@@ -227,8 +227,16 @@ export type ProductDetailsInput = {
   buildVolumeMm: { x: number; y: number; z: number } | null
 }
 
-const CATEGORY_SLUGS: CategorySlug[] = ["printers", "filaments", "resins", "spare-parts", "accessories"]
-const TECHNOLOGIES: Technology[] = ["fdm", "resin"]
+const CATEGORY_SLUGS: CategorySlug[] = [
+  "printers",
+  "filaments",
+  "resins",
+  "spare-parts",
+  "accessories",
+  "scanners",
+  "laser-engravers",
+]
+const TECHNOLOGIES: Technology[] = ["fdm", "resin", "laser"]
 const AVAILABILITIES: Availability[] = ["in_stock", "out_of_stock", "preorder"]
 const USE_CASES: UseCase[] = ["home", "makers", "business", "engineering"]
 
