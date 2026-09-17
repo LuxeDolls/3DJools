@@ -27,8 +27,9 @@ for (const row of rows) {
   }
   try {
     const r = await get(pathname, { access: 'private' });
-    const resp = await fetch(r.blob.downloadUrl || r.blob.url);
-    const buf = Buffer.from(await resp.arrayBuffer());
+    const chunks = [];
+    for await (const chunk of r.stream) chunks.push(chunk);
+    const buf = Buffer.concat(chunks);
     const ext = pathname.split('.').pop().split('?')[0];
     const localPath = `${dir}/${row.slug}.${ext}`;
     fs.writeFileSync(localPath, buf);
