@@ -13,8 +13,16 @@ import { ProductGrid } from "@/components/product/product-grid"
 import { SectionHeading } from "@/components/section-heading"
 
 export async function generateStaticParams() {
-  const slugs = await getAllProductSlugs()
-  return slugs.map((slug) => ({ slug }))
+  try {
+    const slugs = await getAllProductSlugs()
+    return slugs.map((slug) => ({ slug }))
+  } catch (error) {
+    // If the database is temporarily unavailable during build (e.g. a
+    // provider quota hiccup), don't fail the whole deployment. Product pages
+    // will just render on demand instead of being pre-rendered.
+    console.error("[build] Failed to prefetch product slugs for static params:", error)
+    return []
+  }
 }
 
 export async function generateMetadata({

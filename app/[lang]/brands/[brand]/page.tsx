@@ -7,8 +7,16 @@ import { Breadcrumb } from "@/components/breadcrumb"
 import { CatalogView } from "@/components/catalog/catalog-view"
 
 export async function generateStaticParams() {
-  const slugs = await getAllBrandSlugs()
-  return slugs.map((slug) => ({ brand: slug }))
+  try {
+    const slugs = await getAllBrandSlugs()
+    return slugs.map((slug) => ({ brand: slug }))
+  } catch (error) {
+    // If the database is temporarily unavailable during build (e.g. a
+    // provider quota hiccup), don't fail the whole deployment. Brand pages
+    // will just render on demand instead of being pre-rendered.
+    console.error("[build] Failed to prefetch brand slugs for static params:", error)
+    return []
+  }
 }
 
 export async function generateMetadata({
