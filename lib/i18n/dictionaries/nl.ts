@@ -1,7 +1,7 @@
 import type { Dictionary } from "./en"
 
 export const nl: Dictionary = {
-  brandName: "Voltika 3D",
+  brandName: "3DJools",
   tagline: "Serieuze 3D-printers. Eerlijke prijzen.",
   nav: {
     catalog: "Catalogus",
@@ -111,7 +111,7 @@ export const nl: Dictionary = {
   promo: {
     memberEyebrow: "Leden besparen meer",
     memberTitle: "10% korting op elke bestelling",
-    memberText: "Maak een gratis Voltika-account aan en een exclusieve ledenkorting van 10% wordt automatisch toegepast bij het afrekenen — op elk product, elke keer.",
+    memberText: "Maak een gratis 3DJools-account aan en een exclusieve ledenkorting van 10% wordt automatisch toegepast bij het afrekenen — op elk product, elke keer.",
     memberCtaGuest: "Gratis account aanmaken",
     memberCtaSignIn: "Inloggen",
     memberActiveTitle: "Je ledenkorting van 10% is actief",
@@ -271,10 +271,10 @@ export const nl: Dictionary = {
     quickLinks: "Snelle links",
   },
   chat: {
-    title: "Voltika Assistent",
+    title: "3DJools Assistent",
     subtitle: "Vraag ons alles — meestal direct antwoord",
     placeholder: "Typ je bericht…",
-    greeting: "Hoi! Ik ben de Voltika-assistent. Vraag me over printers, verzending, betalen of je bestelling.",
+    greeting: "Hoi! Ik ben de 3DJools-assistent. Vraag me over printers, verzending, betalen of je bestelling.",
     aiDisclaimer: "Je chat met onze AI-assistent. Een medewerker kan het altijd overnemen.",
     send: "Versturen",
     open: "Chat met ons",
@@ -311,7 +311,7 @@ export const nl: Dictionary = {
     signInTitle: "Welkom terug",
     signInSubtitle: "Log in op je account om verder te gaan",
     signUpTitle: "Maak je account aan",
-    signUpSubtitle: "Word lid van Voltika 3D om bestellingen te volgen en sneller af te rekenen",
+    signUpSubtitle: "Word lid van 3DJools om bestellingen te volgen en sneller af te rekenen",
     name: "Volledige naam",
     email: "E-mailadres",
     password: "Wachtwoord",
@@ -351,7 +351,7 @@ export const nl: Dictionary = {
   },
   cookiePolicy: {
     title: "Cookiebeleid",
-    intro: "Dit cookiebeleid legt uit hoe Voltika 3D cookies en vergelijkbare technologieën gebruikt wanneer je onze webshop bezoekt.",
+    intro: "Dit cookiebeleid legt uit hoe 3DJools cookies en vergelijkbare technologieën gebruikt wanneer je onze webshop bezoekt.",
     sections: [
       {
         heading: "Wat zijn cookies?",

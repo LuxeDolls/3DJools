@@ -1,5 +1,5 @@
 export const en = {
-  brandName: "Voltika 3D",
+  brandName: "3DJools",
   tagline: "Serious 3D printers. Honest prices.",
   nav: {
     catalog: "Catalog",
@@ -109,7 +109,7 @@ export const en = {
   promo: {
     memberEyebrow: "Members save more",
     memberTitle: "Get 10% off every order",
-    memberText: "Create a free Voltika account and an exclusive 10% member discount is applied automatically at checkout — on every product, every time.",
+    memberText: "Create a free 3DJools account and an exclusive 10% member discount is applied automatically at checkout — on every product, every time.",
     memberCtaGuest: "Create free account",
     memberCtaSignIn: "Sign in",
     memberActiveTitle: "Your 10% member discount is active",
@@ -269,10 +269,10 @@ export const en = {
     quickLinks: "Quick links",
   },
   chat: {
-    title: "Voltika Assistant",
+    title: "3DJools Assistant",
     subtitle: "Ask us anything — usually replies instantly",
     placeholder: "Type your message…",
-    greeting: "Hi! I'm the Voltika assistant. Ask me about printers, shipping, payments or your order.",
+    greeting: "Hi! I'm the 3DJools assistant. Ask me about printers, shipping, payments or your order.",
     aiDisclaimer: "You're chatting with our AI assistant. A human can take over anytime.",
     send: "Send",
     open: "Chat with us",
@@ -309,7 +309,7 @@ export const en = {
     signInTitle: "Welcome back",
     signInSubtitle: "Sign in to your account to continue",
     signUpTitle: "Create your account",
-    signUpSubtitle: "Join Voltika 3D to track orders and check out faster",
+    signUpSubtitle: "Join 3DJools to track orders and check out faster",
     name: "Full name",
     email: "Email address",
     password: "Password",
@@ -349,7 +349,7 @@ export const en = {
   },
   cookiePolicy: {
     title: "Cookie Policy",
-    intro: "This Cookie Policy explains how Voltika 3D uses cookies and similar technologies when you visit our online store.",
+    intro: "This Cookie Policy explains how 3DJools uses cookies and similar technologies when you visit our online store.",
     sections: [
       {
         heading: "What are cookies?",

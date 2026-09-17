@@ -19,7 +19,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const dict = await getDictionary(locale)
 
   const details = [
-    { icon: Mail, label: dict.contact.email_label, value: "support@voltika3d.example" },
+    { icon: Mail, label: dict.contact.email_label, value: "support@3djools.example" },
     { icon: Phone, label: dict.contact.phone_label, value: "+49 30 1234 5678" },
     { icon: Clock, label: dict.contact.hours_label, value: dict.contact.hours },
     {

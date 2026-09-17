@@ -39,7 +39,7 @@ export default async function ReturnsPage({ params }: { params: Promise<{ lang: 
 
       <ProseSection heading="How to return an item">
         <p>
-          Items must be returned in their original condition and packaging to: Ln-Squared (Voltika 3D returns), Rue
+          Items must be returned in their original condition and packaging to: Ln-Squared (3DJools returns), Rue
           du Chénia 17, 7170 Manage, Hainaut, Belgium. Once we receive and inspect the return, we&apos;ll
           issue a refund to your original payment method within 14 days. For instalment and bank-transfer orders,
           refunds are made to the account used for payment.
@@ -72,7 +72,7 @@ export default async function ReturnsPage({ params }: { params: Promise<{ lang: 
 
       <ProseSection heading="Contact information">
         <p>
-          For cancellations, returns or refund questions, reach Ln-Squared at support@voltika3d.example, by phone at
+          For cancellations, returns or refund questions, reach Ln-Squared at support@3djools.example, by phone at
           +49 30 1234 5678 (Mon–Fri, 9:00–18:00 CET), or by post at Rue du Chénia 17, 7170 Manage, Hainaut,
           Belgium.
         </p>

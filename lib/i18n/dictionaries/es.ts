@@ -1,7 +1,7 @@
 import type { Dictionary } from "./en"
 
 export const es: Dictionary = {
-  brandName: "Voltika 3D",
+  brandName: "3DJools",
   tagline: "Impresoras 3D serias. Precios honestos.",
   nav: {
     catalog: "Catálogo",
@@ -111,7 +111,7 @@ export const es: Dictionary = {
   promo: {
     memberEyebrow: "Los miembros ahorran más",
     memberTitle: "10% de descuento en cada pedido",
-    memberText: "Crea una cuenta Voltika gratis y un descuento exclusivo de miembro del 10% se aplica automáticamente al pagar — en cada producto, siempre.",
+    memberText: "Crea una cuenta 3DJools gratis y un descuento exclusivo de miembro del 10% se aplica automáticamente al pagar — en cada producto, siempre.",
     memberCtaGuest: "Crear cuenta gratis",
     memberCtaSignIn: "Iniciar sesión",
     memberActiveTitle: "Tu descuento de miembro del 10% está activo",
@@ -271,10 +271,10 @@ export const es: Dictionary = {
     quickLinks: "Enlaces rápidos",
   },
   chat: {
-    title: "Asistente Voltika",
+    title: "Asistente 3DJools",
     subtitle: "Pregúntanos lo que sea — suele responder al instante",
     placeholder: "Escribe tu mensaje…",
-    greeting: "¡Hola! Soy el asistente de Voltika. Pregúntame sobre impresoras, envíos, pagos o tu pedido.",
+    greeting: "¡Hola! Soy el asistente de 3DJools. Pregúntame sobre impresoras, envíos, pagos o tu pedido.",
     aiDisclaimer: "Estás chateando con nuestro asistente de IA. Una persona puede intervenir en cualquier momento.",
     send: "Enviar",
     open: "Chatea con nosotros",
@@ -311,7 +311,7 @@ export const es: Dictionary = {
     signInTitle: "Bienvenido de nuevo",
     signInSubtitle: "Inicia sesión en tu cuenta para continuar",
     signUpTitle: "Crea tu cuenta",
-    signUpSubtitle: "Únete a Voltika 3D para seguir pedidos y pagar más rápido",
+    signUpSubtitle: "Únete a 3DJools para seguir pedidos y pagar más rápido",
     name: "Nombre completo",
     email: "Correo electrónico",
     password: "Contraseña",
@@ -351,7 +351,7 @@ export const es: Dictionary = {
   },
   cookiePolicy: {
     title: "Política de cookies",
-    intro: "Esta Política de cookies explica cómo Voltika 3D utiliza cookies y tecnologías similares cuando visitas nuestra tienda online.",
+    intro: "Esta Política de cookies explica cómo 3DJools utiliza cookies y tecnologías similares cuando visitas nuestra tienda online.",
     sections: [
       {
         heading: "¿Qué son las cookies?",

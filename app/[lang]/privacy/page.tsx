@@ -25,7 +25,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
     >
       <ProseSection heading="Who we are">
         <p>
-          The Voltika 3D online store is operated by Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut,
+          The 3DJools online store is operated by Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut,
           Belgium (Company No. 0564.743.304, VAT BE0564743304), which acts as the data controller for the purposes of
           this policy. This privacy policy explains how we collect, use and protect your personal data in accordance
           with the EU General Data Protection Regulation (GDPR).
@@ -68,7 +68,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
           <li>Opt out of marketing communications at any time</li>
           <li>Lodge a complaint with your local data protection authority</li>
         </ul>
-        <p>To exercise any of these rights, contact us at privacy@voltika3d.example.</p>
+        <p>To exercise any of these rights, contact us at privacy@3djools.example.</p>
       </ProseSection>
       <ProseSection heading="Cookies">
         <p>
@@ -88,7 +88,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
       </ProseSection>
       <ProseSection heading="Contact us">
         <p>
-          For any question about this policy or your data, contact Ln-Squared at privacy@voltika3d.example, by phone
+          For any question about this policy or your data, contact Ln-Squared at privacy@3djools.example, by phone
           at +49 30 1234 5678, or by post at Rue du Chénia 17, 7170 Manage, Hainaut, Belgium.
         </p>
       </ProseSection>

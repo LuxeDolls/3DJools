@@ -92,7 +92,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const dict = await getDictionary(locale)
   return {
     title: dict.footer.faq,
-    description: "Answers to common questions about orders, shipping, returns, warranty and payments at Voltika 3D.",
+    description: "Answers to common questions about orders, shipping, returns, warranty and payments at 3DJools.",
   }
 }
 

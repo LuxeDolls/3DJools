@@ -95,7 +95,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-between gap-4 px-4 py-6 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} Voltika 3D — Ln-Squared. {dict.footer.rights}
+            &copy; {new Date().getFullYear()} 3DJools — Ln-Squared. {dict.footer.rights}
           </p>
           <ul className="flex flex-wrap items-center gap-3">
             {payments.map((p) => (

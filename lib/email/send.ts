@@ -19,7 +19,7 @@ export type SendResult = { sent: boolean; skipped?: boolean; error?: string }
 
 export async function sendEmail({ to, subject, html, text }: SendEmailInput): Promise<SendResult> {
   const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.EMAIL_FROM ?? "Voltika 3D <onboarding@resend.dev>"
+  const from = process.env.EMAIL_FROM ?? "3DJools <onboarding@resend.dev>"
 
   if (!apiKey) {
     console.log(`[v0] Email skipped (no RESEND_API_KEY). Would send "${subject}" to ${to}`)

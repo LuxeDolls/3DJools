@@ -25,7 +25,7 @@ export default async function InstalmentAgreementPage({ params }: { params: Prom
       <ProseSection heading="1. Parties">
         <p>
           This Instalment Sale Agreement ("Agreement") is entered into between the Seller / Creditor and the Buyer /
-          Borrower named on the order confirmation for any order placed on the Voltika 3D store using the interest-free
+          Borrower named on the order confirmation for any order placed on the 3DJools store using the interest-free
           instalment payment method.
         </p>
         <p className="mt-2">

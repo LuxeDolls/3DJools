@@ -53,7 +53,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     order.shippingCountry,
   ].filter((line) => line && line.trim())
 
-  const subject = `Your Voltika 3D order confirmation — ${order.orderNumber}`
+  const subject = `Your 3DJools order confirmation — ${order.orderNumber}`
 
   const itemsText = order.items
     .map((i) => `- ${i.productName} × ${i.quantity} — ${euros(i.lineTotalCents)}`)
@@ -144,7 +144,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     ${addressHtml}
     ${orderLink ? `<p style="margin:0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">Voltika 3D · This is your order receipt</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools · This is your order receipt</p>
 </div>
 </body></html>`
 
@@ -162,7 +162,7 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
   const trackingNumber = order.trackingNumber?.trim()
   const trackingUrl = order.trackingUrl?.trim()
 
-  const subject = `Your Voltika 3D order ${order.orderNumber} has shipped`
+  const subject = `Your 3DJools order ${order.orderNumber} has shipped`
 
   const itemsText = order.items
     .map((i) => `- ${i.productName} × ${i.quantity} — ${euros(i.lineTotalCents)}`)
@@ -214,7 +214,7 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
     </table>
     ${orderLink ? `<p style="margin:24px 0 0"><a href="${orderLink}" style="color:#111;font-size:14px">View your order details</a></p>` : ""}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">Voltika 3D</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p>
 </div>
 </body></html>`
 
@@ -247,7 +247,7 @@ export async function sendPaymentUnderReviewEmail(order: OrderWithItems): Promis
     <p style="margin:16px 0 0;color:#111;font-size:14px;line-height:1.6">Thanks — we've received your confirmation and our team is checking your payment. We'll update your order status shortly.</p>
     ${orderLink ? `<p style="margin:20px 0 0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">Voltika 3D</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p>
 </div>
 </body></html>`
 

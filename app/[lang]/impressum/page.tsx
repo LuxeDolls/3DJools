@@ -23,7 +23,7 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
     >
       <ProseSection heading="Company details">
         <p>
-          Voltika 3D (trading name)
+          3DJools (trading name)
           <br />
           Ln-Squared
           <br />
@@ -52,7 +52,7 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
       </ProseSection>
       <ProseSection heading="Contact">
         <p>
-          Email: support@voltika3d.example
+          Email: support@3djools.example
           <br />
           Phone: +49 30 1234 5678
         </p>
