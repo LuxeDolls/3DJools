@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Archive, ArchiveRestore, Check, Loader2, Pencil, Plus } from "lucide-react"
+import { Archive, ArchiveRestore, Check, Loader2, Pencil, Plus, Search, X } from "lucide-react"
 import { getProductForEdit, setProductArchived } from "@/lib/actions/admin"
 import type { AdminProductDetail, AdminProductRow } from "@/lib/catalog/queries"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { ProductForm } from "@/components/admin/product-form"
 
 function euros(cents: number): string {
@@ -27,6 +28,15 @@ export function CatalogTable({
   const [detail, setDetail] = useState<AdminProductDetail | null>(null)
   const [loadingSlug, setLoadingSlug] = useState<string | null>(null)
   const [busySlug, setBusySlug] = useState<string | null>(null)
+  const [query, setQuery] = useState("")
+
+  const filteredRows = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    if (!q) return rows
+    return rows.filter(
+      (row) => row.name.toLowerCase().includes(q) || row.brandName.toLowerCase().includes(q),
+    )
+  }, [rows, query])
 
   function openCreate() {
     setDetail(null)
@@ -52,7 +62,27 @@ export function CatalogTable({
 
   return (
     <div>
-      <div className="mb-4 flex justify-end">
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <div className="relative w-full max-w-sm">
+          <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search products by name…"
+            className="pl-8 pr-8"
+            aria-label="Search products by name"
+          />
+          {query && (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              aria-label="Clear search"
+            >
+              <X className="size-4" />
+            </button>
+          )}
+        </div>
         <Button onClick={openCreate}>
           <Plus className="size-4" /> Add product
         </Button>
@@ -72,7 +102,14 @@ export function CatalogTable({
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
+            {filteredRows.length === 0 && (
+              <tr>
+                <td colSpan={7} className="px-4 py-8 text-center text-sm text-muted-foreground">
+                  No products match &quot;{query}&quot;.
+                </td>
+              </tr>
+            )}
+            {filteredRows.map((row) => (
               <tr
                 key={row.slug}
                 className={`border-b border-border last:border-0 ${row.archived ? "opacity-55" : ""}`}

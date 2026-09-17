@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Loader2, Plus, Trash2, Upload, X } from "lucide-react"
+import { Loader2, Plus, Star, Trash2, Upload, X } from "lucide-react"
 import {
   createProduct,
   updateProductDetails,
@@ -145,6 +145,16 @@ export function ProductForm({
 
   function removeImage(index: number) {
     setForm((f) => ({ ...f, images: f.images.filter((_, i) => i !== index) }))
+  }
+
+  function makeHeroImage(index: number) {
+    setForm((f) => {
+      if (index === 0) return f
+      const images = [...f.images]
+      const [chosen] = images.splice(index, 1)
+      images.unshift(chosen)
+      return { ...f, images }
+    })
   }
 
   async function onFilePick(e: React.ChangeEvent<HTMLInputElement>) {
@@ -360,22 +370,49 @@ export function ProductForm({
           <div className="space-y-2">
             <Label>Photos</Label>
             {form.images.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {form.images.map((url, i) => (
-                  <div key={`${url}-${i}`} className="relative h-16 w-16 overflow-hidden rounded border border-border bg-muted">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={url || "/placeholder.svg"} alt="" className="h-full w-full object-cover" />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(i)}
-                      className="absolute right-0 top-0 flex size-4 items-center justify-center rounded-bl bg-background/90 text-foreground"
-                      aria-label="Remove image"
+              <>
+                <p className="text-xs text-muted-foreground">
+                  The hero photo is shown on product cards and at the top of the product page. Hover a
+                  photo and click the star to make it the hero.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {form.images.map((url, i) => (
+                    <div
+                      key={`${url}-${i}`}
+                      className={`group relative h-16 w-16 overflow-hidden rounded border bg-muted ${
+                        i === 0 ? "border-primary ring-2 ring-primary/40" : "border-border"
+                      }`}
                     >
-                      <X className="size-3" />
-                    </button>
-                  </div>
-                ))}
-              </div>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={url || "/placeholder.svg"} alt="" className="h-full w-full object-cover" />
+                      {i === 0 && (
+                        <span className="absolute left-0 top-0 flex items-center gap-0.5 rounded-br bg-primary px-1 py-0.5 text-[9px] font-medium text-primary-foreground">
+                          <Star className="size-2.5 fill-current" /> Hero
+                        </span>
+                      )}
+                      {i !== 0 && (
+                        <button
+                          type="button"
+                          onClick={() => makeHeroImage(i)}
+                          className="absolute left-0 top-0 flex size-5 items-center justify-center rounded-br bg-background/90 text-foreground opacity-0 transition-opacity group-hover:opacity-100"
+                          aria-label="Make hero photo"
+                          title="Make hero photo"
+                        >
+                          <Star className="size-3" />
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => removeImage(i)}
+                        className="absolute right-0 top-0 flex size-4 items-center justify-center rounded-bl bg-background/90 text-foreground"
+                        aria-label="Remove image"
+                      >
+                        <X className="size-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
             )}
             <div className="flex gap-2">
               <Input
