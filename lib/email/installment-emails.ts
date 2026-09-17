@@ -27,7 +27,7 @@ function wrapHtml(title: string, bodyHtml: string): string {
     <h1 style="margin:0 0 8px;font-size:20px;color:#111">${title}</h1>
     ${bodyHtml}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">Voltika 3D</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p>
 </div>
 </body></html>`
 }

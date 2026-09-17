@@ -17,13 +17,13 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Voltika 3D — 3D Printers, Filament & Accessories',
-    template: '%s · Voltika 3D',
+    default: '3DJools — 3D Printers, Filament & Accessories',
+    template: '%s · 3DJools',
   },
   description:
     'Top-tier 3D printers, filament and accessories at honest prices. Free EU shipping over €100. Bambu Lab, Prusa, Creality, Anycubic, Elegoo and more.',
   generator: 'v0.app',
-  metadataBase: new URL('https://voltika3d.example'),
+  metadataBase: new URL('https://3djools.example'),
   icons: {
     icon: [
       { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },

@@ -36,7 +36,7 @@ export function AdminLogin() {
           <Lock className="h-5 w-5 text-primary" />
         </div>
         <h1 className="text-center font-sans text-xl font-semibold">Admin access</h1>
-        <p className="mt-1 text-center text-sm text-muted-foreground">Voltika 3D operations console</p>
+        <p className="mt-1 text-center text-sm text-muted-foreground">3DJools operations console</p>
         <div className="mt-6 grid gap-1.5">
           <Label htmlFor="admin-password">Password</Label>
           <Input

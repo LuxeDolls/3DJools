@@ -1,7 +1,7 @@
 import type { Dictionary } from "./en"
 
 export const fr: Dictionary = {
-  brandName: "Voltika 3D",
+  brandName: "3DJools",
   tagline: "Des imprimantes 3D sérieuses. Des prix honnêtes.",
   nav: {
     catalog: "Catalogue",
@@ -111,7 +111,7 @@ export const fr: Dictionary = {
   promo: {
     memberEyebrow: "Les membres économisent plus",
     memberTitle: "10% de remise sur chaque commande",
-    memberText: "Créez un compte Voltika gratuit et une remise membre exclusive de 10% est appliquée automatiquement au paiement — sur chaque produit, à chaque fois.",
+    memberText: "Créez un compte 3DJools gratuit et une remise membre exclusive de 10% est appliquée automatiquement au paiement — sur chaque produit, à chaque fois.",
     memberCtaGuest: "Créer un compte gratuit",
     memberCtaSignIn: "Se connecter",
     memberActiveTitle: "Votre remise membre de 10% est active",
@@ -271,10 +271,10 @@ export const fr: Dictionary = {
     quickLinks: "Liens rapides",
   },
   chat: {
-    title: "Assistant Voltika",
+    title: "Assistant 3DJools",
     subtitle: "Posez-nous vos questions — réponse souvent instantanée",
     placeholder: "Écrivez votre message…",
-    greeting: "Bonjour ! Je suis l'assistant Voltika. Posez-moi vos questions sur les imprimantes, la livraison, le paiement ou votre commande.",
+    greeting: "Bonjour ! Je suis l'assistant 3DJools. Posez-moi vos questions sur les imprimantes, la livraison, le paiement ou votre commande.",
     aiDisclaimer: "Vous discutez avec notre assistant IA. Un humain peut prendre le relais à tout moment.",
     send: "Envoyer",
     open: "Discuter avec nous",
@@ -311,7 +311,7 @@ export const fr: Dictionary = {
     signInTitle: "Bon retour",
     signInSubtitle: "Connectez-vous pour continuer",
     signUpTitle: "Créer votre compte",
-    signUpSubtitle: "Rejoignez Voltika 3D pour suivre vos commandes et payer plus vite",
+    signUpSubtitle: "Rejoignez 3DJools pour suivre vos commandes et payer plus vite",
     name: "Nom complet",
     email: "Adresse e-mail",
     password: "Mot de passe",
@@ -351,7 +351,7 @@ export const fr: Dictionary = {
   },
   cookiePolicy: {
     title: "Politique de cookies",
-    intro: "Cette politique de cookies explique comment Voltika 3D utilise les cookies et technologies similaires lorsque vous visitez notre boutique en ligne.",
+    intro: "Cette politique de cookies explique comment 3DJools utilise les cookies et technologies similaires lorsque vous visitez notre boutique en ligne.",
     sections: [
       {
         heading: "Que sont les cookies ?",

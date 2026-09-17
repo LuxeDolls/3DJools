@@ -25,7 +25,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
     >
       <ProseSection heading="Serious machines, honest prices">
         <p>
-          Voltika 3D is a European store dedicated to 3D printing. We hand-pick the machines, filament, resin and
+          3DJools is a European store dedicated to 3D printing. We hand-pick the machines, filament, resin and
           accessories that makers actually rely on — from proven bestsellers to the latest CoreXY flagships — and offer
           them at prices that make sense.
         </p>
@@ -45,11 +45,11 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
       </ProseSection>
       <ProseSection heading="Company & contact details">
         <p>
-          Voltika 3D is operated by Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut, Belgium (Company No.
+          3DJools is operated by Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut, Belgium (Company No.
           0564.743.304, VAT BE0564743304).
         </p>
         <p>
-          Email: support@voltika3d.example
+          Email: support@3djools.example
           <br />
           Phone: +49 30 1234 5678
           <br />

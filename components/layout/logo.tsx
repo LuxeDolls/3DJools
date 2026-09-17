@@ -8,7 +8,7 @@ export function Logo({ className }: { className?: string }) {
         <Boxes className="size-5" strokeWidth={2.4} />
       </span>
       <span className="leading-none">
-        Voltika<span className="text-primary">3D</span>
+        <span className="text-primary">3D</span>Jools
       </span>
     </span>
   )

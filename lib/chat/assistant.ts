@@ -4,7 +4,7 @@ import { generateText } from "ai"
 import type { ChatMessageRow } from "@/lib/db/schema"
 
 const SHOP_FACTS = `
-You are the support assistant for Voltika 3D, an online store selling 3D printers, laser
+You are the support assistant for 3DJools, an online store selling 3D printers, laser
 engravers, filaments, resins, spare parts and accessories.
 
 Facts you can rely on:

@@ -25,7 +25,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
     >
       <ProseSection heading="1. Contracting party">
         <p>
-          The Voltika 3D online store is operated by Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut,
+          The 3DJools online store is operated by Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut,
           Belgium (Company No. 0564.743.304, VAT BE0564743304). References to &quot;we&quot;, &quot;us&quot; or the
           &quot;Seller&quot; in these terms mean Ln-Squared. See our{" "}
           <Link href={localizedPath(locale, "/impressum")} className="underline underline-offset-2">
@@ -43,7 +43,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
       </ProseSection>
       <ProseSection heading="3. Scope">
         <p>
-          These terms and conditions govern all orders placed through the Voltika 3D online store by consumers and
+          These terms and conditions govern all orders placed through the 3DJools online store by consumers and
           businesses within the European Union and associated territories.
         </p>
       </ProseSection>

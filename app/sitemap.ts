@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next"
 import { locales } from "@/lib/i18n/config"
 import { getAllProductSlugs, getAllBrandSlugs, allCategorySlugs } from "@/lib/catalog"
 
-const BASE = "https://voltika3d.example"
+const BASE = "https://3djools.example"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [
