@@ -32,17 +32,20 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
           <Link
             key={tile.href}
             href={localizedPath(locale, tile.href)}
-            className="group relative flex items-end overflow-hidden rounded-lg border border-border bg-secondary/40 aspect-square"
+            className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card"
           >
-            <Image
-              src={tile.image || "/placeholder.svg"}
-              alt={tile.key}
-              fill
-              sizes="(max-width: 1024px) 50vw, 25vw"
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/10 to-transparent" />
-            <h3 className="relative z-10 p-4 font-heading text-lg font-bold text-background">{tile.key}</h3>
+            <div className="relative aspect-square overflow-hidden bg-secondary/40">
+              <Image
+                src={tile.image || "/placeholder.svg"}
+                alt={tile.key}
+                fill
+                sizes="(max-width: 1024px) 50vw, 25vw"
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+            <h3 className="border-t border-border px-4 py-3 font-heading text-base font-bold text-balance text-card-foreground md:text-lg">
+              {tile.key}
+            </h3>
           </Link>
         ))}
       </div>
