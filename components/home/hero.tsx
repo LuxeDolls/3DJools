@@ -41,7 +41,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
             />
             <Button
               size="lg"
-              variant="ghost"
+              variant="outline"
               render={<Link href={localizedPath(locale, "/catalog")}>{dict.home.heroCtaCatalog}</Link>}
             />
           </div>
