@@ -6,14 +6,14 @@ import { getProductBySlug } from "@/lib/catalog"
 import { createOrder, getOrderByOrderNumber, updateOrderStatus } from "@/lib/orders/queries"
 import { sendOrderConfirmationEmail, sendPaymentUnderReviewEmail } from "@/lib/email/order-emails"
 import { memberDiscountCents } from "@/lib/discount"
+import { computeShippingCents } from "@/lib/shipping"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
-// Kept in sync with the checkout UI. Prices are authoritative here, never
-// taken from the client — the cart only supplies slugs + quantities.
-// There is a single EU shipping method (5–10 working days); it becomes free
-// automatically once the subtotal reaches the threshold.
-const FREE_SHIPPING_THRESHOLD_CENTS = 10000
-const STANDARD_SHIPPING_CENTS = 490
+// Prices are authoritative here, never taken from the client — the cart only
+// supplies slugs + quantities. Shipping cost is recomputed from lib/shipping
+// (single EU/UK shipping method, 5–10 working days) using the destination
+// country submitted at checkout; it becomes free automatically once the
+// subtotal reaches the threshold.
 const MAX_QTY = 20
 
 type CheckoutShipping = "standard"
@@ -100,8 +100,10 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   const userId = session?.user?.id ?? null
   const discountCents = userId ? memberDiscountCents(subtotalCents) : 0
 
-  // Shipping is recomputed too: the single EU method is only free above the threshold.
-  const shippingCents = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS ? 0 : STANDARD_SHIPPING_CENTS
+  // Shipping is recomputed too: Belgium gets the domestic rate, every other
+  // destination pays the international rate, and both are waived above the
+  // free-shipping threshold.
+  const shippingCents = computeShippingCents(subtotalCents, input.country)
 
   const totalCents = subtotalCents - discountCents + shippingCents
 

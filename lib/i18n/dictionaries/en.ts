@@ -78,7 +78,7 @@ export const en = {
     name: "Name A–Z",
   },
   home: {
-    heroEyebrow: "Free EU shipping over €100",
+    heroEyebrow: "Free EU shipping over €250",
     heroTitle: "Top-tier 3D printers at prices that make sense",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality and more — handpicked machines, filament and parts, shipped fast across Europe.",
@@ -91,7 +91,7 @@ export const en = {
     shopByBrand: "Shop by brand",
     viewAll: "View all",
     uspShippingTitle: "Fast EU delivery",
-    uspShippingText: "Free over €100. 5–10 business days across the EU.",
+    uspShippingText: "Free over €250. €4.90 within Belgium, €14.99 elsewhere. 5–10 business days.",
     uspSupportTitle: "Expert support",
     uspSupportText: "Talk to real 3D printing specialists, before and after you buy.",
     uspWarrantyTitle: "2-year warranty",
@@ -169,7 +169,7 @@ export const en = {
     shippingStandard: "EU standard shipping",
     shippingStandardDesc: "5–10 business days",
     shippingFree: "Free standard shipping",
-    shippingFreeDesc: "5–10 business days · orders over €100",
+    shippingFreeDesc: "5–10 business days · orders over €250",
     payCard: "Credit / debit card",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Card payment is temporarily unavailable",

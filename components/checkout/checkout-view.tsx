@@ -10,6 +10,7 @@ import { useCart, FREE_SHIPPING_THRESHOLD_CENTS } from "@/components/cart/cart-p
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { formatPrice } from "@/lib/format"
 import { memberDiscountCents } from "@/lib/discount"
@@ -19,6 +20,7 @@ import { getInstallmentDict } from "@/lib/i18n/installments"
 import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
 import { placeOrder } from "@/lib/actions/orders"
+import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 
 type PaymentId = "card" | "sepa" | "crypto" | "installments"
 
@@ -33,6 +35,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
 
   const qualifiesFree = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS
   const [payment, setPayment] = useState<PaymentId>("sepa")
+  const [country, setCountry] = useState("Belgium")
   const [submitting, setSubmitting] = useState(false)
   const [orderError, setOrderError] = useState<string | null>(null)
   const router = useRouter()
@@ -46,7 +49,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
     )
   }
 
-  const shippingCents = qualifiesFree ? 0 : 490
+  const shippingCents = computeShippingCents(subtotalCents, country)
   const totalCents = subtotalCents - discountCents + shippingCents
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
@@ -78,7 +81,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         address: str("address"),
         city: str("city"),
         postalCode: str("postalCode"),
-        country: str("country"),
+        country,
         phone: str("phone"),
         payment,
         items: lines.map((l) => ({ slug: l.slug, quantity: l.quantity, brand: l.brand, image: l.image })),
@@ -135,7 +138,18 @@ export function CheckoutView({ locale }: { locale: Locale }) {
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="country">{dict.checkout.country}</Label>
-              <Input id="country" name="country" autoComplete="country-name" required />
+              <Select value={country} onValueChange={(v) => v && setCountry(v)}>
+                <SelectTrigger id="country" className="w-full">
+                  <SelectValue placeholder={dict.checkout.country} />
+                </SelectTrigger>
+                <SelectContent>
+                  {SHIPPING_COUNTRIES.map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="phone">{dict.checkout.phone}</Label>
