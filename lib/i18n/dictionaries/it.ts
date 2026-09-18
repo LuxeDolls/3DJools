@@ -80,7 +80,7 @@ export const it: Dictionary = {
     name: "Nome A–Z",
   },
   home: {
-    heroEyebrow: "Spedizione UE gratuita oltre 100 €",
+    heroEyebrow: "Spedizione UE gratuita oltre 250 €",
     heroTitle: "Stampanti 3D di alto livello a prezzi che hanno senso",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality e altro — macchine, filamenti e ricambi selezionati, spediti rapidamente in tutta Europa.",
@@ -93,7 +93,7 @@ export const it: Dictionary = {
     shopByBrand: "Acquista per marca",
     viewAll: "Vedi tutto",
     uspShippingTitle: "Consegna UE rapida",
-    uspShippingText: "Gratis oltre 100 €. 5–10 giorni lavorativi in tutta l'UE.",
+    uspShippingText: "Gratis oltre 250 €. 4,90 € in Belgio, 14,99 € altrove. 5–10 giorni lavorativi.",
     uspSupportTitle: "Assistenza esperta",
     uspSupportText: "Parla con veri specialisti della stampa 3D, prima e dopo l'acquisto.",
     uspWarrantyTitle: "Garanzia 2 anni",
@@ -171,7 +171,7 @@ export const it: Dictionary = {
     shippingStandard: "Spedizione standard UE",
     shippingStandardDesc: "5–10 giorni lavorativi",
     shippingFree: "Spedizione standard gratuita",
-    shippingFreeDesc: "5–10 giorni lavorativi · ordini oltre 100 €",
+    shippingFreeDesc: "5–10 giorni lavorativi · ordini oltre 250 €",
     payCard: "Carta di credito / debito",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Il pagamento con carta non è al momento disponibile",

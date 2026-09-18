@@ -80,7 +80,7 @@ export const es: Dictionary = {
     name: "Nombre A–Z",
   },
   home: {
-    heroEyebrow: "Envío gratis en la UE desde 100 €",
+    heroEyebrow: "Envío gratis en la UE desde 250 €",
     heroTitle: "Impresoras 3D de primer nivel a precios que tienen sentido",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality y más — máquinas, filamento y piezas seleccionadas, con envío rápido por toda Europa.",
@@ -93,7 +93,7 @@ export const es: Dictionary = {
     shopByBrand: "Comprar por marca",
     viewAll: "Ver todo",
     uspShippingTitle: "Entrega rápida en la UE",
-    uspShippingText: "Gratis desde 100 €. 5–10 días laborables en toda la UE.",
+    uspShippingText: "Gratis desde 250 €. 4,90 € en Bélgica, 14,99 € en el resto. 5–10 días laborables.",
     uspSupportTitle: "Soporte experto",
     uspSupportText: "Habla con verdaderos especialistas en impresión 3D, antes y después de comprar.",
     uspWarrantyTitle: "2 años de garantía",
@@ -171,7 +171,7 @@ export const es: Dictionary = {
     shippingStandard: "Envío estándar UE",
     shippingStandardDesc: "5–10 días laborables",
     shippingFree: "Envío estándar gratis",
-    shippingFreeDesc: "5–10 días laborables · pedidos de más de 100 €",
+    shippingFreeDesc: "5–10 días laborables · pedidos de más de 250 €",
     payCard: "Tarjeta de crédito / débito",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "El pago con tarjeta no está disponible temporalmente",

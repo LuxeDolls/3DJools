@@ -10,9 +10,9 @@ const faqGroups = [
     heading: "Orders & shipping",
     items: [
       {
-        question: "How long does delivery take?",
+        question: "How long does delivery take, and how much does it cost?",
         answer:
-          "Standard EU shipping takes 5–10 working days and costs €4.90, free on orders over €100. Every order is processed and dispatched within 48 hours on business days; orders placed before 14:00 CET are often dispatched the same day.",
+          "Standard shipping takes 5–10 working days. It costs €4.90 within Belgium and €14.99 to every other destination we deliver to, and is free on orders over €250 either way — the cost is calculated automatically at checkout based on the delivery country you select. Every order is processed and dispatched within 48 hours on business days; orders placed before 14:00 CET are often dispatched the same day.",
       },
       {
         question: "What are your business hours?",
@@ -22,7 +22,7 @@ const faqGroups = [
       {
         question: "Which countries do you ship to?",
         answer:
-          "We ship across the European Union with trusted carriers (DPD, GLS, DHL and UPS). Remote areas and islands (for example Cyprus and Malta) and non-EU European destinations (Switzerland, Norway) may carry a small surcharge, calculated automatically at checkout.",
+          "We ship to Belgium and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with trusted carriers (DPD, GLS, DHL and UPS). Belgium pays our lower domestic rate; every other destination pays the same flat international rate, chosen automatically based on the country you select at checkout.",
       },
       {
         question: "Can I track my order?",

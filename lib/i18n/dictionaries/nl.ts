@@ -80,7 +80,7 @@ export const nl: Dictionary = {
     name: "Naam A–Z",
   },
   home: {
-    heroEyebrow: "Gratis EU-verzending vanaf € 100",
+    heroEyebrow: "Gratis EU-verzending vanaf € 250",
     heroTitle: "Topklasse 3D-printers tegen prijzen die kloppen",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality en meer — geselecteerde machines, filament en onderdelen, snel geleverd door heel Europa.",
@@ -93,7 +93,7 @@ export const nl: Dictionary = {
     shopByBrand: "Shop per merk",
     viewAll: "Alles bekijken",
     uspShippingTitle: "Snelle EU-levering",
-    uspShippingText: "Gratis vanaf € 100. 5–10 werkdagen binnen de EU.",
+    uspShippingText: "Gratis vanaf € 250. € 4,90 binnen België, € 14,99 daarbuiten. 5–10 werkdagen.",
     uspSupportTitle: "Deskundige support",
     uspSupportText: "Praat met echte 3D-printspecialisten, voor en na je aankoop.",
     uspWarrantyTitle: "2 jaar garantie",
@@ -171,7 +171,7 @@ export const nl: Dictionary = {
     shippingStandard: "EU-standaardverzending",
     shippingStandardDesc: "5–10 werkdagen",
     shippingFree: "Gratis standaardverzending",
-    shippingFreeDesc: "5–10 werkdagen · bestellingen boven € 100",
+    shippingFreeDesc: "5–10 werkdagen · bestellingen boven € 250",
     payCard: "Credit-/debetkaart",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",

@@ -80,7 +80,7 @@ export const de: Dictionary = {
     name: "Name A–Z",
   },
   home: {
-    heroEyebrow: "Kostenloser EU-Versand ab 100 €",
+    heroEyebrow: "Kostenloser EU-Versand ab 250 €",
     heroTitle: "Top-3D-Drucker zu Preisen, die Sinn ergeben",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality und mehr — handverlesene Maschinen, Filament und Teile, schnell in ganz Europa geliefert.",
@@ -93,7 +93,7 @@ export const de: Dictionary = {
     shopByBrand: "Nach Marke einkaufen",
     viewAll: "Alle ansehen",
     uspShippingTitle: "Schnelle EU-Lieferung",
-    uspShippingText: "Kostenlos ab 100 €. 5–10 Werktage innerhalb der EU.",
+    uspShippingText: "Kostenlos ab 250 €. 4,90 € innerhalb Belgiens, 14,99 € überall sonst. 5–10 Werktage.",
     uspSupportTitle: "Experten-Support",
     uspSupportText: "Sprich mit echten 3D-Druck-Spezialisten, vor und nach dem Kauf.",
     uspWarrantyTitle: "2 Jahre Garantie",
@@ -171,7 +171,7 @@ export const de: Dictionary = {
     shippingStandard: "EU-Standardversand",
     shippingStandardDesc: "5–10 Werktage",
     shippingFree: "Kostenloser Standardversand",
-    shippingFreeDesc: "5–10 Werktage · Bestellungen über 100 €",
+    shippingFreeDesc: "5–10 Werktage · Bestellungen über 250 €",
     payCard: "Kredit-/Debitkarte",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",
@@ -247,7 +247,7 @@ export const de: Dictionary = {
     companyBlurb: "Dein europäischer Shop für 3D-Drucker, Filament und Zubehör der Marken, denen Maker vertrauen.",
     companyNumber: "Unternehmensnr.",
     vatId: "USt-IdNr.",
-    hoursNote: "Mo–Fr, 9:00–18:00 MEZ · Bestellungen werden innerhalb von 48 Stunden bearbeitet & versandt · Wir antworten innerhalb von 48 Stunden",
+    hoursNote: "Mo��Fr, 9:00–18:00 MEZ · Bestellungen werden innerhalb von 48 Stunden bearbeitet & versandt · Wir antworten innerhalb von 48 Stunden",
   },
   contact: {
     title: "Kontakt",

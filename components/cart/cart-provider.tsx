@@ -98,4 +98,7 @@ export function useCart(): CartContextValue {
   return ctx
 }
 
-export const FREE_SHIPPING_THRESHOLD_CENTS = 10000
+// Re-exported here so existing cart UI imports don't need to change; the
+// actual value lives in lib/shipping.ts alongside the rest of the shipping
+// pricing logic (which also needs the destination country).
+export { FREE_SHIPPING_THRESHOLD_CENTS } from "@/lib/shipping"
