@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth"
 import { getProductBySlug } from "@/lib/catalog"
 import { createOrder, getOrderByOrderNumber, updateOrderStatus } from "@/lib/orders/queries"
 import { sendOrderConfirmationEmail, sendPaymentUnderReviewEmail } from "@/lib/email/order-emails"
+import { notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -183,6 +184,9 @@ export async function markOrderPaidByCustomer(orderNumber: string): Promise<Mark
     return { ok: false, error: "invalid_status" }
   }
   await updateOrderStatus(order.id, "reviewing_payment")
+  void notifyPaymentSubmitted({ ...order, status: "reviewing_payment" }).catch((err) => {
+    console.error("[v0] Payment-submitted admin notification failed:", err)
+  })
   try {
     await sendPaymentUnderReviewEmail(order)
   } catch (err) {

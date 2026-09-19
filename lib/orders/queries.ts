@@ -10,6 +10,7 @@ import {
   type OrderRow,
   type OrderStatus,
 } from "@/lib/db/schema"
+import { notifyNewOrder, notifyOrderStatusChange } from "@/lib/notifications/admin"
 
 export type OrderWithItems = OrderRow & { items: OrderItemRow[] }
 
@@ -81,7 +82,12 @@ export async function createOrder(input: CreateOrderInput): Promise<OrderWithIte
         .returning()
     : []
 
-  return { ...order, items }
+  const orderWithItems = { ...order, items }
+  void notifyNewOrder(orderWithItems).catch((error) => {
+    console.error("[v0] New-order admin notification failed:", error)
+  })
+
+  return orderWithItems
 }
 
 /** Customer-area read: only the signed-in user's own orders. */
@@ -129,7 +135,18 @@ export async function getOrderById(orderId: string): Promise<OrderWithItems | nu
 }
 
 export async function updateOrderStatus(orderId: string, status: OrderStatus): Promise<void> {
+  const previous = await getOrderById(orderId)
+  if (!previous || previous.status === status) {
+    return
+  }
+
   await db.update(orders).set({ status, updatedAt: new Date() }).where(eq(orders.id, orderId))
+  const updated = await getOrderById(orderId)
+  if (updated) {
+    void notifyOrderStatusChange(updated, previous.status).catch((error) => {
+      console.error("[v0] Order-status admin notification failed:", error)
+    })
+  }
 }
 
 export type TrackingInput = {
@@ -139,6 +156,7 @@ export type TrackingInput = {
 }
 
 export async function updateOrderTracking(orderId: string, tracking: TrackingInput): Promise<OrderWithItems | null> {
+  const previous = await getOrderById(orderId)
   await db
     .update(orders)
     .set({
@@ -150,7 +168,13 @@ export async function updateOrderTracking(orderId: string, tracking: TrackingInp
       updatedAt: new Date(),
     })
     .where(eq(orders.id, orderId))
-  return getOrderById(orderId)
+  const updated = await getOrderById(orderId)
+  if (updated && previous && previous.status !== updated.status) {
+    void notifyOrderStatusChange(updated, previous.status).catch((error) => {
+      console.error("[v0] Shipment admin notification failed:", error)
+    })
+  }
+  return updated
 }
 
 async function attachItems(rows: OrderRow[]): Promise<OrderWithItems[]> {

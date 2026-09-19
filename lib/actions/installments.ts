@@ -7,6 +7,7 @@ import { buildSchedule, computeInstallmentAmounts, generateApplicationRef, quali
 import { createOrder, getOrderById, updateOrderStatus } from "@/lib/orders/queries"
 import { sendPaymentUnderReviewEmail } from "@/lib/email/order-emails"
 import { sendInstallmentApplicationReceivedEmail } from "@/lib/email/installment-emails"
+import { notifyInstallmentApplication, notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { desc, eq } from "drizzle-orm"
 
 export type ApplicationInput = {
@@ -166,6 +167,12 @@ export async function createInstallmentApplication(input: ApplicationInput): Pro
     })
     .returning()
 
+  if (app) {
+    void notifyInstallmentApplication(app).catch((error) => {
+      console.error("[v0] New-installment admin notification failed:", error)
+    })
+  }
+
   try {
     if (app) await sendInstallmentApplicationReceivedEmail(app)
   } catch (err) {
@@ -216,7 +223,12 @@ export async function markInstallmentPaymentSubmitted(
     await updateOrderStatus(app.orderId, "reviewing_payment")
     try {
       const order = await getOrderById(app.orderId)
-      if (order) await sendPaymentUnderReviewEmail(order)
+      if (order) {
+        void notifyPaymentSubmitted({ ...order, status: "reviewing_payment" }).catch((error) => {
+          console.error("[v0] Installment payment-submitted admin notification failed:", error)
+        })
+        await sendPaymentUnderReviewEmail(order)
+      }
     } catch (err) {
       console.error("[v0] Installment payment-under-review email failed:", err)
     }
