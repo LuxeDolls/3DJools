@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next"
 import { locales } from "@/lib/i18n/config"
 import { getAllProductSlugs, getAllBrandSlugs, allCategorySlugs } from "@/lib/catalog"
 
-const BASE = "https://3djools.example"
+const BASE = "https://3djools.com"
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [

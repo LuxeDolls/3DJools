@@ -58,7 +58,7 @@ export default async function ProductPage({
   if (!product) notFound()
 
   const related = await getRelatedProducts(product, 4, locale)
-  const url = `https://3djools.example${localizedPath(locale, `/product/${product.slug}`)}`
+  const url = `https://3djools.com${localizedPath(locale, `/product/${product.slug}`)}`
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">

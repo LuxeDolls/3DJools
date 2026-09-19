@@ -68,7 +68,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
           <li>Opt out of marketing communications at any time</li>
           <li>Lodge a complaint with your local data protection authority</li>
         </ul>
-        <p>To exercise any of these rights, contact us at privacy@3djools.example.</p>
+        <p>To exercise any of these rights, contact us at info@3djools.com.</p>
       </ProseSection>
       <ProseSection heading="Cookies">
         <p>
@@ -88,7 +88,7 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
       </ProseSection>
       <ProseSection heading="Contact us">
         <p>
-          For any question about this policy or your data, contact Ln-Squared at privacy@3djools.example, by phone
+          For any question about this policy or your data, contact Ln-Squared at info@3djools.com, by phone
           at +49 30 1234 5678, or by post at Rue du Chénia 17, 7170 Manage, Hainaut, Belgium.
         </p>
       </ProseSection>

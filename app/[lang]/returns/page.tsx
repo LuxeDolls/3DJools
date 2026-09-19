@@ -72,7 +72,7 @@ export default async function ReturnsPage({ params }: { params: Promise<{ lang: 
 
       <ProseSection heading="Contact information">
         <p>
-          For cancellations, returns or refund questions, reach Ln-Squared at support@3djools.example, by phone at
+          For cancellations, returns or refund questions, reach Ln-Squared at info@3djools.com, by phone at
           +49 30 1234 5678 (Mon–Fri, 9:00–18:00 CET), or by post at Rue du Chénia 17, 7170 Manage, Hainaut,
           Belgium.
         </p>

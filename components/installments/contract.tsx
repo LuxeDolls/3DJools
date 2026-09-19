@@ -12,7 +12,7 @@ export const CREDITOR = {
   address: "Rue du Chénia 17, 7170 Manage, Hainaut, Belgium",
   registration: "Company No. 0564.743.304 · Safe No. BE02758815",
   vat: "BE0564743304",
-  email: "billing@3djools.example",
+  email: "info@3djools.com",
 }
 
 type ClauseSet = {
