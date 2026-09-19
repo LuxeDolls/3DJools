@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { CreditCard, Package, MessageSquare, Boxes, LayoutDashboard, MessageCircle } from "lucide-react"
+import { CreditCard, Package, MessageSquare, Boxes, LayoutDashboard, MessageCircle, HardDriveDownload } from "lucide-react"
 import { getUnreadChatCount } from "@/lib/actions/admin"
 
 const LINKS = [
@@ -13,6 +13,7 @@ const LINKS = [
   { href: "/admin/orders", label: "Orders", icon: Package },
   { href: "/admin/messages", label: "Messages", icon: MessageSquare },
   { href: "/admin/chat", label: "Live chat", icon: MessageCircle },
+  { href: "/admin/backups", label: "Backups", icon: HardDriveDownload },
 ]
 
 export function AdminNav() {

@@ -13,6 +13,7 @@
     "@vercel/blob": "^2.8.0",
     "@vercel/connect": "^2.3.0",
     "ai": "^7.0.102",
+    "archiver": "^8.0.0",
     "better-auth": "^1.7.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
+    "@types/archiver": "^8.0.0",
     "@types/node": "^24",
     "@types/nodemailer": "^8.0.2",
     "@types/pg": "^8.23.1",
