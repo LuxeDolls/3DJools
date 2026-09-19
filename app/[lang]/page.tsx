@@ -30,6 +30,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <Hero locale={locale} dict={dict} />
       <UspBar dict={dict} />
       <MemberPromo />
+      <ScamAdviserTrust dict={dict} />
       <CategoryTiles locale={locale} dict={dict} />
 
       <section className="mx-auto max-w-7xl px-4 py-12">
@@ -53,7 +54,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       </section>
 
       <BrandStrip locale={locale} dict={dict} brands={brands} />
-      <ScamAdviserTrust dict={dict} />
       <Newsletter />
     </>
   )
