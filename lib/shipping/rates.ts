@@ -13,6 +13,11 @@ export const INTERNATIONAL_RATE_CENTS = 1499 // €14.99 — rest of EU + neighb
 export const DELIVERY_TIME_LABEL = "5–10 working days"
 export const DISPATCH_TIME_LABEL = "within 48 business hours"
 
+// Language-neutral numbers, used to build the translated delivery/dispatch phrase per locale.
+export const DELIVERY_MIN_DAYS = 5
+export const DELIVERY_MAX_DAYS = 10
+export const DISPATCH_HOURS = 48
+
 export const DOMESTIC_COUNTRY = { code: "BE", name: "Belgium" } as const
 
 // Rest of the EU (26 members excluding Belgium) plus neighbouring countries we also ship to.
