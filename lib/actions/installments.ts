@@ -5,7 +5,10 @@ import { installmentApplications, type ApplicationCartItem, type NewOrderItemRow
 import { getProductBySlug } from "@/lib/catalog"
 import { buildSchedule, computeInstallmentAmounts, generateApplicationRef, qualifiesForInstallments } from "@/lib/installments"
 import { createOrder, getOrderById, updateOrderStatus } from "@/lib/orders/queries"
-import { sendInstallmentApplicationReceivedEmail } from "@/lib/email/installment-emails"
+import {
+  sendInstallmentApplicationReceivedEmail,
+  sendInstallmentPaymentStatusEmail,
+} from "@/lib/email/installment-emails"
 import { notifyInstallmentApplication, notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { desc, eq } from "drizzle-orm"
 
@@ -218,6 +221,8 @@ export async function markInstallmentPaymentSubmitted(
     .set({ schedule, updatedAt: new Date() })
     .where(eq(installmentApplications.id, app.id))
 
+  const paymentApp = { ...app, schedule }
+
   if (app.orderId) {
     await updateOrderStatus(app.orderId, "reviewing_payment")
     try {
@@ -228,8 +233,17 @@ export async function markInstallmentPaymentSubmitted(
         })
       }
     } catch (err) {
-      console.error("[v0] Installment payment-under-review email failed:", err)
+      console.error("[v0] Installment payment admin notification failed:", err)
     }
+  }
+
+  try {
+    const result = await sendInstallmentPaymentStatusEmail(paymentApp, scheduleIndex, "reviewing_payment")
+    if (!result.sent) {
+      console.error("[v0] Installment payment customer email was not sent:", result.error ?? "email delivery skipped")
+    }
+  } catch (error) {
+    console.error("[v0] Installment payment customer email failed:", error)
   }
 
   return { ok: true }
