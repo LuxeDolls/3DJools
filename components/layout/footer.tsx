@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { CreditCard, Landmark, Bitcoin, CalendarClock, ShieldCheck, Clock } from "lucide-react"
+import { CreditCard, Landmark, Bitcoin, CalendarClock, ShieldCheck, Clock, Mail } from "lucide-react"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -58,6 +58,13 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           <p className="mt-4 max-w-sm text-pretty text-sm leading-relaxed text-muted-foreground">
             {dict.footer.companyBlurb}
           </p>
+          <a
+            href="mailto:info@3djools.com"
+            className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
+          >
+            <Mail className="size-4 text-primary" aria-hidden="true" />
+            info@3djools.com
+          </a>
           <div className="mt-5 flex items-center gap-2 text-sm font-medium text-foreground">
             <ShieldCheck className="size-4 text-primary" />
             {dict.footer.paymentsSecured}

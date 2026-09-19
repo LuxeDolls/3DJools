@@ -30,7 +30,7 @@ export default async function InstalmentAgreementPage({ params }: { params: Prom
         </p>
         <p className="mt-2">
           <span className="font-medium text-foreground">Seller / Creditor:</span> {CREDITOR.name}, {CREDITOR.address} ·{" "}
-          {CREDITOR.registration} · VAT {CREDITOR.vat} · {CREDITOR.email}
+          {CREDITOR.registration} · VAT {CREDITOR.vat} · <a href={`mailto:${CREDITOR.email}`} className="underline underline-offset-2 hover:text-foreground">{CREDITOR.email}</a>
         </p>
         <p className="mt-1">
           <span className="font-medium text-foreground">Buyer / Borrower:</span> the individual or business identified

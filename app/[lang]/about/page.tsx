@@ -49,7 +49,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           0564.743.304, VAT BE0564743304).
         </p>
         <p>
-          Email: support@3djools.example
+          Email: <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">info@3djools.com</a>
           <br />
           Phone: +49 30 1234 5678
           <br />

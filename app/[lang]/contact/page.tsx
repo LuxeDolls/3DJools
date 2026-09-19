@@ -19,7 +19,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const dict = await getDictionary(locale)
 
   const details = [
-    { icon: Mail, label: dict.contact.email_label, value: "support@3djools.example" },
+    { icon: Mail, label: dict.contact.email_label, value: "info@3djools.com", href: "mailto:info@3djools.com" },
     { icon: Phone, label: dict.contact.phone_label, value: "+49 30 1234 5678" },
     { icon: Clock, label: dict.contact.hours_label, value: dict.contact.hours },
     {
@@ -60,7 +60,16 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                 </span>
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-wide text-muted-foreground">{d.label}</p>
-                  <p className="text-sm font-medium text-foreground">{d.value}</p>
+                  {"href" in d ? (
+                    <a
+                      href={d.href}
+                      className="text-sm font-medium text-foreground underline underline-offset-2 hover:text-primary"
+                    >
+                      {d.value}
+                    </a>
+                  ) : (
+                    <p className="text-sm font-medium text-foreground">{d.value}</p>
+                  )}
                 </div>
               </li>
             ))}

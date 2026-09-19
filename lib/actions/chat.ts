@@ -1,7 +1,9 @@
 "use server"
 
 import { generateAssistantReply } from "@/lib/chat/assistant"
+import { notifyNewLiveChatVisitor } from "@/lib/notifications/live-chat"
 import {
+  findConversation,
   getMessagesForConversation,
   getOrCreateConversation,
   insertMessage,
@@ -15,14 +17,14 @@ function isSafeVisitorId(visitorId: string): boolean {
 
 export async function initChat(visitorId: string, locale: string): Promise<ChatMessageRow[]> {
   if (!isSafeVisitorId(visitorId)) return []
-  const conversation = await getOrCreateConversation(visitorId, locale)
-  return getMessagesForConversation(conversation.id)
+  const conversation = await findConversation(visitorId)
+  return conversation ? getMessagesForConversation(conversation.id) : []
 }
 
 export async function getChatMessages(visitorId: string): Promise<ChatMessageRow[]> {
   if (!isSafeVisitorId(visitorId)) return []
-  const conversation = await getOrCreateConversation(visitorId, "en")
-  return getMessagesForConversation(conversation.id)
+  const conversation = await findConversation(visitorId)
+  return conversation ? getMessagesForConversation(conversation.id) : []
 }
 
 export async function sendChatMessage(
@@ -36,8 +38,20 @@ export async function sendChatMessage(
   }
 
   const conversation = await getOrCreateConversation(visitorId, locale)
+  const existingMessages = await getMessagesForConversation(conversation.id)
+  const isNewVisitor = !existingMessages.some((message) => message.role === "user")
+
   await insertMessage(conversation.id, "user", content)
   await touchConversation(conversation.id, { unreadForAdmin: true })
+
+  if (isNewVisitor) {
+    await notifyNewLiveChatVisitor({
+      conversationId: conversation.id,
+      visitorId,
+      locale,
+      message: content,
+    })
+  }
 
   if (conversation.mode === "ai") {
     try {

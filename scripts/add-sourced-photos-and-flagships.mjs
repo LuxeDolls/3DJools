@@ -10,7 +10,7 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function uploadFromUrl(sourceUrl, pathname, attempt = 1) {
   const res = await fetch(sourceUrl, {
-    headers: { "User-Agent": "3DJoolsCatalogBot/1.0 (contact: catalog@3djools.example)" },
+    headers: { "User-Agent": "3DJoolsCatalogBot/1.0 (contact: info@3djools.com)" },
   })
   if (res.status === 429 && attempt <= 6) {
     const waitMs = 20000 * attempt

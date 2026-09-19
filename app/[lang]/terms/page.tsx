@@ -31,7 +31,10 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
           <Link href={localizedPath(locale, "/impressum")} className="underline underline-offset-2">
             legal notice
           </Link>{" "}
-          for full contact details.
+          for full contact details. You can also reach us directly at{" "}
+          <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">
+            info@3djools.com
+          </a>.
         </p>
       </ProseSection>
       <ProseSection heading="2. Definitions">

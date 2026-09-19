@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/checkout", "/admin"],
     },
-    sitemap: "https://3djools.example/sitemap.xml",
+    sitemap: "https://3djools.com/sitemap.xml",
   }
 }
