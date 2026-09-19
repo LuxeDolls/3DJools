@@ -21,6 +21,7 @@ import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/insta
 import { cn } from "@/lib/utils"
 import { placeOrder } from "@/lib/actions/orders"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
+import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 
 type PaymentId = "card" | "sepa" | "crypto" | "installments"
 
@@ -35,6 +36,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
 
   const qualifiesFree = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS
   const [payment, setPayment] = useState<PaymentId>("sepa")
+  const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Belgium")
   const [submitting, setSubmitting] = useState(false)
   const [orderError, setOrderError] = useState<string | null>(null)
@@ -84,6 +86,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         country,
         phone: str("phone"),
         payment,
+        cryptoCoin: payment === "crypto" ? cryptoCoin : undefined,
         items: lines.map((l) => ({ slug: l.slug, quantity: l.quantity, brand: l.brand, image: l.image })),
       })
       if (!res.ok) {
@@ -204,14 +207,38 @@ export function CheckoutView({ locale }: { locale: Locale }) {
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm text-muted-foreground">
               <p className="font-medium text-foreground">{dict.checkout.payCryptoNoteTitle}</p>
               <p className="mt-1">{dict.checkout.payCryptoNoteText}</p>
+              <div className="mt-3 space-y-1.5">
+                <Label htmlFor="cryptoCoin" className="text-xs text-muted-foreground">
+                  {dict.checkout.payCryptoCoin}
+                </Label>
+                <Select value={cryptoCoin} onValueChange={(v) => v && setCryptoCoin(v)}>
+                  <SelectTrigger id="cryptoCoin" className="w-full bg-card">
+                    <SelectValue placeholder={dict.checkout.payCryptoCoin}>
+                      {(value: string) => {
+                        const opt = getCryptoCoinOption(value)
+                        return `${opt.coinLabel} · ${opt.network}`
+                      }}
+                    </SelectValue>
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CRYPTO_COIN_OPTIONS.map((coin) => (
+                      <SelectItem key={coin.id} value={coin.id}>
+                        {coin.coinLabel} · {coin.network}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
               <dl className="mt-3 space-y-1">
                 <div className="flex justify-between gap-4">
                   <dt>{dict.checkout.payCryptoNetwork}</dt>
-                  <dd className="font-mono text-foreground">USDT · TRC20</dd>
+                  <dd className="font-mono text-foreground">
+                    {getCryptoCoinOption(cryptoCoin).coinLabel} · {getCryptoCoinOption(cryptoCoin).network}
+                  </dd>
                 </div>
                 <div className="flex justify-between gap-4">
                   <dt>{dict.checkout.payCryptoAddress}</dt>
-                  <dd className="break-all font-mono text-foreground">TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</dd>
+                  <dd className="break-all font-mono text-foreground">{getCryptoCoinOption(cryptoCoin).address}</dd>
                 </div>
               </dl>
             </div>

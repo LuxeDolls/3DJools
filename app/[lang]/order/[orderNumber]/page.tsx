@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import { OrderPaymentInstructions } from "@/components/checkout/order-payment-instructions"
+import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
@@ -55,6 +56,7 @@ export default async function OrderConfirmationPage({
   }
   const awaitingOfflinePayment =
     (order.paymentMethod === "bank_transfer" || order.paymentMethod === "crypto") && status === "awaiting_payment"
+  const cryptoCoin = parseOrderNotes(order.notes).crypto_coin
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -207,6 +209,7 @@ export default async function OrderConfirmationPage({
               paymentMethod={order.paymentMethod as PaymentMethod}
               amountCents={order.totalCents}
               locale={locale}
+              cryptoCoin={cryptoCoin}
               dict={{
                 paymentInstructions: dict.orderConfirmation.paymentInstructions,
                 iPaidButton: dict.orderConfirmation.iPaidButton,

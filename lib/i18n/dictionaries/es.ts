@@ -182,9 +182,10 @@ export const es: Dictionary = {
     paySepaDesc: "Paga por transferencia IBAN a nuestra cuenta",
     payCrypto: "Criptomoneda",
     payCryptoDesc: "Bitcoin, Ethereum, USDT y más",
-    payCryptoNoteTitle: "Dirección de la wallet (marcador temporal)",
+    payCryptoNoteTitle: "Dirección de la wallet",
     payCryptoNoteText:
-      "Estamos finalizando los detalles de pago con criptomonedas. Tras realizar tu pedido, envía el importe exacto a la dirección indicada — nuestro equipo lo confirmará manualmente.",
+      "Elige una criptomoneda a continuación y envía el importe exacto a esa dirección tras realizar tu pedido — nuestro equipo lo confirmará manualmente.",
+    payCryptoCoin: "Criptomoneda",
     payCryptoNetwork: "Red",
     payCryptoAddress: "Dirección",
     payInstallments: "A plazos — 4× en 2 meses",

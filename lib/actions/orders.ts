@@ -8,6 +8,8 @@ import { sendOrderConfirmationEmail } from "@/lib/email/order-emails"
 import { notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
+import { buildOrderNotes } from "@/lib/orders/notes"
+import { isCryptoCoinId } from "@/lib/payments/crypto"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 // Prices are authoritative here, never taken from the client — the cart only
@@ -40,6 +42,8 @@ export type PlaceOrderInput = {
   phone?: string
   shipping?: CheckoutShipping
   payment: CheckoutPayment
+  /** Selected coin/network id when payment is "crypto" (see lib/payments/crypto.ts). */
+  cryptoCoin?: string
   items: { slug: string; quantity: number; brand?: string; image?: string }[]
 }
 
@@ -129,7 +133,13 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       postalCode: input.postalCode.trim(),
       country: input.country.trim(),
     },
-    notes: discountCents > 0 ? `member_discount_cents=${discountCents}` : undefined,
+    notes: buildOrderNotes({
+      member_discount_cents: discountCents > 0 ? String(discountCents) : undefined,
+      crypto_coin:
+        paymentMethod === "crypto" && input.cryptoCoin && isCryptoCoinId(input.cryptoCoin)
+          ? input.cryptoCoin
+          : undefined,
+    }),
     items,
   })
 

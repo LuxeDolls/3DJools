@@ -182,9 +182,10 @@ export const it: Dictionary = {
     paySepaDesc: "Paga con bonifico IBAN sul nostro conto",
     payCrypto: "Criptovaluta",
     payCryptoDesc: "Bitcoin, Ethereum, USDT e altro",
-    payCryptoNoteTitle: "Indirizzo del wallet (segnaposto)",
+    payCryptoNoteTitle: "Indirizzo del wallet",
     payCryptoNoteText:
-      "Stiamo finalizzando i dettagli del pagamento in criptovaluta. Dopo l'ordine, invia l'importo esatto all'indirizzo indicato — il nostro team confermerà manualmente.",
+      "Scegli una criptovaluta qui sotto, poi invia l'importo esatto a quell'indirizzo dopo l'ordine — il nostro team confermerà manualmente.",
+    payCryptoCoin: "Criptovaluta",
     payCryptoNetwork: "Rete",
     payCryptoAddress: "Indirizzo",
     payInstallments: "Rate — 4× in 2 mesi",

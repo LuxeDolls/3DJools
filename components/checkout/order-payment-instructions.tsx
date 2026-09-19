@@ -14,11 +14,14 @@ export function OrderPaymentInstructions({
   amountCents,
   locale,
   dict,
+  cryptoCoin,
 }: {
   orderNumber: string
   paymentMethod: PaymentMethod
   amountCents: number
   locale: Locale
+  /** Coin/network id chosen at checkout, persisted on the order (see lib/payments/crypto.ts). */
+  cryptoCoin?: string
   dict: {
     paymentInstructions: string
     iPaidButton: string
@@ -42,6 +45,7 @@ export function OrderPaymentInstructions({
       reference={orderNumber}
       locale={locale}
       dict={dict}
+      cryptoCoin={cryptoCoin}
       trigger={
         <Button variant="outline">
           <Landmark className="size-4" />

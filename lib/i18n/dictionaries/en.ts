@@ -180,9 +180,10 @@ export const en = {
     paySepaDesc: "Pay by IBAN transfer to our account",
     payCrypto: "Cryptocurrency",
     payCryptoDesc: "Bitcoin, Ethereum, USDT and more",
-    payCryptoNoteTitle: "Wallet address (placeholder)",
+    payCryptoNoteTitle: "Wallet address",
     payCryptoNoteText:
-      "We're finalizing crypto payment details. Send the exact amount to the address below after placing your order — our team will confirm manually.",
+      "Choose a coin below, then send the exact amount to that address after placing your order — our team will confirm manually.",
+    payCryptoCoin: "Coin",
     payCryptoNetwork: "Network",
     payCryptoAddress: "Address",
   payInstallments: "Instalments — 4× over 2 months",
