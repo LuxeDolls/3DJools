@@ -16,6 +16,7 @@ import { getOrderById, updateOrderStatus, updateOrderTracking } from "@/lib/orde
 import {
   sendInstallmentApplicationApprovedEmail,
   sendInstallmentApplicationRejectedEmail,
+  sendInstallmentPaymentStatusEmail,
 } from "@/lib/email/installment-emails"
 import { getAdminProductBySlug, type AdminProductDetail } from "@/lib/catalog/queries"
 import type { Availability, CategorySlug, ProductSpec, Technology, UseCase } from "@/lib/catalog/types"
@@ -107,10 +108,11 @@ export async function decideApplication(
   }
 
   try {
-    if (decision === "approved") {
-      await sendInstallmentApplicationApprovedEmail(app)
-    } else {
-      await sendInstallmentApplicationRejectedEmail(app)
+    const result = decision === "approved"
+      ? await sendInstallmentApplicationApprovedEmail(app)
+      : await sendInstallmentApplicationRejectedEmail(app)
+    if (!result.sent) {
+      console.error("[v0] Installment decision email was not sent:", result.error ?? "email delivery skipped")
     }
   } catch (err) {
     console.error("[v0] Installment decision email failed:", err)
@@ -148,12 +150,22 @@ export async function confirmInstallmentPayment(
       .where(eq(installmentApplications.id, id))
   }
 
+  const allPaid = schedule.every((s) => s.status === "paid")
+  const downPaid = schedule[0]?.status === "paid"
+  const nextStatus: OrderStatus = allPaid ? "paid" : downPaid ? "partially_paid" : "awaiting_payment"
+
   if (app.orderId) {
-    const allPaid = schedule.every((s) => s.status === "paid")
-    const downPaid = schedule[0]?.status === "paid"
-    const nextStatus: OrderStatus = allPaid ? "paid" : downPaid ? "partially_paid" : "awaiting_payment"
     await updateOrderStatus(app.orderId, nextStatus)
     revalidatePath("/admin/orders")
+  }
+
+  try {
+    const result = await sendInstallmentPaymentStatusEmail({ ...app, schedule }, scheduleIndex, nextStatus)
+    if (!result.sent) {
+      console.error("[v0] Installment payment status email was not sent:", result.error ?? "email delivery skipped")
+    }
+  } catch (error) {
+    console.error("[v0] Installment payment status email failed:", error)
   }
 
   revalidatePath("/admin/applications")
