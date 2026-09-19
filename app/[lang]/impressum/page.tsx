@@ -52,7 +52,7 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
       </ProseSection>
       <ProseSection heading="Contact">
         <p>
-          Email: info@3djools.com
+          Email: <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">info@3djools.com</a>
           <br />
           Phone: +49 30 1234 5678
         </p>

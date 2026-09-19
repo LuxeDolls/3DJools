@@ -41,6 +41,13 @@ export default async function CookiePolicyPage({
         ))}
       </div>
 
+      <p className="mt-10 text-sm leading-relaxed text-muted-foreground">
+        Questions about cookies or your privacy? Contact us at{" "}
+        <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">
+          info@3djools.com
+        </a>.
+      </p>
+
       <div className="mt-12 rounded-xl border border-border bg-card p-6">
         <h2 className="font-heading text-lg font-semibold text-foreground">{cp.manageHeading}</h2>
         <p className="mb-4 mt-1 text-sm text-pretty leading-relaxed text-muted-foreground">{cp.manageText}</p>
