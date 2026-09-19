@@ -1,6 +1,16 @@
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { ProsePage, ProseSection } from "@/components/legal/prose-page"
+import {
+  DELIVERY_TIME_LABEL,
+  DOMESTIC_RATE_CENTS,
+  FREE_SHIPPING_THRESHOLD_CENTS,
+  INTERNATIONAL_RATE_CENTS,
+} from "@/lib/shipping/rates"
+
+function formatEuro(cents: number): string {
+  return `€${(cents / 100).toFixed(2).replace(/\.00$/, "")}`
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -34,16 +44,22 @@ export default async function ShippingPage({ params }: { params: Promise<{ lang:
             <tbody className="divide-y divide-border">
               <tr>
                 <td className="px-4 py-3 font-medium text-foreground">Belgium</td>
-                <td className="px-4 py-3">5–10 working days</td>
+                <td className="px-4 py-3">{DELIVERY_TIME_LABEL}</td>
                 <td className="px-4 py-3">
-                  €4.90 <span className="font-medium text-primary">(free over €250)</span>
+                  {formatEuro(DOMESTIC_RATE_CENTS)}{" "}
+                  <span className="font-medium text-primary">
+                    (free over {formatEuro(FREE_SHIPPING_THRESHOLD_CENTS)})
+                  </span>
                 </td>
               </tr>
               <tr>
                 <td className="px-4 py-3 font-medium text-foreground">Rest of the EU & neighbouring countries</td>
-                <td className="px-4 py-3">5–10 working days</td>
+                <td className="px-4 py-3">{DELIVERY_TIME_LABEL}</td>
                 <td className="px-4 py-3">
-                  €14.99 <span className="font-medium text-primary">(free over €250)</span>
+                  {formatEuro(INTERNATIONAL_RATE_CENTS)}{" "}
+                  <span className="font-medium text-primary">
+                    (free over {formatEuro(FREE_SHIPPING_THRESHOLD_CENTS)})
+                  </span>
                 </td>
               </tr>
             </tbody>

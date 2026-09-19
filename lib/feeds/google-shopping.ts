@@ -1,8 +1,20 @@
 import type { Locale } from "@/lib/i18n/config"
 import { getAllProducts } from "@/lib/catalog"
+import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNATIONAL_RATE_CENTS } from "@/lib/shipping/rates"
 
 const BASE_URL = "https://3djools.com"
 const STORE_NAME = "3DJools"
+
+// Flat-rate shipping per destination, mirrored from lib/shipping/rates.ts (see the Shipping page).
+// Note: GMC's per-item <g:shipping> tag cannot express the "free over €250" threshold — that
+// promotion must additionally be configured as a conditional free-shipping rule in the Merchant
+// Center account's Shipping settings using the same countries and threshold.
+const SHIPPING_BLOCKS = ALL_SHIPPING_COUNTRIES
+  .map(({ code }) => {
+    const cents = code === DOMESTIC_COUNTRY.code ? DOMESTIC_RATE_CENTS : INTERNATIONAL_RATE_CENTS
+    return `\n      <g:shipping>\n        <g:country>${code}</g:country>\n        <g:price>${(cents / 100).toFixed(2)} EUR</g:price>\n      </g:shipping>`
+  })
+  .join("")
 
 function escapeXml(value: string): string {
   return value
@@ -53,7 +65,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
       ${gtin ? `<g:gtin>${escapeXml(gtin)}</g:gtin>` : ""}
       <g:condition>new</g:condition>
       <g:product_type>${escapeXml(product.category)}</g:product_type>
-      <g:custom_label_0>${STORE_NAME}</g:custom_label_0>
+      <g:custom_label_0>${STORE_NAME}</g:custom_label_0>${SHIPPING_BLOCKS}
     </item>`
   }).join("")
 

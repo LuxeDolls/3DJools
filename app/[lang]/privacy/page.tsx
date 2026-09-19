@@ -43,6 +43,31 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
           marketing communications. We never sell your personal data.
         </p>
       </ProseSection>
+      <ProseSection heading="Legal basis for processing">
+        <p>We only process your personal data where we have a valid legal basis to do so:</p>
+        <ul className="ml-5 list-disc space-y-1">
+          <li><strong>Contract performance</strong> — processing your order, payment and delivery details to fulfil a purchase or instalment agreement</li>
+          <li><strong>Legal obligation</strong> — retaining invoicing and tax records as required by Belgian and EU law</li>
+          <li><strong>Legitimate interest</strong> — preventing fraud, securing our systems, and running essential store functionality</li>
+          <li><strong>Consent</strong> — sending marketing communications and using non-essential analytics cookies, which you can withdraw at any time</li>
+        </ul>
+      </ProseSection>
+      <ProseSection heading="Service providers we use">
+        <p>
+          We share personal data with a limited number of service providers who process it on our behalf, strictly to
+          operate the store:
+        </p>
+        <ul className="ml-5 list-disc space-y-1">
+          <li><strong>Vercel</strong> — application hosting and infrastructure</li>
+          <li><strong>Neon</strong> — database hosting for order and account records</li>
+          <li><strong>Vercel Blob</strong> — storage of product images and uploaded files</li>
+          <li><strong>Zoho Mail / Titan Email</strong> — sending transactional emails such as order confirmations and support replies</li>
+        </ul>
+        <p>
+          Each provider is bound by a data processing agreement and may only use your data to provide the service we
+          have engaged them for.
+        </p>
+      </ProseSection>
       <ProseSection heading="Data retention">
         <p>
           We keep order and invoicing data for as long as required by tax and commercial law (generally up to 10
@@ -69,6 +94,11 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
           <li>Lodge a complaint with your local data protection authority</li>
         </ul>
         <p>To exercise any of these rights, contact us at <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">info@3djools.com</a>.</p>
+        <p>
+          As our company is established in Belgium, you also have the right to lodge a complaint directly with the
+          Belgian Data Protection Authority (Autorité de protection des données / Gegevensbeschermingsautoriteit),
+          Rue de la Presse 35, 1000 Brussels, Belgium — <a href="mailto:contact@apd-gba.be" className="underline underline-offset-2 hover:text-foreground">contact@apd-gba.be</a>.
+        </p>
       </ProseSection>
       <ProseSection heading="Cookies">
         <p>
