@@ -22,6 +22,7 @@ import { cn } from "@/lib/utils"
 import { placeOrder } from "@/lib/actions/orders"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
+import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 
 type PaymentId = "card" | "sepa" | "crypto" | "installments"
 
@@ -197,8 +198,9 @@ export function CheckoutView({ locale }: { locale: Locale }) {
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm text-muted-foreground">
               <p className="font-medium text-foreground">Bank transfer details (shown after ordering)</p>
               <dl className="mt-2 space-y-1">
-                <div className="flex justify-between gap-4"><dt>IBAN</dt><dd className="font-mono text-foreground">DE00 0000 0000 0000 0000 00</dd></div>
-                <div className="flex justify-between gap-4"><dt>BIC</dt><dd className="font-mono text-foreground">XXXXDEXXXXX</dd></div>
+                <div className="flex justify-between gap-4"><dt>Name</dt><dd className="font-mono text-foreground">{BANK_TRANSFER_ACCOUNT.accountName}</dd></div>
+                <div className="flex justify-between gap-4"><dt>IBAN</dt><dd className="font-mono text-foreground">{BANK_TRANSFER_ACCOUNT.iban}</dd></div>
+                <div className="flex justify-between gap-4"><dt>BIC</dt><dd className="font-mono text-foreground">{BANK_TRANSFER_ACCOUNT.bic}</dd></div>
                 <div className="flex justify-between gap-4"><dt>Reference</dt><dd className="font-mono text-foreground">Your order number</dd></div>
               </dl>
             </div>
