@@ -1,11 +1,11 @@
 import "server-only"
+import nodemailer from "nodemailer"
 
 /**
- * Email delivery is intentionally decoupled from a provider. When
- * `RESEND_API_KEY` (and `EMAIL_FROM`) are configured, emails are sent through
- * Resend's HTTP API. Until then, every call is a safe no-op that logs what
- * *would* have been sent, so the ordering flow works end-to-end without a
- * provider and starts delivering the moment the key is added — no code change.
+ * Sends transactional email through Zoho Mail SMTP. Configure the mailbox with
+ * ZOHO_SMTP_USER and a Zoho app password in ZOHO_SMTP_PASSWORD. The EU SMTP
+ * endpoint is the default; override ZOHO_SMTP_HOST or ZOHO_SMTP_PORT only if
+ * Zoho provides different settings for the mailbox.
  */
 
 type SendEmailInput = {
@@ -17,34 +17,46 @@ type SendEmailInput = {
 
 export type SendResult = { sent: boolean; skipped?: boolean; error?: string }
 
-export async function sendEmail({ to, subject, html, text }: SendEmailInput): Promise<SendResult> {
-  const apiKey = process.env.RESEND_API_KEY
-  const from = process.env.EMAIL_FROM ?? "3DJools <onboarding@resend.dev>"
+function getSmtpConfig() {
+  const user = process.env.ZOHO_SMTP_USER
+  const pass = process.env.ZOHO_SMTP_PASSWORD
 
-  if (!apiKey) {
-    console.log(`[v0] Email skipped (no RESEND_API_KEY). Would send "${subject}" to ${to}`)
+  if (!user || !pass) return null
+
+  const port = Number(process.env.ZOHO_SMTP_PORT ?? "465")
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new Error("ZOHO_SMTP_PORT must be a valid TCP port")
+  }
+
+  return {
+    host: process.env.ZOHO_SMTP_HOST ?? "smtp.zoho.eu",
+    port,
+    secure: port === 465,
+    auth: { user, pass },
+  }
+}
+
+export async function sendEmail({ to, subject, html, text }: SendEmailInput): Promise<SendResult> {
+  let smtp
+  try {
+    smtp = getSmtpConfig()
+  } catch (err) {
+    console.error("[email] Invalid Zoho SMTP configuration:", err)
+    return { sent: false, error: err instanceof Error ? err.message : "Invalid SMTP configuration" }
+  }
+
+  if (!smtp) {
+    console.log(`[email] Email skipped (Zoho SMTP is not configured). Would send "${subject}" to ${to}`)
     return { sent: false, skipped: true }
   }
 
+  const from = process.env.EMAIL_FROM ?? smtp.auth.user
+
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ from, to, subject, html, text }),
-    })
-
-    if (!res.ok) {
-      const detail = await res.text()
-      console.error(`[v0] Resend send failed (${res.status}): ${detail}`)
-      return { sent: false, error: `Resend responded ${res.status}` }
-    }
-
+    await nodemailer.createTransport(smtp).sendMail({ from, to, subject, html, text })
     return { sent: true }
   } catch (err) {
-    console.error("[v0] Resend send threw:", err)
+    console.error("[email] Zoho SMTP send failed:", err)
     return { sent: false, error: err instanceof Error ? err.message : "Unknown error" }
   }
 }
