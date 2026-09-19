@@ -95,6 +95,36 @@ export async function sendInstallmentApplicationApprovedEmail(app: InstallmentAp
 }
 
 /** Sent when an admin rejects the application. */
+export async function sendInstallmentPaymentStatusEmail(
+  app: InstallmentApplication,
+  scheduleIndex: number,
+  orderStatus: string,
+): Promise<SendResult> {
+  const entry = app.schedule[scheduleIndex]
+  if (!entry) return { sent: false, error: "Installment schedule entry not found" }
+
+  const link = statusLink(app)
+  const paymentLabel = entry.label === "down_payment" ? "down payment" : `installment ${scheduleIndex}`
+  const statusLabel = entry.status === "paid" ? "Paid" : entry.status === "reviewing" ? "Payment under review" : "Unpaid"
+  const subject = `Payment update for your installment order — ${app.applicationRef}`
+  const text = [
+    `Hi ${app.firstName},`,
+    `Your ${paymentLabel} of ${euros(entry.amountCents)} is now: ${statusLabel}.`,
+    `Order status: ${orderStatus}.`,
+    link ? `\nView your installment plan: ${link}` : null,
+  ].filter((line) => line !== null).join("\n")
+
+  const html = wrapHtml(
+    "Payment status update",
+    `<p style="margin:0 0 4px;color:#555;font-size:14px">Reference <strong>${app.applicationRef}</strong></p>
+    <p style="margin:16px 0;color:#111;font-size:14px;line-height:1.6">Hi ${app.firstName}, your <strong>${paymentLabel}</strong> of <strong>${euros(entry.amountCents)}</strong> is now <strong>${statusLabel}</strong>.</p>
+    <p style="margin:0;color:#111;font-size:14px;line-height:1.6">Your order status is <strong>${orderStatus}</strong>.</p>
+    ${link ? `<p style="margin:20px 0 0"><a href="${link}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your installment plan</a></p>` : ""}`,
+  )
+
+  return sendEmail({ to: app.email, subject, html, text })
+}
+
 export async function sendInstallmentApplicationRejectedEmail(app: InstallmentApplication): Promise<SendResult> {
   const subject = `Update on your installment application — ${app.applicationRef}`
 
