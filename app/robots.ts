@@ -5,7 +5,21 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/checkout", "/admin"],
+      disallow: [
+        "/api/",
+        "/admin",
+        "/*/admin",
+        "/*/account",
+        "/*/cart",
+        "/*/checkout",
+        "/*/installments/apply",
+        "/*/installments/*",
+        "/*/order/*",
+        "/*/search",
+        "/*/sign-in",
+        "/*/sign-up",
+        "/*/track-order",
+      ],
     },
     sitemap: "https://3djools.com/sitemap.xml",
   }
