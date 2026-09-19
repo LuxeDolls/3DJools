@@ -1,5 +1,6 @@
 import { betterAuth } from "better-auth"
 import { pool } from "@/lib/db"
+import { notifyNewCustomer } from "@/lib/notifications/admin"
 
 export const auth = betterAuth({
   database: pool,
@@ -13,6 +14,15 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
+  },
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (createdUser) => {
+          await notifyNewCustomer(createdUser)
+        },
+      },
+    },
   },
   trustedOrigins: [
     ...(process.env.NODE_ENV === "development"
