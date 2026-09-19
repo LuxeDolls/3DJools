@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { formatPrice } from "@/lib/format"
+import { getCryptoCoinOption } from "@/lib/payments/crypto"
+import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 import type { Locale } from "@/lib/i18n/config"
 
 type Method = "bank_transfer" | "crypto"
@@ -25,6 +27,7 @@ export function PaymentInstructionsDialog({
   dict,
   trigger,
   onConfirm,
+  cryptoCoin,
 }: {
   method: Method
   amountCents: number
@@ -45,7 +48,10 @@ export function PaymentInstructionsDialog({
   /** Visible trigger element/label; defaults to a "Show payment details" button. */
   trigger?: React.ReactNode
   onConfirm: () => Promise<{ ok: boolean; error?: string }>
+  /** Coin/network id chosen at checkout (see lib/payments/crypto.ts); defaults to USDT · TRC20. */
+  cryptoCoin?: string
 }) {
+  const coin = getCryptoCoinOption(cryptoCoin)
   const [open, setOpen] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [done, setDone] = useState(false)
@@ -103,23 +109,29 @@ export function PaymentInstructionsDialog({
                   {method === "bank_transfer" ? (
                     <>
                       <div className="flex justify-between gap-4">
+                        <dt className="text-muted-foreground">Name</dt>
+                        <dd className="font-mono text-foreground">{BANK_TRANSFER_ACCOUNT.accountName}</dd>
+                      </div>
+                      <div className="flex justify-between gap-4">
                         <dt className="text-muted-foreground">IBAN</dt>
-                        <dd className="font-mono text-foreground">DE00 0000 0000 0000 0000 00</dd>
+                        <dd className="font-mono text-foreground">{BANK_TRANSFER_ACCOUNT.iban}</dd>
                       </div>
                       <div className="flex justify-between gap-4">
                         <dt className="text-muted-foreground">BIC</dt>
-                        <dd className="font-mono text-foreground">XXXXDEXXXXX</dd>
+                        <dd className="font-mono text-foreground">{BANK_TRANSFER_ACCOUNT.bic}</dd>
                       </div>
                     </>
                   ) : (
                     <>
                       <div className="flex justify-between gap-4">
                         <dt className="text-muted-foreground">{dict.payCryptoNetwork}</dt>
-                        <dd className="font-mono text-foreground">USDT · TRC20</dd>
+                        <dd className="font-mono text-foreground">
+                          {coin.coinLabel} · {coin.network}
+                        </dd>
                       </div>
                       <div className="flex justify-between gap-4">
                         <dt className="text-muted-foreground">{dict.payCryptoAddress}</dt>
-                        <dd className="break-all font-mono text-foreground">TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</dd>
+                        <dd className="break-all font-mono text-foreground">{coin.address}</dd>
                       </div>
                     </>
                   )}

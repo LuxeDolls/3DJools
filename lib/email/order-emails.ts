@@ -1,6 +1,7 @@
 import "server-only"
 
 import { sendEmail, type SendResult } from "@/lib/email/send"
+import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 import type { OrderWithItems } from "@/lib/orders/queries"
 
 function euros(cents: number): string {
@@ -79,7 +80,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     "",
     `Payment: ${paymentLabel}`,
     awaitingPayment && isSepa
-      ? `\nPlease transfer ${euros(order.totalCents)} and include your order number ${order.orderNumber} as the payment reference.\nIBAN: DE00 0000 0000 0000 0000 00\nBIC: XXXXDEXXXXX`
+      ? `\nPlease transfer ${euros(order.totalCents)} and include your order number ${order.orderNumber} as the payment reference.\nName: ${BANK_TRANSFER_ACCOUNT.accountName}\nIBAN: ${BANK_TRANSFER_ACCOUNT.iban}\nBIC: ${BANK_TRANSFER_ACCOUNT.bic}`
       : null,
     awaitingPayment && isCrypto
       ? `\nPlease send the equivalent of ${euros(order.totalCents)} to our wallet and include your order number ${order.orderNumber} in your records.\nNetwork: USDT · TRC20\nAddress: TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`
@@ -112,7 +113,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     awaitingPayment && isSepa
       ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
       <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">Please transfer <strong>${euros(order.totalCents)}</strong> and include your order number <strong>${order.orderNumber}</strong> as the payment reference so we can match your payment.</p>
-      <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">IBAN: DE00 0000 0000 0000 0000 00 · BIC: XXXXDEXXXXX</p>
+        <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">Name: ${BANK_TRANSFER_ACCOUNT.accountName} · IBAN: ${BANK_TRANSFER_ACCOUNT.iban} · BIC: ${BANK_TRANSFER_ACCOUNT.bic}</p>
     </div>`
       : ""
 

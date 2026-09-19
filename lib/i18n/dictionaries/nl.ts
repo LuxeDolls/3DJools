@@ -182,9 +182,10 @@ export const nl: Dictionary = {
     paySepaDesc: "Betaal via IBAN-overschrijving op onze rekening",
     payCrypto: "Cryptovaluta",
     payCryptoDesc: "Bitcoin, Ethereum, USDT en meer",
-    payCryptoNoteTitle: "Walletadres (tijdelijk)",
+    payCryptoNoteTitle: "Walletadres",
     payCryptoNoteText:
-      "We ronden de details voor cryptobetalingen nog af. Stuur na het plaatsen van je bestelling het exacte bedrag naar het onderstaande adres — ons team bevestigt dit handmatig.",
+      "Kies hieronder een munt en stuur na het plaatsen van je bestelling het exacte bedrag naar dat adres — ons team bevestigt dit handmatig.",
+    payCryptoCoin: "Munt",
     payCryptoNetwork: "Netwerk",
     payCryptoAddress: "Adres",
     payInstallments: "In termijnen — 4× in 2 maanden",
