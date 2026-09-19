@@ -11,6 +11,19 @@ type ConversationWithLastMessage = Awaited<ReturnType<typeof listChatConversatio
 
 const POLL_INTERVAL_MS = 5000
 
+function formatChatDate(value: Date | string): string {
+  return new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+    timeZone: "UTC",
+  }).format(new Date(value))
+}
+
 export function ChatInbox({ initialConversations }: { initialConversations: ConversationWithLastMessage[] }) {
   const router = useRouter()
   const [conversations, setConversations] = useState(initialConversations)
@@ -115,7 +128,7 @@ export function ChatInbox({ initialConversations }: { initialConversations: Conv
                     {c.mode === "human" ? "Human" : "AI"}
                   </span>
                   <span>{c.locale.toUpperCase()}</span>
-                  <span>{new Date(c.lastMessageAt).toLocaleString()}</span>
+                  <span title="UTC">{formatChatDate(c.lastMessageAt)}</span>
                 </div>
               </button>
             </li>
