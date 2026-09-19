@@ -67,7 +67,7 @@ export function MessagesInbox({ messages }: { messages: ContactMessageRow[] }) {
                   <p className="truncate font-medium">{m.subject || "(no subject)"}</p>
                 </div>
                 <p className="mt-1 truncate text-xs text-muted-foreground">
-                  {m.name} · {m.email} · <span>{hydrated ? formatMessageDate(m.createdAt) : "—"}</span>
+                  {m.name} · {m.email} · <span suppressHydrationWarning>{hydrated ? formatMessageDate(m.createdAt) : "—"}</span>
                 </p>
               </div>
             </button>
