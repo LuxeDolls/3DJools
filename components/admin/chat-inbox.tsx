@@ -122,7 +122,7 @@ export function ChatInbox({ initialConversations }: { initialConversations: Conv
                     {c.mode === "human" ? "Human" : "AI"}
                   </span>
                   <span>{c.locale.toUpperCase()}</span>
-                  <span title="UTC">{formatChatDate(c.lastMessageAt)}</span>
+                  <span title="UTC" suppressHydrationWarning>{formatChatDate(c.lastMessageAt)}</span>
                 </div>
               </button>
             </li>
