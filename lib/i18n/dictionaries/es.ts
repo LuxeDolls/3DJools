@@ -107,6 +107,9 @@ export const es: Dictionary = {
     saleBannerTitle: "Rebajas de otoño: 10% de descuento en impresoras, escáneres y grabadoras láser",
     saleBannerEndsPrefix: "Termina el",
     saleBannerCta: "Ver las rebajas",
+    scamAdviserRating: "Muy probablemente seguro",
+    scamAdviserText: "Consulta nuestra evaluación independiente y el análisis de seguridad de ScamAdviser.",
+    scamAdviserCta: "Ver evaluación",
   },
   promo: {
     memberEyebrow: "Los miembros ahorran más",
@@ -247,6 +250,8 @@ export const es: Dictionary = {
     companyBlurb: "Tu tienda europea de impresoras 3D, filamento y accesorios de las marcas en las que confían los makers.",
     companyNumber: "N.º de empresa",
     vatId: "NIF/IVA",
+    scamAdviserBadge: "Muy probablemente seguro",
+    scamAdviserLink: "Ver 3DJools en ScamAdviser",
     hoursNote: "Lun–Vie, 9:00–18:00 CET · Los pedidos se procesan y envían en un plazo de 48 horas · Respondemos en un plazo de 48 horas",
   },
   contact: {

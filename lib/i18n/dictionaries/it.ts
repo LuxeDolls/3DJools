@@ -107,6 +107,9 @@ export const it: Dictionary = {
     saleBannerTitle: "Saldi d'autunno: 10% di sconto su stampanti, scanner e incisori laser",
     saleBannerEndsPrefix: "Termina il",
     saleBannerCta: "Vai ai saldi",
+    scamAdviserRating: "Molto probabilmente sicuro",
+    scamAdviserText: "Scopri la nostra valutazione indipendente e l’analisi di sicurezza di ScamAdviser.",
+    scamAdviserCta: "Vedi la valutazione",
   },
   promo: {
     memberEyebrow: "I membri risparmiano di più",
@@ -248,6 +251,8 @@ export const it: Dictionary = {
     companyNumber: "N. società",
     vatId: "P. IVA",
     hoursNote: "Lun–Ven, 9:00–18:00 CET · Ordini elaborati e spediti entro 48 ore · Rispondiamo entro 48 ore",
+    scamAdviserBadge: "Molto probabilmente sicuro",
+    scamAdviserLink: "Vedi 3DJools su ScamAdviser",
   },
   contact: {
     title: "Contattaci",

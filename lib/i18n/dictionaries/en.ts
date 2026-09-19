@@ -105,6 +105,9 @@ export const en = {
     saleBannerTitle: "Autumn sale: 10% off printers, scanners & laser engravers",
     saleBannerEndsPrefix: "Ends",
     saleBannerCta: "Shop the sale",
+    scamAdviserRating: "Very likely safe",
+    scamAdviserText: "See our independent ScamAdviser review and website safety analysis.",
+    scamAdviserCta: "View review",
   },
   promo: {
     memberEyebrow: "Members save more",
@@ -246,6 +249,8 @@ export const en = {
     companyNumber: "Company No.",
     vatId: "VAT",
     hoursNote: "Mon–Fri, 9:00–18:00 CET · Orders processed & dispatched within 48 hours · We reply within 48 hours",
+    scamAdviserBadge: "Very likely safe",
+    scamAdviserLink: "View 3DJools on ScamAdviser",
   },
   contact: {
     title: "Contact us",

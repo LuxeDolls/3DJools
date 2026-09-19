@@ -65,8 +65,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
       </ProseSection>
       <ProseSection heading="6. Right of withdrawal">
         <p>
-          Consumers have a statutory 14-day right of withdrawal as described in our returns policy, which forms part of
-          these terms.
+          Consumers have a statutory 14-day right of withdrawal, which 3DJools voluntarily extends to a 30-day return
+          policy as described in our returns policy, which forms part of these terms.
         </p>
       </ProseSection>
       <ProseSection heading="7. Warranty & liability">

@@ -37,7 +37,7 @@ const faqGroups = [
       {
         question: "What is your return policy?",
         answer:
-          "As an EU consumer you can withdraw from your purchase within 14 days of receiving your goods, without giving a reason. Once we receive and inspect the return, we refund you within 14 days.",
+          "We offer a 30-day return policy — well beyond the EU statutory 14-day minimum. Once we receive and inspect the return, we refund you within 7 working days.",
       },
       {
         question: "Who pays for return shipping?",
