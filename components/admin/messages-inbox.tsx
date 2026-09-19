@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { setMessageStatus } from "@/lib/actions/admin"
 import { Button } from "@/components/ui/button"
@@ -23,6 +23,11 @@ export function MessagesInbox({ messages }: { messages: ContactMessageRow[] }) {
   const router = useRouter()
   const [open, setOpen] = useState<string | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
+  const [hydrated, setHydrated] = useState(false)
+
+  useEffect(() => {
+    setHydrated(true)
+  }, [])
 
   async function mark(id: string, status: ContactStatus) {
     setBusy(id)
@@ -62,7 +67,7 @@ export function MessagesInbox({ messages }: { messages: ContactMessageRow[] }) {
                   <p className="truncate font-medium">{m.subject || "(no subject)"}</p>
                 </div>
                 <p className="mt-1 truncate text-xs text-muted-foreground">
-                  {m.name} · {m.email} · <span suppressHydrationWarning>{formatMessageDate(m.createdAt)}</span>
+                  {m.name} · {m.email} · <span>{hydrated ? formatMessageDate(m.createdAt) : "—"}</span>
                 </p>
               </div>
             </button>
