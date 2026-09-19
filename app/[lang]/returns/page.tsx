@@ -29,11 +29,12 @@ export default async function ReturnsPage({ params }: { params: Promise<{ lang: 
         </p>
       </ProseSection>
 
-      <ProseSection heading="14-day right of withdrawal">
+      <ProseSection heading="30-day return policy">
         <p>
-          As a consumer in the EU you have the right to withdraw from your purchase within 14 days of receiving your
-          goods, without giving any reason, in line with EU consumer protection law. To exercise this right, contact us
-          with your order reference and we&apos;ll guide you through the return.
+          As a consumer in the EU you have a statutory right to withdraw from your purchase within 14 days of
+          receiving your goods, without giving any reason, in line with EU consumer protection law. 3DJools
+          voluntarily extends this window: you can return most items within 30 days of receiving your goods. To
+          exercise this right, contact us with your order reference and we&apos;ll guide you through the return.
         </p>
       </ProseSection>
 
@@ -41,14 +42,14 @@ export default async function ReturnsPage({ params }: { params: Promise<{ lang: 
         <p>
           Items must be returned in their original condition and packaging to: Ln-Squared (3DJools returns), Rue
           du Chénia 17, 7170 Manage, Hainaut, Belgium. Once we receive and inspect the return, we&apos;ll
-          issue a refund to your original payment method within 14 days. For instalment and bank-transfer orders,
-          refunds are made to the account used for payment.
+          issue a refund to your original payment method within 7 working days. For instalment and bank-transfer
+          orders, refunds are made to the account used for payment.
         </p>
       </ProseSection>
 
       <ProseSection heading="Who pays for return shipping">
         <p>
-          If you are withdrawing from your purchase within the 14-day period simply because you changed your mind, you
+          If you are returning an item within the 30-day period simply because you changed your mind, you
           are responsible for the direct cost of returning the item to us — we recommend using a tracked shipping
           service. If your order arrived damaged, faulty or incorrect, we cover the return shipping cost in full; see
           &quot;Damaged or faulty on arrival&quot; below.

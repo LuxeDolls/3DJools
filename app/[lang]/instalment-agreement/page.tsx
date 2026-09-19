@@ -76,9 +76,9 @@ export default async function InstalmentAgreementPage({ params }: { params: Prom
 
       <ProseSection heading="6. Right of withdrawal">
         <p>
-          The Buyer has a statutory right of withdrawal of 14 days in accordance with EU consumer law, as further
-          described in our returns policy. Amounts already paid under this Agreement are refunded according to that
-          policy if the Buyer exercises this right.
+          The Buyer has a statutory right of withdrawal of 14 days in accordance with EU consumer law, which 3DJools
+          voluntarily extends to a 30-day return policy as further described in our returns policy. Amounts already
+          paid under this Agreement are refunded within 7 working days if the Buyer exercises this right.
         </p>
       </ProseSection>
 

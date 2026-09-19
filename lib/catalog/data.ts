@@ -1,7 +1,7 @@
 import type { Brand, Category, Product } from "./types"
 
 export const brands: Brand[] = [
-  { slug: "bambu-lab", name: "Bambu Lab", blurb: "Fast, reliable CoreXY printers with best-in-class auto-calibration.", country: "CN" },
+  { slug: "bambu-lab", name: "Bambu Lab", blurb: "Fast, reliable CoreXY printers with automatic calibration.", country: "CN" },
   { slug: "creality", name: "Creality", blurb: "The most popular budget FDM printers worldwide.", country: "CN" },
   { slug: "prusa", name: "Prusa", blurb: "Open-source workhorses engineered and made in the EU.", country: "CZ" },
   { slug: "anycubic", name: "Anycubic", blurb: "Affordable FDM and high-detail resin machines.", country: "CN" },
@@ -231,9 +231,9 @@ export const products: Product[] = [
     condition: "new",
     mpn: "ENDER3-V3-SE",
     gtin: "6971636405201",
-    shortDescription: "The best-value entry FDM printer with auto-levelling and direct drive.",
-    description:
-      "The Ender-3 V3 SE modernises the world's most popular printer line with CR Touch automatic bed levelling, a Sprite direct-drive extruder and 250 mm/s speeds — all at an unbeatable entry price. A filament runout sensor pauses the job if a spool runs dry, and the open aluminium-extrusion frame keeps maintenance and upgrades simple for first-time owners learning the FDM process.",
+  shortDescription: "An affordable entry FDM printer with auto-levelling and direct drive.",
+  description:
+    "The Ender-3 V3 SE modernises the world's most popular printer line with CR Touch automatic bed levelling, a Sprite direct-drive extruder and 250 mm/s speeds — all at an accessible entry price. A filament runout sensor pauses the job if a spool runs dry, and the open aluminium-extrusion frame keeps maintenance and upgrades simple for first-time owners learning the FDM process.",
     highlights: [
       "Auto bed levelling",
       "Sprite direct drive",
