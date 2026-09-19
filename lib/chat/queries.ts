@@ -89,11 +89,21 @@ export async function listConversationsForAdmin() {
         .where(and(eq(chatMessages.conversationId, c.id)))
         .orderBy(desc(chatMessages.createdAt))
         .limit(1)
-      return { ...c, lastMessage: last[0] ?? null }
+      const userMessages = await db
+        .select({ id: chatMessages.id })
+        .from(chatMessages)
+        .where(and(eq(chatMessages.conversationId, c.id), eq(chatMessages.role, "user")))
+        .limit(1)
+
+      return {
+        ...c,
+        lastMessage: last[0] ?? null,
+        hasUserMessage: userMessages.length > 0,
+      }
     }),
   )
 
-  return withLastMessage.filter((conversation) => conversation.lastMessage !== null)
+  return withLastMessage.filter((conversation) => conversation.hasUserMessage)
 }
 
 export async function getUnreadConversationCount(): Promise<number> {
