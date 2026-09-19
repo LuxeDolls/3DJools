@@ -12,6 +12,13 @@ const STATUS_STYLE: Record<ContactStatus, string> = {
   resolved: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400",
 }
 
+function formatMessageDate(value: Date | string): string {
+  const date = new Date(value)
+  const pad = (part: number) => String(part).padStart(2, "0")
+
+  return `${pad(date.getUTCDate())}.${pad(date.getUTCMonth() + 1)}.${date.getUTCFullYear()}, ${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`
+}
+
 export function MessagesInbox({ messages }: { messages: ContactMessageRow[] }) {
   const router = useRouter()
   const [open, setOpen] = useState<string | null>(null)
@@ -55,7 +62,7 @@ export function MessagesInbox({ messages }: { messages: ContactMessageRow[] }) {
                   <p className="truncate font-medium">{m.subject || "(no subject)"}</p>
                 </div>
                 <p className="mt-1 truncate text-xs text-muted-foreground">
-                  {m.name} · {m.email} · {new Date(m.createdAt).toLocaleString()}
+                  {m.name} · {m.email} · {formatMessageDate(m.createdAt)}
                 </p>
               </div>
             </button>
