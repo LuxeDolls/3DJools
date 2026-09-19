@@ -12,23 +12,26 @@ type SendEmailInput = {
 
 export type SendResult = { sent: boolean; skipped?: boolean; error?: string }
 
-const smtpUser = "info@3djools.com"
+const smtpUser = process.env.ZOHO_SMTP_USER ?? "info@3djools.com"
+const smtpHost = process.env.ZOHO_SMTP_HOST ?? "smtp.zoho.eu"
+const smtpPort = Number(process.env.ZOHO_SMTP_PORT ?? "465")
+const smtpPassword = process.env.ZOHO_SMTP_PASSWORD
 
 const transporter = nodemailer.createTransport({
-  host: "smtp.titan.email",
-  port: 465,
-  secure: true,
+  host: smtpHost,
+  port: smtpPort,
+  secure: smtpPort === 465,
   auth: {
     user: smtpUser,
-    pass: process.env.TITAN_SMTP_PASSWORD,
+    pass: smtpPassword,
   },
   connectionTimeout: 10_000,
   socketTimeout: 20_000,
 })
 
 export async function sendEmail({ to, subject, html, text, replyTo }: SendEmailInput): Promise<SendResult> {
-  if (!process.env.TITAN_SMTP_PASSWORD) {
-    console.error("[v0] Email skipped because TITAN_SMTP_PASSWORD is not configured")
+  if (!smtpPassword) {
+    console.error("[v0] Email skipped because ZOHO_SMTP_PASSWORD is not configured")
     return { sent: false, skipped: true }
   }
 
@@ -44,7 +47,7 @@ export async function sendEmail({ to, subject, html, text, replyTo }: SendEmailI
 
     return { sent: true }
   } catch (err) {
-    console.error("[v0] Titan SMTP send failed:", err)
+    console.error("[v0] Zoho SMTP send failed:", err)
     return { sent: false, error: err instanceof Error ? err.message : "Unknown error" }
   }
 }

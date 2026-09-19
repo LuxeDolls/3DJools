@@ -38,7 +38,7 @@ function escapeHtml(value: string): string {
 
 /**
  * Persists a contact form submission to the admin inbox and sends a
- * notification through Titan Mail. Persistence remains the source of truth
+ * notification through the configured Zoho SMTP account. Persistence remains the source of truth
  * if SMTP is temporarily unavailable.
  */
 export async function submitContactMessage(input: ContactInput): Promise<ContactResult> {
