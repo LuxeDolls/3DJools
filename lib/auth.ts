@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth"
 import { pool } from "@/lib/db"
 import { notifyNewCustomer } from "@/lib/notifications/admin"
+import { sendWelcomeEmail } from "@/lib/email/auth-emails"
 
 export const auth = betterAuth({
   database: pool,
@@ -19,7 +20,10 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (createdUser) => {
-          await notifyNewCustomer(createdUser)
+          await Promise.allSettled([
+            notifyNewCustomer(createdUser),
+            sendWelcomeEmail(createdUser),
+          ])
         },
       },
     },
