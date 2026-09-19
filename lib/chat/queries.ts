@@ -12,6 +12,17 @@ import {
 } from "@/lib/db/schema"
 
 /** Find an existing conversation for this visitor, or create a fresh one. */
+export async function findConversation(visitorId: string): Promise<ChatConversationRow | null> {
+  const existing = await db
+    .select()
+    .from(chatConversations)
+    .where(eq(chatConversations.visitorId, visitorId))
+    .orderBy(desc(chatConversations.createdAt))
+    .limit(1)
+
+  return existing[0] ?? null
+}
+
 export async function getOrCreateConversation(visitorId: string, locale: string): Promise<ChatConversationRow> {
   const existing = await db
     .select()
@@ -82,12 +93,17 @@ export async function listConversationsForAdmin() {
     }),
   )
 
-  return withLastMessage
+  return withLastMessage.filter((conversation) => conversation.lastMessage !== null)
 }
 
 export async function getUnreadConversationCount(): Promise<number> {
-  const rows = await db.select().from(chatConversations).where(eq(chatConversations.unreadForAdmin, true))
-  return rows.length
+  const rows = await db
+    .select({ conversationId: chatConversations.id })
+    .from(chatConversations)
+    .innerJoin(chatMessages, eq(chatMessages.conversationId, chatConversations.id))
+    .where(eq(chatConversations.unreadForAdmin, true))
+
+  return new Set(rows.map((row) => row.conversationId)).size
 }
 
 export async function setConversationMode(conversationId: string, mode: ChatMode): Promise<void> {
