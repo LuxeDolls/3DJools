@@ -11,6 +11,7 @@ import {
   type OrderStatus,
 } from "@/lib/db/schema"
 import { notifyNewOrder, notifyOrderStatusChange } from "@/lib/notifications/admin"
+import { sendOrderStatusUpdateEmail } from "@/lib/email/order-emails"
 
 export type OrderWithItems = OrderRow & { items: OrderItemRow[] }
 
@@ -146,6 +147,9 @@ export async function updateOrderStatus(orderId: string, status: OrderStatus): P
     void notifyOrderStatusChange(updated, previous.status).catch((error) => {
       console.error("[v0] Order-status admin notification failed:", error)
     })
+    void sendOrderStatusUpdateEmail(updated, previous.status).catch((error) => {
+      console.error("[v0] Order-status customer email failed:", error)
+    })
   }
 }
 
@@ -172,6 +176,9 @@ export async function updateOrderTracking(orderId: string, tracking: TrackingInp
   if (updated && previous && previous.status !== updated.status) {
     void notifyOrderStatusChange(updated, previous.status).catch((error) => {
       console.error("[v0] Shipment admin notification failed:", error)
+    })
+    void sendOrderStatusUpdateEmail(updated, previous.status).catch((error) => {
+      console.error("[v0] Shipment customer email failed:", error)
     })
   }
   return updated

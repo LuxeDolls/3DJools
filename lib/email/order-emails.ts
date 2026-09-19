@@ -155,6 +155,51 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
  * Notify the customer that their order has shipped, including the carrier,
  * tracking number and a tracking link. Safe no-op until Resend is configured.
  */
+const ORDER_STATUS_LABELS: Record<string, string> = {
+  pending: "Pending",
+  awaiting_payment: "Awaiting payment",
+  reviewing_payment: "Payment under review",
+  paid: "Paid",
+  processing: "Processing",
+  shipped: "Shipped",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
+}
+
+export async function sendOrderStatusUpdateEmail(
+  order: OrderWithItems,
+  previousStatus: string,
+): Promise<SendResult> {
+  const base = siteUrl()
+  const orderLink = base ? `${base}/en/order/${order.orderNumber}` : ""
+  const previousLabel = ORDER_STATUS_LABELS[previousStatus] ?? previousStatus
+  const statusLabel = ORDER_STATUS_LABELS[order.status] ?? order.status
+  const subject = `Your 3DJools order ${order.orderNumber} is now ${statusLabel}`
+  const text = [
+    `Your order ${order.orderNumber} has been updated.`,
+    `Status: ${previousLabel} → ${statusLabel}`,
+    `Order total: ${euros(order.totalCents)}`,
+    order.trackingNumber ? `Tracking number: ${order.trackingNumber}` : null,
+    order.trackingUrl ? `Track your parcel: ${order.trackingUrl}` : null,
+    orderLink ? `\nView your order: ${orderLink}` : null,
+  ]
+    .filter((line) => line !== null)
+    .join("\n")
+
+  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
+<div style="max-width:560px;margin:0 auto;padding:24px"><div style="background:#fff;border-radius:12px;padding:32px">
+<h1 style="margin:0 0 8px;font-size:20px;color:#111">Your order has been updated</h1>
+<p style="margin:0 0 8px;color:#555;font-size:14px">Order <strong>${order.orderNumber}</strong></p>
+<p style="margin:0;color:#111;font-size:15px;line-height:1.6">Status: <strong>${previousLabel}</strong> → <strong>${statusLabel}</strong></p>
+${order.trackingNumber ? `<p style="margin:16px 0 0;color:#111;font-size:14px">Tracking number: ${order.trackingNumber}</p>` : ""}
+${order.trackingUrl ? `<p style="margin:12px 0 0"><a href="${order.trackingUrl}" style="color:#111">Track your parcel</a></p>` : ""}
+${orderLink ? `<p style="margin:20px 0 0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
+</div><p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p></div>
+</body></html>`
+
+  return sendEmail({ to: order.email, subject, html, text })
+}
+
 export async function sendOrderShippedEmail(order: OrderWithItems): Promise<SendResult> {
   const base = siteUrl()
   const orderLink = base ? `${base}/en/order/${order.orderNumber}` : ""
