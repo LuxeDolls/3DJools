@@ -13,7 +13,6 @@ import {
 import { createAdminSession, destroyAdminSession, isAdmin, verifyPassword } from "@/lib/admin-auth"
 import { updateMessageStatus } from "@/lib/contact/queries"
 import { getOrderById, updateOrderStatus, updateOrderTracking } from "@/lib/orders/queries"
-import { sendOrderShippedEmail } from "@/lib/email/order-emails"
 import {
   sendInstallmentApplicationApprovedEmail,
   sendInstallmentApplicationRejectedEmail,
@@ -380,10 +379,6 @@ export async function setOrderTracking(
     trackingUrl,
     carrier: input.carrier?.trim() || undefined,
   })
-
-  if (order) {
-    await sendOrderShippedEmail(order)
-  }
 
   revalidatePath("/admin/orders")
   revalidatePath(`/admin/orders/${orderId}`)

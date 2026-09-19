@@ -5,7 +5,6 @@ import { installmentApplications, type ApplicationCartItem, type NewOrderItemRow
 import { getProductBySlug } from "@/lib/catalog"
 import { buildSchedule, computeInstallmentAmounts, generateApplicationRef, qualifiesForInstallments } from "@/lib/installments"
 import { createOrder, getOrderById, updateOrderStatus } from "@/lib/orders/queries"
-import { sendPaymentUnderReviewEmail } from "@/lib/email/order-emails"
 import { sendInstallmentApplicationReceivedEmail } from "@/lib/email/installment-emails"
 import { notifyInstallmentApplication, notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { desc, eq } from "drizzle-orm"
@@ -227,7 +226,6 @@ export async function markInstallmentPaymentSubmitted(
         void notifyPaymentSubmitted({ ...order, status: "reviewing_payment" }).catch((error) => {
           console.error("[v0] Installment payment-submitted admin notification failed:", error)
         })
-        await sendPaymentUnderReviewEmail(order)
       }
     } catch (err) {
       console.error("[v0] Installment payment-under-review email failed:", err)

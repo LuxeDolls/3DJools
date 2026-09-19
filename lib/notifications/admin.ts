@@ -36,19 +36,24 @@ function linesToHtml(lines: string[]): string {
   return lines.map((line) => (line ? `<p style="margin:0 0 8px;color:#222">${escapeHtml(line)}</p>` : "<br>")).join("")
 }
 
-async function notifyAdmin(notification: AdminNotification): Promise<void> {
-  await Promise.allSettled([
+async function notifyAdmin(notification: AdminNotification, sendTelegram = true): Promise<void> {
+  const deliveries: Promise<unknown>[] = [
     sendEmail({
       to: adminEmail,
       subject: notification.subject,
       text: notification.text,
       html: `<h1 style="font-family:Arial,sans-serif">${escapeHtml(notification.title)}</h1><div style="font-family:Arial,sans-serif;line-height:1.5">${notification.html}</div>`,
     }),
-    sendTelegramNotification(`${notification.title}\n\n${notification.text}`),
-  ])
+  ]
+
+  if (sendTelegram) {
+    deliveries.push(sendTelegramNotification(`${notification.title}\n\n${notification.text}`))
+  }
+
+  await Promise.allSettled(deliveries)
 }
 
-async function sendTelegramNotification(text: string): Promise<void> {
+export async function sendTelegramNotification(text: string): Promise<void> {
   if (!telegramChatId) {
     console.warn("[v0] Telegram admin notification skipped: TELEGRAM_CHAT_ID is not configured")
     return
@@ -147,7 +152,7 @@ export async function notifyOrderStatusChange(
     title: "Order or payment status changed",
     text: lines.join("\n"),
     html: linesToHtml(lines),
-  })
+  }, false)
 }
 
 export async function notifyPaymentSubmitted(order: OrderWithItems): Promise<void> {
@@ -187,5 +192,5 @@ export async function notifyInstallmentApplication(application: {
     title: "New instalment application",
     text: lines.join("\n"),
     html: linesToHtml(lines),
-  })
+  }, false)
 }

@@ -4,7 +4,7 @@ import { headers } from "next/headers"
 import { auth } from "@/lib/auth"
 import { getProductBySlug } from "@/lib/catalog"
 import { createOrder, getOrderByOrderNumber, updateOrderStatus } from "@/lib/orders/queries"
-import { sendOrderConfirmationEmail, sendPaymentUnderReviewEmail } from "@/lib/email/order-emails"
+import { sendOrderConfirmationEmail } from "@/lib/email/order-emails"
 import { notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
@@ -187,10 +187,5 @@ export async function markOrderPaidByCustomer(orderNumber: string): Promise<Mark
   void notifyPaymentSubmitted({ ...order, status: "reviewing_payment" }).catch((err) => {
     console.error("[v0] Payment-submitted admin notification failed:", err)
   })
-  try {
-    await sendPaymentUnderReviewEmail(order)
-  } catch (err) {
-    console.error("[v0] Payment-under-review email failed:", err)
-  }
   return { ok: true }
 }
