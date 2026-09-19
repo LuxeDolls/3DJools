@@ -12,16 +12,10 @@ type ConversationWithLastMessage = Awaited<ReturnType<typeof listChatConversatio
 const POLL_INTERVAL_MS = 5000
 
 function formatChatDate(value: Date | string): string {
-  return new Intl.DateTimeFormat("en-GB", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-    timeZone: "UTC",
-  }).format(new Date(value))
+  const date = new Date(value)
+  const pad = (part: number) => String(part).padStart(2, "0")
+
+  return `${pad(date.getUTCDate())}.${pad(date.getUTCMonth() + 1)}.${date.getUTCFullYear()}, ${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}:${pad(date.getUTCSeconds())}`
 }
 
 export function ChatInbox({ initialConversations }: { initialConversations: ConversationWithLastMessage[] }) {
