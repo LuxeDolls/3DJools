@@ -1,6 +1,7 @@
 import "server-only"
 
 import { sendEmail } from "@/lib/email/send"
+import { sendTelegramNotification } from "@/lib/notifications/admin"
 
 type NewLiveChatVisitor = {
   conversationId: string
@@ -35,5 +36,8 @@ export async function notifyNewLiveChatVisitor(input: NewLiveChatVisitor): Promi
   ].join("\n")
   const html = `<h1 style="font-family:Arial,sans-serif">New live chat visitor</h1><div style="font-family:Arial,sans-serif;line-height:1.5"><p>Conversation: ${escapeHtml(input.conversationId)}</p><p>Visitor: ${escapeHtml(input.visitorId)}</p><p>Locale: ${escapeHtml(input.locale)}</p><p><strong>First message:</strong></p><p style="white-space:pre-wrap">${escapeHtml(input.message)}</p></div>`
 
-  await sendEmail({ to: "info@3djools.com", subject, text, html })
+  await Promise.allSettled([
+    sendEmail({ to: "info@3djools.com", subject, text, html }),
+    sendTelegramNotification(text),
+  ])
 }

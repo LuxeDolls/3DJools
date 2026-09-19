@@ -53,7 +53,7 @@ async function notifyAdmin(notification: AdminNotification, sendTelegram = true)
   await Promise.allSettled(deliveries)
 }
 
-async function sendTelegramNotification(text: string): Promise<void> {
+export async function sendTelegramNotification(text: string): Promise<void> {
   if (!telegramChatId) {
     console.warn("[v0] Telegram admin notification skipped: TELEGRAM_CHAT_ID is not configured")
     return
