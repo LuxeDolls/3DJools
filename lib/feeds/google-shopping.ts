@@ -50,7 +50,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
       <g:availability>${availability(product.availability)}</g:availability>${salePrice}
       <g:brand>${escapeXml(brand)}</g:brand>
       <g:mpn>${escapeXml(fullMpn)}</g:mpn>
-      ${gtin ? `<g:gtin>${escapeXml(gtin)}</g:gtin>` : "<g:identifier_exists>no</g:identifier_exists>"}
+      ${gtin ? `<g:gtin>${escapeXml(gtin)}</g:gtin>` : ""}
       <g:condition>new</g:condition>
       <g:product_type>${escapeXml(product.category)}</g:product_type>
       <g:custom_label_0>${STORE_NAME}</g:custom_label_0>
