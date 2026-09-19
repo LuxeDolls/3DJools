@@ -107,6 +107,9 @@ export const nl: Dictionary = {
     saleBannerTitle: "Herfstuitverkoop: 10% korting op printers, scanners & lasergraveermachines",
     saleBannerEndsPrefix: "Eindigt op",
     saleBannerCta: "Naar de uitverkoop",
+    scamAdviserRating: "Zeer waarschijnlijk veilig",
+    scamAdviserText: "Bekijk onze onafhankelijke ScamAdviser-beoordeling en veiligheidsanalyse.",
+    scamAdviserCta: "Beoordeling bekijken",
   },
   promo: {
     memberEyebrow: "Leden besparen meer",
@@ -247,6 +250,8 @@ export const nl: Dictionary = {
     companyBlurb: "Jouw Europese winkel voor 3D-printers, filament en accessoires van de merken die makers vertrouwen.",
     companyNumber: "KvK-nummer",
     vatId: "Btw-nummer",
+    scamAdviserBadge: "Zeer waarschijnlijk veilig",
+    scamAdviserLink: "Bekijk 3DJools op ScamAdviser",
     hoursNote: "Ma–Vr, 9:00–18:00 CET · Bestellingen worden binnen 48 uur verwerkt & verzonden · We reageren binnen 48 uur",
   },
   contact: {

@@ -4,6 +4,7 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Logo } from "./logo"
+import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 
 export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const lp = (p: string) => localizedPath(locale, p)
@@ -72,6 +73,9 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           <div className="mt-2 flex items-start gap-2 text-sm text-muted-foreground">
             <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
             <span>{dict.footer.hoursNote}</span>
+          </div>
+          <div className="mt-5">
+            <ScamAdviserTrust dict={dict} compact />
           </div>
           <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
             Ln-Squared · Rue du Chénia 17, 7170 Manage, Hainaut, Belgium

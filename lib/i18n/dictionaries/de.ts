@@ -107,6 +107,9 @@ export const de: Dictionary = {
     saleBannerTitle: "Herbst-Sale: 10% Rabatt auf Drucker, Scanner & Lasergravierer",
     saleBannerEndsPrefix: "Endet am",
     saleBannerCta: "Zum Sale",
+    scamAdviserRating: "Sehr wahrscheinlich sicher",
+    scamAdviserText: "Sieh dir unsere unabhängige ScamAdviser-Bewertung und Sicherheitsanalyse an.",
+    scamAdviserCta: "Bewertung ansehen",
   },
   promo: {
     memberEyebrow: "Mitglieder sparen mehr",
@@ -247,6 +250,8 @@ export const de: Dictionary = {
     companyBlurb: "Dein europäischer Shop für 3D-Drucker, Filament und Zubehör der Marken, denen Maker vertrauen.",
     companyNumber: "Unternehmensnr.",
     vatId: "USt-IdNr.",
+    scamAdviserBadge: "Sehr wahrscheinlich sicher",
+    scamAdviserLink: "3DJools auf ScamAdviser ansehen",
     hoursNote: "Mo��Fr, 9:00–18:00 MEZ · Bestellungen werden innerhalb von 48 Stunden bearbeitet & versandt · Wir antworten innerhalb von 48 Stunden",
   },
   contact: {

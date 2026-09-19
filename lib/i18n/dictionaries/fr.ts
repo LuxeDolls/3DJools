@@ -107,6 +107,9 @@ export const fr: Dictionary = {
     saleBannerTitle: "Soldes d'automne : 10 % de réduction sur les imprimantes, scanners et graveurs laser",
     saleBannerEndsPrefix: "Se termine le",
     saleBannerCta: "Voir les soldes",
+    scamAdviserRating: "Très probablement sûr",
+    scamAdviserText: "Consultez notre évaluation indépendante et l’analyse de sécurité ScamAdviser.",
+    scamAdviserCta: "Voir l’évaluation",
   },
   promo: {
     memberEyebrow: "Les membres économisent plus",
@@ -248,6 +251,8 @@ export const fr: Dictionary = {
     companyNumber: "N° d'entreprise",
     vatId: "TVA",
     hoursNote: "Lun–Ven, 9h–18h CET · Commandes traitées et expédiées sous 48 heures · Nous répondons sous 48 heures",
+    scamAdviserBadge: "Très probablement sûr",
+    scamAdviserLink: "Voir 3DJools sur ScamAdviser",
   },
   contact: {
     title: "Nous contacter",

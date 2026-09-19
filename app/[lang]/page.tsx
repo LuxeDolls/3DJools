@@ -9,6 +9,7 @@ import { CategoryTiles } from "@/components/home/category-tiles"
 import { BrandStrip } from "@/components/home/brand-strip"
 import { MemberPromo } from "@/components/home/member-promo"
 import { Newsletter } from "@/components/home/newsletter"
+import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 import { SectionHeading } from "@/components/section-heading"
 import { ProductGrid } from "@/components/product/product-grid"
 
@@ -52,6 +53,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       </section>
 
       <BrandStrip locale={locale} dict={dict} brands={brands} />
+      <ScamAdviserTrust dict={dict} />
       <Newsletter />
     </>
   )
