@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
-import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Info, Lock } from "lucide-react"
+import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useCart } from "@/components/cart/cart-provider"
 import { Button } from "@/components/ui/button"
@@ -256,11 +256,6 @@ export function CheckoutView({ locale }: { locale: Locale }) {
             </div>
           )}
         </section>
-
-        <div className="flex items-start gap-3 rounded-lg border border-accent/40 bg-accent/10 p-4 text-sm text-foreground">
-          <Info className="size-5 shrink-0 text-accent-foreground" />
-          <p>{dict.checkout.demoNotice}</p>
-        </div>
       </div>
 
       {/* Order summary */}

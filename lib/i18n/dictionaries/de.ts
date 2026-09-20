@@ -170,7 +170,6 @@ export const de: Dictionary = {
     shippingMethod: "Versandart",
     paymentMethod: "Zahlungsart",
     placeOrder: "Bestellung aufgeben",
-    demoNotice: "Dies ist eine Vorschau-Kasse. Die Zahlungsabwicklung ist noch nicht aktiv.",
     shippingStandard: "EU-Standardversand",
     shippingStandardDesc: "5–10 Werktage",
     shippingFree: "Kostenloser Standardversand",
