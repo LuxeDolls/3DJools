@@ -38,7 +38,7 @@ function availability(value: string): string {
 }
 
 export async function createGoogleShoppingFeed(locale: Locale): Promise<string> {
-  const products = await getAllProducts(locale)
+  const products = (await getAllProducts(locale)).filter((product) => product.category !== "filaments")
   const items = products.map((product) => {
     const brand = product.brandName ?? product.brandSlug
     const gtin = product.ean ?? product.gtin
