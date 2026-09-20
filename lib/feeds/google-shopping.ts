@@ -4,6 +4,7 @@ import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNAT
 
 const BASE_URL = "https://3djools.com"
 const STORE_NAME = "3DJools"
+const SALE_PRICE_EFFECTIVE_DATE = "2026-09-01T00:00+02:00/2026-09-30T23:59+02:00"
 
 // Shipping is free to every destination, mirrored from lib/shipping/rates.ts (see the Shipping page).
 const SHIPPING_BLOCKS = ALL_SHIPPING_COUNTRIES
@@ -38,7 +39,7 @@ function availability(value: string): string {
 }
 
 export async function createGoogleShoppingFeed(locale: Locale): Promise<string> {
-  const products = await getAllProducts(locale)
+  const products = (await getAllProducts(locale)).filter((product) => product.category !== "filaments")
   const items = products.map((product) => {
     const brand = product.brandName ?? product.brandSlug
     const gtin = product.ean ?? product.gtin
@@ -46,7 +47,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
     const imageLink = absoluteImageUrl(product.images[0])
     const productUrl = `${BASE_URL}/${locale}/product/${encodeURIComponent(product.slug)}`
     const salePrice = product.compareAtCents && product.compareAtCents > product.priceCents
-      ? `\n      <g:sale_price>${formatPrice(product.priceCents)}</g:sale_price>\n      <g:price>${formatPrice(product.compareAtCents)}</g:price>`
+      ? `\n      <g:price>${formatPrice(product.compareAtCents)}</g:price>\n      <g:sale_price>${formatPrice(product.priceCents)}</g:sale_price>\n      <g:sale_price_effective_date>${SALE_PRICE_EFFECTIVE_DATE}</g:sale_price_effective_date>`
       : `\n      <g:price>${formatPrice(product.priceCents)}</g:price>`
 
     return `
