@@ -91,7 +91,7 @@ export const en = {
     shopByBrand: "Shop by brand",
     viewAll: "View all",
     uspShippingTitle: "Fast EU delivery",
-    uspShippingText: "Free over €250. €4.90 within Belgium, €14.99 elsewhere. 5–10 business days.",
+    uspShippingText: "Free shipping on every order, EU-wide. 5–10 business days.",
     uspSupportTitle: "Expert support",
     uspSupportText: "Talk to real 3D printing specialists, before and after you buy.",
     uspWarrantyTitle: "2-year warranty",

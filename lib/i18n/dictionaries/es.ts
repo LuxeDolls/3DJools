@@ -93,7 +93,7 @@ export const es: Dictionary = {
     shopByBrand: "Comprar por marca",
     viewAll: "Ver todo",
     uspShippingTitle: "Entrega rápida en la UE",
-    uspShippingText: "Gratis desde 250 €. 4,90 € en Bélgica, 14,99 € en el resto. 5–10 días laborables.",
+    uspShippingText: "Envío gratis en todos los pedidos, en toda la UE. 5–10 días laborables.",
     uspSupportTitle: "Soporte experto",
     uspSupportText: "Habla con verdaderos especialistas en impresión 3D, antes y después de comprar.",
     uspWarrantyTitle: "2 años de garantía",

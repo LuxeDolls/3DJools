@@ -4,7 +4,6 @@ import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNAT
 
 const BASE_URL = "https://3djools.com"
 const STORE_NAME = "3DJools"
-const SALE_PRICE_EFFECTIVE_DATE = "2026-09-01T00:00+02:00/2026-09-30T23:59+02:00"
 
 // Shipping is free to every destination, mirrored from lib/shipping/rates.ts (see the Shipping page).
 const SHIPPING_BLOCKS = ALL_SHIPPING_COUNTRIES
@@ -46,9 +45,9 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
     const fullMpn = [brand, product.mpn].filter(Boolean).join(" ")
     const imageLink = absoluteImageUrl(product.images[0])
     const productUrl = `${BASE_URL}/${locale}/product/${encodeURIComponent(product.slug)}`
-    const salePrice = product.compareAtCents && product.compareAtCents > product.priceCents
-      ? `\n      <g:price>${formatPrice(product.compareAtCents)}</g:price>\n      <g:sale_price>${formatPrice(product.priceCents)}</g:sale_price>\n      <g:sale_price_effective_date>${SALE_PRICE_EFFECTIVE_DATE}</g:sale_price_effective_date>`
-      : `\n      <g:price>${formatPrice(product.priceCents)}</g:price>`
+    // Only the final (already-discounted) price is ever sent — no g:sale_price /
+    // g:sale_price_effective_date, matching the single-price display on the site.
+    const priceBlock = `\n      <g:price>${formatPrice(product.priceCents)}</g:price>`
 
     return `
     <item>
@@ -57,7 +56,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
       <g:description>${escapeXml(product.shortDescription || product.description)}</g:description>
       <g:link>${escapeXml(productUrl)}</g:link>
       ${imageLink ? `<g:image_link>${escapeXml(imageLink)}</g:image_link>` : ""}
-      <g:availability>${availability(product.availability)}</g:availability>${salePrice}
+      <g:availability>${availability(product.availability)}</g:availability>${priceBlock}
       <g:brand>${escapeXml(brand)}</g:brand>
       <g:mpn>${escapeXml(fullMpn)}</g:mpn>
       ${gtin ? `<g:gtin>${escapeXml(gtin)}</g:gtin>` : ""}

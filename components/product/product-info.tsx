@@ -46,7 +46,7 @@ export function ProductInfo({ product }: { product: Product }) {
       </div>
 
       <div className="mt-5">
-        <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} size="lg" />
+        <Price cents={product.priceCents} locale={locale} size="lg" />
         {installmentsEligible && (
           <p className="mt-1.5 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-muted-foreground">
             <CalendarClock className="size-4 shrink-0 text-primary" />
