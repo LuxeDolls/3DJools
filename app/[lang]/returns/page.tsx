@@ -43,7 +43,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "If your order arrives damaged or faulty, contact us within 48 hours with photos and we'll arrange a free replacement or return at no cost to you.",
     contactHeading: "Contact information",
     contactPre: "For cancellations, returns or refund questions, reach Ln-Squared at",
-    contactMid: ", by phone at +49 30 1234 5678 (Mon–Fri, 9:00–18:00 CET), or by post at",
+    contactMid: ", by phone at +32 460 00 80 70 (Mon–Fri, 9:00–18:00 CET), or by post at",
     contactPost: ".",
   },
   de: {
@@ -67,7 +67,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Kommt Ihre Bestellung beschädigt oder fehlerhaft an, kontaktieren Sie uns innerhalb von 48 Stunden mit Fotos, und wir organisieren einen kostenlosen Ersatz oder eine kostenlose Rücksendung.",
     contactHeading: "Kontaktinformationen",
     contactPre: "Bei Fragen zu Stornierungen, Rückgaben oder Rückerstattungen erreichen Sie Ln-Squared unter",
-    contactMid: ", telefonisch unter +49 30 1234 5678 (Mo–Fr, 9:00–18:00 Uhr MEZ) oder per Post an",
+    contactMid: ", telefonisch unter +32 460 00 80 70 (Mo–Fr, 9:00–18:00 Uhr MEZ) oder per Post an",
     contactPost: ".",
   },
   fr: {
@@ -91,7 +91,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Si votre commande arrive endommagée ou défectueuse, contactez-nous dans les 48 heures avec des photos et nous organiserons un remplacement ou un retour gratuit, sans frais pour vous.",
     contactHeading: "Coordonnées",
     contactPre: "Pour toute question relative aux annulations, retours ou remboursements, contactez Ln-Squared à",
-    contactMid: ", par téléphone au +49 30 1234 5678 (lun.–ven., 9h00–18h00 CET), ou par courrier à",
+    contactMid: ", par téléphone au +32 460 00 80 70 (lun.–ven., 9h00–18h00 CET), ou par courrier à",
     contactPost: ".",
   },
   it: {
@@ -115,7 +115,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Se il tuo ordine arriva danneggiato o difettoso, contattaci entro 48 ore con delle foto e organizzeremo una sostituzione o una restituzione gratuita, senza alcun costo per te.",
     contactHeading: "Informazioni di contatto",
     contactPre: "Per domande su annullamenti, resi o rimborsi, contatta Ln-Squared all'indirizzo",
-    contactMid: ", telefonicamente al +49 30 1234 5678 (lun–ven, 9:00–18:00 CET), oppure per posta a",
+    contactMid: ", telefonicamente al +32 460 00 80 70 (lun–ven, 9:00–18:00 CET), oppure per posta a",
     contactPost: ".",
   },
   es: {
@@ -139,7 +139,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Si su pedido llega dañado o defectuoso, contáctenos dentro de 48 horas con fotos y organizaremos una sustitución o devolución gratuita, sin ningún coste para usted.",
     contactHeading: "Información de contacto",
     contactPre: "Para cancelaciones, devoluciones o preguntas sobre reembolsos, contacte con Ln-Squared en",
-    contactMid: ", por teléfono al +49 30 1234 5678 (lun–vie, 9:00–18:00 CET), o por correo postal a",
+    contactMid: ", por teléfono al +32 460 00 80 70 (lun–vie, 9:00–18:00 CET), o por correo postal a",
     contactPost: ".",
   },
   nl: {
@@ -163,7 +163,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Als uw bestelling beschadigd of defect aankomt, neem dan binnen 48 uur contact met ons op met foto's en wij regelen een gratis vervanging of retour zonder kosten voor u.",
     contactHeading: "Contactgegevens",
     contactPre: "Voor annuleringen, retouren of vragen over terugbetaling kunt u Ln-Squared bereiken via",
-    contactMid: ", telefonisch op +49 30 1234 5678 (ma–vr, 9:00–18:00 uur CET), of per post naar",
+    contactMid: ", telefonisch op +32 460 00 80 70 (ma–vr, 9:00–18:00 uur CET), of per post naar",
     contactPost: ".",
   },
 }

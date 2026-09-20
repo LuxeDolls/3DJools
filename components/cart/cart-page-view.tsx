@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Minus, Plus, Trash2, ShoppingCart, Lock } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
-import { useCart, FREE_SHIPPING_THRESHOLD_CENTS } from "./cart-provider"
+import { useCart } from "./cart-provider"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { formatPrice } from "@/lib/format"
@@ -35,8 +35,6 @@ export function CartPageView({ locale }: { locale: Locale }) {
       </div>
     )
   }
-
-  const freeShipping = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1fr_22rem]">
@@ -106,9 +104,7 @@ export function CartPageView({ locale }: { locale: Locale }) {
           )}
           <div className="flex justify-between">
             <dt className="text-muted-foreground">{dict.cart.shipping}</dt>
-            <dd className="font-medium text-foreground">
-              {freeShipping ? dict.cart.shippingFree : dict.cart.calculatedAtCheckout}
-            </dd>
+            <dd className="font-medium text-foreground">{dict.cart.shippingFree}</dd>
           </div>
         </dl>
         {!isMember && (

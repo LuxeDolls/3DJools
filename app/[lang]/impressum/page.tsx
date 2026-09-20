@@ -226,7 +226,7 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
             info@3djools.com
           </a>
           <br />
-          {t.phoneLabel}: +49 30 1234 5678
+          {t.phoneLabel}: +32 460 00 80 70
         </p>
       </ProseSection>
       <ProseSection heading={t.registrationHeading}>

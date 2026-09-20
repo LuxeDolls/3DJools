@@ -80,7 +80,7 @@ export const it: Dictionary = {
     name: "Nome A–Z",
   },
   home: {
-    heroEyebrow: "Spedizione UE gratuita oltre 250 €",
+    heroEyebrow: "Spedizione gratuita su ogni ordine",
     heroTitle: "Stampanti 3D di alto livello a prezzi che hanno senso",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality e altro — macchine, filamenti e ricambi selezionati, spediti rapidamente in tutta Europa.",
@@ -174,7 +174,7 @@ export const it: Dictionary = {
     shippingStandard: "Spedizione standard UE",
     shippingStandardDesc: "5–10 giorni lavorativi",
     shippingFree: "Spedizione standard gratuita",
-    shippingFreeDesc: "5–10 giorni lavorativi · ordini oltre 250 €",
+    shippingFreeDesc: "5–10 giorni lavorativi · gratuita su ogni ordine",
     payCard: "Carta di credito / debito",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Il pagamento con carta non è al momento disponibile",

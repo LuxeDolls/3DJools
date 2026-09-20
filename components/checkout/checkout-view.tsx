@@ -6,7 +6,7 @@ import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Info, Lock } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
-import { useCart, FREE_SHIPPING_THRESHOLD_CENTS } from "@/components/cart/cart-provider"
+import { useCart } from "@/components/cart/cart-provider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -35,7 +35,6 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const isMember = Boolean(session?.user)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
 
-  const qualifiesFree = subtotalCents >= FREE_SHIPPING_THRESHOLD_CENTS
   const [payment, setPayment] = useState<PaymentId>("sepa")
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Belgium")
@@ -170,8 +169,8 @@ export function CheckoutView({ locale }: { locale: Locale }) {
               selected
               icon={Truck}
               title={dict.checkout.shippingStandard}
-              desc={qualifiesFree ? dict.checkout.shippingFreeDesc : dict.checkout.shippingStandardDesc}
-              trailing={shippingCents === 0 ? dict.cart.shippingFree : formatPrice(shippingCents, locale)}
+              desc={dict.checkout.shippingFreeDesc}
+              trailing={dict.cart.shippingFree}
             />
           </div>
         </section>
