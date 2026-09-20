@@ -93,7 +93,7 @@ export const nl: Dictionary = {
     shopByBrand: "Shop per merk",
     viewAll: "Alles bekijken",
     uspShippingTitle: "Snelle EU-levering",
-    uspShippingText: "Gratis vanaf € 250. € 4,90 binnen België, € 14,99 daarbuiten. 5–10 werkdagen.",
+    uspShippingText: "Gratis verzending op elke bestelling, EU-breed. 5–10 werkdagen.",
     uspSupportTitle: "Deskundige support",
     uspSupportText: "Praat met echte 3D-printspecialisten, voor en na je aankoop.",
     uspWarrantyTitle: "2 jaar garantie",

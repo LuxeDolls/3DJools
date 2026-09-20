@@ -93,7 +93,7 @@ export const de: Dictionary = {
     shopByBrand: "Nach Marke einkaufen",
     viewAll: "Alle ansehen",
     uspShippingTitle: "Schnelle EU-Lieferung",
-    uspShippingText: "Kostenlos ab 250 €. 4,90 € innerhalb Belgiens, 14,99 € überall sonst. 5–10 Werktage.",
+    uspShippingText: "Kostenloser Versand für jede Bestellung, EU-weit. 5–10 Werktage.",
     uspSupportTitle: "Experten-Support",
     uspSupportText: "Sprich mit echten 3D-Druck-Spezialisten, vor und nach dem Kauf.",
     uspWarrantyTitle: "2 Jahre Garantie",
