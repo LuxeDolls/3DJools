@@ -5,10 +5,7 @@ import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNAT
 const BASE_URL = "https://3djools.com"
 const STORE_NAME = "3DJools"
 
-// Flat-rate shipping per destination, mirrored from lib/shipping/rates.ts (see the Shipping page).
-// Note: GMC's per-item <g:shipping> tag cannot express the "free over €250" threshold — that
-// promotion must additionally be configured as a conditional free-shipping rule in the Merchant
-// Center account's Shipping settings using the same countries and threshold.
+// Shipping is free to every destination, mirrored from lib/shipping/rates.ts (see the Shipping page).
 const SHIPPING_BLOCKS = ALL_SHIPPING_COUNTRIES
   .map(({ code }) => {
     const cents = code === DOMESTIC_COUNTRY.code ? DOMESTIC_RATE_CENTS : INTERNATIONAL_RATE_CENTS

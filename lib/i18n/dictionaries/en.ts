@@ -78,7 +78,7 @@ export const en = {
     name: "Name A–Z",
   },
   home: {
-    heroEyebrow: "Free EU shipping over €250",
+    heroEyebrow: "Free shipping on every order",
     heroTitle: "Top-tier 3D printers at prices that make sense",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality and more — handpicked machines, filament and parts, shipped fast across Europe.",
@@ -172,7 +172,7 @@ export const en = {
     shippingStandard: "EU standard shipping",
     shippingStandardDesc: "5–10 business days",
     shippingFree: "Free standard shipping",
-    shippingFreeDesc: "5–10 business days · orders over €250",
+    shippingFreeDesc: "5–10 business days · free on every order",
     payCard: "Credit / debit card",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Card payment is temporarily unavailable",

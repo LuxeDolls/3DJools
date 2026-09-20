@@ -178,7 +178,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
             info@3djools.com
           </a>
           <br />
-          {t.phoneLabel}: +49 30 1234 5678
+          {t.phoneLabel}: +32 460 00 80 70
           <br />
           {t.hoursLabel}: Monday–Friday, 9:00–18:00 CET
         </p>

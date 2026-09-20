@@ -20,7 +20,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
 
   const details = [
     { icon: Mail, label: dict.contact.email_label, value: "info@3djools.com", href: "mailto:info@3djools.com" },
-    { icon: Phone, label: dict.contact.phone_label, value: "+49 30 1234 5678" },
+    { icon: Phone, label: dict.contact.phone_label, value: "+32 460 00 80 70" },
     { icon: Clock, label: dict.contact.hours_label, value: dict.contact.hours },
     {
       icon: MapPin,

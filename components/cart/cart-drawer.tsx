@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
-import { useCart, FREE_SHIPPING_THRESHOLD_CENTS } from "./cart-provider"
+import { useCart } from "./cart-provider"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetFooter } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -14,9 +14,6 @@ export function CartDrawer() {
   const { locale, dict } = useI18n()
   const lp = useLocalizedPath()
   const { lines, subtotalCents, count, isOpen, closeCart, updateQuantity, removeItem } = useCart()
-
-  const remaining = FREE_SHIPPING_THRESHOLD_CENTS - subtotalCents
-  const progress = Math.min(100, (subtotalCents / FREE_SHIPPING_THRESHOLD_CENTS) * 100)
 
   return (
     <Sheet open={isOpen} onOpenChange={(o) => !o && closeCart()}>
@@ -49,16 +46,7 @@ export function CartDrawer() {
         ) : (
           <>
             <div className="border-b border-border bg-secondary/50 px-4 py-3">
-              {remaining > 0 ? (
-                <p className="text-xs text-muted-foreground">
-                  {dict.cart.freeShippingProgress.replace("{amount}", formatPrice(remaining, locale))}
-                </p>
-              ) : (
-                <p className="text-xs font-medium text-primary">{dict.cart.freeShippingReached}</p>
-              )}
-              <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-border">
-                <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${progress}%` }} />
-              </div>
+              <p className="text-xs font-medium text-primary">{dict.cart.freeShippingReached}</p>
             </div>
 
             <ul className="flex-1 divide-y divide-border overflow-y-auto px-4">

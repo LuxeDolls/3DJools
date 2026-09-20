@@ -109,7 +109,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "We may update this privacy policy from time to time to reflect changes in our practices or legal requirements. Material changes will be reflected on this page with an updated \u201clast updated\u201d date.",
     sectionContact: "Contact us",
     contactBefore: "For any question about this policy or your data, contact Ln-Squared at ",
-    contactPhoneLabel: ", by phone at +49 30 1234 5678, or by post at Rue du Chénia 17, 7170 Manage, Hainaut, Belgium.",
+    contactPhoneLabel: ", by phone at +32 460 00 80 70, or by post at Rue du Chénia 17, 7170 Manage, Hainaut, Belgium.",
     contactAfter: "",
   },
   de: {
@@ -174,7 +174,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren, um Änderungen unserer Praktiken oder rechtlicher Anforderungen widerzuspiegeln. Wesentliche Änderungen werden auf dieser Seite mit einem aktualisierten „zuletzt aktualisiert“-Datum angezeigt.",
     sectionContact: "Kontakt",
     contactBefore: "Bei Fragen zu dieser Richtlinie oder Ihren Daten kontaktieren Sie Ln-Squared unter ",
-    contactPhoneLabel: ", telefonisch unter +49 30 1234 5678 oder postalisch unter Rue du Chénia 17, 7170 Manage, Hainaut, Belgien.",
+    contactPhoneLabel: ", telefonisch unter +32 460 00 80 70 oder postalisch unter Rue du Chénia 17, 7170 Manage, Hainaut, Belgien.",
     contactAfter: "",
   },
   fr: {
@@ -239,7 +239,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre pour refléter les changements de nos pratiques ou des exigences légales. Les modifications substantielles seront reflétées sur cette page avec une date de « dernière mise à jour » actualisée.",
     sectionContact: "Nous contacter",
     contactBefore: "Pour toute question concernant cette politique ou vos données, contactez Ln-Squared à ",
-    contactPhoneLabel: ", par téléphone au +49 30 1234 5678, ou par courrier à Rue du Chénia 17, 7170 Manage, Hainaut, Belgique.",
+    contactPhoneLabel: ", par téléphone au +32 460 00 80 70, ou par courrier à Rue du Chénia 17, 7170 Manage, Hainaut, Belgique.",
     contactAfter: "",
   },
   it: {
@@ -304,7 +304,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Potremmo aggiornare questa informativa sulla privacy di tanto in tanto per riflettere modifiche alle nostre pratiche o ai requisiti legali. Le modifiche sostanziali saranno riportate in questa pagina con una data di \u201cultimo aggiornamento\u201d aggiornata.",
     sectionContact: "Contattaci",
     contactBefore: "Per qualsiasi domanda su questa informativa o sui tuoi dati, contatta Ln-Squared all'indirizzo ",
-    contactPhoneLabel: ", per telefono al +49 30 1234 5678, o per posta a Rue du Chénia 17, 7170 Manage, Hainaut, Belgio.",
+    contactPhoneLabel: ", per telefono al +32 460 00 80 70, o per posta a Rue du Chénia 17, 7170 Manage, Hainaut, Belgio.",
     contactAfter: "",
   },
   es: {
@@ -369,7 +369,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Podemos actualizar esta política de privacidad de vez en cuando para reflejar cambios en nuestras prácticas o requisitos legales. Los cambios sustanciales se reflejarán en esta página con una fecha de \u201cúltima actualización\u201d actualizada.",
     sectionContact: "Contáctanos",
     contactBefore: "Para cualquier pregunta sobre esta política o tus datos, contacta con Ln-Squared en ",
-    contactPhoneLabel: ", por teléfono al +49 30 1234 5678, o por correo postal a Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica.",
+    contactPhoneLabel: ", por teléfono al +32 460 00 80 70, o por correo postal a Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica.",
     contactAfter: "",
   },
   nl: {
@@ -434,7 +434,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Wij kunnen dit privacybeleid van tijd tot tijd bijwerken om wijzigingen in onze praktijken of wettelijke vereisten weer te geven. Materiële wijzigingen worden op deze pagina weergegeven met een bijgewerkte datum van \u201claatst bijgewerkt\u201d.",
     sectionContact: "Contact",
     contactBefore: "Voor vragen over dit beleid of uw gegevens, neem contact op met Ln-Squared via ",
-    contactPhoneLabel: ", telefonisch op +49 30 1234 5678, of per post op Rue du Chénia 17, 7170 Manage, Hainaut, België.",
+    contactPhoneLabel: ", telefonisch op +32 460 00 80 70, of per post op Rue du Chénia 17, 7170 Manage, Hainaut, België.",
     contactAfter: "",
   },
 }

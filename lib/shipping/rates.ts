@@ -1,14 +1,10 @@
 // Single source of truth for shipping rates and destinations.
 // Keep this in sync with the values quoted on the Shipping page, FAQ, checkout,
 // and whatever is configured in Google Merchant Center's account-level shipping settings.
-// GMC does not support a "free over X" threshold inside a per-item <g:shipping> feed tag —
-// that must be configured as a conditional/promotion in the Merchant Center account itself
-// using the same numbers below.
+// Shipping is free on every order, to every destination — both rates are 0.
 
-export const FREE_SHIPPING_THRESHOLD_CENTS = 25_000 // €250
-
-export const DOMESTIC_RATE_CENTS = 490 // €4.90 — Belgium
-export const INTERNATIONAL_RATE_CENTS = 1499 // €14.99 — rest of EU + neighbouring countries
+export const DOMESTIC_RATE_CENTS = 0 // Belgium — free shipping
+export const INTERNATIONAL_RATE_CENTS = 0 // rest of EU + neighbouring countries — free shipping
 
 export const DELIVERY_TIME_LABEL = "5–10 working days"
 export const DISPATCH_TIME_LABEL = "within 48 business hours"

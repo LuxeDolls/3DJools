@@ -80,7 +80,7 @@ export const de: Dictionary = {
     name: "Name A–Z",
   },
   home: {
-    heroEyebrow: "Kostenloser EU-Versand ab 250 €",
+    heroEyebrow: "Kostenloser Versand bei jeder Bestellung",
     heroTitle: "Top-3D-Drucker zu Preisen, die Sinn ergeben",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality und mehr — handverlesene Maschinen, Filament und Teile, schnell in ganz Europa geliefert.",
@@ -174,7 +174,7 @@ export const de: Dictionary = {
     shippingStandard: "EU-Standardversand",
     shippingStandardDesc: "5–10 Werktage",
     shippingFree: "Kostenloser Standardversand",
-    shippingFreeDesc: "5–10 Werktage · Bestellungen über 250 €",
+    shippingFreeDesc: "5–10 Werktage · kostenlos bei jeder Bestellung",
     payCard: "Kredit-/Debitkarte",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",

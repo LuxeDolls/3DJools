@@ -80,7 +80,7 @@ export const es: Dictionary = {
     name: "Nombre A–Z",
   },
   home: {
-    heroEyebrow: "Envío gratis en la UE desde 250 €",
+    heroEyebrow: "Envío gratis en todos los pedidos",
     heroTitle: "Impresoras 3D de primer nivel a precios que tienen sentido",
     heroSubtitle:
       "Bambu Lab, Prusa, Creality y más — máquinas, filamento y piezas seleccionadas, con envío rápido por toda Europa.",
@@ -174,7 +174,7 @@ export const es: Dictionary = {
     shippingStandard: "Envío estándar UE",
     shippingStandardDesc: "5–10 días laborables",
     shippingFree: "Envío estándar gratis",
-    shippingFreeDesc: "5–10 días laborables · pedidos de más de 250 €",
+    shippingFreeDesc: "5–10 días laborables · gratis en todos los pedidos",
     payCard: "Tarjeta de crédito / débito",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "El pago con tarjeta no está disponible temporalmente",
@@ -249,7 +249,7 @@ export const es: Dictionary = {
     rights: "Todos los derechos reservados.",
     paymentsSecured: "Pagos seguros y cifrados",
     companyBlurb: "Tu tienda europea de impresoras 3D, filamento y accesorios de las marcas en las que confían los makers.",
-    companyNumber: "N.º de empresa",
+    companyNumber: "N.�� de empresa",
     vatId: "NIF/IVA",
     scamAdviserBadge: "Muy probablemente seguro",
     scamAdviserLink: "Ver 3DJools en ScamAdviser",
