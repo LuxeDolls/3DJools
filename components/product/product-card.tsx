@@ -61,7 +61,7 @@ export function ProductCard({
           <StarRating rating={product.rating} count={product.reviewCount} />
         </div>
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
-          <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} />
+          <Price cents={product.priceCents} locale={locale} />
           <QuickAddButton product={product} label={dict.common.addToCart} />
         </div>
       </div>
