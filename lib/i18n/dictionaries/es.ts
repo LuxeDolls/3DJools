@@ -170,7 +170,6 @@ export const es: Dictionary = {
     shippingMethod: "Método de envío",
     paymentMethod: "Método de pago",
     placeOrder: "Realizar pedido",
-    demoNotice: "Esta es una vista previa del pago. El procesamiento de pagos aún no está activo.",
     shippingStandard: "Envío estándar UE",
     shippingStandardDesc: "5–10 días laborables",
     shippingFree: "Envío estándar gratis",

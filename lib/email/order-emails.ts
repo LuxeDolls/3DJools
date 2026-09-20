@@ -2,6 +2,8 @@ import "server-only"
 
 import { sendEmail, type SendResult } from "@/lib/email/send"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
+import { getCryptoCoinOption } from "@/lib/payments/crypto"
+import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderWithItems } from "@/lib/orders/queries"
 
 function euros(cents: number): string {
@@ -45,6 +47,9 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const awaitingPayment = order.status === "awaiting_payment"
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
+  // Same coin/network the customer actually selected at checkout (see lib/payments/crypto.ts),
+  // persisted on the order as `crypto_coin=<id>` in the notes field.
+  const cryptoCoin = getCryptoCoinOption(parseOrderNotes(order.notes).crypto_coin)
 
   const addressLines = [
     order.shippingName,
@@ -83,7 +88,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
       ? `\nPlease transfer ${euros(order.totalCents)} and include your order number ${order.orderNumber} as the payment reference.\nName: ${BANK_TRANSFER_ACCOUNT.accountName}\nIBAN: ${BANK_TRANSFER_ACCOUNT.iban}\nBIC: ${BANK_TRANSFER_ACCOUNT.bic}`
       : null,
     awaitingPayment && isCrypto
-      ? `\nPlease send the equivalent of ${euros(order.totalCents)} to our wallet and include your order number ${order.orderNumber} in your records.\nNetwork: USDT · TRC20\nAddress: TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX`
+      ? `\nPlease send the equivalent of ${euros(order.totalCents)} to our wallet and include your order number ${order.orderNumber} in your records.\nNetwork: ${cryptoCoin.coinLabel} · ${cryptoCoin.network}\nAddress: ${cryptoCoin.address}`
       : null,
     addressLines.length ? `\nShipping to:\n${addressLines.join("\n")}` : null,
     orderLink ? `\nView your order: ${orderLink}` : null,
@@ -121,7 +126,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     awaitingPayment && isCrypto
       ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
       <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">Please send the equivalent of <strong>${euros(order.totalCents)}</strong> and keep your order number <strong>${order.orderNumber}</strong> for your records.</p>
-      <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">USDT · TRC20: TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+      <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">${cryptoCoin.coinLabel} · ${cryptoCoin.network}: ${cryptoCoin.address}</p>
     </div>`
       : ""
 

@@ -170,7 +170,6 @@ export const nl: Dictionary = {
     shippingMethod: "Verzendmethode",
     paymentMethod: "Betaalmethode",
     placeOrder: "Bestelling plaatsen",
-    demoNotice: "Dit is een voorbeeld-checkout. Betalingsverwerking is nog niet actief.",
     shippingStandard: "EU-standaardverzending",
     shippingStandardDesc: "5–10 werkdagen",
     shippingFree: "Gratis standaardverzending",

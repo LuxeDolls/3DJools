@@ -168,7 +168,6 @@ export const en = {
     shippingMethod: "Shipping method",
     paymentMethod: "Payment method",
     placeOrder: "Place order",
-    demoNotice: "This is a preview checkout. Payment processing is not yet live.",
     shippingStandard: "EU standard shipping",
     shippingStandardDesc: "5–10 business days",
     shippingFree: "Free standard shipping",

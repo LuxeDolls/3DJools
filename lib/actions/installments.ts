@@ -1,5 +1,6 @@
 "use server"
 
+import { after } from "next/server"
 import { db } from "@/lib/db"
 import { installmentApplications, type ApplicationCartItem, type NewOrderItemRow, type ScheduleEntry } from "@/lib/db/schema"
 import { getProductBySlug } from "@/lib/catalog"
@@ -170,9 +171,11 @@ export async function createInstallmentApplication(input: ApplicationInput): Pro
     .returning()
 
   if (app) {
-    void notifyInstallmentApplication(app).catch((error) => {
-      console.error("[v0] New-installment admin notification failed:", error)
-    })
+    after(() =>
+      notifyInstallmentApplication(app).catch((error) => {
+        console.error("[v0] New-installment admin notification failed:", error)
+      }),
+    )
   }
 
   try {
@@ -228,9 +231,11 @@ export async function markInstallmentPaymentSubmitted(
     try {
       const order = await getOrderById(app.orderId)
       if (order) {
-        void notifyPaymentSubmitted({ ...order, status: "reviewing_payment" }).catch((error) => {
-          console.error("[v0] Installment payment-submitted admin notification failed:", error)
-        })
+        after(() =>
+          notifyPaymentSubmitted({ ...order, status: "reviewing_payment" }).catch((error) => {
+            console.error("[v0] Installment payment-submitted admin notification failed:", error)
+          }),
+        )
       }
     } catch (err) {
       console.error("[v0] Installment payment admin notification failed:", err)

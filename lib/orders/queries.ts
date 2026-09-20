@@ -1,6 +1,7 @@
 import "server-only"
 
 import { and, desc, eq } from "drizzle-orm"
+import { after } from "next/server"
 import { db } from "@/lib/db"
 import {
   orderItems,
@@ -84,9 +85,15 @@ export async function createOrder(input: CreateOrderInput): Promise<OrderWithIte
     : []
 
   const orderWithItems = { ...order, items }
-  void notifyNewOrder(orderWithItems).catch((error) => {
-    console.error("[v0] New-order admin notification failed:", error)
-  })
+  // Scheduled via after() rather than a bare fire-and-forget promise: on
+  // Vercel's serverless runtime, the function can be frozen the instant the
+  // response is sent, which would silently drop an un-awaited promise before
+  // it finishes — after() keeps the invocation alive until this resolves.
+  after(() =>
+    notifyNewOrder(orderWithItems).catch((error) => {
+      console.error("[v0] New-order admin notification failed:", error)
+    }),
+  )
 
   return orderWithItems
 }
@@ -144,12 +151,16 @@ export async function updateOrderStatus(orderId: string, status: OrderStatus): P
   await db.update(orders).set({ status, updatedAt: new Date() }).where(eq(orders.id, orderId))
   const updated = await getOrderById(orderId)
   if (updated) {
-    void notifyOrderStatusChange(updated, previous.status).catch((error) => {
-      console.error("[v0] Order-status admin notification failed:", error)
-    })
-    void sendOrderStatusUpdateEmail(updated, previous.status).catch((error) => {
-      console.error("[v0] Order-status customer email failed:", error)
-    })
+    after(() =>
+      notifyOrderStatusChange(updated, previous.status).catch((error) => {
+        console.error("[v0] Order-status admin notification failed:", error)
+      }),
+    )
+    after(() =>
+      sendOrderStatusUpdateEmail(updated, previous.status).catch((error) => {
+        console.error("[v0] Order-status customer email failed:", error)
+      }),
+    )
   }
 }
 
@@ -174,12 +185,16 @@ export async function updateOrderTracking(orderId: string, tracking: TrackingInp
     .where(eq(orders.id, orderId))
   const updated = await getOrderById(orderId)
   if (updated && previous && previous.status !== updated.status) {
-    void notifyOrderStatusChange(updated, previous.status).catch((error) => {
-      console.error("[v0] Shipment admin notification failed:", error)
-    })
-    void sendOrderStatusUpdateEmail(updated, previous.status).catch((error) => {
-      console.error("[v0] Shipment customer email failed:", error)
-    })
+    after(() =>
+      notifyOrderStatusChange(updated, previous.status).catch((error) => {
+        console.error("[v0] Shipment admin notification failed:", error)
+      }),
+    )
+    after(() =>
+      sendOrderStatusUpdateEmail(updated, previous.status).catch((error) => {
+        console.error("[v0] Shipment customer email failed:", error)
+      }),
+    )
   }
   return updated
 }
