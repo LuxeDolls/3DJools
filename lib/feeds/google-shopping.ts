@@ -37,6 +37,26 @@ function availability(value: string): string {
   return "in stock"
 }
 
+function hashForGoogleId(value: string): string {
+  let first = 2166136261
+  let second = 16777619
+
+  for (const character of value) {
+    const codePoint = character.codePointAt(0) ?? 0
+    first = Math.imul(first ^ codePoint, 16777619) >>> 0
+    second = Math.imul(second ^ codePoint, 2246822519) >>> 0
+  }
+
+  return `${first.toString(16).padStart(8, "0")}${second.toString(16).padStart(8, "0")}`
+}
+
+function googleProductId(product: { id: string; slug: string }): string {
+  if (product.id.length <= 50) return product.id
+
+  const readableSlug = product.slug.replace(/[^a-zA-Z0-9-]/g, "-").slice(0, 31)
+  return `p-${hashForGoogleId(product.id)}-${readableSlug}`
+}
+
 export async function createGoogleShoppingFeed(locale: Locale): Promise<string> {
   const products = (await getAllProducts(locale)).filter((product) => product.category !== "filaments")
   const items = products.map((product) => {
@@ -51,7 +71,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
 
     return `
     <item>
-      <g:id>${escapeXml(product.id)}</g:id>
+      <g:id>${escapeXml(googleProductId(product))}</g:id>
       <g:title>${escapeXml(product.name)}</g:title>
       <g:description>${escapeXml(product.shortDescription || product.description)}</g:description>
       <g:link>${escapeXml(productUrl)}</g:link>

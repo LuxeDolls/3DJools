@@ -6,13 +6,13 @@
 export const DOMESTIC_RATE_CENTS = 0 // Belgium — free shipping
 export const INTERNATIONAL_RATE_CENTS = 0 // rest of EU + neighbouring countries — free shipping
 
-export const DELIVERY_TIME_LABEL = "5–10 working days"
-export const DISPATCH_TIME_LABEL = "within 48 business hours"
-
-// Language-neutral numbers, used to build the translated delivery/dispatch phrase per locale.
-export const DELIVERY_MIN_DAYS = 5
-export const DELIVERY_MAX_DAYS = 10
-export const DISPATCH_HOURS = 48
+export const DELIVERY_TIME_LABEL = "3–6 business days"
+export const DISPATCH_TIME_LABEL = "within 0–1 business day"
+export const DELIVERY_MIN_DAYS = 3
+export const DELIVERY_MAX_DAYS = 6
+export const HANDLING_MIN_DAYS = 0
+export const HANDLING_MAX_DAYS = 1
+export const ORDER_CUTOFF_TIME = "15:00 CET"
 
 export const DOMESTIC_COUNTRY = { code: "BE", name: "Belgium" } as const
 
