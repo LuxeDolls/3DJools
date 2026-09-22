@@ -37,7 +37,7 @@ const faqGroups = [
       {
         question: "What is your return policy?",
         answer:
-          "We offer a 30-day return policy — well beyond the EU statutory 14-day minimum. Once we receive and inspect the return, we refund you within 7 working days.",
+          "We offer a 14-day return policy in line with the EU statutory withdrawal period. We accept returns for both non-defective and defective products, but exchanges are not accepted. Once we receive and inspect the return, we refund you within 14 days.",
       },
       {
         question: "Who pays for return shipping?",
