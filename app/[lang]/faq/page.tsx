@@ -12,7 +12,7 @@ const faqGroups = [
       {
         question: "How long does delivery take, and how much does it cost?",
         answer:
-          "Standard shipping takes 5–10 working days and is completely free on every order, to every destination we deliver to — no minimum spend required. Every order is processed and dispatched within 48 hours on business days; orders placed before 14:00 CET are often dispatched the same day.",
+          "Standard shipping takes 3–6 business days in total and is completely free on every order, to every destination we deliver to — no minimum spend required. Handling takes 0–1 business day and transit takes 3–5 business days. Orders placed by 15:00 CET Monday to Friday enter the handling window that day.",
       },
       {
         question: "What are your business hours?",
