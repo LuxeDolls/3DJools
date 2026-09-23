@@ -1,45 +1,38 @@
 import type { MetadataRoute } from "next"
 
+const disallow = [
+  "/api/",
+  "/admin",
+  "/*/admin",
+  "/*/account",
+  "/*/cart",
+  "/*/checkout",
+  "/*/installments/apply",
+  "/*/installments/*",
+  "/*/order/*",
+  "/*/search",
+  "/*/sign-in",
+  "/*/sign-up",
+  "/*/track-order",
+]
+
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: ["Googlebot", "Googlebot-Image"],
+        userAgent: "Googlebot",
         allow: "/",
-        disallow: [
-          "/api/",
-          "/admin",
-          "/*/admin",
-          "/*/account",
-          "/*/cart",
-          "/*/checkout",
-          "/*/installments/apply",
-          "/*/installments/*",
-          "/*/order/*",
-          "/*/search",
-          "/*/sign-in",
-          "/*/sign-up",
-          "/*/track-order",
-        ],
+        disallow,
+      },
+      {
+        userAgent: "Googlebot-Image",
+        allow: "/",
+        disallow,
       },
       {
         userAgent: "*",
         allow: "/",
-        disallow: [
-          "/api/",
-          "/admin",
-          "/*/admin",
-          "/*/account",
-          "/*/cart",
-          "/*/checkout",
-          "/*/installments/apply",
-          "/*/installments/*",
-          "/*/order/*",
-          "/*/search",
-          "/*/sign-in",
-          "/*/sign-up",
-          "/*/track-order",
-        ],
+        disallow,
       },
     ],
     sitemap: "https://3djools.com/sitemap.xml",
