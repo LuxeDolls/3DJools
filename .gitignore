@@ -13,3 +13,6 @@ __v0_jsx-dev-runtime.ts
 node_modules
 .next/
 .DS_Store
+
+# Customer invoices contain personal data and must not be committed
+/public/invoices/
