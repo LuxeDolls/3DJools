@@ -3,8 +3,8 @@
  *  names Googlebot and Googlebot-Image. Serve those files from our own
  *  domains instead, with no redirect in front of the image response.
  *
- *  - www.3djools.com/media/<pathname>  (used in the feed and on product pages)
- *  - images.3djools.com/products/<file> (dedicated image host, same bytes)
+ *  - images.3djools.com/media/<pathname>  (feed and product pages)
+ *  - www.3djools.com/media/<pathname>     (same bytes, no redirect)
  */
 export const SITE_ORIGIN = "https://www.3djools.com"
 export const IMAGE_ORIGIN = "https://images.3djools.com"
@@ -35,7 +35,7 @@ export function storefrontImageUrl(image: string | undefined | null): string | u
 
 export function mediaUrl(pathname: string): string {
   const clean = pathname.replace(/^\/+/, "")
-  return `${SITE_ORIGIN}/media/${clean}`
+  return `${IMAGE_ORIGIN}/media/${clean}`
 }
 
 export function imageHostUrl(pathname: string): string {

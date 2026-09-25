@@ -38,6 +38,13 @@ function detectLocale(request: NextRequest): string {
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const host = request.headers.get("host")?.split(":")[0]
+
+  // images.3djools.com only serves catalog photos. robots.txt and image files
+  // are outside this matcher; everything else must not duplicate the storefront.
+  if (host === "images.3djools.com") {
+    return new NextResponse("Not found", { status: 404 })
+  }
 
   const hasLocale = locales.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
