@@ -20,7 +20,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
     {
       key: dict.categories.scanners,
       href: "/catalog/scanners",
-      image: "/api/product-image?pathname=products%2Fmatter-and-form-three%2F1.png",
+      image: "https://6iwpszoiwj016as8.public.blob.vercel-storage.com/products/matter-and-form-three/1.png",
     },
   ]
 

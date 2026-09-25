@@ -11,8 +11,9 @@ const EXT_BY_TYPE: Record<string, string> = {
   "image/gif": "gif",
 }
 
-// Admin-only upload for catalog photos. Files land in the private Blob store
-// under products/, and are served publicly through /api/product-image.
+// Admin-only upload for catalog photos. Files land in the public Blob store
+// under products/ and are served directly from the CDN URL (no /api proxy),
+// so they're crawlable by Googlebot for Google Merchant Center.
 export async function POST(request: NextRequest) {
   if (!(await isAdmin())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
@@ -36,11 +37,12 @@ export async function POST(request: NextRequest) {
 
   try {
     const blob = await put(pathname, file, {
-      access: "private",
+      access: "public",
       addRandomSuffix: false,
       contentType: file.type,
+      token: process.env.BLOB_PUBLIC_READ_WRITE_TOKEN,
     })
-    return NextResponse.json({ url: `/api/product-image?pathname=${encodeURIComponent(blob.pathname)}` })
+    return NextResponse.json({ url: blob.url })
   } catch (error) {
     console.error("[v0] product image upload error:", error)
     return NextResponse.json({ error: "Upload failed" }, { status: 500 })
