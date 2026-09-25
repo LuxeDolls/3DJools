@@ -16,9 +16,11 @@ const disallow = [
   "/*/track-order",
 ]
 
-// Catalog photos are public but streamed through /api/product-image. That path
-// must stay allowed: Google Merchant Center fetches it with Googlebot-Image,
-// and a blanket Disallow: /api/ makes those products fail policy checks.
+// Catalog photos now live on the public Blob CDN (blob.vercel-storage.com),
+// not proxied through /api/product-image, so Google Merchant Center no
+// longer depends on this exception. Kept as a harmless safety net for the
+// legacy route (still serves old cached/external links) and any other public
+// /api/ endpoint that should stay crawlable despite the blanket Disallow: /api/ below.
 const allow = ["/", "/api/product-image"]
 
 export default function robots(): MetadataRoute.Robots {
