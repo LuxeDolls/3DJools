@@ -6,6 +6,20 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  async rewrites() {
+    return {
+      // images.3djools.com/products/... is the dedicated image host.
+      // Rewrite internally so the response is 200, not a redirect, and
+      // robots.txt on that host stays served by the app.
+      beforeFiles: [
+        {
+          source: "/products/:path*",
+          has: [{ type: "host", value: "images.3djools.com" }],
+          destination: "/media/products/:path*",
+        },
+      ],
+    }
+  },
   async headers() {
     return [
       {

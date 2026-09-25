@@ -2,6 +2,7 @@ import "server-only"
 import { and, asc, eq, isNotNull, ne, or } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { brands as brandsTable, categories as categoriesTable, products as productsTable } from "@/lib/db/schema"
+import { storefrontImageUrl } from "./image-urls"
 import { localizeProduct, localizeProducts } from "./localize"
 import type { Availability, Brand, Category, CategorySlug, Product, ProductSpec, Technology, UseCase } from "./types"
 
@@ -43,7 +44,7 @@ function rowToProduct(r: typeof productsTable.$inferSelect, brandName?: string):
     highlights: r.highlights,
     translations: r.translations,
     specs: r.specs,
-    images: r.images,
+    images: r.images.map((image) => storefrontImageUrl(image)).filter((image): image is string => Boolean(image)),
     featured: r.featured,
     bestseller: r.bestseller,
     weightKg: r.weightKg,
