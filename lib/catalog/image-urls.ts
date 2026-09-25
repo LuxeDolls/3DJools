@@ -3,8 +3,8 @@
  *  names Googlebot and Googlebot-Image. Serve those files from our own
  *  domains instead, with no redirect in front of the image response.
  *
- *  - images.3djools.com/media/<pathname>  (feed and product pages)
- *  - www.3djools.com/media/<pathname>     (same bytes, no redirect)
+ *  - www.3djools.com/media/<pathname>     (feed, product pages, no redirect)
+ *  - images.3djools.com/media/<pathname>  (same bytes, kept as a second host)
  */
 export const SITE_ORIGIN = "https://www.3djools.com"
 export const IMAGE_ORIGIN = "https://images.3djools.com"
@@ -26,7 +26,8 @@ export function storefrontImageUrl(image: string | undefined | null): string | u
     const url = new URL(image)
     if (url.hostname === PUBLIC_BLOB_HOST) return mediaUrl(url.pathname)
     if (url.hostname === "3djools.com") return `${SITE_ORIGIN}${url.pathname}${url.search}`
-    if (url.hostname === "www.3djools.com" || url.hostname === "images.3djools.com") return image
+    if (url.hostname === "images.3djools.com") return mediaUrl(url.pathname.replace(/^\/media\//, ""))
+    if (url.hostname === "www.3djools.com") return image
     return image
   } catch {
     return image
@@ -34,8 +35,8 @@ export function storefrontImageUrl(image: string | undefined | null): string | u
 }
 
 export function mediaUrl(pathname: string): string {
-  const clean = pathname.replace(/^\/+/, "")
-  return `${IMAGE_ORIGIN}/media/${clean}`
+  const clean = pathname.replace(/^\/+/, "").replace(/^media\//, "")
+  return `${SITE_ORIGIN}/media/${clean}`
 }
 
 export function imageHostUrl(pathname: string): string {
