@@ -16,11 +16,12 @@ const disallow = [
   "/*/track-order",
 ]
 
-// Catalog photos are served directly from the public Blob CDN
-// (blob.vercel-storage.com), not proxied through our own /api/ routes, so
-// there's no need to carve out an exception to the blanket Disallow: /api/
-// below for Google Merchant Center or any other crawler.
-const allow = ["/"]
+// Catalog photos now live on the public Blob CDN (blob.vercel-storage.com),
+// not proxied through /api/product-image, so Google Merchant Center no
+// longer depends on this exception. Kept as a harmless safety net for the
+// legacy route (still serves old cached/external links) and any other public
+// /api/ endpoint that should stay crawlable despite the blanket Disallow: /api/ below.
+const allow = ["/", "/api/product-image"]
 
 export default function robots(): MetadataRoute.Robots {
   return {
