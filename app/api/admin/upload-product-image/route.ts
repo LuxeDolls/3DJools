@@ -1,4 +1,5 @@
 import { put } from "@vercel/blob"
+import { mediaUrl } from "@/lib/catalog/image-urls"
 import { type NextRequest, NextResponse } from "next/server"
 import { isAdmin } from "@/lib/admin-auth"
 
@@ -42,7 +43,7 @@ export async function POST(request: NextRequest) {
       contentType: file.type,
       token: process.env.BLOB_PUBLIC_READ_WRITE_TOKEN,
     })
-    return NextResponse.json({ url: blob.url })
+    return NextResponse.json({ url: mediaUrl(blob.pathname) })
   } catch (error) {
     console.error("[v0] product image upload error:", error)
     return NextResponse.json({ error: "Upload failed" }, { status: 500 })

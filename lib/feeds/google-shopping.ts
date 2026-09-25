@@ -1,8 +1,9 @@
 import type { Locale } from "@/lib/i18n/config"
 import { getAllProducts } from "@/lib/catalog"
+import { storefrontImageUrl, SITE_ORIGIN } from "@/lib/catalog/image-urls"
 import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNATIONAL_RATE_CENTS } from "@/lib/shipping/rates"
 
-const BASE_URL = "https://3djools.com"
+const BASE_URL = SITE_ORIGIN
 const STORE_NAME = "3DJools"
 
 // Shipping is free to every destination, mirrored from lib/shipping/rates.ts (see the Shipping page).
@@ -27,8 +28,7 @@ function formatPrice(cents: number): string {
 }
 
 function absoluteImageUrl(image: string | undefined): string | undefined {
-  if (!image) return undefined
-  return image.startsWith("http") ? image : `${BASE_URL}${image.startsWith("/") ? "" : "/"}${image}`
+  return storefrontImageUrl(image)
 }
 
 function availability(value: string): string {

@@ -273,6 +273,97 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
 }
 
 /**
+ * Friendly nudge for an order that's still `awaiting_payment` a while after
+ * checkout: welcomes the customer, recaps their order, and asks whether they
+ * still need to send payment (repeating the bank transfer / crypto details),
+ * since they haven't yet clicked "I've paid".
+ */
+export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<SendResult> {
+  const base = siteUrl()
+  const orderLink = base ? `${base}/en/order/${order.orderNumber}` : ""
+  const paymentLabel = PAYMENT_LABELS[order.paymentMethod] ?? order.paymentMethod
+  const isSepa = order.paymentMethod === "bank_transfer"
+  const isCrypto = order.paymentMethod === "crypto"
+  const cryptoCoin = getCryptoCoinOption(parseOrderNotes(order.notes).crypto_coin)
+  const firstName = order.shippingName?.trim().split(/\s+/)[0] ?? ""
+
+  const subject = `Have you completed payment for your order ${order.orderNumber}?`
+
+  const itemsText = order.items
+    .map((i) => `- ${i.productName} × ${i.quantity} — ${euros(i.lineTotalCents)}`)
+    .join("\n")
+
+  const text = [
+    `Hi ${firstName || "there"},`,
+    "",
+    `Welcome to 3DJools, and thank you for your order — we're delighted to have you with us!`,
+    `We noticed your order ${order.orderNumber} is still marked as awaiting payment, so we wanted to check in and make sure everything is on track.`,
+    "",
+    "Your order:",
+    itemsText,
+    `Total: ${euros(order.totalCents)}`,
+    `Payment method: ${paymentLabel}`,
+    "",
+    isSepa
+      ? `If you haven't sent the bank transfer yet, here are the details again:\nAmount: ${euros(order.totalCents)}\nReference: ${order.orderNumber} (please include this so we can match your payment)\nName: ${BANK_TRANSFER_ACCOUNT.accountName}\nIBAN: ${BANK_TRANSFER_ACCOUNT.iban}\nBIC: ${BANK_TRANSFER_ACCOUNT.bic}\n\nOnce you've made the transfer, simply click "I've paid" on your order page so our team can start verifying it.`
+      : null,
+    isCrypto
+      ? `If you haven't sent the payment yet, here are the details again:\nAmount: ${euros(order.totalCents)}\nNetwork: ${cryptoCoin.coinLabel} · ${cryptoCoin.network}\nAddress: ${cryptoCoin.address}\n\nOnce you've sent it, simply click "I've paid" on your order page so our team can start verifying it.`
+      : null,
+    "",
+    "If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've changed your mind or run into any trouble, simply reply to this email; we're happy to help.",
+    orderLink ? `\nView your order: ${orderLink}` : null,
+    "",
+    "Looking forward to getting your order on its way to you soon!",
+  ]
+    .filter((line) => line !== null)
+    .join("\n")
+
+  const itemsHtml = order.items
+    .map(
+      (i) =>
+        `<tr><td style="padding:8px 0;color:#111">${i.productName} <span style="color:#888">× ${i.quantity}</span></td><td style="padding:8px 0;text-align:right;color:#111">${euros(
+          i.lineTotalCents,
+        )}</td></tr>`,
+    )
+    .join("")
+
+  const sepaHtml = isSepa
+    ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">If you haven't sent the transfer yet, here are the details again:</p>
+      <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">Amount: ${euros(order.totalCents)} · Reference: ${order.orderNumber}<br>Name: ${BANK_TRANSFER_ACCOUNT.accountName} · IBAN: ${BANK_TRANSFER_ACCOUNT.iban} · BIC: ${BANK_TRANSFER_ACCOUNT.bic}</p>
+    </div>`
+    : ""
+
+  const cryptoHtml = isCrypto
+    ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">If you haven't sent the payment yet, here are the details again:</p>
+      <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">Amount: ${euros(order.totalCents)} · ${cryptoCoin.coinLabel} · ${cryptoCoin.network}<br>Address: ${cryptoCoin.address}</p>
+    </div>`
+    : ""
+
+  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
+<div style="max-width:560px;margin:0 auto;padding:24px">
+  <div style="background:#fff;border-radius:12px;padding:32px">
+    <h1 style="margin:0 0 8px;font-size:20px;color:#111">Welcome to 3DJools${firstName ? `, ${firstName}` : ""}!</h1>
+    <p style="margin:0 0 20px;color:#555;font-size:14px;line-height:1.6">Thank you for your order — we're delighted to have you with us. We noticed order <strong>${order.orderNumber}</strong> is still marked as <strong>awaiting payment</strong>, so we wanted to check in and make sure everything is on track.</p>
+    ${sepaHtml}
+    ${cryptoHtml}
+    <table style="width:100%;border-collapse:collapse;font-size:14px;border-top:1px solid #eee;margin-bottom:8px">${itemsHtml}</table>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px">
+      <tr><td style="padding:12px 0 0;font-weight:700;color:#111;border-top:1px solid #eee">Total</td><td style="padding:12px 0 0;text-align:right;font-weight:700;color:#111;border-top:1px solid #eee">${euros(order.totalCents)}</td></tr>
+    </table>
+    <p style="margin:0 0 20px;color:#111;font-size:14px;line-height:1.6">If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've run into any trouble or changed your mind, simply reply to this email; we're happy to help.</p>
+    ${orderLink ? `<p style="margin:0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
+  </div>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools · We're looking forward to getting your order on its way</p>
+</div>
+</body></html>`
+
+  return sendEmail({ to: order.email, subject, html, text })
+}
+
+/**
  * Sent after the customer clicks "I've paid" on a bank transfer or crypto
  * order, confirming we received their notice and are now checking the
  * payment before moving the order forward.

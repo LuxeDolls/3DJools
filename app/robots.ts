@@ -1,4 +1,6 @@
 import type { MetadataRoute } from "next"
+import { headers } from "next/headers"
+import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
 
 const disallow = [
   "/api/",
@@ -16,14 +18,26 @@ const disallow = [
   "/*/track-order",
 ]
 
-// Catalog photos now live on the public Blob CDN (blob.vercel-storage.com),
-// not proxied through /api/product-image, so Google Merchant Center no
-// longer depends on this exception. Kept as a harmless safety net for the
-// legacy route (still serves old cached/external links) and any other public
-// /api/ endpoint that should stay crawlable despite the blanket Disallow: /api/ below.
-const allow = ["/", "/api/product-image"]
+// /media is the same-origin image proxy. /api/product-image stays allowed as a
+// safety net for old links. Googlebot and Googlebot-Image are named explicitly
+// because Merchant Center looks for those user-agents.
+const allow = ["/", "/media", "/api/product-image"]
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const host = (await headers()).get("host")?.split(":")[0] ?? ""
+
+  // Dedicated image host. Merchant Center checks robots.txt on the host that
+  // serves the image, so this file must name Googlebot and Googlebot-Image.
+  if (host === "images.3djools.com") {
+    return {
+      rules: [
+        { userAgent: "Googlebot", allow: "/" },
+        { userAgent: "Googlebot-Image", allow: "/" },
+        { userAgent: "*", allow: "/" },
+      ],
+    }
+  }
+
   return {
     rules: [
       {
@@ -42,6 +56,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow,
       },
     ],
-    sitemap: "https://3djools.com/sitemap.xml",
+    sitemap: `${SITE_ORIGIN}/sitemap.xml`,
   }
 }
