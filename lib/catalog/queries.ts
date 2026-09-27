@@ -1,5 +1,5 @@
 import "server-only"
-import { and, asc, eq, isNotNull, ne, or } from "drizzle-orm"
+import { and, asc, eq, isNotNull, ne, notInArray, or } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { brands as brandsTable, categories as categoriesTable, products as productsTable } from "@/lib/db/schema"
 import { storefrontImageUrl } from "./image-urls"
@@ -87,7 +87,7 @@ export async function getProductBySlug(slug: string, locale = "en"): Promise<Pro
     .select({ p: productsTable, brandName: brandsTable.name })
     .from(productsTable)
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
-    .where(eq(productsTable.slug, slug))
+    .where(and(eq(productsTable.slug, slug), eq(productsTable.archived, false)))
     .limit(1)
   return row ? localizeProduct(rowToProduct(row.p, row.brandName ?? undefined), locale) : undefined
 }
@@ -177,10 +177,28 @@ export async function getActiveSale(): Promise<{ active: boolean; endsAt: Date |
   return { active: true, endsAt, count: active.length }
 }
 
-/** All non-archived product slugs — for generateStaticParams / sitemap. */
+/** All non-archived product slugs — for generateStaticParams. */
 export async function getAllProductSlugs(): Promise<string[]> {
   const rows = await db.select({ slug: productsTable.slug }).from(productsTable).where(eq(productsTable.archived, false))
   return rows.map((r) => r.slug)
+}
+
+/** Spare parts are off the storefront. Filaments stay indexed when they are still for sale. */
+const unlistedCategories = ["spare-parts"] as const
+
+/** Live products that should be indexed: not archived, and not in a removed category. */
+export async function getSitemapProducts(): Promise<
+  { slug: string; category: CategorySlug; brandSlug: string; updatedAt: Date }[]
+> {
+  return db
+    .select({
+      slug: productsTable.slug,
+      category: productsTable.category,
+      brandSlug: productsTable.brandSlug,
+      updatedAt: productsTable.updatedAt,
+    })
+    .from(productsTable)
+    .where(and(eq(productsTable.archived, false), notInArray(productsTable.category, [...unlistedCategories])))
 }
 
 export async function getAllBrandSlugs(): Promise<string[]> {

@@ -4,8 +4,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Cookie } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
+import { applyAnalyticsConsent, CONSENT_KEY, readConsent } from "./consent"
 
-const CONSENT_KEY = "voltika-cookie-consent"
 export const OPEN_COOKIE_SETTINGS_EVENT = "voltika:open-cookie-settings"
 
 export function CookieConsent() {
@@ -15,6 +15,7 @@ export function CookieConsent() {
   const bannerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    applyAnalyticsConsent(readConsent())
     if (!localStorage.getItem(CONSENT_KEY)) {
       setVisible(true)
     }
@@ -49,6 +50,7 @@ export function CookieConsent() {
     } catch {
       // Ignore storage errors (e.g. private mode); banner still dismisses for this session.
     }
+    applyAnalyticsConsent(value)
     setVisible(false)
   }
 

@@ -11,7 +11,6 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
     { key: dict.categories.resins, href: "/catalog/resins", image: "/products/resin-standard.png" },
     { key: dict.categories.filaments, href: "/catalog/filaments", image: "/products/filament-pla.png" },
     { key: dict.categories.accessories, href: "/catalog/accessories", image: "/products/wash-cure.png" },
-    { key: dict.categories.spareParts, href: "/catalog/spare-parts", image: "/products/nozzle-kit.png" },
     {
       key: dict.categories.laserEngravers,
       href: "/catalog/laser-engravers",

@@ -1,6 +1,7 @@
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { ProsePage, ProseSection } from "@/components/legal/prose-page"
+import { COMPANY, fillCompany } from "@/lib/company"
 
 type ImpressumCopy = {
   companyHeading: string
@@ -184,7 +185,7 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
-  const t = COPY[locale]
+  const t = fillCompany(COPY[locale])
 
   return (
     <ProsePage
@@ -197,11 +198,11 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
         <p>
           {t.tradingName}
           <br />
-          Ln-Squared
+          {COMPANY.legalName}
           <br />
-          Rue du Chénia 17
+          {COMPANY.street}
           <br />
-          7170 Manage, Hainaut, Belgium
+          {COMPANY.postalCode} {COMPANY.city}, {COMPANY.region}, {COMPANY.country}
         </p>
       </ProseSection>
       <ProseSection heading={t.legalFormHeading}>
@@ -222,20 +223,18 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
       <ProseSection heading={t.contactHeading}>
         <p>
           {t.emailLabel}:{" "}
-          <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">
-            info@3djools.com
+          <a href={`mailto:${COMPANY.email}`} className="underline underline-offset-2 hover:text-foreground">
+            {COMPANY.email}
           </a>
           <br />
-          {t.phoneLabel}: +32 460 00 80 70
+          {t.phoneLabel}: <a href={`tel:${COMPANY.phoneTel}`} className="underline underline-offset-2 hover:text-foreground">{COMPANY.phoneDisplay}</a>
         </p>
       </ProseSection>
       <ProseSection heading={t.registrationHeading}>
         <p>
-          {t.companyNumberLabel}: 0564.743.304
+          {t.companyNumberLabel}: {COMPANY.companyNumber}
           <br />
-          {t.safeNumberLabel}: BE02758815
-          <br />
-          {t.vatLabel}: BE0564743304
+          {t.vatLabel}: {COMPANY.vat}
         </p>
       </ProseSection>
       <ProseSection heading={t.odrHeading}>

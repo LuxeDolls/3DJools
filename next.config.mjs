@@ -20,6 +20,15 @@ const nextConfig = {
       ],
     }
   },
+  async redirects() {
+    const from = "voltera-voltera-v-one-solder-paste-3-ink-2-ml"
+    const to = "voltera-voltera-v-one-solder-paste-t4-2-ml-sn42bi576ag04"
+    return ["en", "de", "it", "fr", "nl", "es"].map((lang) => ({
+      source: `/${lang}/product/${from}`,
+      destination: `/${lang}/product/${to}`,
+      permanent: true,
+    }))
+  },
   async headers() {
     return [
       {

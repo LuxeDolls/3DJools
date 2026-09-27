@@ -1,6 +1,7 @@
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { ProsePage, ProseSection } from "@/components/legal/prose-page"
+import { fillCompany } from "@/lib/company"
 import { CREDITOR } from "@/components/installments/contract"
 
 type InstalmentCopy = {
@@ -179,7 +180,7 @@ export default async function InstalmentAgreementPage({ params }: { params: Prom
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
-  const t = COPY[locale]
+  const t = fillCompany(COPY[locale])
 
   return (
     <ProsePage

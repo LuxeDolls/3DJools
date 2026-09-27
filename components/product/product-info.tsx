@@ -5,7 +5,6 @@ import { Minus, Plus, Truck, ShieldCheck, Lock, CheckCircle2, Clock, CalendarClo
 import { useI18n } from "@/components/i18n-provider"
 import { AddToCartButton } from "./add-to-cart-button"
 import { Price } from "./price"
-import { StarRating } from "./star-rating"
 import type { Product } from "@/lib/catalog/types"
 import { formatPrice } from "@/lib/format"
 import { qualifiesForInstallments } from "@/lib/installments"
@@ -34,7 +33,6 @@ export function ProductInfo({ product }: { product: Product }) {
       </h1>
 
       <div className="mt-3 flex items-center gap-4">
-        <StarRating rating={product.rating} count={product.reviewCount} size="md" />
         <span className="text-sm text-muted-foreground">
           {dict.product.mpn}: {product.mpn}
         </span>
@@ -89,9 +87,14 @@ export function ProductInfo({ product }: { product: Product }) {
 
       {/* Trust badges */}
       <ul className="mt-6 grid grid-cols-1 gap-3 rounded-lg border border-border bg-card p-4 sm:grid-cols-3">
-        <li className="flex items-center gap-2 text-sm text-foreground">
-          <Truck className="size-4 shrink-0 text-primary" />
-          {dict.product.freeShipping}
+        <li className="flex items-start gap-2 text-sm text-foreground">
+          <Truck className="mt-0.5 size-4 shrink-0 text-primary" />
+          <span>
+            {dict.product.freeShipping}
+            <span className="mt-0.5 block text-xs font-normal leading-relaxed text-muted-foreground">
+              {dict.product.deliveryEstimate}
+            </span>
+          </span>
         </li>
         <li className="flex items-center gap-2 text-sm text-foreground">
           <ShieldCheck className="size-4 shrink-0 text-primary" />

@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Landmark, Bitcoin, CalendarClock, ShieldCheck, Clock, Mail } from "lucide-react"
+import { Landmark, Bitcoin, CalendarClock, Clock, Mail, Phone } from "lucide-react"
+import { COMPANY, companyStreetLine } from "@/lib/company"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -59,17 +60,20 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             {dict.footer.companyBlurb}
           </p>
           <a
-            href="mailto:info@3djools.com"
+            href={`mailto:${COMPANY.email}`}
             className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
           >
             <Mail className="size-4 text-primary" aria-hidden="true" />
-            info@3djools.com
+            {COMPANY.email}
           </a>
-          <div className="mt-5 flex items-center gap-2 text-sm font-medium text-foreground">
-            <ShieldCheck className="size-4 text-primary" />
-            {dict.footer.paymentsSecured}
-          </div>
-          <div className="mt-2 flex items-start gap-2 text-sm text-muted-foreground">
+          <a
+            href={`tel:${COMPANY.phoneTel}`}
+            className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
+          >
+            <Phone className="size-4 text-primary" aria-hidden="true" />
+            {COMPANY.phoneDisplay}
+          </a>
+          <div className="mt-5 flex items-start gap-2 text-sm text-muted-foreground">
             <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
             <span>{dict.footer.hoursNote}</span>
           </div>
@@ -77,9 +81,11 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <ScamAdviserTrust dict={dict} compact />
           </div>
           <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-            Ln-Squared · Rue du Chénia 17, 7170 Manage, Hainaut, Belgium
+            {dict.footer.operatedBy}
             <br />
-            {dict.footer.companyNumber} 0564.743.304 · {dict.footer.vatId} BE0564743304
+            {companyStreetLine}
+            <br />
+            {dict.footer.companyNumber} {COMPANY.companyNumber} · {dict.footer.vatId} {COMPANY.vat}
           </p>
         </div>
 
@@ -105,7 +111,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-between gap-4 px-4 py-6 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} 3DJools — Ln-Squared. {dict.footer.rights}
+            &copy; {new Date().getFullYear()} {COMPANY.tradingName} — {COMPANY.legalName}. {dict.footer.rights}
           </p>
           <ul className="flex flex-wrap items-center gap-3">
             {payments.map((p) => (

@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
-import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
+import { Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useCart } from "@/components/cart/cart-provider"
 import { Button } from "@/components/ui/button"
@@ -39,6 +39,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Belgium")
   const [submitting, setSubmitting] = useState(false)
+  const [termsAccepted, setTermsAccepted] = useState(false)
   const [orderError, setOrderError] = useState<string | null>(null)
   const router = useRouter()
 
@@ -55,8 +56,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const totalCents = subtotalCents - discountCents + shippingCents
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
-  const paymentOptions: { id: PaymentId; icon: typeof CreditCard; title: string; desc: string; disabled?: boolean }[] = [
-    { id: "card", icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardUnavailable, disabled: true },
+  const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean }[] = [
     { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     {
@@ -71,6 +71,10 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (submitting) return
+    if (!termsAccepted) {
+      setOrderError(dict.checkout.termsConsentError)
+      return
+    }
     setOrderError(null)
     const fd = new FormData(e.currentTarget)
     const str = (k: string) => String(fd.get(k) ?? "").trim()
@@ -87,6 +91,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         phone: str("phone"),
         payment,
         cryptoCoin: payment === "crypto" ? cryptoCoin : undefined,
+        termsAccepted,
         items: lines.map((l) => ({ slug: l.slug, quantity: l.quantity, brand: l.brand, image: l.image })),
       })
       if (!res.ok) {
@@ -319,6 +324,27 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         </div>
         <p className="mt-1 text-xs text-muted-foreground">{dict.cart.vatIncluded}</p>
 
+        <label className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-muted-foreground">
+          <input
+            type="checkbox"
+            name="termsAccepted"
+            checked={termsAccepted}
+            onChange={(event) => setTermsAccepted(event.target.checked)}
+            required
+            className="mt-0.5 size-4 shrink-0 accent-primary"
+          />
+          <span>
+            {dict.checkout.termsConsentBefore}{" "}
+            <Link href={lp("/terms")} className="font-medium text-primary underline-offset-4 hover:underline">
+              {dict.footer.terms}
+            </Link>{" "}
+            {dict.checkout.termsConsentAnd}{" "}
+            <Link href={lp("/privacy")} className="font-medium text-primary underline-offset-4 hover:underline">
+              {dict.footer.privacy}
+            </Link>{" "}
+            {dict.checkout.termsConsentAfter}
+          </span>
+        </label>
         {orderError && (
                 <p className="mb-3 text-sm text-destructive" role="alert">
                   {orderError}
@@ -328,10 +354,20 @@ export function CheckoutView({ locale }: { locale: Locale }) {
           <Button
             size="lg"
             className="mt-4 w-full"
-            render={<Link href={lp("/installments/apply")}>{it.checkoutInstallmentCta}</Link>}
-          />
+            type="button"
+            disabled={!termsAccepted}
+            onClick={() => {
+              if (!termsAccepted) {
+                setOrderError(dict.checkout.termsConsentError)
+                return
+              }
+              router.push(lp("/installments/apply"))
+            }}
+          >
+            {it.checkoutInstallmentCta}
+          </Button>
         ) : (
-          <Button size="lg" className="mt-4 w-full" type="submit" disabled={submitting}>
+          <Button size="lg" className="mt-4 w-full" type="submit" disabled={submitting || !termsAccepted}>
             <Lock className="size-4" />
             {submitting ? dict.checkout.processing : dict.checkout.placeOrder}
           </Button>
@@ -353,7 +389,7 @@ function OptionCard({
   selected: boolean
   disabled?: boolean
   onSelect?: () => void
-  icon: typeof CreditCard
+  icon: typeof Landmark
   title: string
   desc: string
   trailing?: string

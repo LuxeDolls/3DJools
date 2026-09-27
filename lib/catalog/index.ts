@@ -39,6 +39,7 @@ export {
   getRelatedProducts,
   getAllProductSlugs,
   getAllBrandSlugs,
+  getSitemapProducts,
   getActiveSale,
 } from "./queries"
 
@@ -47,7 +48,6 @@ export const allCategorySlugs = [
   "printers",
   "filaments",
   "resins",
-  "spare-parts",
   "accessories",
   "scanners",
   "laser-engravers",

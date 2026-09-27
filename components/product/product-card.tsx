@@ -5,7 +5,6 @@ import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import type { Product } from "@/lib/catalog/types"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Price } from "./price"
-import { StarRating } from "./star-rating"
 import { QuickAddButton } from "./quick-add-button"
 
 export function ProductCard({
@@ -57,9 +56,6 @@ export function ProductCard({
             {product.name}
           </h3>
         </Link>
-        <div className="mt-1.5">
-          <StarRating rating={product.rating} count={product.reviewCount} />
-        </div>
         <div className="mt-auto flex items-end justify-between gap-2 pt-3">
           <Price cents={product.priceCents} locale={locale} />
           <QuickAddButton product={product} label={dict.common.addToCart} />

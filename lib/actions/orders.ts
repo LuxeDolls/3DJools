@@ -45,6 +45,7 @@ export type PlaceOrderInput = {
   payment: CheckoutPayment
   /** Selected coin/network id when payment is "crypto" (see lib/payments/crypto.ts). */
   cryptoCoin?: string
+  termsAccepted?: boolean
   items: { slug: string; quantity: number; brand?: string; image?: string }[]
 }
 
@@ -74,6 +75,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     if (!value || !value.trim()) return { ok: false, error: "missing_fields" }
   }
   if (!isValidEmail(input.email)) return { ok: false, error: "invalid_email" }
+  if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
   // Card payment is temporarily unavailable; the checkout UI already disables
   // the option, but guard here too in case the action is called directly.

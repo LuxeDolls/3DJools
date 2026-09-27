@@ -1,5 +1,6 @@
-import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
+import { OptionalAnalytics } from '@/components/legal/optional-analytics'
+import { OrganizationJsonLd } from '@/components/legal/organization-jsonld'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Space_Grotesk } from 'next/font/google'
 import './globals.css'
@@ -55,20 +56,41 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-MKK9CLYCYB"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-consent" strategy="beforeInteractive">
           {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
+gtag('consent', 'default', {
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'denied',
+  functionality_storage: 'denied',
+  personalization_storage: 'denied',
+  security_storage: 'granted',
+  wait_for_update: 500
+});
+try {
+  var saved = JSON.parse(localStorage.getItem('voltika-cookie-consent') || 'null');
+  if (saved && saved.value === 'all') {
+    gtag('consent', 'update', {
+      analytics_storage: 'granted',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied'
+    });
+  }
+} catch (e) {}`}
+        </Script>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-MKK9CLYCYB" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`gtag('js', new Date());
 gtag('config', 'G-MKK9CLYCYB');`}
         </Script>
       </head>
       <body className="font-sans antialiased">
+        <OrganizationJsonLd />
         {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        <OptionalAnalytics />
       </body>
     </html>
   )

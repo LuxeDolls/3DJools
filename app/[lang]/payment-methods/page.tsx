@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { CreditCard, Landmark, Bitcoin, CalendarClock } from "lucide-react"
+import { Landmark, Bitcoin, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -18,7 +18,6 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
-    { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardUnavailable, disabled: true },
     { icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     {
@@ -42,7 +41,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
         {methods.map((m) => (
           <div
             key={m.title}
-            className={`rounded-lg border border-border bg-card p-5 ${m.disabled ? "opacity-60" : ""}`}
+            className="rounded-lg border border-border bg-card p-5"
           >
             <span className="flex size-11 items-center justify-center rounded-md bg-primary/10 text-primary">
               <m.icon className="size-5" />
