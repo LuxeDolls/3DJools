@@ -39,6 +39,7 @@ export {
   getRelatedProducts,
   getAllProductSlugs,
   getAllBrandSlugs,
+  getSitemapProducts,
   getActiveSale,
 } from "./queries"
 
