@@ -87,7 +87,7 @@ export async function getProductBySlug(slug: string, locale = "en"): Promise<Pro
     .select({ p: productsTable, brandName: brandsTable.name })
     .from(productsTable)
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
-    .where(eq(productsTable.slug, slug))
+    .where(and(eq(productsTable.slug, slug), eq(productsTable.archived, false)))
     .limit(1)
   return row ? localizeProduct(rowToProduct(row.p, row.brandName ?? undefined), locale) : undefined
 }

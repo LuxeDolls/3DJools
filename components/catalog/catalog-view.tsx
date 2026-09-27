@@ -33,7 +33,6 @@ const CATEGORY_OPTIONS: CategorySlug[] = [
   "printers",
   "filaments",
   "resins",
-  "spare-parts",
   "accessories",
   "scanners",
   "laser-engravers",
