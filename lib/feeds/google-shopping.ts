@@ -8,26 +8,28 @@ const BASE_URL = SITE_ORIGIN
 const STORE_NAME = "3DJools"
 const DESCRIPTION_LIMIT = 5000
 
-// Specialist Merchant Center feed: machines only. Accessories, spare parts,
-// filaments and resins stay on the site but are not submitted here.
-const FEED_CATEGORIES = new Set(["printers", "scanners", "laser-engravers"])
+// Machines and accessories. Spare parts, filaments and resins stay on the site.
+// Russian is not a storefront language and must never appear in a feed.
+const FEED_CATEGORIES = new Set(["printers", "scanners", "laser-engravers", "accessories"])
+const CYRILLIC = /[\u0400-\u04FF]/
 
 const GOOGLE_CATEGORY = {
   printers: "6865",
   scanners: "306",
   "laser-engravers": "504642",
+  accessories: "499682",
 } as const
 
 const PCB_PRINTER_SLUG = "voltera-voltera-v1-pcb-printer"
 const PCB_CATEGORY = "3889"
 
 const PRODUCT_TYPE: Record<Locale, Record<string, string>> = {
-  en: { printers: "3D printers", scanners: "3D scanners", "laser-engravers": "Laser engravers", pcb: "PCB printers" },
-  de: { printers: "3D-Drucker", scanners: "3D-Scanner", "laser-engravers": "Lasergravierer", pcb: "Leiterplatten-Drucker" },
-  fr: { printers: "Imprimantes 3D", scanners: "Scanners 3D", "laser-engravers": "Graveurs laser", pcb: "Imprimantes PCB" },
-  it: { printers: "Stampanti 3D", scanners: "Scanner 3D", "laser-engravers": "Incisori laser", pcb: "Stampanti PCB" },
-  es: { printers: "Impresoras 3D", scanners: "Escáneres 3D", "laser-engravers": "Grabadores láser", pcb: "Impresoras PCB" },
-  nl: { printers: "3D-printers", scanners: "3D-scanners", "laser-engravers": "Lasergravers", pcb: "PCB-printers" },
+  en: { printers: "3D printers", scanners: "3D scanners", "laser-engravers": "Laser engravers", accessories: "Accessories", pcb: "PCB printers" },
+  de: { printers: "3D-Drucker", scanners: "3D-Scanner", "laser-engravers": "Lasergravierer", accessories: "Zubehör", pcb: "Leiterplatten-Drucker" },
+  fr: { printers: "Imprimantes 3D", scanners: "Scanners 3D", "laser-engravers": "Graveurs laser", accessories: "Accessoires", pcb: "Imprimantes PCB" },
+  it: { printers: "Stampanti 3D", scanners: "Scanner 3D", "laser-engravers": "Incisori laser", accessories: "Accessori", pcb: "Stampanti PCB" },
+  es: { printers: "Impresoras 3D", scanners: "Escáneres 3D", "laser-engravers": "Grabadores láser", accessories: "Accesorios", pcb: "Impresoras PCB" },
+  nl: { printers: "3D-printers", scanners: "3D-scanners", "laser-engravers": "Lasergravers", accessories: "Accessoires", pcb: "PCB-printers" },
 }
 
 const SPEC_INTRO: Record<Locale, string> = {
@@ -176,6 +178,28 @@ function feedDescription(product: Product, locale: Locale): string {
   return clip(`${base} ${SPEC_INTRO[locale]} ${specs.join(". ")}.`)
 }
 
+function containsRussian(value: string | undefined): boolean {
+  return Boolean(value && CYRILLIC.test(value))
+}
+
+function productContainsRussian(product: Product): boolean {
+  return [
+    product.name,
+    product.shortDescription,
+    product.description,
+    product.brandName,
+    product.brandSlug,
+    product.mpn,
+    ...product.highlights,
+    ...product.specs.flatMap((spec) => [spec.label, spec.value]),
+  ].some((value) => containsRussian(value))
+}
+
+function enoughImages(product: Product): boolean {
+  const minimum = product.category === "accessories" ? 1 : 2
+  return product.images.length >= minimum
+}
+
 function googleCategory(product: Product): string {
   if (product.slug === PCB_PRINTER_SLUG) return PCB_CATEGORY
   return GOOGLE_CATEGORY[product.category as keyof typeof GOOGLE_CATEGORY] ?? ""
@@ -194,7 +218,11 @@ function validGtin(value: string | undefined): string | undefined {
 
 export async function createGoogleShoppingFeed(locale: Locale): Promise<string> {
   const products = (await getAllProducts(locale)).filter(
-    (product) => FEED_CATEGORIES.has(product.category) && product.images.length >= 2 && !product.slug.startsWith("test-"),
+    (product) =>
+      FEED_CATEGORIES.has(product.category) &&
+      enoughImages(product) &&
+      !product.slug.startsWith("test-") &&
+      !productContainsRussian(product),
   )
   const items = products.map((product) => {
     const brand = product.brandName ?? product.brandSlug
@@ -227,14 +255,16 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
     </item>`
   }).join("")
 
-  return `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0" xml:lang="${locale}">
   <channel>
     <title>${STORE_NAME} (${locale})</title>
     <link>${BASE_URL}/${locale}</link>
     <description>Product feed for ${STORE_NAME} in ${locale}</description>${items}
   </channel>
 </rss>`
+
+  return xml.replace(/[\u0400-\u04FF]+/g, "")
 }
 
 export function xmlResponse(xml: string): Response {
