@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n/config"
+import { COMPANY, companyStreetLine } from "@/lib/company"
 import { formatPrice } from "@/lib/format"
 import type { ScheduleEntry } from "@/lib/db/schema"
 
@@ -8,11 +9,11 @@ import type { ScheduleEntry } from "@/lib/db/schema"
  */
 
 export const CREDITOR = {
-  name: "LN-SQUARED",
-  address: "Rue du Chénia 17, 7170 Manage, Belgium",
-  registration: "Company No. 0564.743.304",
-  vat: "BE0564743304",
-  email: "info@3djools.com",
+  name: COMPANY.legalName,
+  address: companyStreetLine,
+  registration: `Company No. ${COMPANY.companyNumber}`,
+  vat: COMPANY.vat,
+  email: COMPANY.email,
 }
 
 type ClauseSet = {

@@ -87,9 +87,14 @@ export function ProductInfo({ product }: { product: Product }) {
 
       {/* Trust badges */}
       <ul className="mt-6 grid grid-cols-1 gap-3 rounded-lg border border-border bg-card p-4 sm:grid-cols-3">
-        <li className="flex items-center gap-2 text-sm text-foreground">
-          <Truck className="size-4 shrink-0 text-primary" />
-          {dict.product.freeShipping}
+        <li className="flex items-start gap-2 text-sm text-foreground">
+          <Truck className="mt-0.5 size-4 shrink-0 text-primary" />
+          <span>
+            {dict.product.freeShipping}
+            <span className="mt-0.5 block text-xs font-normal leading-relaxed text-muted-foreground">
+              {dict.product.deliveryEstimate}
+            </span>
+          </span>
         </li>
         <li className="flex items-center gap-2 text-sm text-foreground">
           <ShieldCheck className="size-4 shrink-0 text-primary" />

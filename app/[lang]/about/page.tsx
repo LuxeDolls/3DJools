@@ -3,6 +3,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
 import { ProsePage, ProseSection } from "@/components/legal/prose-page"
+import { COMPANY, fillCompany } from "@/lib/company"
 
 type AboutCopy = {
   h1Heading: string
@@ -33,7 +34,7 @@ const COPY: Record<Locale, AboutCopy> = {
     h3Heading: "The brands we trust",
     h3: "Bambu Lab, Prusa, Creality, Anycubic, Elegoo, Flashforge and Snapmaker — we stock the brands with the track record, the community and the spare-part availability to keep you printing for years.",
     h4Heading: "Company & contact details",
-    h4Intro: "3DJools is operated by LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgium (Company No. 0564.743.304, VAT BE0564743304).",
+    h4Intro: "3DJools is operated by {legalName}, {street}, {postalCode} {city}, Hainaut, Belgium (Company No. {companyNumber}, VAT {vat}).",
     emailLabel: "Email",
     phoneLabel: "Phone",
     hoursLabel: "Business hours",
@@ -52,7 +53,7 @@ const COPY: Record<Locale, AboutCopy> = {
     h3Heading: "Die Marken, denen wir vertrauen",
     h3: "Bambu Lab, Prusa, Creality, Anycubic, Elegoo, Flashforge und Snapmaker — wir führen die Marken mit der Erfahrung, der Community und der Ersatzteilverfügbarkeit, die Sie jahrelang zum Drucken brauchen.",
     h4Heading: "Unternehmens- & Kontaktdaten",
-    h4Intro: "3DJools wird betrieben von LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgien (Unternehmensnummer 0564.743.304, USt-IdNr. BE0564743304).",
+    h4Intro: "3DJools wird betrieben von {legalName}, {street}, {postalCode} {city}, Hainaut, Belgien (Unternehmensnummer {companyNumber}, USt-IdNr. {vat}).",
     emailLabel: "E-Mail",
     phoneLabel: "Telefon",
     hoursLabel: "Geschäftszeiten",
@@ -71,7 +72,7 @@ const COPY: Record<Locale, AboutCopy> = {
     h3Heading: "Les marques auxquelles nous faisons confiance",
     h3: "Bambu Lab, Prusa, Creality, Anycubic, Elegoo, Flashforge et Snapmaker — nous proposons les marques qui ont l'expérience, la communauté et la disponibilité de pièces détachées pour vous faire imprimer pendant des années.",
     h4Heading: "Informations sur l'entreprise & contact",
-    h4Intro: "3DJools est exploitée par LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgique (n° d'entreprise 0564.743.304, TVA BE0564743304).",
+    h4Intro: "3DJools est exploitée par {legalName}, {street}, {postalCode} {city}, Hainaut, Belgique (n° d'entreprise {companyNumber}, TVA {vat}).",
     emailLabel: "E-mail",
     phoneLabel: "Téléphone",
     hoursLabel: "Horaires d'ouverture",
@@ -90,7 +91,7 @@ const COPY: Record<Locale, AboutCopy> = {
     h3Heading: "I marchi di cui ci fidiamo",
     h3: "Bambu Lab, Prusa, Creality, Anycubic, Elegoo, Flashforge e Snapmaker — proponiamo i marchi con l'esperienza, la community e la disponibilità di ricambi che ti permettono di stampare per anni.",
     h4Heading: "Dati aziendali & contatti",
-    h4Intro: "3DJools è gestito da LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgio (numero di società 0564.743.304, P.IVA BE0564743304).",
+    h4Intro: "3DJools è gestito da {legalName}, {street}, {postalCode} {city}, Hainaut, Belgio (numero di società {companyNumber}, P.IVA {vat}).",
     emailLabel: "E-mail",
     phoneLabel: "Telefono",
     hoursLabel: "Orari di apertura",
@@ -109,7 +110,7 @@ const COPY: Record<Locale, AboutCopy> = {
     h3Heading: "Las marcas en las que confiamos",
     h3: "Bambu Lab, Prusa, Creality, Anycubic, Elegoo, Flashforge y Snapmaker — trabajamos con las marcas que tienen el historial, la comunidad y la disponibilidad de repuestos para mantenerlo imprimiendo durante años.",
     h4Heading: "Datos de la empresa & contacto",
-    h4Intro: "3DJools está operada por LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica (n.º de empresa 0564.743.304, IVA BE0564743304).",
+    h4Intro: "3DJools está operada por {legalName}, {street}, {postalCode} {city}, Hainaut, Bélgica (n.º de empresa {companyNumber}, IVA {vat}).",
     emailLabel: "Correo electrónico",
     phoneLabel: "Teléfono",
     hoursLabel: "Horario comercial",
@@ -128,7 +129,7 @@ const COPY: Record<Locale, AboutCopy> = {
     h3Heading: "De merken die we vertrouwen",
     h3: "Bambu Lab, Prusa, Creality, Anycubic, Elegoo, Flashforge en Snapmaker — wij voeren de merken met de trackrecord, de community en de beschikbaarheid van onderdelen om u jarenlang te laten printen.",
     h4Heading: "Bedrijfs- & contactgegevens",
-    h4Intro: "3DJools wordt beheerd door LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, België (ondernemingsnummer 0564.743.304, btw-nummer BE0564743304).",
+    h4Intro: "3DJools wordt beheerd door {legalName}, {street}, {postalCode} {city}, Hainaut, België (ondernemingsnummer {companyNumber}, btw-nummer {vat}).",
     emailLabel: "E-mail",
     phoneLabel: "Telefoon",
     hoursLabel: "Openingstijden",
@@ -152,7 +153,7 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
-  const t = COPY[locale]
+  const t = fillCompany(COPY[locale])
 
   return (
     <ProsePage
@@ -174,11 +175,11 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
         <p>{t.h4Intro}</p>
         <p>
           {t.emailLabel}:{" "}
-          <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">
-            info@3djools.com
+          <a href={`mailto:${COMPANY.email}`} className="underline underline-offset-2 hover:text-foreground">
+            {COMPANY.email}
           </a>
           <br />
-          {t.phoneLabel}: +32 460 00 80 70
+          {t.phoneLabel}: <a href={`tel:${COMPANY.phoneTel}`} className="underline underline-offset-2 hover:text-foreground">{COMPANY.phoneDisplay}</a>
           <br />
           {t.hoursLabel}: Monday–Friday, 9:00–18:00 CET
         </p>

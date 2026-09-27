@@ -39,6 +39,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Belgium")
   const [submitting, setSubmitting] = useState(false)
+  const [termsAccepted, setTermsAccepted] = useState(false)
   const [orderError, setOrderError] = useState<string | null>(null)
   const router = useRouter()
 
@@ -70,6 +71,10 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (submitting) return
+    if (!termsAccepted) {
+      setOrderError(dict.checkout.termsConsentError)
+      return
+    }
     setOrderError(null)
     const fd = new FormData(e.currentTarget)
     const str = (k: string) => String(fd.get(k) ?? "").trim()
@@ -86,6 +91,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         phone: str("phone"),
         payment,
         cryptoCoin: payment === "crypto" ? cryptoCoin : undefined,
+        termsAccepted,
         items: lines.map((l) => ({ slug: l.slug, quantity: l.quantity, brand: l.brand, image: l.image })),
       })
       if (!res.ok) {
@@ -318,6 +324,27 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         </div>
         <p className="mt-1 text-xs text-muted-foreground">{dict.cart.vatIncluded}</p>
 
+        <label className="mt-4 flex items-start gap-2 text-xs leading-relaxed text-muted-foreground">
+          <input
+            type="checkbox"
+            name="termsAccepted"
+            checked={termsAccepted}
+            onChange={(event) => setTermsAccepted(event.target.checked)}
+            required
+            className="mt-0.5 size-4 shrink-0 accent-primary"
+          />
+          <span>
+            {dict.checkout.termsConsentBefore}{" "}
+            <Link href={lp("/terms")} className="font-medium text-primary underline-offset-4 hover:underline">
+              {dict.footer.terms}
+            </Link>{" "}
+            {dict.checkout.termsConsentAnd}{" "}
+            <Link href={lp("/privacy")} className="font-medium text-primary underline-offset-4 hover:underline">
+              {dict.footer.privacy}
+            </Link>{" "}
+            {dict.checkout.termsConsentAfter}
+          </span>
+        </label>
         {orderError && (
                 <p className="mb-3 text-sm text-destructive" role="alert">
                   {orderError}
@@ -327,10 +354,20 @@ export function CheckoutView({ locale }: { locale: Locale }) {
           <Button
             size="lg"
             className="mt-4 w-full"
-            render={<Link href={lp("/installments/apply")}>{it.checkoutInstallmentCta}</Link>}
-          />
+            type="button"
+            disabled={!termsAccepted}
+            onClick={() => {
+              if (!termsAccepted) {
+                setOrderError(dict.checkout.termsConsentError)
+                return
+              }
+              router.push(lp("/installments/apply"))
+            }}
+          >
+            {it.checkoutInstallmentCta}
+          </Button>
         ) : (
-          <Button size="lg" className="mt-4 w-full" type="submit" disabled={submitting}>
+          <Button size="lg" className="mt-4 w-full" type="submit" disabled={submitting || !termsAccepted}>
             <Lock className="size-4" />
             {submitting ? dict.checkout.processing : dict.checkout.placeOrder}
           </Button>

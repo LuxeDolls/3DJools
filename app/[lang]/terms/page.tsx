@@ -3,6 +3,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
 import { ProsePage, ProseSection } from "@/components/legal/prose-page"
+import { COMPANY, fillCompany } from "@/lib/company"
 
 type TermsCopy = {
   s1Heading: string
@@ -43,7 +44,7 @@ const COPY: Record<Locale, TermsCopy> = {
   en: {
     s1Heading: "1. Contracting party",
     s1Pre:
-      "The 3DJools online store is operated by LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgium (Company No. 0564.743.304, VAT BE0564743304). References to \u201cwe\u201d, \u201cus\u201d or the \u201cSeller\u201d in these terms mean LN-SQUARED. See our",
+      "The 3DJools online store is operated by {legalName}, {street}, {postalCode} {city}, Hainaut, Belgium (Company No. {companyNumber}, VAT {vat}). References to \u201cwe\u201d, \u201cus\u201d or the \u201cSeller\u201d in these terms mean {legalName}. See our",
     s1LinkPre: "legal notice",
     s1Post: "for full contact details. You can also reach us directly at",
     s2Heading: "2. Definitions",
@@ -79,7 +80,7 @@ const COPY: Record<Locale, TermsCopy> = {
   de: {
     s1Heading: "1. Vertragspartner",
     s1Pre:
-      "Der Online-Shop 3DJools wird betrieben von LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgien (Unternehmensnummer 0564.743.304, USt-IdNr. BE0564743304). Verweise auf \u201cwir\u201d, \u201cuns\u201d oder den \u201cVerkäufer\u201d in diesen Bedingungen bezeichnen LN-SQUARED. Vollständige Kontaktangaben finden Sie in unserem",
+      "Der Online-Shop 3DJools wird betrieben von {legalName}, {street}, {postalCode} {city}, Hainaut, Belgien (Unternehmensnummer {companyNumber}, USt-IdNr. {vat}). Verweise auf \u201cwir\u201d, \u201cuns\u201d oder den \u201cVerkäufer\u201d in diesen Bedingungen bezeichnen {legalName}. Vollständige Kontaktangaben finden Sie in unserem",
     s1LinkPre: "Impressum",
     s1Post: ". Sie erreichen uns auch direkt unter",
     s2Heading: "2. Begriffsbestimmungen",
@@ -115,7 +116,7 @@ const COPY: Record<Locale, TermsCopy> = {
   fr: {
     s1Heading: "1. Partie contractante",
     s1Pre:
-      "La boutique en ligne 3DJools est exploitée par LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgique (n° d'entreprise 0564.743.304, TVA BE0564743304). Les références à \u201cnous\u201d ou au \u201cVendeur\u201d dans les présentes conditions désignent LN-SQUARED. Consultez notre",
+      "La boutique en ligne 3DJools est exploitée par {legalName}, {street}, {postalCode} {city}, Hainaut, Belgique (n° d'entreprise {companyNumber}, TVA {vat}). Les références à \u201cnous\u201d ou au \u201cVendeur\u201d dans les présentes conditions désignent {legalName}. Consultez notre",
     s1LinkPre: "mention légale",
     s1Post: "pour les coordonnées complètes. Vous pouvez également nous contacter directement à",
     s2Heading: "2. Définitions",
@@ -151,7 +152,7 @@ const COPY: Record<Locale, TermsCopy> = {
   it: {
     s1Heading: "1. Controparte contrattuale",
     s1Pre:
-      "Il negozio online 3DJools è gestito da LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgio (numero di società 0564.743.304, P.IVA BE0564743304). I riferimenti a \u201cnoi\u201d o al \u201cVenditore\u201d in queste condizioni indicano LN-SQUARED. Per i dati di contatto completi, consulta la nostra",
+      "Il negozio online 3DJools è gestito da {legalName}, {street}, {postalCode} {city}, Hainaut, Belgio (numero di società {companyNumber}, P.IVA {vat}). I riferimenti a \u201cnoi\u201d o al \u201cVenditore\u201d in queste condizioni indicano {legalName}. Per i dati di contatto completi, consulta la nostra",
     s1LinkPre: "nota legale",
     s1Post: ". Puoi contattarci anche direttamente all'indirizzo",
     s2Heading: "2. Definizioni",
@@ -187,7 +188,7 @@ const COPY: Record<Locale, TermsCopy> = {
   es: {
     s1Heading: "1. Parte contratante",
     s1Pre:
-      "La tienda online 3DJools está operada por LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica (n.º de empresa 0564.743.304, IVA BE0564743304). Las referencias a \u201cnosotros\u201d o al \u201cVendedor\u201d en estas condiciones significan LN-SQUARED. Consulta nuestro",
+      "La tienda online 3DJools está operada por {legalName}, {street}, {postalCode} {city}, Hainaut, Bélgica (n.º de empresa {companyNumber}, IVA {vat}). Las referencias a \u201cnosotros\u201d o al \u201cVendedor\u201d en estas condiciones significan {legalName}. Consulta nuestro",
     s1LinkPre: "aviso legal",
     s1Post: "para los datos de contacto completos. También puedes contactarnos directamente en",
     s2Heading: "2. Definiciones",
@@ -223,7 +224,7 @@ const COPY: Record<Locale, TermsCopy> = {
   nl: {
     s1Heading: "1. Contractpartij",
     s1Pre:
-      "De webshop 3DJools wordt beheerd door LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, België (ondernemingsnummer 0564.743.304, btw-nummer BE0564743304). Verwijzingen naar \u201cwij\u201d, \u201cons\u201d of de \u201cVerkoper\u201d in deze voorwaarden betekenen LN-SQUARED. Raadpleeg ons",
+      "De webshop 3DJools wordt beheerd door {legalName}, {street}, {postalCode} {city}, Hainaut, België (ondernemingsnummer {companyNumber}, btw-nummer {vat}). Verwijzingen naar \u201cwij\u201d, \u201cons\u201d of de \u201cVerkoper\u201d in deze voorwaarden betekenen {legalName}. Raadpleeg ons",
     s1LinkPre: "impressum",
     s1Post: "voor volledige contactgegevens. U kunt ons ook rechtstreeks bereiken via",
     s2Heading: "2. Definities",
@@ -269,7 +270,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
-  const t = COPY[locale]
+  const t = fillCompany(COPY[locale])
 
   return (
     <ProsePage
@@ -285,8 +286,8 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
             {dict.footer.impressum}
           </Link>{" "}
           {t.s1Post}{" "}
-          <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">
-            info@3djools.com
+          <a href={`mailto:${COMPANY.email}`} className="underline underline-offset-2 hover:text-foreground">
+            {COMPANY.email}
           </a>
           .
         </p>

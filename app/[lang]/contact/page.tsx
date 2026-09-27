@@ -5,6 +5,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { ContactForm } from "@/components/contact/contact-form"
+import { COMPANY, companyStreetLine } from "@/lib/company"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -19,13 +20,13 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const dict = await getDictionary(locale)
 
   const details = [
-    { icon: Mail, label: dict.contact.email_label, value: "info@3djools.com", href: "mailto:info@3djools.com" },
-    { icon: Phone, label: dict.contact.phone_label, value: "+32 460 00 80 70" },
+    { icon: Mail, label: dict.contact.email_label, value: COMPANY.email, href: `mailto:${COMPANY.email}` },
+    { icon: Phone, label: dict.contact.phone_label, value: COMPANY.phoneDisplay, href: `tel:${COMPANY.phoneTel}` },
     { icon: Clock, label: dict.contact.hours_label, value: dict.contact.hours },
     {
       icon: MapPin,
       label: dict.contact.address_label,
-      value: "LN-SQUARED (3DJools), Rue du Chénia 17, 7170 Manage, Belgium",
+      value: `${COMPANY.legalName} (${COMPANY.tradingName}), ${companyStreetLine}`,
     },
   ]
 

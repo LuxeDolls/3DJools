@@ -143,7 +143,7 @@ function googleProductId(product: { id: string; slug: string }): string {
   if (product.id.length <= 50) return product.id
 
   const readableSlug = product.slug.replace(/[^a-zA-Z0-9-]/g, "-").slice(0, 31)
-  return `p-${hashForGoogleId(product.id)}-${readableSlug}`
+  return `p-${hashForGoogleId(product.id)}-${readableSlug}`.slice(0, 50)
 }
 
 function wordCount(value: string): number {
