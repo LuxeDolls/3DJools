@@ -70,7 +70,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "What is your return policy?",
             answer:
-              "We offer a 14-day return policy in line with the EU statutory withdrawal period. We accept returns of both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. Once we receive and inspect the return, we refund you within 14 days.",
+              "As a consumer in the EU you can withdraw within 14 days of receiving the goods, without giving a reason. We accept returns of both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. Once we receive and inspect the return, we refund your original payment method within 14 days.",
           },
           {
             question: "Who pays for return shipping?",
@@ -80,7 +80,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Do you offer a warranty?",
             answer:
-              "Every item is covered by the EU statutory 2-year consumer guarantee against defects, and many manufacturers add their own warranty on top. Our support team helps arrange any repair or replacement.",
+              "Every machine we sell is covered by the EU statutory 2-year consumer guarantee against defects. Many manufacturers also provide their own additional warranty. Our support team helps arrange any repair or replacement.",
           },
         ],
       },
@@ -92,14 +92,14 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "SEPA bank transfer, cryptocurrency and interest-free instalments. Card payment is not offered. Details are on our ",
+                "SEPA bank transfer, cryptocurrency and interest-free instalments. Card payment is temporarily unavailable. Details are on our ",
               label: "payment methods page",
               after: ".",
             },
           },
           {
             question: "How do interest-free instalments work?",
-            answer: "Your order is split into four equal payments over two months, with no interest and no fees.",
+            answer: "For orders of €1,000 or more, the order is split into four equal payments over two months, with no interest and no fees.",
           },
           {
             question: "Are prices shown with VAT?",
@@ -168,7 +168,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wie lauten Ihre Rückgabebedingungen?",
             answer:
-              "Wir bieten eine Rückgabe innerhalb von 14 Tagen im Rahmen des gesetzlichen Widerrufsrechts der EU. Wir nehmen sowohl mangelfreie als auch mangelhafte Produkte zurück. Die Artikel müssen neu sein und im ursprünglichen Zustand sowie in der Originalverpackung zurückgesendet werden. Ein Umtausch ist nicht möglich. Nach Erhalt und Prüfung erstatten wir den Kaufpreis innerhalb von 14 Tagen.",
+              "Als Verbraucher in der EU können Sie den Kauf innerhalb von 14 Tagen nach Erhalt der Ware ohne Angabe von Gründen widerrufen. Wir nehmen sowohl mangelfreie als auch mangelhafte Produkte zurück. Die Artikel müssen neu sein und im ursprünglichen Zustand sowie in der Originalverpackung zurückgesendet werden. Ein Umtausch ist nicht möglich. Nach Erhalt und Prüfung erstatten wir den Betrag innerhalb von 14 Tagen auf Ihre ursprüngliche Zahlungsmethode.",
           },
           {
             question: "Wer trägt die Kosten der Rücksendung?",
@@ -178,7 +178,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Gibt es eine Garantie?",
             answer:
-              "Jeder Artikel ist durch die gesetzliche zweijährige Verbrauchergarantie der EU gegen Mängel abgedeckt. Viele Hersteller gewähren zusätzlich eine eigene Garantie. Unser Support hilft bei Reparatur oder Ersatz.",
+              "Jede von uns verkaufte Maschine ist durch die gesetzliche zweijährige EU-Verbrauchergarantie gegen Mängel abgedeckt. Viele Hersteller gewähren zusätzlich eine eigene Garantie. Unser Support hilft bei Reparatur oder Ersatz.",
           },
         ],
       },
@@ -190,14 +190,14 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "SEPA-Überweisung, Kryptowährung und zinsfreie Ratenzahlung. Kartenzahlung bieten wir nicht an. Einzelheiten stehen auf unserer Seite ",
+                "SEPA-Überweisung, Kryptowährung und zinsfreie Ratenzahlung. Die Kartenzahlung ist vorübergehend nicht verfügbar. Einzelheiten stehen auf unserer Seite ",
               label: "Zahlungsarten",
               after: ".",
             },
           },
           {
             question: "Wie funktioniert die zinsfreie Ratenzahlung?",
-            answer: "Ihre Bestellung wird in vier gleiche Zahlungen über zwei Monate aufgeteilt, ohne Zinsen und ohne Gebühren.",
+            answer: "Ab einem Bestellwert von 1.000 € wird die Bestellung in vier gleiche Zahlungen über zwei Monate aufgeteilt, ohne Zinsen und ohne Gebühren.",
           },
           {
             question: "Sind die Preise inklusive MwSt.?",
@@ -266,7 +266,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quelle est votre politique de retour ?",
             answer:
-              "Nous appliquons un délai de retour de 14 jours, conformément au droit de rétractation prévu par le droit de l'UE. Nous acceptons les retours de produits non défectueux et défectueux. Les articles doivent être neufs et renvoyés dans leur état et leur emballage d'origine. Les échanges ne sont pas acceptés. Dès réception et contrôle du retour, nous vous remboursons sous 14 jours.",
+              "En tant que consommateur dans l'UE, vous pouvez vous rétracter dans les 14 jours suivant la réception des marchandises, sans avoir à justifier de motif. Nous acceptons les retours de produits non défectueux et défectueux. Les articles doivent être neufs et renvoyés dans leur état et leur emballage d'origine. Les échanges ne sont pas acceptés. Dès réception et contrôle du retour, nous remboursons votre moyen de paiement d'origine sous 14 jours.",
           },
           {
             question: "Qui paie les frais de retour ?",
@@ -276,7 +276,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Proposez-vous une garantie ?",
             answer:
-              "Chaque article est couvert par la garantie légale de conformité de 2 ans prévue par le droit de l'UE contre les défauts, et de nombreux fabricants ajoutent leur propre garantie. Notre équipe d'assistance organise toute réparation ou tout remplacement.",
+              "Chaque machine que nous vendons est couverte par la garantie légale européenne de 2 ans contre les défauts. De nombreux fabricants ajoutent leur propre garantie. Notre équipe d'assistance organise toute réparation ou tout remplacement.",
           },
         ],
       },
@@ -288,14 +288,14 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Virement SEPA, cryptomonnaie et paiement en plusieurs fois sans intérêt. Le paiement par carte n'est pas proposé. Les détails figurent sur notre ",
+                "Virement SEPA, cryptomonnaie et paiement en plusieurs fois sans intérêt. Le paiement par carte est temporairement indisponible. Les détails figurent sur notre ",
               label: "page des moyens de paiement",
               after: ".",
             },
           },
           {
             question: "Comment fonctionne le paiement en plusieurs fois sans intérêt ?",
-            answer: "Votre commande est répartie en quatre versements égaux sur deux mois, sans intérêt et sans frais.",
+            answer: "Pour les commandes de 1 000 € ou plus, la commande est répartie en quatre versements égaux sur deux mois, sans intérêt et sans frais.",
           },
           {
             question: "Les prix incluent-ils la TVA ?",
@@ -364,7 +364,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Qual è la vostra politica di reso?",
             answer:
-              "Offriamo un reso di 14 giorni, in linea con il diritto di recesso previsto dal diritto dell'UE. Accettiamo resi sia di prodotti non difettosi sia di prodotti difettosi. Gli articoli devono essere nuovi e restituiti nelle condizioni e nella confezione originali. I cambi non sono accettati. Dopo aver ricevuto e controllato il reso, rimborsiamo entro 14 giorni.",
+              "Come consumatore nell'UE puoi recedere entro 14 giorni dalla ricezione della merce, senza fornire alcuna motivazione. Accettiamo resi sia di prodotti non difettosi sia di prodotti difettosi. Gli articoli devono essere nuovi e restituiti nelle condizioni e nella confezione originali. I cambi non sono accettati. Dopo aver ricevuto e controllato il reso, rimborsiamo il metodo di pagamento originale entro 14 giorni.",
           },
           {
             question: "Chi paga la spedizione di reso?",
@@ -374,7 +374,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Offrite una garanzia?",
             answer:
-              "Ogni articolo è coperto dalla garanzia legale di conformità di 2 anni prevista dal diritto dell'UE contro i difetti, e molti produttori aggiungono una propria garanzia. Il nostro supporto aiuta a organizzare riparazione o sostituzione.",
+              "Ogni macchina che vendiamo è coperta dalla garanzia legale UE di 2 anni contro i difetti. Molti produttori aggiungono una propria garanzia. Il nostro supporto aiuta a organizzare riparazione o sostituzione.",
           },
         ],
       },
@@ -386,14 +386,14 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Bonifico SEPA, criptovaluta e rate senza interessi. Il pagamento con carta non è offerto. I dettagli sono sulla nostra ",
+                "Bonifico SEPA, criptovaluta e rate senza interessi. Il pagamento con carta è temporaneamente non disponibile. I dettagli sono sulla nostra ",
               label: "pagina dei metodi di pagamento",
               after: ".",
             },
           },
           {
             question: "Come funzionano le rate senza interessi?",
-            answer: "L'ordine viene suddiviso in quattro pagamenti uguali nell'arco di due mesi, senza interessi e senza commissioni.",
+            answer: "Per ordini da 1.000 € in su, l'ordine viene suddiviso in quattro pagamenti uguali nell'arco di due mesi, senza interessi e senza commissioni.",
           },
           {
             question: "I prezzi includono l'IVA?",
@@ -462,7 +462,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿Cuál es vuestra política de devoluciones?",
             answer:
-              "Ofrecemos una devolución de 14 días, conforme al derecho de desistimiento de la UE. Aceptamos devoluciones de productos no defectuosos y defectuosos. Los artículos deben ser nuevos y devolverse en su estado y embalaje originales. No aceptamos cambios. Una vez recibido y revisado el retorno, reembolsamos en un plazo de 14 días.",
+              "Como consumidor en la UE puede desistir en los 14 días siguientes a la recepción de los bienes, sin necesidad de justificar el motivo. Aceptamos devoluciones de productos no defectuosos y defectuosos. Los artículos deben ser nuevos y devolverse en su estado y embalaje originales. No aceptamos cambios. Una vez recibida y revisada la devolución, reembolsamos su método de pago original en un plazo de 14 días.",
           },
           {
             question: "¿Quién paga el envío de la devolución?",
@@ -472,7 +472,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿Ofrecéis garantía?",
             answer:
-              "Cada artículo está cubierto por la garantía legal de 2 años de la UE frente a defectos, y muchos fabricantes añaden su propia garantía. Nuestro equipo de soporte ayuda a gestionar cualquier reparación o reemplazo.",
+              "Cada máquina que vendemos está cubierta por la garantía legal de la UE de 2 años contra defectos. Muchos fabricantes añaden su propia garantía. Nuestro equipo de soporte ayuda a gestionar cualquier reparación o reemplazo.",
           },
         ],
       },
@@ -484,14 +484,14 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Transferencia SEPA, criptomoneda y plazos sin intereses. No ofrecemos pago con tarjeta. Los detalles están en nuestra ",
+                "Transferencia SEPA, criptomoneda y plazos sin intereses. El pago con tarjeta no está disponible temporalmente. Los detalles están en nuestra ",
               label: "página de métodos de pago",
               after: ".",
             },
           },
           {
             question: "¿Cómo funcionan los plazos sin intereses?",
-            answer: "El pedido se divide en cuatro pagos iguales a lo largo de dos meses, sin intereses y sin comisiones.",
+            answer: "Para pedidos de 1.000 € o más, el pedido se divide en cuatro pagos iguales a lo largo de dos meses, sin intereses y sin comisiones.",
           },
           {
             question: "¿Los precios incluyen el IVA?",
@@ -560,7 +560,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wat is jullie retourbeleid?",
             answer:
-              "We bieden een retourtermijn van 14 dagen, in lijn met het wettelijke herroepingsrecht van de EU. We aanvaarden retouren van zowel niet-defecte als defecte producten. Artikelen moeten nieuw zijn en in de oorspronkelijke staat en verpakking worden teruggestuurd. Ruilen is niet mogelijk. Zodra we de retour hebben ontvangen en gecontroleerd, betalen we binnen 14 dagen terug.",
+              "Als consument in de EU kunt u binnen 14 dagen na ontvangst van de goederen herroepen, zonder opgave van reden. We aanvaarden retouren van zowel niet-defecte als defecte producten. Artikelen moeten nieuw zijn en in de oorspronkelijke staat en verpakking worden teruggestuurd. Ruilen is niet mogelijk. Zodra we de retour hebben ontvangen en gecontroleerd, betalen we binnen 14 dagen terug op uw oorspronkelijke betaalmethode.",
           },
           {
             question: "Wie betaalt de retourzending?",
@@ -570,7 +570,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Bieden jullie garantie?",
             answer:
-              "Elk artikel valt onder de wettelijke consumentengarantie van 2 jaar van de EU tegen gebreken, en veel fabrikanten voegen daar een eigen garantie aan toe. Onze support helpt bij reparatie of vervanging.",
+              "Elke machine die wij verkopen valt onder de wettelijke EU-consumentengarantie van 2 jaar tegen gebreken. Veel fabrikanten voegen daar een eigen garantie aan toe. Onze support helpt bij reparatie of vervanging.",
           },
         ],
       },
@@ -582,14 +582,14 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "SEPA-overschrijving, cryptovaluta en renteloze termijnen. Betaling met kaart bieden we niet aan. De details staan op onze ",
+                "SEPA-overschrijving, cryptovaluta en renteloze termijnen. Betalen met kaart is momenteel niet beschikbaar. De details staan op onze ",
               label: "pagina met betaalmethoden",
               after: ".",
             },
           },
           {
             question: "Hoe werken de renteloze termijnen?",
-            answer: "Je bestelling wordt verdeeld in vier gelijke betalingen over twee maanden, zonder rente en zonder kosten.",
+            answer: "Voor bestellingen vanaf € 1.000 wordt de bestelling verdeeld in vier gelijke betalingen over twee maanden, zonder rente en zonder kosten.",
           },
           {
             question: "Zijn de prijzen inclusief btw?",
