@@ -5,7 +5,7 @@ import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
 
 const BASE = SITE_ORIGIN
 
-const unlistedCategories = new Set(["filaments", "spare-parts"])
+const unlistedCategories = new Set(["spare-parts"])
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPaths = [

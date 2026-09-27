@@ -183,9 +183,8 @@ export async function getAllProductSlugs(): Promise<string[]> {
   return rows.map((r) => r.slug)
 }
 
-/** Categories taken off the storefront. Their pages 404 or are no longer sold,
- *  so they must not appear in the sitemap even if old rows remain in the DB. */
-const unlistedCategories = ["filaments", "spare-parts"] as const
+/** Spare parts are off the storefront. Filaments stay indexed when they are still for sale. */
+const unlistedCategories = ["spare-parts"] as const
 
 /** Live products that should be indexed: not archived, and not in a removed category. */
 export async function getSitemapProducts(): Promise<
