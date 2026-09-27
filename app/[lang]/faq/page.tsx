@@ -37,12 +37,12 @@ const faqGroups = [
       {
         question: "What is your return policy?",
         answer:
-          "We offer a 14-day return policy in line with the EU statutory withdrawal period. We accept returns for both non-defective and defective products, but exchanges are not accepted. Once we receive and inspect the return, we refund you within 14 days.",
+          "We offer a 14-day return policy in line with the EU statutory withdrawal period. We accept returns of both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. Once we receive and inspect the return, we refund you within 14 days.",
       },
       {
         question: "Who pays for return shipping?",
         answer:
-          "If you simply change your mind, you cover the direct cost of returning the item. If your order arrived damaged, faulty or incorrect, we cover return shipping in full — contact us within 48 hours with photos.",
+          "Return shipping is free for accepted returns, including non-defective and defective products. We provide a return label to download and print, and there is no restocking fee. If an item arrives damaged or faulty, contact us within 48 hours with photos and we will arrange a free replacement or return.",
       },
       {
         question: "Do you offer a warranty?",
@@ -57,7 +57,7 @@ const faqGroups = [
       {
         question: "What payment methods do you accept?",
         answer:
-          "SEPA bank transfer, cryptocurrency and interest-free instalments. Card payment is temporarily unavailable — see our payment methods page for details.",
+          "SEPA bank transfer, cryptocurrency and interest-free instalments. Card payment is not offered. Details are on our payment methods page.",
       },
       {
         question: "How do interest-free instalments work?",
