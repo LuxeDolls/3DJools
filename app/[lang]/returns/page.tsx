@@ -31,7 +31,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "As a consumer in the EU you have a statutory right to withdraw from your purchase within 14 days of receiving your goods, without giving any reason, in line with EU consumer protection law. We accept returns for both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. To exercise this right, contact us with your order reference and we'll guide you through the return.",
     howToHeading: "How to return an item",
     howTo:
-      "Items must be returned in their original condition and packaging to: Ln-Squared (3DJools returns), Rue du Chénia 17, 7170 Manage, Hainaut, Belgium. Once we receive and inspect the return, we'll issue a refund to your original payment method within 14 days. For instalment and bank-transfer orders, refunds are made to the account used for payment.",
+      "Items must be returned in their original condition and packaging to: LN-SQUARED (3DJools returns), Rue du Chénia 17, 7170 Manage, Hainaut, Belgium. Once we receive and inspect the return, we'll issue a refund to your original payment method within 14 days. For instalment and bank-transfer orders, refunds are made to the account used for payment.",
     whoPaysHeading: "Who pays for return shipping",
     whoPays:
       "Return shipping is free for accepted returns, including returns of non-defective and defective products. We provide a return label to download and print. There are no restocking fees. See \u201cDamaged or faulty on arrival\u201d below for items that arrive damaged or faulty.",
@@ -42,7 +42,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
     damaged:
       "If your order arrives damaged or faulty, contact us within 48 hours with photos and we'll arrange a free replacement or return at no cost to you.",
     contactHeading: "Contact information",
-    contactPre: "For cancellations, returns or refund questions, reach Ln-Squared at",
+    contactPre: "For cancellations, returns or refund questions, reach LN-SQUARED at",
     contactMid: ", by phone at +32 460 00 80 70 (Mon–Fri, 9:00–18:00 CET), or by post at",
     contactPost: ".",
   },
@@ -55,7 +55,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Als Verbraucher in der EU haben Sie gemäß dem EU-Verbraucherschutzrecht ein gesetzliches Widerrufsrecht, mit dem Sie Ihren Kauf innerhalb von 14 Tagen nach Erhalt der Ware ohne Angabe von Gründen widerrufen können. Wir akzeptieren Rückgaben sowohl für mangelfreie als auch für mangelhafte Produkte. Die Artikel müssen neu sowie im Originalzustand und in der Originalverpackung sein. Umtausch ist nicht möglich. Um dieses Recht auszuüben, kontaktieren Sie uns mit Ihrer Bestellnummer, und wir führen Sie durch die Rückgabe.",
     howToHeading: "So geben Sie einen Artikel zurück",
     howTo:
-      "Artikel müssen im Originalzustand und in der Originalverpackung zurückgesendet werden an: Ln-Squared (3DJools Retouren), Rue du Chénia 17, 7170 Manage, Hainaut, Belgien. Sobald wir die Rücksendung erhalten und geprüft haben, erstatten wir den Betrag innerhalb von 14 Tagen auf Ihre ursprüngliche Zahlungsmethode. Bei Raten- und Überweisungsbestellungen erfolgt die Erstattung auf das für die Zahlung verwendete Konto.",
+      "Artikel müssen im Originalzustand und in der Originalverpackung zurückgesendet werden an: LN-SQUARED (3DJools Retouren), Rue du Chénia 17, 7170 Manage, Hainaut, Belgien. Sobald wir die Rücksendung erhalten und geprüft haben, erstatten wir den Betrag innerhalb von 14 Tagen auf Ihre ursprüngliche Zahlungsmethode. Bei Raten- und Überweisungsbestellungen erfolgt die Erstattung auf das für die Zahlung verwendete Konto.",
     whoPaysHeading: "Wer trägt die Rücksendekosten",
     whoPays:
       "Die Rücksendung ist für akzeptierte Rückgaben kostenlos, sowohl für mangelfreie als auch für mangelhafte Produkte. Wir stellen ein Rücksendeetikett zum Herunterladen und Ausdrucken bereit. Es fallen keine Wiedereinlagerungsgebühren an. Für bei Ankunft beschädigte oder fehlerhafte Artikel siehe \u201cBeschädigt oder fehlerhaft bei Ankunft\u201d unten.",
@@ -66,7 +66,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
     damaged:
       "Kommt Ihre Bestellung beschädigt oder fehlerhaft an, kontaktieren Sie uns innerhalb von 48 Stunden mit Fotos, und wir organisieren einen kostenlosen Ersatz oder eine kostenlose Rücksendung.",
     contactHeading: "Kontaktinformationen",
-    contactPre: "Bei Fragen zu Stornierungen, Rückgaben oder Rückerstattungen erreichen Sie Ln-Squared unter",
+    contactPre: "Bei Fragen zu Stornierungen, Rückgaben oder Rückerstattungen erreichen Sie LN-SQUARED unter",
     contactMid: ", telefonisch unter +32 460 00 80 70 (Mo–Fr, 9:00–18:00 Uhr MEZ) oder per Post an",
     contactPost: ".",
   },
@@ -79,10 +79,10 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "En tant que consommateur au sein de l'UE, vous disposez d'un droit légal de rétractation vous permettant d'annuler votre achat dans les 14 jours suivant la réception de vos marchandises, sans avoir à justifier de motif, conformément au droit européen de protection des consommateurs. Nous acceptons les retours de produits non défectueux comme de produits défectueux. Les articles doivent être neufs, dans leur état et emballage d'origine. Les échanges ne sont pas acceptés. Pour exercer ce droit, contactez-nous avec votre référence de commande et nous vous guiderons dans la procédure de retour.",
     howToHeading: "Comment retourner un article",
     howTo:
-      "Les articles doivent être retournés dans leur état et emballage d'origine à l'adresse suivante : Ln-Squared (retours 3DJools), Rue du Chénia 17, 7170 Manage, Hainaut, Belgique. Une fois le retour reçu et vérifié, nous procéderons au remboursement sur votre moyen de paiement d'origine dans un délai de 14 jours. Pour les commandes payées en plusieurs fois ou par virement bancaire, le remboursement est effectué sur le compte utilisé pour le paiement.",
+      "Les articles doivent être retournés dans leur état et emballage d'origine à l'adresse suivante : LN-SQUARED (retours 3DJools), Rue du Chénia 17, 7170 Manage, Hainaut, Belgique. Une fois le retour reçu et vérifié, nous procéderons au remboursement sur votre moyen de paiement d'origine dans un délai de 14 jours. Pour les commandes payées en plusieurs fois ou par virement bancaire, le remboursement est effectué sur le compte utilisé pour le paiement.",
     whoPaysHeading: "Qui paie les frais de retour",
     whoPays:
-      "Les frais de retour sont gratuits pour les retours acceptés, qu'il s'agisse de produits non défectueux ou défectueux. Nous fournissons une étiquette de retour à télécharger et à imprimer. Aucun frais de restockage ne s'applique. Pour les articles endommagés ou défectueux à l'arrivée, voir \u201cArticle endommagé ou défectueux à l'arrivée\u201d ci-dessous.",
+      "Les frais de retour sont gratuits pour les retours acceptés, qu'il s'agisse de produits non défectueux ou défectueux. Nous fournissons une étiquette de retour à télécharger et à imprimer. Aucun frais de restockage ne s'applique. Pour les articles endommagés ou défectueux à l'arrivée, voir \u201cArticle endommagé ou défectueux �� l'arrivée\u201d ci-dessous.",
     warrantyHeading: "Garantie",
     warranty:
       "Chaque machine que nous vendons est couverte par la garantie légale européenne de 2 ans contre les défauts. De nombreux fabricants proposent également leur propre garantie supplémentaire. En cas de problème, notre équipe d'assistance vous aidera à organiser une réparation ou un remplacement.",
@@ -90,7 +90,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
     damaged:
       "Si votre commande arrive endommagée ou défectueuse, contactez-nous dans les 48 heures avec des photos et nous organiserons un remplacement ou un retour gratuit, sans frais pour vous.",
     contactHeading: "Coordonnées",
-    contactPre: "Pour toute question relative aux annulations, retours ou remboursements, contactez Ln-Squared à",
+    contactPre: "Pour toute question relative aux annulations, retours ou remboursements, contactez LN-SQUARED à",
     contactMid: ", par téléphone au +32 460 00 80 70 (lun.–ven., 9h00–18h00 CET), ou par courrier à",
     contactPost: ".",
   },
@@ -103,7 +103,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "In qualità di consumatore nell'UE, hai il diritto legale di recedere dal tuo acquisto entro 14 giorni dalla ricezione della merce, senza fornire alcuna motivazione, in conformità con il diritto UE a tutela dei consumatori. Accettiamo resi sia di prodotti non difettosi sia di prodotti difettosi. Gli articoli devono essere nuovi e nelle condizioni e nella confezione originali. Non accettiamo cambi. Per esercitare questo diritto, contattaci con il tuo numero d'ordine e ti guideremo nella procedura di restituzione.",
     howToHeading: "Come restituire un articolo",
     howTo:
-      "Gli articoli devono essere restituiti nelle condizioni e nella confezione originali all'indirizzo: Ln-Squared (resi 3DJools), Rue du Chénia 17, 7170 Manage, Hainaut, Belgio. Una volta ricevuto e ispezionato il reso, emetteremo un rimborso sul metodo di pagamento originale entro 14 giorni. Per gli ordini a rate o con bonifico bancario, il rimborso viene effettuato sul conto utilizzato per il pagamento.",
+      "Gli articoli devono essere restituiti nelle condizioni e nella confezione originali all'indirizzo: LN-SQUARED (resi 3DJools), Rue du Chénia 17, 7170 Manage, Hainaut, Belgio. Una volta ricevuto e ispezionato il reso, emetteremo un rimborso sul metodo di pagamento originale entro 14 giorni. Per gli ordini a rate o con bonifico bancario, il rimborso viene effettuato sul conto utilizzato per il pagamento.",
     whoPaysHeading: "Chi paga la spedizione di ritorno",
     whoPays:
       "La spedizione di ritorno è gratuita per i resi accettati, sia per i prodotti non difettosi sia per quelli difettosi. Forniamo un'etichetta di reso da scaricare e stampare. Non sono applicate commissioni di reintegro. Per gli articoli arrivati danneggiati o difettosi, consulta \u201cDanneggiato o difettoso all'arrivo\u201d di seguito.",
@@ -114,7 +114,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
     damaged:
       "Se il tuo ordine arriva danneggiato o difettoso, contattaci entro 48 ore con delle foto e organizzeremo una sostituzione o una restituzione gratuita, senza alcun costo per te.",
     contactHeading: "Informazioni di contatto",
-    contactPre: "Per domande su annullamenti, resi o rimborsi, contatta Ln-Squared all'indirizzo",
+    contactPre: "Per domande su annullamenti, resi o rimborsi, contatta LN-SQUARED all'indirizzo",
     contactMid: ", telefonicamente al +32 460 00 80 70 (lun–ven, 9:00–18:00 CET), oppure per posta a",
     contactPost: ".",
   },
@@ -127,7 +127,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Como consumidor en la UE, tiene el derecho legal de desistir de su compra dentro de los 14 días posteriores a la recepción de los bienes, sin necesidad de justificar el motivo, de acuerdo con la legislación europea de protección al consumidor. Aceptamos devoluciones tanto de productos no defectuosos como defectuosos. Los artículos deben ser nuevos y estar en su estado y embalaje originales. No se aceptan cambios. Para ejercer este derecho, contáctenos con su número de pedido y le guiaremos en el proceso de devolución.",
     howToHeading: "Cómo devolver un artículo",
     howTo:
-      "Los artículos deben devolverse en su estado y embalaje originales a: Ln-Squared (devoluciones 3DJools), Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica. Una vez recibida e inspeccionada la devolución, emitiremos un reembolso a su método de pago original dentro de 14 días. Para pedidos con pago a plazos o transferencia bancaria, el reembolso se realiza a la cuenta utilizada para el pago.",
+      "Los artículos deben devolverse en su estado y embalaje originales a: LN-SQUARED (devoluciones 3DJools), Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica. Una vez recibida e inspeccionada la devolución, emitiremos un reembolso a su método de pago original dentro de 14 días. Para pedidos con pago a plazos o transferencia bancaria, el reembolso se realiza a la cuenta utilizada para el pago.",
     whoPaysHeading: "Quién paga el envío de devolución",
     whoPays:
       "El envío de devolución es gratuito para las devoluciones aceptadas, tanto de productos no defectuosos como defectuosos. Proporcionamos una etiqueta de devolución para descargar e imprimir. No se aplican gastos de reposición. Para los artículos dañados o defectuosos a la llegada, consulte \u201cDañado o defectuoso a la llegada\u201d más abajo.",
@@ -138,7 +138,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
     damaged:
       "Si su pedido llega dañado o defectuoso, contáctenos dentro de 48 horas con fotos y organizaremos una sustitución o devolución gratuita, sin ningún coste para usted.",
     contactHeading: "Información de contacto",
-    contactPre: "Para cancelaciones, devoluciones o preguntas sobre reembolsos, contacte con Ln-Squared en",
+    contactPre: "Para cancelaciones, devoluciones o preguntas sobre reembolsos, contacte con LN-SQUARED en",
     contactMid: ", por teléfono al +32 460 00 80 70 (lun–vie, 9:00–18:00 CET), o por correo postal a",
     contactPost: ".",
   },
@@ -151,7 +151,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Als consument in de EU heeft u het wettelijke recht om binnen 14 dagen na ontvangst van uw goederen uw aankoop te herroepen, zonder opgave van reden, in overeenstemming met het EU-consumentenrecht. Wij accepteren retouren van zowel niet-defecte als defecte producten. Artikelen moeten nieuw zijn en zich in de originele staat en verpakking bevinden. Ruilingen worden niet geaccepteerd. Om dit recht uit te oefenen, neemt u contact met ons op met uw bestelnummer en begeleiden wij u door de retourprocedure.",
     howToHeading: "Hoe u een artikel retourneert",
     howTo:
-      "Artikelen moeten in de originele staat en verpakking worden geretourneerd naar: Ln-Squared (3DJools retouren), Rue du Chénia 17, 7170 Manage, Hainaut, België. Zodra wij de retourzending hebben ontvangen en gecontroleerd, betalen wij binnen 14 dagen terug op uw oorspronkelijke betaalmethode. Bij bestellingen met gespreide betaling of overschrijving wordt terugbetaald op de rekening die voor de betaling is gebruikt.",
+      "Artikelen moeten in de originele staat en verpakking worden geretourneerd naar: LN-SQUARED (3DJools retouren), Rue du Chénia 17, 7170 Manage, Hainaut, België. Zodra wij de retourzending hebben ontvangen en gecontroleerd, betalen wij binnen 14 dagen terug op uw oorspronkelijke betaalmethode. Bij bestellingen met gespreide betaling of overschrijving wordt terugbetaald op de rekening die voor de betaling is gebruikt.",
     whoPaysHeading: "Wie betaalt de retourverzending",
     whoPays:
       "De retourzending is gratis voor geaccepteerde retouren, zowel voor niet-defecte als defecte producten. Wij verstrekken een retourlabel dat u kunt downloaden en afdrukken. Er worden geen herbevoorradingskosten aangerekend. Voor artikelen die beschadigd of defect aankomen, zie \u201cBeschadigd of defect bij aankomst\u201d hieronder.",
@@ -162,7 +162,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
     damaged:
       "Als uw bestelling beschadigd of defect aankomt, neem dan binnen 48 uur contact met ons op met foto's en wij regelen een gratis vervanging of retour zonder kosten voor u.",
     contactHeading: "Contactgegevens",
-    contactPre: "Voor annuleringen, retouren of vragen over terugbetaling kunt u Ln-Squared bereiken via",
+    contactPre: "Voor annuleringen, retouren of vragen over terugbetaling kunt u LN-SQUARED bereiken via",
     contactMid: ", telefonisch op +32 460 00 80 70 (ma–vr, 9:00–18:00 uur CET), of per post naar",
     contactPost: ".",
   },

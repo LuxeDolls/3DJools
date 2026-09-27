@@ -8,9 +8,9 @@ import type { ScheduleEntry } from "@/lib/db/schema"
  */
 
 export const CREDITOR = {
-  name: "Ln-Squared",
-  address: "Rue du Chénia 17, 7170 Manage, Hainaut, Belgium",
-  registration: "Company No. 0564.743.304 · Safe No. BE02758815",
+  name: "LN-SQUARED",
+  address: "Rue du Chénia 17, 7170 Manage, Belgium",
+  registration: "Company No. 0564.743.304",
   vat: "BE0564743304",
   email: "info@3djools.com",
 }

@@ -5,7 +5,6 @@ import { Minus, Plus, Truck, ShieldCheck, Lock, CheckCircle2, Clock, CalendarClo
 import { useI18n } from "@/components/i18n-provider"
 import { AddToCartButton } from "./add-to-cart-button"
 import { Price } from "./price"
-import { StarRating } from "./star-rating"
 import type { Product } from "@/lib/catalog/types"
 import { formatPrice } from "@/lib/format"
 import { qualifiesForInstallments } from "@/lib/installments"
@@ -34,7 +33,6 @@ export function ProductInfo({ product }: { product: Product }) {
       </h1>
 
       <div className="mt-3 flex items-center gap-4">
-        <StarRating rating={product.rating} count={product.reviewCount} size="md" />
         <span className="text-sm text-muted-foreground">
           {dict.product.mpn}: {product.mpn}
         </span>

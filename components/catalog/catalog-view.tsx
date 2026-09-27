@@ -238,7 +238,6 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
                 <SelectItem value="featured">{dict.sort.featured}</SelectItem>
                 <SelectItem value="price-asc">{dict.sort.priceAsc}</SelectItem>
                 <SelectItem value="price-desc">{dict.sort.priceDesc}</SelectItem>
-                <SelectItem value="rating">{dict.sort.rating}</SelectItem>
                 <SelectItem value="name">{dict.sort.name}</SelectItem>
               </SelectContent>
             </Select>

@@ -27,11 +27,6 @@ export function ProductJsonLd({ product, url }: { product: Product; url: string 
     mpn: product.mpn,
     ...(product.ean ?? product.gtin ? { gtin13: product.ean ?? product.gtin } : {}),
     brand: { "@type": "Brand", name: product.brandName ?? product.brandSlug },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: product.rating,
-      reviewCount: product.reviewCount,
-    },
     offers: {
       "@type": "Offer",
       url,

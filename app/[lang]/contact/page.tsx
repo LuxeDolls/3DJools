@@ -25,7 +25,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
     {
       icon: MapPin,
       label: dict.contact.address_label,
-      value: "Rue du Chénia 17, 7170 Manage, Hainaut, Belgium",
+      value: "LN-SQUARED (3DJools), Rue du Chénia 17, 7170 Manage, Belgium",
     },
   ]
 

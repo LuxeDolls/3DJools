@@ -197,7 +197,7 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
         <p>
           {t.tradingName}
           <br />
-          Ln-Squared
+          LN-SQUARED
           <br />
           Rue du Chénia 17
           <br />
@@ -232,8 +232,6 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
       <ProseSection heading={t.registrationHeading}>
         <p>
           {t.companyNumberLabel}: 0564.743.304
-          <br />
-          {t.safeNumberLabel}: BE02758815
           <br />
           {t.vatLabel}: BE0564743304
         </p>

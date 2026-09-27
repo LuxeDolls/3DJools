@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
-import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
+import { Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useCart } from "@/components/cart/cart-provider"
 import { Button } from "@/components/ui/button"
@@ -55,8 +55,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const totalCents = subtotalCents - discountCents + shippingCents
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
-  const paymentOptions: { id: PaymentId; icon: typeof CreditCard; title: string; desc: string; disabled?: boolean }[] = [
-    { id: "card", icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardUnavailable, disabled: true },
+  const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean }[] = [
     { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     {
@@ -353,7 +352,7 @@ function OptionCard({
   selected: boolean
   disabled?: boolean
   onSelect?: () => void
-  icon: typeof CreditCard
+  icon: typeof Landmark
   title: string
   desc: string
   trailing?: string

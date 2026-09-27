@@ -50,7 +50,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
   en: {
     sectionWhoWeAre: "Who we are",
     whoWeAre:
-      "The 3DJools online store is operated by Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut, Belgium (Company No. 0564.743.304, VAT BE0564743304), which acts as the data controller for the purposes of this policy. This privacy policy explains how we collect, use and protect your personal data in accordance with the EU General Data Protection Regulation (GDPR).",
+      "The 3DJools online store is operated by LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgium (Company No. 0564.743.304, VAT BE0564743304), which acts as the data controller for the purposes of this policy. This privacy policy explains how we collect, use and protect your personal data in accordance with the EU General Data Protection Regulation (GDPR).",
     sectionDataWeCollect: "Data we collect",
     dataWeCollect:
       "We collect the information you provide when placing an order or contacting us (name, address, email, phone, payment details) and technical data such as cookies necessary to run the store and understand how it is used.",
@@ -108,14 +108,14 @@ const COPY: Record<Locale, PrivacyCopy> = {
     changes:
       "We may update this privacy policy from time to time to reflect changes in our practices or legal requirements. Material changes will be reflected on this page with an updated \u201clast updated\u201d date.",
     sectionContact: "Contact us",
-    contactBefore: "For any question about this policy or your data, contact Ln-Squared at ",
+    contactBefore: "For any question about this policy or your data, contact LN-SQUARED at ",
     contactPhoneLabel: ", by phone at +32 460 00 80 70, or by post at Rue du Chénia 17, 7170 Manage, Hainaut, Belgium.",
     contactAfter: "",
   },
   de: {
     sectionWhoWeAre: "Wer wir sind",
     whoWeAre:
-      "Der 3DJools-Onlineshop wird betrieben von Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut, Belgien (Unternehmensnr. 0564.743.304, USt-IdNr. BE0564743304), das als Verantwortlicher im Sinne dieser Richtlinie handelt. Diese Datenschutzerklärung erläutert, wie wir Ihre personenbezogenen Daten gemäß der EU-Datenschutz-Grundverordnung (DSGVO) erheben, verwenden und schützen.",
+      "Der 3DJools-Onlineshop wird betrieben von LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgien (Unternehmensnr. 0564.743.304, USt-IdNr. BE0564743304), das als Verantwortlicher im Sinne dieser Richtlinie handelt. Diese Datenschutzerklärung erläutert, wie wir Ihre personenbezogenen Daten gemäß der EU-Datenschutz-Grundverordnung (DSGVO) erheben, verwenden und schützen.",
     sectionDataWeCollect: "Von uns erhobene Daten",
     dataWeCollect:
       "Wir erheben die Informationen, die Sie bei einer Bestellung oder Kontaktaufnahme angeben (Name, Adresse, E-Mail, Telefon, Zahlungsdaten) sowie technische Daten wie Cookies, die für den Betrieb des Shops und das Verständnis seiner Nutzung erforderlich sind.",
@@ -173,14 +173,14 @@ const COPY: Record<Locale, PrivacyCopy> = {
     changes:
       "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren, um Änderungen unserer Praktiken oder rechtlicher Anforderungen widerzuspiegeln. Wesentliche Änderungen werden auf dieser Seite mit einem aktualisierten „zuletzt aktualisiert“-Datum angezeigt.",
     sectionContact: "Kontakt",
-    contactBefore: "Bei Fragen zu dieser Richtlinie oder Ihren Daten kontaktieren Sie Ln-Squared unter ",
+    contactBefore: "Bei Fragen zu dieser Richtlinie oder Ihren Daten kontaktieren Sie LN-SQUARED unter ",
     contactPhoneLabel: ", telefonisch unter +32 460 00 80 70 oder postalisch unter Rue du Chénia 17, 7170 Manage, Hainaut, Belgien.",
     contactAfter: "",
   },
   fr: {
     sectionWhoWeAre: "Qui nous sommes",
     whoWeAre:
-      "La boutique en ligne 3DJools est exploitée par Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut, Belgique (n° d'entreprise 0564.743.304, TVA BE0564743304), qui agit en tant que responsable du traitement au sens de la présente politique. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données personnelles conformément au Règlement général sur la protection des données (RGPD).",
+      "La boutique en ligne 3DJools est exploitée par LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgique (n° d'entreprise 0564.743.304, TVA BE0564743304), qui agit en tant que responsable du traitement au sens de la présente politique. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données personnelles conformément au Règlement général sur la protection des données (RGPD).",
     sectionDataWeCollect: "Données que nous collectons",
     dataWeCollect:
       "Nous collectons les informations que vous fournissez lors d'une commande ou d'un contact (nom, adresse, e-mail, téléphone, informations de paiement), ainsi que des données techniques telles que les cookies nécessaires au fonctionnement de la boutique et à la compréhension de son utilisation.",
@@ -238,14 +238,14 @@ const COPY: Record<Locale, PrivacyCopy> = {
     changes:
       "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre pour refléter les changements de nos pratiques ou des exigences légales. Les modifications substantielles seront reflétées sur cette page avec une date de « dernière mise à jour » actualisée.",
     sectionContact: "Nous contacter",
-    contactBefore: "Pour toute question concernant cette politique ou vos données, contactez Ln-Squared à ",
+    contactBefore: "Pour toute question concernant cette politique ou vos données, contactez LN-SQUARED à ",
     contactPhoneLabel: ", par téléphone au +32 460 00 80 70, ou par courrier à Rue du Chénia 17, 7170 Manage, Hainaut, Belgique.",
     contactAfter: "",
   },
   it: {
     sectionWhoWeAre: "Chi siamo",
     whoWeAre:
-      "Il negozio online 3DJools è gestito da Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut, Belgio (n. società 0564.743.304, P.IVA BE0564743304), che agisce come titolare del trattamento ai fini della presente informativa. Questa informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali in conformità al Regolamento generale sulla protezione dei dati dell'UE (GDPR).",
+      "Il negozio online 3DJools è gestito da LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Belgio (n. società 0564.743.304, P.IVA BE0564743304), che agisce come titolare del trattamento ai fini della presente informativa. Questa informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali in conformità al Regolamento generale sulla protezione dei dati dell'UE (GDPR).",
     sectionDataWeCollect: "Dati che raccogliamo",
     dataWeCollect:
       "Raccogliamo le informazioni che fornisci al momento dell'ordine o del contatto (nome, indirizzo, e-mail, telefono, dettagli di pagamento) e dati tecnici come i cookie necessari per far funzionare il negozio e comprenderne l'utilizzo.",
@@ -303,14 +303,14 @@ const COPY: Record<Locale, PrivacyCopy> = {
     changes:
       "Potremmo aggiornare questa informativa sulla privacy di tanto in tanto per riflettere modifiche alle nostre pratiche o ai requisiti legali. Le modifiche sostanziali saranno riportate in questa pagina con una data di \u201cultimo aggiornamento\u201d aggiornata.",
     sectionContact: "Contattaci",
-    contactBefore: "Per qualsiasi domanda su questa informativa o sui tuoi dati, contatta Ln-Squared all'indirizzo ",
+    contactBefore: "Per qualsiasi domanda su questa informativa o sui tuoi dati, contatta LN-SQUARED all'indirizzo ",
     contactPhoneLabel: ", per telefono al +32 460 00 80 70, o per posta a Rue du Chénia 17, 7170 Manage, Hainaut, Belgio.",
     contactAfter: "",
   },
   es: {
     sectionWhoWeAre: "Quiénes somos",
     whoWeAre:
-      "La tienda online 3DJools está operada por Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica (N.º de empresa 0564.743.304, IVA BE0564743304), que actúa como responsable del tratamiento a efectos de esta política. Esta política de privacidad explica cómo recopilamos, utilizamos y protegemos tus datos personales de conformidad con el Reglamento General de Protección de Datos de la UE (RGPD).",
+      "La tienda online 3DJools está operada por LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica (N.º de empresa 0564.743.304, IVA BE0564743304), que actúa como responsable del tratamiento a efectos de esta política. Esta política de privacidad explica cómo recopilamos, utilizamos y protegemos tus datos personales de conformidad con el Reglamento General de Protección de Datos de la UE (RGPD).",
     sectionDataWeCollect: "Datos que recopilamos",
     dataWeCollect:
       "Recopilamos la información que proporcionas al realizar un pedido o contactarnos (nombre, dirección, correo electrónico, teléfono, datos de pago) y datos técnicos como cookies necesarias para el funcionamiento de la tienda y para entender su uso.",
@@ -368,14 +368,14 @@ const COPY: Record<Locale, PrivacyCopy> = {
     changes:
       "Podemos actualizar esta política de privacidad de vez en cuando para reflejar cambios en nuestras prácticas o requisitos legales. Los cambios sustanciales se reflejarán en esta página con una fecha de \u201cúltima actualización\u201d actualizada.",
     sectionContact: "Contáctanos",
-    contactBefore: "Para cualquier pregunta sobre esta política o tus datos, contacta con Ln-Squared en ",
+    contactBefore: "Para cualquier pregunta sobre esta política o tus datos, contacta con LN-SQUARED en ",
     contactPhoneLabel: ", por teléfono al +32 460 00 80 70, o por correo postal a Rue du Chénia 17, 7170 Manage, Hainaut, Bélgica.",
     contactAfter: "",
   },
   nl: {
     sectionWhoWeAre: "Wie wij zijn",
     whoWeAre:
-      "De 3DJools-webshop wordt beheerd door Ln-Squared, Rue du Chénia 17, 7170 Manage, Hainaut, België (ondernemingsnr. 0564.743.304, btw BE0564743304), dat optreedt als verwerkingsverantwoordelijke in de zin van dit beleid. Dit privacybeleid legt uit hoe wij uw persoonsgegevens verzamelen, gebruiken en beschermen in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).",
+      "De 3DJools-webshop wordt beheerd door LN-SQUARED, Rue du Chénia 17, 7170 Manage, Hainaut, België (ondernemingsnr. 0564.743.304, btw BE0564743304), dat optreedt als verwerkingsverantwoordelijke in de zin van dit beleid. Dit privacybeleid legt uit hoe wij uw persoonsgegevens verzamelen, gebruiken en beschermen in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).",
     sectionDataWeCollect: "Gegevens die wij verzamelen",
     dataWeCollect:
       "Wij verzamelen de informatie die u verstrekt bij het plaatsen van een bestelling of bij contact met ons (naam, adres, e-mail, telefoon, betaalgegevens) en technische gegevens zoals cookies die nodig zijn om de winkel te laten werken en te begrijpen hoe deze wordt gebruikt.",
@@ -433,7 +433,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
     changes:
       "Wij kunnen dit privacybeleid van tijd tot tijd bijwerken om wijzigingen in onze praktijken of wettelijke vereisten weer te geven. Materiële wijzigingen worden op deze pagina weergegeven met een bijgewerkte datum van \u201claatst bijgewerkt\u201d.",
     sectionContact: "Contact",
-    contactBefore: "Voor vragen over dit beleid of uw gegevens, neem contact op met Ln-Squared via ",
+    contactBefore: "Voor vragen over dit beleid of uw gegevens, neem contact op met LN-SQUARED via ",
     contactPhoneLabel: ", telefonisch op +32 460 00 80 70, of per post op Rue du Chénia 17, 7170 Manage, Hainaut, België.",
     contactAfter: "",
   },
