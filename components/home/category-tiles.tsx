@@ -19,7 +19,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
     {
       key: dict.categories.scanners,
       href: "/catalog/scanners",
-      image: "https://www.3djools.com/media/products/matter-and-form-three/1.png",
+      image: "/products/scanner-matter-and-form.jpg",
     },
   ]
 
