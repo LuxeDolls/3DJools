@@ -13,6 +13,10 @@ import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 import { SectionHeading } from "@/components/section-heading"
 import { ProductGrid } from "@/components/product/product-grid"
 
+// The sale end date comes from the database. Without this, the homepage stays
+// frozen at build time and a date change never reaches the live site.
+export const revalidate = 300
+
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
