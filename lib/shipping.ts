@@ -19,9 +19,9 @@ export function computeShippingCents(_subtotalCents: number, _country: string | 
   return 0
 }
 
-// Countries selectable at checkout: Belgium plus the rest of the EU and the
-// handful of nearby non-EU countries we already ship to per the shipping
-// policy page. Shipping is free to every one of them.
+// Countries selectable at checkout: Belgium plus the rest of the EU, the
+// nearby non-EU countries we already ship to, and Qatar. Shipping is free
+// to every one of them.
 export const SHIPPING_COUNTRIES: string[] = [
   "Belgium",
   "Austria",
@@ -46,6 +46,7 @@ export const SHIPPING_COUNTRIES: string[] = [
   "Norway",
   "Poland",
   "Portugal",
+  "Qatar",
   "Romania",
   "Slovakia",
   "Slovenia",
