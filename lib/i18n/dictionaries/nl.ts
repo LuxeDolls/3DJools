@@ -153,6 +153,7 @@ export const nl: Dictionary = {
     freeShippingReached: "Je hebt gratis verzending ontgrendeld!",
     vatIncluded: "Btw inbegrepen indien van toepassing",
     memberDiscount: "Ledenkorting (10%)",
+    personalDiscount: "Persoonlijke korting (5%)",
     signInToSave: "Log in om 10% te besparen op deze bestelling",
   },
   checkout: {

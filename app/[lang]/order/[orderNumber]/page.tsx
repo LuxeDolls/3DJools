@@ -47,7 +47,11 @@ export default async function OrderConfirmationPage({
   }
 
   const status = order.status as OrderStatus
-  const discountCents = order.subtotalCents + order.shippingCents - order.totalCents
+  const notes = parseOrderNotes(order.notes)
+  const memberFromNotes = Number(notes.member_discount_cents || 0)
+  const personalDiscountCents = Number(notes.personal_discount_cents || 0)
+  const discountGap = order.subtotalCents + order.shippingCents - order.totalCents
+  const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
   const paymentLabels: Record<PaymentMethod, string> = {
     card: dict.checkout.payCard,
     bank_transfer: dict.checkout.paySepa,
@@ -119,10 +123,16 @@ export default async function OrderConfirmationPage({
             <dt className="text-muted-foreground">{dict.common.subtotal}</dt>
             <dd className="font-medium tabular-nums text-foreground">{formatPrice(order.subtotalCents, locale)}</dd>
           </div>
-          {discountCents > 0 && (
+          {memberDiscountCents > 0 && (
             <div className="flex justify-between text-primary">
               <dt>{dict.cart.memberDiscount}</dt>
-              <dd className="font-medium tabular-nums">-{formatPrice(discountCents, locale)}</dd>
+              <dd className="font-medium tabular-nums">-{formatPrice(memberDiscountCents, locale)}</dd>
+            </div>
+          )}
+          {personalDiscountCents > 0 && (
+            <div className="flex justify-between text-primary">
+              <dt>{dict.cart.personalDiscount}</dt>
+              <dd className="font-medium tabular-nums">-{formatPrice(personalDiscountCents, locale)}</dd>
             </div>
           )}
           <div className="flex justify-between">

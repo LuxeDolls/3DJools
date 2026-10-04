@@ -153,6 +153,7 @@ export const de: Dictionary = {
     freeShippingReached: "Du hast kostenlosen Versand freigeschaltet!",
     vatIncluded: "MwSt. ggf. inbegriffen",
     memberDiscount: "Mitgliederrabatt (10%)",
+    personalDiscount: "Persönlicher Rabatt (5%)",
     signInToSave: "Anmelden und 10% bei dieser Bestellung sparen",
   },
   checkout: {
