@@ -16,7 +16,7 @@ export const ORDER_CUTOFF_TIME = "15:00 CET"
 
 export const DOMESTIC_COUNTRY = { code: "BE", name: "Belgium" } as const
 
-// Rest of the EU (26 members excluding Belgium) plus neighbouring countries we also ship to.
+// Rest of the EU (26 members excluding Belgium), neighbouring countries, and Qatar.
 export const INTERNATIONAL_COUNTRIES = [
   { code: "AT", name: "Austria" },
   { code: "BG", name: "Bulgaria" },
@@ -47,6 +47,7 @@ export const INTERNATIONAL_COUNTRIES = [
   { code: "CH", name: "Switzerland" },
   { code: "NO", name: "Norway" },
   { code: "GB", name: "United Kingdom" },
+  { code: "QA", name: "Qatar" },
 ] as const
 
 export const ALL_SHIPPING_COUNTRIES = [DOMESTIC_COUNTRY, ...INTERNATIONAL_COUNTRIES]

@@ -50,7 +50,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Which countries do you ship to?",
             answer:
-              "We ship to Belgium and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with trusted carriers (DPD, GLS, DHL and UPS). Shipping is free to every one of these destinations.",
+              "We ship to Belgium and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom), and to Qatar, with trusted carriers (DPD, GLS, DHL and UPS). Shipping is free to every one of these destinations.",
           },
           {
             question: "Can I track my order?",
@@ -148,7 +148,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "In welche Länder liefern Sie?",
             answer:
-              "Wir liefern nach Belgien und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) mit zuverlässigen Versanddienstleistern (DPD, GLS, DHL und UPS). Der Versand ist in jedes dieser Länder kostenlos.",
+              "Wir liefern nach Belgien und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) und nach Katar mit zuverlässigen Versanddienstleistern (DPD, GLS, DHL und UPS). Der Versand ist in jedes dieser Länder kostenlos.",
           },
           {
             question: "Kann ich meine Bestellung verfolgen?",
@@ -246,7 +246,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Vers quels pays livrez-vous ?",
             answer:
-              "Nous livrons en Belgique et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni), avec des transporteurs fiables (DPD, GLS, DHL et UPS). La livraison est gratuite vers chacune de ces destinations.",
+              "Nous livrons en Belgique et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni) et au Qatar, avec des transporteurs fiables (DPD, GLS, DHL et UPS). La livraison est gratuite vers chacune de ces destinations.",
           },
           {
             question: "Puis-je suivre ma commande ?",
@@ -344,7 +344,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "In quali Paesi spedite?",
             answer:
-              "Spediamo in Belgio e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito), con corrieri affidabili (DPD, GLS, DHL e UPS). La spedizione è gratuita verso ciascuna di queste destinazioni.",
+              "Spediamo in Belgio e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito) e in Qatar, con corrieri affidabili (DPD, GLS, DHL e UPS). La spedizione è gratuita verso ciascuna di queste destinazioni.",
           },
           {
             question: "Posso tracciare il mio ordine?",
@@ -442,7 +442,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿A qué países enviáis?",
             answer:
-              "Enviamos a Bélgica y al resto de la Unión Europea, además de a algunos países vecinos (Suiza, Noruega y Reino Unido), con transportistas de confianza (DPD, GLS, DHL y UPS). El envío es gratuito a todos estos destinos.",
+              "Enviamos a Bélgica y al resto de la Unión Europea, además de a algunos países vecinos (Suiza, Noruega y Reino Unido) y a Catar, con transportistas de confianza (DPD, GLS, DHL y UPS). El envío es gratuito a todos estos destinos.",
           },
           {
             question: "¿Puedo seguir mi pedido?",
@@ -540,7 +540,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Naar welke landen verzenden jullie?",
             answer:
-              "We verzenden naar België en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk), met betrouwbare vervoerders (DPD, GLS, DHL en UPS). Verzending is gratis naar elk van deze bestemmingen.",
+              "We verzenden naar België en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk) en naar Qatar, met betrouwbare vervoerders (DPD, GLS, DHL en UPS). Verzending is gratis naar elk van deze bestemmingen.",
           },
           {
             question: "Kan ik mijn bestelling volgen?",
