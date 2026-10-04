@@ -8,6 +8,7 @@ import { setOrderStatus, setOrderTracking } from "@/lib/actions/admin"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import type { OrderStatus } from "@/lib/db/schema"
 import type { OrderWithItems } from "@/lib/orders/queries"
+import { parseOrderNotes } from "@/lib/orders/notes"
 
 const STATUSES: OrderStatus[] = [
   "pending",
@@ -219,6 +220,18 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
                               <dt className="text-muted-foreground">Subtotal</dt>
                               <dd>{euros(order.subtotalCents)}</dd>
                             </div>
+                            {Number(parseOrderNotes(order.notes).member_discount_cents || 0) > 0 && (
+                              <div className="flex justify-between">
+                                <dt className="text-muted-foreground">Member discount</dt>
+                                <dd>-{euros(Number(parseOrderNotes(order.notes).member_discount_cents))}</dd>
+                              </div>
+                            )}
+                            {Number(parseOrderNotes(order.notes).personal_discount_cents || 0) > 0 && (
+                              <div className="flex justify-between">
+                                <dt className="text-muted-foreground">Personal discount</dt>
+                                <dd>-{euros(Number(parseOrderNotes(order.notes).personal_discount_cents))}</dd>
+                              </div>
+                            )}
                             <div className="flex justify-between">
                               <dt className="text-muted-foreground">Shipping</dt>
                               <dd>{order.shippingCents === 0 ? "Free" : euros(order.shippingCents)}</dd>

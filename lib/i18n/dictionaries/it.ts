@@ -153,6 +153,7 @@ export const it: Dictionary = {
     freeShippingReached: "Hai sbloccato la spedizione gratuita!",
     vatIncluded: "IVA inclusa ove applicabile",
     memberDiscount: "Sconto membri (10%)",
+    personalDiscount: "Sconto personale (5%)",
     signInToSave: "Accedi per risparmiare il 10% su questo ordine",
   },
   checkout: {

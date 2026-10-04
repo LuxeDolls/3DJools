@@ -151,6 +151,7 @@ export const en = {
     freeShippingReached: "You've unlocked free shipping!",
     vatIncluded: "VAT included where applicable",
     memberDiscount: "Member discount (10%)",
+    personalDiscount: "Personal discount (5%)",
     signInToSave: "Sign in to save 10% on this order",
   },
   checkout: {
