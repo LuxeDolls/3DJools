@@ -215,6 +215,14 @@ export default async function OrderConfirmationPage({
         {order.paymentMethod === "card" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
             <p>{dict.checkout.payCardNote}</p>
+            {notes.aviagram_last_status === "canceled" ||
+            notes.aviagram_last_status === "cancelled" ||
+            notes.aviagram_last_status === "timeout" ? (
+              <p className="mt-2 text-destructive">{dict.checkout.payCardFailed}</p>
+            ) : null}
+            {notes.aviagram_declined_reason ? (
+              <p className="mt-1 text-muted-foreground">{notes.aviagram_declined_reason}</p>
+            ) : null}
             <CardPayButton
               orderNumber={order.orderNumber}
               locale={locale}

@@ -180,6 +180,7 @@ export const en = {
     payCard: "Credit / debit card",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Card payment is temporarily unavailable",
+    payCardFailed: "The card payment was not completed. You can try again.",
     payCardNote:
       "You will be redirected to a secure payment page. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
     paySepa: "Bank transfer (SEPA)",

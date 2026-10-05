@@ -182,6 +182,7 @@ export const it: Dictionary = {
     payCard: "Carta di credito / debito",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Il pagamento con carta non è al momento disponibile",
+    payCardFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
     payCardNote:
       "Verrai reindirizzato a una pagina di pagamento sicura. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     paySepa: "Bonifico bancario (SEPA)",

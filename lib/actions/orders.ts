@@ -19,7 +19,7 @@ import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { isCryptoCoinId } from "@/lib/payments/crypto"
-import { appendProviderOrderId, aviagramConfigured, createCardForm } from "@/lib/payments/aviagram"
+import { appendProviderOrderId, aviagramConfigured, cardAmount, createCardForm } from "@/lib/payments/aviagram"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 // Prices are authoritative here, never taken from the client — the cart only
@@ -173,7 +173,11 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         locale,
         webhookToken,
       })
-      await mergeOrderNotes(order.id, { aviagram_order_ids: form.providerOrderId })
+      await mergeOrderNotes(order.id, {
+        aviagram_order_ids: form.providerOrderId,
+        aviagram_requested_amount: cardAmount(totalCents),
+        aviagram_requested_currency: "EUR",
+      })
       paymentUrl = form.redirectUrl
     } catch (err) {
       console.error("[v0] Card payment could not start:", err)
@@ -219,6 +223,8 @@ export async function startCardPayment(orderNumber: string, locale: string): Pro
     })
     await mergeOrderNotes(order.id, {
       aviagram_order_ids: appendProviderOrderId(notes.aviagram_order_ids, form.providerOrderId),
+      aviagram_requested_amount: cardAmount(order.totalCents),
+      aviagram_requested_currency: "EUR",
       checkout_locale: safeLocale,
     })
     return { ok: true, paymentUrl: form.redirectUrl }

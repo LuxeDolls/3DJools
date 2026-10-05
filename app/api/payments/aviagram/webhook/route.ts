@@ -33,11 +33,20 @@ export async function POST(request: NextRequest) {
 
   let body: Record<string, unknown>
   try {
-    const parsed = await request.json()
-    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-      return NextResponse.json({ ok: false }, { status: 400 })
+    const contentType = request.headers.get("content-type") ?? ""
+    if (contentType.includes("application/x-www-form-urlencoded")) {
+      const form = await request.formData()
+      body = {}
+      for (const [key, value] of form.entries()) {
+        if (typeof value === "string") body[key] = value
+      }
+    } else {
+      const parsed = await request.json()
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+        return NextResponse.json({ ok: false }, { status: 400 })
+      }
+      body = parsed as Record<string, unknown>
     }
-    body = parsed as Record<string, unknown>
   } catch {
     return NextResponse.json({ ok: false }, { status: 400 })
   }
@@ -69,23 +78,23 @@ export async function POST(request: NextRequest) {
 
   const amount = readField(body, "amount")
   const currency = readField(body, "currency").toUpperCase()
-  // After convertCurrency the gateway settles EUR-GT as EUR and reports that amount.
+  // convertCurrency settles EUR-GT back as EUR. That settled amount can differ
+  // from the shop total, so a mismatch is recorded, not rejected.
   const settledCurrency = currency.startsWith("EUR") ? "EUR" : currency
-  const decline = noteSafe(readField(body, "declinedReason", "DeclinedReaction", "declined_reason"))
+  const decline = noteSafe(
+    readField(body, "declinedReason", "DeclinedReaction", "declined_reason", "declinedReaction"),
+  )
+  const converted = Boolean(amount) && !amountsMatch(amount, order.totalCents)
   const audit = {
     aviagram_last_status: status || undefined,
     aviagram_settled_amount: amount ? noteSafe(amount) : undefined,
     aviagram_settled_currency: settledCurrency || undefined,
     aviagram_declined_reason: decline || undefined,
+    aviagram_amount_converted: converted ? "1" : undefined,
   }
 
   if (currency && !currency.startsWith("EUR")) {
     console.error("[v0] Aviagram webhook currency rejected", order.orderNumber)
-    await mergeOrderNotes(order.id, audit)
-    return new NextResponse(null, { status: 200 })
-  }
-  if (!amountsMatch(amount, order.totalCents)) {
-    console.error("[v0] Aviagram webhook amount rejected", order.orderNumber)
     await mergeOrderNotes(order.id, audit)
     return new NextResponse(null, { status: 200 })
   }
@@ -95,15 +104,12 @@ export async function POST(request: NextRequest) {
       ...audit,
       aviagram_order_ids: [...knownIds, providerOrderId].join(","),
     })
-  } else if (status) {
+  } else if (status || amount || decline) {
     await mergeOrderNotes(order.id, audit)
   }
 
-  if (status === "received") {
-    if (PAYABLE_STATUSES.has(order.status)) {
-      await updateOrderStatus(order.id, "paid")
-    }
-    return new NextResponse(null, { status: 200 })
+  if (status === "received" && PAYABLE_STATUSES.has(order.status)) {
+    await updateOrderStatus(order.id, "paid")
   }
 
   return new NextResponse(null, { status: 200 })

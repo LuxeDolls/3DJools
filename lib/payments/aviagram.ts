@@ -6,6 +6,7 @@ import { COMPANY } from "@/lib/company"
 // POST {host}/api/payment/createForm with Authorization: Basic base64(clientId:clientSecret).
 // The public example credentials on that page are not this store's keys.
 
+// Docs write the host as <HOST_URL>. Set AVIAGRAM_API_URL to the host from Aviagram.
 const DEFAULT_HOST = "https://aviagram.app"
 const DEFAULT_CURRENCY = "EUR-GT"
 
@@ -77,7 +78,7 @@ export async function createCardForm(input: {
   })
   // redirect_url is used by working clients but is not in the public field list.
   // If the gateway rejects the extra field, retry with the documented body only.
-  if (response.status === 400) {
+  if (response.status === 400 || response.status === 422) {
     response = await fetch(`${host}/api/payment/createForm`, {
       method: "POST",
       headers,
@@ -87,15 +88,21 @@ export async function createCardForm(input: {
   }
 
   const text = await response.text()
-  let data: { orderId?: unknown; redirect_url?: unknown } = {}
+  let data: { orderId?: unknown; redirect_url?: unknown; redirectUrl?: unknown } = {}
   try {
-    data = JSON.parse(text) as { orderId?: unknown; redirect_url?: unknown }
+    data = JSON.parse(text) as { orderId?: unknown; redirect_url?: unknown; redirectUrl?: unknown }
   } catch {
     data = {}
   }
 
-  const providerOrderId = typeof data.orderId === "string" ? data.orderId.trim() : ""
-  const redirectUrl = typeof data.redirect_url === "string" ? data.redirect_url.trim() : ""
+  const providerOrderId =
+    typeof data.orderId === "string"
+      ? data.orderId.trim()
+      : typeof data.orderId === "number" && Number.isFinite(data.orderId)
+        ? String(data.orderId)
+        : ""
+  const redirectRaw = typeof data.redirect_url === "string" ? data.redirect_url : data.redirectUrl
+  const redirectUrl = typeof redirectRaw === "string" ? redirectRaw.trim() : ""
   if (!response.ok || !isProviderOrderId(providerOrderId) || !redirectUrl.startsWith("https://")) {
     console.error("[v0] Aviagram createForm failed", response.status)
     throw new Error("aviagram_create_failed")
