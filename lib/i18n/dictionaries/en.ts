@@ -97,7 +97,7 @@ export const en = {
     uspWarrantyTitle: "2-year warranty",
     uspWarrantyText: "Every machine covered by EU consumer guarantee.",
     uspPaymentTitle: "Flexible payment",
-    uspPaymentText: "SEPA transfer, crypto or 4× interest-free instalments.",
+    uspPaymentText: "Cards, SEPA transfer, crypto or 4× interest-free instalments.",
     newsletterTitle: "Get maker deals in your inbox",
     newsletterText: "New drops, restocks and members-only offers. No spam.",
     newsletterPlaceholder: "Your email address",
