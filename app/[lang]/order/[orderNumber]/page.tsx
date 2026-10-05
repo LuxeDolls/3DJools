@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import { OrderPaymentInstructions } from "@/components/checkout/order-payment-instructions"
 import { CardPayButton } from "@/components/checkout/card-pay-button"
+import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -24,10 +25,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 
 export default async function OrderConfirmationPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ lang: string; orderNumber: string }>
+  searchParams: Promise<{ paypal?: string }>
 }) {
   const { lang, orderNumber } = await params
+  const { paypal } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const order = await getOrderByOrderNumber(decodeURIComponent(orderNumber))
@@ -55,6 +59,7 @@ export default async function OrderConfirmationPage({
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
   const paymentLabels: Record<PaymentMethod, string> = {
     card: dict.checkout.payCard,
+    paypal: dict.checkout.payPaypal,
     bank_transfer: dict.checkout.paySepa,
     crypto: dict.checkout.payCrypto,
     installments: dict.checkout.payInstallments,
@@ -209,6 +214,23 @@ export default async function OrderConfirmationPage({
                 />
               )}
             </div>
+          </div>
+        )}
+
+        {order.paymentMethod === "paypal" && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            <p>{dict.checkout.payPaypalNote}</p>
+            {paypal === "cancelled" ? (
+              <p className="mt-2 text-destructive">{dict.checkout.payPaypalCancelled}</p>
+            ) : paypal === "failed" || notes.paypal_last_status === "not_completed" ? (
+              <p className="mt-2 text-destructive">{dict.checkout.payPaypalFailed}</p>
+            ) : null}
+            <PaypalPayButton
+              orderNumber={order.orderNumber}
+              locale={locale}
+              label={dict.checkout.payPaypal}
+              errorLabel={dict.checkout.payPaypalUnavailable}
+            />
           </div>
         )}
 

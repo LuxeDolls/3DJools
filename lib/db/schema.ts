@@ -226,7 +226,7 @@ export const ORDER_STATUSES = [
 
 export type OrderStatus = (typeof ORDER_STATUSES)[number]
 
-export const PAYMENT_METHODS = ["card", "bank_transfer", "crypto", "installments"] as const
+export const PAYMENT_METHODS = ["card", "paypal", "bank_transfer", "crypto", "installments"] as const
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number]
 
 export const orders = pgTable("orders", {

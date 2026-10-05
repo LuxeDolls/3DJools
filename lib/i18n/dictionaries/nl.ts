@@ -99,7 +99,7 @@ export const nl: Dictionary = {
     uspWarrantyTitle: "2 jaar garantie",
     uspWarrantyText: "Elke machine gedekt door EU-consumentengarantie.",
     uspPaymentTitle: "Flexibel betalen",
-    uspPaymentText: "Kaart, SEPA-overboeking, crypto of 4× rentevrij.",
+    uspPaymentText: "PayPal, kaart, SEPA-overboeking, crypto of 4× rentevrij.",
     newsletterTitle: "Ontvang maker-aanbiedingen per e-mail",
     newsletterText: "Nieuwe releases, herbevoorrading en exclusieve aanbiedingen. Geen spam.",
     newsletterPlaceholder: "Je e-mailadres",
@@ -185,6 +185,13 @@ export const nl: Dictionary = {
     payCardFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payCardNote:
       "U wordt doorgestuurd naar een beveiligde betaalpagina. Wij zien uw kaartnummer niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
+    payPaypal: "PayPal",
+    payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
+    payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",
+    payPaypalFailed: "De PayPal-betaling is niet voltooid. U kunt het opnieuw proberen.",
+    payPaypalCancelled: "U heeft de PayPal-betaling geannuleerd. U kunt het opnieuw proberen.",
+    payPaypalNote:
+      "U wordt doorgestuurd naar PayPal om de betaling te bevestigen. Wij zien uw PayPal-login niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
     paySepa: "Bankoverschrijving (SEPA)",
     paySepaDesc: "Betaal via IBAN-overschrijving op onze rekening",
     payCrypto: "Cryptovaluta",

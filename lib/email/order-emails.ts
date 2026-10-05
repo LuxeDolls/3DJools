@@ -20,6 +20,7 @@ function siteUrl(): string {
 
 const PAYMENT_LABELS: Record<string, string> = {
   card: "Card",
+  paypal: "PayPal",
   bank_transfer: "Bank transfer (SEPA)",
   crypto: "Cryptocurrency",
   installments: "Installments",
@@ -48,6 +49,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
   const isCard = order.paymentMethod === "card"
+  const isPaypal = order.paymentMethod === "paypal"
   // Same coin/network the customer actually selected at checkout (see lib/payments/crypto.ts),
   // persisted on the order as `crypto_coin=<id>` in the notes field.
   const cryptoCoin = getCryptoCoinOption(parseOrderNotes(order.notes).crypto_coin)
@@ -93,6 +95,9 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
       : null,
     awaitingPayment && isCard
       ? `\nCard payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
+      : null,
+    awaitingPayment && isPaypal
+      ? `\nPayPal payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
       : null,
     addressLines.length ? `\nShipping to:\n${addressLines.join("\n")}` : null,
     orderLink ? `\nView your order: ${orderLink}` : null,
@@ -141,6 +146,13 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     </div>`
       : ""
 
+  const paypalHtml =
+    awaitingPayment && isPaypal
+      ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      <p style="margin:0;font-size:14px;color:#7a4b00">PayPal payment of <strong>${euros(order.totalCents)}</strong> is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.</p>
+    </div>`
+      : ""
+
   const addressHtml = addressLines.length
     ? `<div style="margin-bottom:20px">
       <p style="margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:#888">Shipping to</p>
@@ -157,6 +169,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     ${sepaHtml}
     ${cryptoHtml}
     ${cardHtml}
+    ${paypalHtml}
     <table style="width:100%;border-collapse:collapse;font-size:14px;border-top:1px solid #eee;margin-bottom:8px">${itemsHtml}</table>
     <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px">${totalsHtml}</table>
     ${addressHtml}
@@ -296,6 +309,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
   const paymentLabel = PAYMENT_LABELS[order.paymentMethod] ?? order.paymentMethod
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
+  const isPaypal = order.paymentMethod === "paypal"
   const cryptoCoin = getCryptoCoinOption(parseOrderNotes(order.notes).crypto_coin)
   const firstName = order.shippingName?.trim().split(/\s+/)[0] ?? ""
 
@@ -322,6 +336,9 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     isCrypto
       ? `If you haven't sent the payment yet, here are the details again:\nAmount: ${euros(order.totalCents)}\nNetwork: ${cryptoCoin.coinLabel} · ${cryptoCoin.network}\nAddress: ${cryptoCoin.address}\n\nOnce you've sent it, simply click "I've paid" on your order page so our team can start verifying it.`
       : null,
+    isPaypal
+      ? `If you haven't approved the PayPal payment of ${euros(order.totalCents)} yet, open your order page and continue to PayPal. If you have already paid, wait for the status to update and do not pay twice.`
+      : null,
     "",
     "If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've changed your mind or run into any trouble, simply reply to this email; we're happy to help.",
     orderLink ? `\nView your order: ${orderLink}` : null,
@@ -347,6 +364,12 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     </div>`
     : ""
 
+  const paypalHtml = isPaypal
+    ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      <p style="margin:0;font-size:14px;color:#7a4b00">If you haven't approved the PayPal payment of <strong>${euros(order.totalCents)}</strong> yet, open your order page and continue to PayPal. If you have already paid, wait for the status to update and do not pay twice.</p>
+    </div>`
+    : ""
+
   const cryptoHtml = isCrypto
     ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
       <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">If you haven't sent the payment yet, here are the details again:</p>
@@ -361,6 +384,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     <p style="margin:0 0 20px;color:#555;font-size:14px;line-height:1.6">Thank you for your order — we're delighted to have you with us. We noticed order <strong>${order.orderNumber}</strong> is still marked as <strong>awaiting payment</strong>, so we wanted to check in and make sure everything is on track.</p>
     ${sepaHtml}
     ${cryptoHtml}
+    ${paypalHtml}
     <table style="width:100%;border-collapse:collapse;font-size:14px;border-top:1px solid #eee;margin-bottom:8px">${itemsHtml}</table>
     <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px">
       <tr><td style="padding:12px 0 0;font-weight:700;color:#111;border-top:1px solid #eee">Total</td><td style="padding:12px 0 0;text-align:right;font-weight:700;color:#111;border-top:1px solid #eee">${euros(order.totalCents)}</td></tr>

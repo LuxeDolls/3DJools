@@ -92,7 +92,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Card (Visa, Mastercard), SEPA bank transfer, cryptocurrency and interest-free instalments. Card details are entered on a secure payment page. Details are on our ",
+                "PayPal, card (Visa, Mastercard), SEPA bank transfer, cryptocurrency and interest-free instalments. PayPal and card details are entered on a secure payment page. Details are on our ",
               label: "payment methods page",
               after: ".",
             },
@@ -190,7 +190,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Karte (Visa, Mastercard), SEPA-Überweisung, Kryptowährung und zinsfreie Ratenzahlung. Kartendaten werden auf einer sicheren Zahlungsseite eingegeben. Einzelheiten stehen auf unserer Seite ",
+                "PayPal, Karte (Visa, Mastercard), SEPA-Überweisung, Kryptowährung und zinsfreie Ratenzahlung. PayPal- und Kartendaten werden auf einer sicheren Zahlungsseite eingegeben. Einzelheiten stehen auf unserer Seite ",
               label: "Zahlungsarten",
               after: ".",
             },
@@ -288,7 +288,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Carte (Visa, Mastercard), virement SEPA, cryptomonnaie et paiement en plusieurs fois sans intérêt. Les données de carte sont saisies sur une page de paiement sécurisée. Les détails figurent sur notre ",
+                "PayPal, carte (Visa, Mastercard), virement SEPA, cryptomonnaie et paiement en plusieurs fois sans intérêt. Les données PayPal et de carte sont saisies sur une page de paiement sécurisée. Les détails figurent sur notre ",
               label: "page des moyens de paiement",
               after: ".",
             },
@@ -386,7 +386,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Carta (Visa, Mastercard), bonifico SEPA, criptovaluta e rate senza interessi. I dati della carta si inseriscono su una pagina di pagamento sicura. I dettagli sono sulla nostra ",
+                "PayPal, carta (Visa, Mastercard), bonifico SEPA, criptovaluta e rate senza interessi. I dati PayPal e della carta si inseriscono su una pagina di pagamento sicura. I dettagli sono sulla nostra ",
               label: "pagina dei metodi di pagamento",
               after: ".",
             },
@@ -484,7 +484,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Tarjeta (Visa, Mastercard), transferencia SEPA, criptomoneda y plazos sin intereses. Los datos de la tarjeta se introducen en una página de pago segura. Los detalles están en nuestra ",
+                "PayPal, tarjeta (Visa, Mastercard), transferencia SEPA, criptomoneda y plazos sin intereses. Los datos de PayPal y de la tarjeta se introducen en una página de pago segura. Los detalles están en nuestra ",
               label: "página de métodos de pago",
               after: ".",
             },
@@ -582,7 +582,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Kaart (Visa, Mastercard), SEPA-overschrijving, cryptovaluta en renteloze termijnen. Kaartgegevens worden ingevoerd op een beveiligde betaalpagina. De details staan op onze ",
+                "PayPal, kaart (Visa, Mastercard), SEPA-overschrijving, cryptovaluta en renteloze termijnen. PayPal- en kaartgegevens worden ingevoerd op een beveiligde betaalpagina. De details staan op onze ",
               label: "pagina met betaalmethoden",
               after: ".",
             },

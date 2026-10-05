@@ -99,7 +99,7 @@ export const fr: Dictionary = {
     uspWarrantyTitle: "Garantie 2 ans",
     uspWarrantyText: "Chaque machine couverte par la garantie consommateur UE.",
     uspPaymentTitle: "Paiement flexible",
-    uspPaymentText: "Carte, virement SEPA, crypto ou 4× sans frais.",
+    uspPaymentText: "PayPal, carte, virement SEPA, crypto ou 4× sans frais.",
     newsletterTitle: "Recevez nos offres par e-mail",
     newsletterText: "Nouveautés, réassorts et offres réservées aux membres. Pas de spam.",
     newsletterPlaceholder: "Votre adresse e-mail",
@@ -185,6 +185,13 @@ export const fr: Dictionary = {
     payCardFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
     payCardNote:
       "Vous serez redirigé vers une page de paiement sécurisée. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
+    payPaypal: "PayPal",
+    payPaypalDesc: "Payez avec votre solde PayPal, votre compte bancaire ou votre carte",
+    payPaypalUnavailable: "PayPal est temporairement indisponible",
+    payPaypalFailed: "Le paiement PayPal n'a pas abouti. Vous pouvez réessayer.",
+    payPaypalCancelled: "Vous avez annulé le paiement PayPal. Vous pouvez réessayer.",
+    payPaypalNote:
+      "Vous serez redirigé vers PayPal pour approuver le paiement. Nous ne voyons jamais votre identifiant PayPal. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     paySepa: "Virement bancaire (SEPA)",
     paySepaDesc: "Paiement par virement IBAN sur notre compte",
     payCrypto: "Cryptomonnaie",
