@@ -99,7 +99,7 @@ export const nl: Dictionary = {
     uspWarrantyTitle: "2 jaar garantie",
     uspWarrantyText: "Elke machine gedekt door EU-consumentengarantie.",
     uspPaymentTitle: "Flexibel betalen",
-    uspPaymentText: "SEPA-overboeking, crypto of 4× rentevrij.",
+    uspPaymentText: "Kaart, SEPA-overboeking, crypto of 4× rentevrij.",
     newsletterTitle: "Ontvang maker-aanbiedingen per e-mail",
     newsletterText: "Nieuwe releases, herbevoorrading en exclusieve aanbiedingen. Geen spam.",
     newsletterPlaceholder: "Je e-mailadres",

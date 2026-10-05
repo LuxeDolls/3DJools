@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Landmark, Bitcoin, CalendarClock, Clock, Mail, Phone } from "lucide-react"
+import { CreditCard, Landmark, Bitcoin, CalendarClock, Clock, Mail, Phone } from "lucide-react"
 import { COMPANY, companyStreetLine } from "@/lib/company"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
@@ -46,6 +46,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   const payments = [
+    { icon: CreditCard, label: dict.checkout.payCard },
     { icon: Landmark, label: dict.checkout.paySepa },
     { icon: Bitcoin, label: dict.checkout.payCrypto },
     { icon: CalendarClock, label: dict.checkout.payInstallments },
