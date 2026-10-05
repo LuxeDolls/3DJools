@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
-import { Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
+import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useCart } from "@/components/cart/cart-provider"
 import { Button } from "@/components/ui/button"
@@ -57,6 +57,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean }[] = [
+    { id: "card", icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
     { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     {
@@ -92,14 +93,33 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         payment,
         cryptoCoin: payment === "crypto" ? cryptoCoin : undefined,
         termsAccepted,
+        locale,
         items: lines.map((l) => ({ slug: l.slug, quantity: l.quantity, brand: l.brand, image: l.image })),
       })
       if (!res.ok) {
-        setOrderError(dict.checkout.orderError)
+        setOrderError(
+          res.error === "card_unavailable" || res.error === "card_start_failed"
+            ? dict.checkout.payCardUnavailable
+            : dict.checkout.orderError,
+        )
         setSubmitting(false)
         return
       }
       clear()
+      if (res.paymentUrl) {
+        try {
+          if (window.top && window.top !== window.self) {
+            window.top.location.href = res.paymentUrl
+            return
+          }
+        } catch {
+          window.open(res.paymentUrl, "_blank", "noopener,noreferrer")
+          router.push(lp(`/order/${res.orderNumber}`))
+          return
+        }
+        window.location.href = res.paymentUrl
+        return
+      }
       router.push(lp(`/order/${res.orderNumber}`))
     } catch {
       setOrderError(dict.checkout.orderError)
@@ -198,6 +218,11 @@ export function CheckoutView({ locale }: { locale: Locale }) {
           </div>
 
           {/* Contextual panels per payment method */}
+          {payment === "card" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{dict.checkout.payCardNote}</p>
+            </div>
+          )}
           {payment === "sepa" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm text-muted-foreground">
               <p className="font-medium text-foreground">Bank transfer details (shown after ordering)</p>

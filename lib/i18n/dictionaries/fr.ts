@@ -182,6 +182,9 @@ export const fr: Dictionary = {
     payCard: "Carte de crédit / débit",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Le paiement par carte est temporairement indisponible",
+    payCardFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
+    payCardNote:
+      "Vous serez redirigé vers une page de paiement sécurisée. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     paySepa: "Virement bancaire (SEPA)",
     paySepaDesc: "Paiement par virement IBAN sur notre compte",
     payCrypto: "Cryptomonnaie",
