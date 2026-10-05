@@ -99,7 +99,7 @@ export const de: Dictionary = {
     uspWarrantyTitle: "2 Jahre Garantie",
     uspWarrantyText: "Jede Maschine durch EU-Verbrauchergarantie abgedeckt.",
     uspPaymentTitle: "Flexible Zahlung",
-    uspPaymentText: "Karte, SEPA-Überweisung, Krypto oder 4× zinsfreie Raten.",
+    uspPaymentText: "PayPal, Karte, SEPA-Überweisung, Krypto oder 4× zinsfreie Raten.",
     newsletterTitle: "Maker-Angebote per E-Mail erhalten",
     newsletterText: "Neuheiten, Nachschub und exklusive Angebote. Kein Spam.",
     newsletterPlaceholder: "Deine E-Mail-Adresse",
@@ -185,6 +185,13 @@ export const de: Dictionary = {
     payCardFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     payCardNote:
       "Sie werden zu einer sicheren Zahlungsseite weitergeleitet. Wir sehen Ihre Kartennummer nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
+    payPaypal: "PayPal",
+    payPaypalDesc: "Mit PayPal-Guthaben, Bankkonto oder Karte zahlen",
+    payPaypalUnavailable: "PayPal ist vorübergehend nicht verfügbar",
+    payPaypalFailed: "Die PayPal-Zahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
+    payPaypalCancelled: "Sie haben die PayPal-Zahlung abgebrochen. Sie können es erneut versuchen.",
+    payPaypalNote:
+      "Sie werden zu PayPal weitergeleitet, um die Zahlung zu bestätigen. Wir sehen Ihre PayPal-Anmeldung nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     paySepa: "Banküberweisung (SEPA)",
     paySepaDesc: "Zahlung per IBAN-Überweisung auf unser Konto",
     payCrypto: "Kryptowährung",

@@ -99,7 +99,7 @@ export const it: Dictionary = {
     uspWarrantyTitle: "Garanzia 2 anni",
     uspWarrantyText: "Ogni macchina coperta dalla garanzia consumatori UE.",
     uspPaymentTitle: "Pagamento flessibile",
-    uspPaymentText: "Carta, bonifico SEPA, cripto o 4× senza interessi.",
+    uspPaymentText: "PayPal, carta, bonifico SEPA, cripto o 4× senza interessi.",
     newsletterTitle: "Ricevi le offerte via e-mail",
     newsletterText: "Novità, riassortimenti e offerte riservate. Niente spam.",
     newsletterPlaceholder: "Il tuo indirizzo e-mail",
@@ -185,6 +185,13 @@ export const it: Dictionary = {
     payCardFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
     payCardNote:
       "Verrai reindirizzato a una pagina di pagamento sicura. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
+    payPaypal: "PayPal",
+    payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
+    payPaypalUnavailable: "PayPal non è al momento disponibile",
+    payPaypalFailed: "Il pagamento PayPal non è andato a buon fine. Puoi riprovare.",
+    payPaypalCancelled: "Hai annullato il pagamento PayPal. Puoi riprovare.",
+    payPaypalNote:
+      "Verrai reindirizzato su PayPal per approvare il pagamento. Non vediamo mai il tuo accesso PayPal. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     paySepa: "Bonifico bancario (SEPA)",
     paySepaDesc: "Paga con bonifico IBAN sul nostro conto",
     payCrypto: "Criptovaluta",

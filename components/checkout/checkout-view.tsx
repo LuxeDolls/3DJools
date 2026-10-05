@@ -24,7 +24,7 @@ import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 
-type PaymentId = "card" | "sepa" | "crypto" | "installments"
+type PaymentId = "card" | "paypal" | "sepa" | "crypto" | "installments"
 
 export function CheckoutView({ locale }: { locale: Locale }) {
   const { dict } = useI18n()
@@ -56,7 +56,8 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const totalCents = subtotalCents - discountCents + shippingCents
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
-  const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean }[] = [
+  const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
+    { id: "paypal", icon: Landmark, title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc, mark: "/payments/paypal.svg" },
     { id: "card", icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
     { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
@@ -100,7 +101,9 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         setOrderError(
           res.error === "card_unavailable" || res.error === "card_start_failed"
             ? dict.checkout.payCardUnavailable
-            : dict.checkout.orderError,
+            : res.error === "paypal_unavailable" || res.error === "paypal_start_failed"
+              ? dict.checkout.payPaypalUnavailable
+              : dict.checkout.orderError,
         )
         setSubmitting(false)
         return
@@ -211,6 +214,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
                 disabled={opt.disabled}
                 onSelect={() => !opt.disabled && setPayment(opt.id)}
                 icon={opt.icon}
+                mark={opt.mark}
                 title={opt.title}
                 desc={opt.desc}
               />
@@ -221,6 +225,11 @@ export function CheckoutView({ locale }: { locale: Locale }) {
           {payment === "card" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.payCardNote}</p>
+            </div>
+          )}
+          {payment === "paypal" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{dict.checkout.payPaypalNote}</p>
             </div>
           )}
           {payment === "sepa" && (
@@ -407,6 +416,7 @@ function OptionCard({
   disabled,
   onSelect,
   icon: Icon,
+  mark,
   title,
   desc,
   trailing,
@@ -415,6 +425,7 @@ function OptionCard({
   disabled?: boolean
   onSelect?: () => void
   icon: typeof Landmark
+  mark?: string
   title: string
   desc: string
   trailing?: string
@@ -441,7 +452,13 @@ function OptionCard({
       >
         {selected && <span className="size-2.5 rounded-full bg-primary" />}
       </span>
-      <Icon className={cn("size-5 shrink-0", selected ? "text-primary" : "text-muted-foreground")} />
+      {mark ? (
+        <span className="flex h-7 shrink-0 items-center rounded-sm bg-white px-1.5">
+          <Image src={mark} alt="" width={72} height={18} className="h-[18px] w-auto" />
+        </span>
+      ) : (
+        <Icon className={cn("size-5 shrink-0", selected ? "text-primary" : "text-muted-foreground")} />
+      )}
       <span className="min-w-0 flex-1">
         <span className="block text-sm font-medium text-foreground">{title}</span>
         <span className="block text-xs text-muted-foreground">{desc}</span>

@@ -97,7 +97,7 @@ export const en = {
     uspWarrantyTitle: "2-year warranty",
     uspWarrantyText: "Every machine covered by EU consumer guarantee.",
     uspPaymentTitle: "Flexible payment",
-    uspPaymentText: "Cards, SEPA transfer, crypto or 4× interest-free instalments.",
+    uspPaymentText: "PayPal, cards, SEPA transfer, crypto or 4× interest-free instalments.",
     newsletterTitle: "Get maker deals in your inbox",
     newsletterText: "New drops, restocks and members-only offers. No spam.",
     newsletterPlaceholder: "Your email address",
@@ -183,6 +183,13 @@ export const en = {
     payCardFailed: "The card payment was not completed. You can try again.",
     payCardNote:
       "You will be redirected to a secure payment page. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
+    payPaypal: "PayPal",
+    payPaypalDesc: "Pay with your PayPal balance, bank account or card",
+    payPaypalUnavailable: "PayPal is temporarily unavailable",
+    payPaypalFailed: "The PayPal payment was not completed. You can try again.",
+    payPaypalCancelled: "You cancelled the PayPal payment. You can try again.",
+    payPaypalNote:
+      "You will be redirected to PayPal to approve the payment. We never see your PayPal login. If you have already paid, wait for the status to update and do not pay twice.",
     paySepa: "Bank transfer (SEPA)",
     paySepaDesc: "Pay by IBAN transfer to our account",
     payCrypto: "Cryptocurrency",

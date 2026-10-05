@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Link from "next/link"
 import { CreditCard, Landmark, Bitcoin, CalendarClock, Clock, Mail, Phone } from "lucide-react"
 import { COMPANY, companyStreetLine } from "@/lib/company"
@@ -46,6 +47,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   const payments = [
+    { icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" },
     { icon: CreditCard, label: dict.checkout.payCard },
     { icon: Landmark, label: dict.checkout.paySepa },
     { icon: Bitcoin, label: dict.checkout.payCrypto },
@@ -121,7 +123,13 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                 className="flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-muted-foreground"
                 title={p.label}
               >
-                <p.icon className="size-4 text-foreground" />
+                {"mark" in p && p.mark ? (
+                  <span className="flex h-5 items-center rounded-sm bg-white px-1">
+                    <Image src={p.mark} alt="" width={56} height={14} className="h-3.5 w-auto" />
+                  </span>
+                ) : (
+                  <p.icon className="size-4 text-foreground" />
+                )}
                 <span className="hidden sm:inline">{p.label}</span>
               </li>
             ))}

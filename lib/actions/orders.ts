@@ -20,6 +20,7 @@ import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendProviderOrderId, aviagramConfigured, cardAmount, createCardForm } from "@/lib/payments/aviagram"
+import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 // Prices are authoritative here, never taken from the client — the cart only
@@ -30,11 +31,12 @@ import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schem
 const MAX_QTY = 20
 
 type CheckoutShipping = "standard"
-type CheckoutPayment = "card" | "sepa" | "crypto" | "installments"
+type CheckoutPayment = "card" | "paypal" | "sepa" | "crypto" | "installments"
 
 // Maps the checkout selector id onto the persisted PaymentMethod enum.
 const PAYMENT_METHOD: Record<CheckoutPayment, PaymentMethod> = {
   card: "card",
+  paypal: "paypal",
   sepa: "bank_transfer",
   crypto: "crypto",
   installments: "installments",
@@ -90,6 +92,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
   if (input.payment === "card" && !aviagramConfigured()) return { ok: false, error: "card_unavailable" }
+  if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
   const items: Array<Omit<NewOrderItemRow, "id" | "orderId">> = []
@@ -128,7 +131,10 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   const paymentMethod = PAYMENT_METHOD[input.payment] ?? "card"
   // Card, bank transfer and crypto stay unpaid until funds are confirmed.
   const status: OrderStatus =
-    paymentMethod === "bank_transfer" || paymentMethod === "crypto" || paymentMethod === "card"
+    paymentMethod === "bank_transfer" ||
+    paymentMethod === "crypto" ||
+    paymentMethod === "card" ||
+    paymentMethod === "paypal"
       ? "awaiting_payment"
       : "paid"
 
@@ -186,6 +192,24 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     }
   }
 
+  if (paymentMethod === "paypal") {
+    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
+    await mergeOrderNotes(order.id, { checkout_locale: locale })
+    try {
+      const checkout = await createPaypalCheckout({
+        orderNumber: order.orderNumber,
+        amountCents: totalCents,
+        locale,
+      })
+      await mergeOrderNotes(order.id, { paypal_order_ids: checkout.paypalOrderId })
+      paymentUrl = checkout.approveUrl
+    } catch (err) {
+      console.error("[v0] PayPal payment could not start:", err)
+      await abandonUnpaidOrder(order.id)
+      return { ok: false, error: "paypal_start_failed" }
+    }
+  }
+
   // Send the receipt. Never let an email failure break checkout — the order
   // is already committed, so we log and move on (a safe no-op without Resend).
   try {
@@ -231,6 +255,36 @@ export async function startCardPayment(orderNumber: string, locale: string): Pro
   } catch (err) {
     console.error("[v0] Card payment retry failed:", err)
     return { ok: false, error: "card_start_failed" }
+  }
+}
+
+export type StartPaypalPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
+
+/** Opens a new PayPal approval for an order that is still awaiting payment. */
+export async function startPaypalPayment(orderNumber: string, locale: string): Promise<StartPaypalPaymentResult> {
+  if (!paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order || order.paymentMethod !== "paypal") return { ok: false, error: "not_found" }
+  if (order.status !== "awaiting_payment" && order.status !== "reviewing_payment") {
+    return { ok: false, error: "invalid_status" }
+  }
+
+  const notes = parseOrderNotes(order.notes)
+  const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
+  try {
+    const checkout = await createPaypalCheckout({
+      orderNumber: order.orderNumber,
+      amountCents: order.totalCents,
+      locale: safeLocale,
+    })
+    await mergeOrderNotes(order.id, {
+      paypal_order_ids: appendPaypalOrderId(notes.paypal_order_ids, checkout.paypalOrderId),
+      checkout_locale: safeLocale,
+    })
+    return { ok: true, paymentUrl: checkout.approveUrl }
+  } catch (err) {
+    console.error("[v0] PayPal payment retry failed:", err)
+    return { ok: false, error: "paypal_start_failed" }
   }
 }
 
