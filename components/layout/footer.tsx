@@ -47,10 +47,10 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   const payments = [
-    { icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" },
     { icon: CreditCard, label: dict.checkout.payCard },
     { icon: Landmark, label: dict.checkout.paySepa },
     { icon: Bitcoin, label: dict.checkout.payCrypto },
+    { icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" },
     { icon: CalendarClock, label: dict.checkout.payInstallments },
   ]
 
