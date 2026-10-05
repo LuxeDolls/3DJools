@@ -62,8 +62,8 @@ export async function createCardForm(input: {
   }
 
   const host = paymentHost()
-  const currency = process.env.AVIAGRAM_CURRENCY || DEFAULT_CURRENCY
-  const webhookUrl = `${COMPANY.url}/api/payments/aviagram/webhook?token=${input.webhookToken}`
+  const currency = (process.env.AVIAGRAM_CURRENCY || DEFAULT_CURRENCY).trim()
+  const webhookUrl = `${COMPANY.url}/api/payments/aviagram/webhook/${input.webhookToken}`
   const returnUrl = `${COMPANY.url}/${input.locale}/order/${encodeURIComponent(input.orderNumber)}?card=return`
 
   const headers = {
