@@ -14,6 +14,18 @@ export function aviagramConfigured(): boolean {
   return Boolean(process.env.AVIAGRAM_CLIENT_ID && process.env.AVIAGRAM_CLIENT_SECRET)
 }
 
+function paymentHost(): string {
+  const raw = (process.env.AVIAGRAM_API_URL || DEFAULT_HOST).trim().replace(/\/$/, "")
+  const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`
+  const url = new URL(withScheme)
+  if (url.protocol !== "https:" && url.protocol !== "http:") throw new Error("aviagram_bad_host")
+  return url.pathname && url.pathname !== "/" ? withScheme : url.origin
+}
+
+function paymentEndpoint(host: string): string {
+  return host.endsWith("/api/payment/createForm") ? host : `${host}/api/payment/createForm`
+}
+
 export function cardAmount(cents: number): string {
   return (cents / 100).toFixed(2)
 }
@@ -49,7 +61,7 @@ export async function createCardForm(input: {
     throw new Error("aviagram_bad_amount")
   }
 
-  const host = (process.env.AVIAGRAM_API_URL || DEFAULT_HOST).replace(/\/$/, "")
+  const host = paymentHost()
   const currency = process.env.AVIAGRAM_CURRENCY || DEFAULT_CURRENCY
   const webhookUrl = `${COMPANY.url}/api/payments/aviagram/webhook?token=${input.webhookToken}`
   const returnUrl = `${COMPANY.url}/${input.locale}/order/${encodeURIComponent(input.orderNumber)}?card=return`
@@ -70,7 +82,8 @@ export async function createCardForm(input: {
     payment_method: "card",
     webhook_url: webhookUrl,
   }
-  let response = await fetch(`${host}/api/payment/createForm`, {
+  const endpoint = paymentEndpoint(host)
+  let response = await fetch(endpoint, {
     method: "POST",
     headers,
     body: JSON.stringify({ ...baseBody, redirect_url: returnUrl }),
@@ -79,7 +92,7 @@ export async function createCardForm(input: {
   // redirect_url is used by working clients but is not in the public field list.
   // If the gateway rejects the extra field, retry with the documented body only.
   if (response.status === 400 || response.status === 422) {
-    response = await fetch(`${host}/api/payment/createForm`, {
+    response = await fetch(endpoint, {
       method: "POST",
       headers,
       body: JSON.stringify(baseBody),
