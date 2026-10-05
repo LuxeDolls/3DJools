@@ -3,8 +3,8 @@ import "server-only"
 import { COMPANY } from "@/lib/company"
 
 // Hosted card checkout. Docs: https://aviagram.gitbook.io/docsavialooo
-// POST {host}/api/payment/createForm with Authorization: Basic base64(clientId:clientSecret).
-// The public example credentials on that page are not this store's keys.
+// POST {host}/api/payment/create with Authorization: Basic base64(clientId:clientSecret).
+// createForm is a different method and is not enabled for this client.
 
 // Docs write the host as <HOST_URL>. Set AVIAGRAM_API_URL to the host from Aviagram.
 const DEFAULT_HOST = "https://aviagram.app"
@@ -14,16 +14,13 @@ export function aviagramConfigured(): boolean {
   return Boolean(process.env.AVIAGRAM_CLIENT_ID && process.env.AVIAGRAM_CLIENT_SECRET)
 }
 
-function paymentHost(): string {
-  const raw = (process.env.AVIAGRAM_API_URL || DEFAULT_HOST).trim().replace(/\/$/, "")
+function paymentEndpoint(): string {
+  const raw = (process.env.AVIAGRAM_API_URL || DEFAULT_HOST).trim()
   const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`
   const url = new URL(withScheme)
   if (url.protocol !== "https:" && url.protocol !== "http:") throw new Error("aviagram_bad_host")
-  return url.pathname && url.pathname !== "/" ? withScheme : url.origin
-}
-
-function paymentEndpoint(host: string): string {
-  return host.endsWith("/api/payment/createForm") ? host : `${host}/api/payment/createForm`
+  // The saved host may be the origin or the full createForm URL from Aviagram.
+  return `${url.origin}/api/payment/create`
 }
 
 export function cardAmount(cents: number): string {
@@ -61,7 +58,6 @@ export async function createCardForm(input: {
     throw new Error("aviagram_bad_amount")
   }
 
-  const host = paymentHost()
   const currency = (process.env.AVIAGRAM_CURRENCY || DEFAULT_CURRENCY).trim()
   const webhookUrl = `${COMPANY.url}/api/payments/aviagram/webhook/${input.webhookToken}`
   const returnUrl = `${COMPANY.url}/${input.locale}/order/${encodeURIComponent(input.orderNumber)}?card=return`
@@ -82,7 +78,7 @@ export async function createCardForm(input: {
     payment_method: "card",
     webhook_url: webhookUrl,
   }
-  const endpoint = paymentEndpoint(host)
+  const endpoint = paymentEndpoint()
   let response = await fetch(endpoint, {
     method: "POST",
     headers,
@@ -117,7 +113,7 @@ export async function createCardForm(input: {
   const redirectRaw = typeof data.redirect_url === "string" ? data.redirect_url : data.redirectUrl
   const redirectUrl = typeof redirectRaw === "string" ? redirectRaw.trim() : ""
   if (!response.ok || !isProviderOrderId(providerOrderId) || !redirectUrl.startsWith("https://")) {
-    console.error("[v0] Aviagram createForm failed", response.status)
+    console.error("[v0] Aviagram create failed", response.status)
     throw new Error("aviagram_create_failed")
   }
 
