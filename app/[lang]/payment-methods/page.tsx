@@ -19,10 +19,10 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
-    { icon: Landmark, mark: "/payments/paypal.svg", title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc },
     { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
     { icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
+    { icon: Landmark, mark: "/payments/paypal.svg", title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc },
     {
       icon: CalendarClock,
       title: dict.checkout.payInstallments,
