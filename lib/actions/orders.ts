@@ -4,13 +4,22 @@ import { headers } from "next/headers"
 import { after } from "next/server"
 import { auth } from "@/lib/auth"
 import { getProductBySlug } from "@/lib/catalog"
-import { createOrder, getOrderByOrderNumber, updateOrderStatus } from "@/lib/orders/queries"
+import { randomBytes } from "node:crypto"
+import { isLocale } from "@/lib/i18n/config"
+import {
+  abandonUnpaidOrder,
+  createOrder,
+  getOrderByOrderNumber,
+  mergeOrderNotes,
+  updateOrderStatus,
+} from "@/lib/orders/queries"
 import { sendOrderConfirmationEmail } from "@/lib/email/order-emails"
 import { notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
-import { buildOrderNotes } from "@/lib/orders/notes"
+import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { isCryptoCoinId } from "@/lib/payments/crypto"
+import { appendProviderOrderId, aviagramConfigured, createCardForm } from "@/lib/payments/aviagram"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 // Prices are authoritative here, never taken from the client — the cart only
@@ -46,10 +55,13 @@ export type PlaceOrderInput = {
   /** Selected coin/network id when payment is "crypto" (see lib/payments/crypto.ts). */
   cryptoCoin?: string
   termsAccepted?: boolean
+  locale?: string
   items: { slug: string; quantity: number; brand?: string; image?: string }[]
 }
 
-export type PlaceOrderResult = { ok: true; orderNumber: string } | { ok: false; error: string }
+export type PlaceOrderResult =
+  | { ok: true; orderNumber: string; paymentUrl?: string }
+  | { ok: false; error: string }
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -77,9 +89,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (!isValidEmail(input.email)) return { ok: false, error: "invalid_email" }
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
-  // Card payment is temporarily unavailable; the checkout UI already disables
-  // the option, but guard here too in case the action is called directly.
-  if (input.payment === "card") return { ok: false, error: "card_unavailable" }
+  if (input.payment === "card" && !aviagramConfigured()) return { ok: false, error: "card_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
   const items: Array<Omit<NewOrderItemRow, "id" | "orderId">> = []
@@ -116,9 +126,11 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   const totalCents = subtotalCents - discountCents + shippingCents
 
   const paymentMethod = PAYMENT_METHOD[input.payment] ?? "card"
-  // Card is treated as settled in this preview; offline methods await funds.
+  // Card, bank transfer and crypto stay unpaid until funds are confirmed.
   const status: OrderStatus =
-    paymentMethod === "bank_transfer" || paymentMethod === "crypto" ? "awaiting_payment" : "paid"
+    paymentMethod === "bank_transfer" || paymentMethod === "crypto" || paymentMethod === "card"
+      ? "awaiting_payment"
+      : "paid"
 
   const order = await createOrder({
     userId,
@@ -146,6 +158,30 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     items,
   })
 
+  let paymentUrl: string | undefined
+  if (paymentMethod === "card") {
+    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
+    const webhookToken = randomBytes(32).toString("hex")
+    await mergeOrderNotes(order.id, {
+      aviagram_webhook_token: webhookToken,
+      checkout_locale: locale,
+    })
+    try {
+      const form = await createCardForm({
+        orderNumber: order.orderNumber,
+        amountCents: totalCents,
+        locale,
+        webhookToken,
+      })
+      await mergeOrderNotes(order.id, { aviagram_order_ids: form.providerOrderId })
+      paymentUrl = form.redirectUrl
+    } catch (err) {
+      console.error("[v0] Card payment could not start:", err)
+      await abandonUnpaidOrder(order.id)
+      return { ok: false, error: "card_start_failed" }
+    }
+  }
+
   // Send the receipt. Never let an email failure break checkout — the order
   // is already committed, so we log and move on (a safe no-op without Resend).
   try {
@@ -154,7 +190,42 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     console.error("[v0] Order confirmation email failed:", err)
   }
 
-  return { ok: true, orderNumber: order.orderNumber }
+  return { ok: true, orderNumber: order.orderNumber, paymentUrl }
+}
+
+export type StartCardPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
+
+/** Opens a new hosted card form for an order that is still awaiting payment. */
+export async function startCardPayment(orderNumber: string, locale: string): Promise<StartCardPaymentResult> {
+  if (!aviagramConfigured()) return { ok: false, error: "card_unavailable" }
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order || order.paymentMethod !== "card") return { ok: false, error: "not_found" }
+  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
+
+  const notes = parseOrderNotes(order.notes)
+  const existingToken = notes.aviagram_webhook_token ?? ""
+  const webhookToken = /^[a-f0-9]{64}$/.test(existingToken) ? existingToken : randomBytes(32).toString("hex")
+  const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
+  if (webhookToken !== notes.aviagram_webhook_token) {
+    await mergeOrderNotes(order.id, { aviagram_webhook_token: webhookToken, checkout_locale: safeLocale })
+  }
+
+  try {
+    const form = await createCardForm({
+      orderNumber: order.orderNumber,
+      amountCents: order.totalCents,
+      locale: safeLocale,
+      webhookToken,
+    })
+    await mergeOrderNotes(order.id, {
+      aviagram_order_ids: appendProviderOrderId(notes.aviagram_order_ids, form.providerOrderId),
+      checkout_locale: safeLocale,
+    })
+    return { ok: true, paymentUrl: form.redirectUrl }
+  } catch (err) {
+    console.error("[v0] Card payment retry failed:", err)
+    return { ok: false, error: "card_start_failed" }
+  }
 }
 
 export type TrackOrderInput = { orderNumber: string; email: string }

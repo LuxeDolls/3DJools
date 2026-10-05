@@ -92,7 +92,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "SEPA bank transfer, cryptocurrency and interest-free instalments. Card payment is temporarily unavailable. Details are on our ",
+                "Card (Visa, Mastercard), SEPA bank transfer, cryptocurrency and interest-free instalments. Card details are entered on a secure payment page. Details are on our ",
               label: "payment methods page",
               after: ".",
             },
@@ -190,7 +190,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "SEPA-Überweisung, Kryptowährung und zinsfreie Ratenzahlung. Die Kartenzahlung ist vorübergehend nicht verfügbar. Einzelheiten stehen auf unserer Seite ",
+                "Karte (Visa, Mastercard), SEPA-Überweisung, Kryptowährung und zinsfreie Ratenzahlung. Kartendaten werden auf einer sicheren Zahlungsseite eingegeben. Einzelheiten stehen auf unserer Seite ",
               label: "Zahlungsarten",
               after: ".",
             },
@@ -288,7 +288,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Virement SEPA, cryptomonnaie et paiement en plusieurs fois sans intérêt. Le paiement par carte est temporairement indisponible. Les détails figurent sur notre ",
+                "Carte (Visa, Mastercard), virement SEPA, cryptomonnaie et paiement en plusieurs fois sans intérêt. Les données de carte sont saisies sur une page de paiement sécurisée. Les détails figurent sur notre ",
               label: "page des moyens de paiement",
               after: ".",
             },
@@ -386,7 +386,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Bonifico SEPA, criptovaluta e rate senza interessi. Il pagamento con carta è temporaneamente non disponibile. I dettagli sono sulla nostra ",
+                "Carta (Visa, Mastercard), bonifico SEPA, criptovaluta e rate senza interessi. I dati della carta si inseriscono su una pagina di pagamento sicura. I dettagli sono sulla nostra ",
               label: "pagina dei metodi di pagamento",
               after: ".",
             },
@@ -484,7 +484,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Transferencia SEPA, criptomoneda y plazos sin intereses. El pago con tarjeta no está disponible temporalmente. Los detalles están en nuestra ",
+                "Tarjeta (Visa, Mastercard), transferencia SEPA, criptomoneda y plazos sin intereses. Los datos de la tarjeta se introducen en una página de pago segura. Los detalles están en nuestra ",
               label: "página de métodos de pago",
               after: ".",
             },
@@ -582,7 +582,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "SEPA-overschrijving, cryptovaluta en renteloze termijnen. Betalen met kaart is momenteel niet beschikbaar. De details staan op onze ",
+                "Kaart (Visa, Mastercard), SEPA-overschrijving, cryptovaluta en renteloze termijnen. Kaartgegevens worden ingevoerd op een beveiligde betaalpagina. De details staan op onze ",
               label: "pagina met betaalmethoden",
               after: ".",
             },

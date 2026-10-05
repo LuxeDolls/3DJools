@@ -182,6 +182,8 @@ export const nl: Dictionary = {
     payCard: "Credit-/debetkaart",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
+    payCardNote:
+      "U wordt doorgestuurd naar een beveiligde betaalpagina. Wij zien uw kaartnummer niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
     paySepa: "Bankoverschrijving (SEPA)",
     paySepaDesc: "Betaal via IBAN-overschrijving op onze rekening",
     payCrypto: "Cryptovaluta",

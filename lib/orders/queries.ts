@@ -13,6 +13,7 @@ import {
 } from "@/lib/db/schema"
 import { notifyNewOrder, notifyOrderStatusChange } from "@/lib/notifications/admin"
 import { sendOrderStatusUpdateEmail } from "@/lib/email/order-emails"
+import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 
 export type OrderWithItems = OrderRow & { items: OrderItemRow[] }
 
@@ -140,6 +141,21 @@ export async function getOrderById(orderId: string): Promise<OrderWithItems | nu
   if (!order) return null
   const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id))
   return { ...order, items }
+}
+
+export async function mergeOrderNotes(orderId: string, fields: Record<string, string | undefined>): Promise<void> {
+  const current = await getOrderById(orderId)
+  if (!current) return
+  const notes = buildOrderNotes({ ...parseOrderNotes(current.notes), ...fields })
+  await db.update(orders).set({ notes: notes ?? null, updatedAt: new Date() }).where(eq(orders.id, orderId))
+}
+
+/** Drops an unpaid order without emailing the customer. Used when card checkout cannot start. */
+export async function abandonUnpaidOrder(orderId: string): Promise<void> {
+  await db
+    .update(orders)
+    .set({ status: "cancelled", updatedAt: new Date() })
+    .where(and(eq(orders.id, orderId), eq(orders.status, "awaiting_payment")))
 }
 
 export async function updateOrderStatus(orderId: string, status: OrderStatus): Promise<void> {

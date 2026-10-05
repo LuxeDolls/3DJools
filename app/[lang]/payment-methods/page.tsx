@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Landmark, Bitcoin, CalendarClock } from "lucide-react"
+import { CreditCard, Landmark, Bitcoin, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -18,6 +18,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
+    { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
     { icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     {
@@ -54,7 +55,8 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
 
       <div className="mt-8 rounded-lg border border-border bg-secondary/40 p-5 text-sm leading-relaxed text-muted-foreground">
         <p>
-          All prices are shown in euro (EUR) and include VAT where applicable. Instalment plans split your order into
+          All prices are shown in euro (EUR) and include VAT where applicable. Card payments open a secure payment
+          page; we never see the card number. Instalment plans split your order into
           four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched
           once payment is received on our IBAN, which is shown at checkout and on your order confirmation.
         </p>

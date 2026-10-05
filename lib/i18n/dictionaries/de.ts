@@ -182,6 +182,8 @@ export const de: Dictionary = {
     payCard: "Kredit-/Debitkarte",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",
+    payCardNote:
+      "Sie werden zu einer sicheren Zahlungsseite weitergeleitet. Wir sehen Ihre Kartennummer nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     paySepa: "Banküberweisung (SEPA)",
     paySepaDesc: "Zahlung per IBAN-Überweisung auf unser Konto",
     payCrypto: "Kryptowährung",

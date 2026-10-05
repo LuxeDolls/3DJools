@@ -47,6 +47,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const awaitingPayment = order.status === "awaiting_payment"
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
+  const isCard = order.paymentMethod === "card"
   // Same coin/network the customer actually selected at checkout (see lib/payments/crypto.ts),
   // persisted on the order as `crypto_coin=<id>` in the notes field.
   const cryptoCoin = getCryptoCoinOption(parseOrderNotes(order.notes).crypto_coin)
@@ -90,6 +91,9 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     awaitingPayment && isCrypto
       ? `\nPlease send the equivalent of ${euros(order.totalCents)} to our wallet and include your order number ${order.orderNumber} in your records.\nNetwork: ${cryptoCoin.coinLabel} · ${cryptoCoin.network}\nAddress: ${cryptoCoin.address}`
       : null,
+    awaitingPayment && isCard
+      ? `\nCard payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
+      : null,
     addressLines.length ? `\nShipping to:\n${addressLines.join("\n")}` : null,
     orderLink ? `\nView your order: ${orderLink}` : null,
   ]
@@ -130,6 +134,13 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     </div>`
       : ""
 
+  const cardHtml =
+    awaitingPayment && isCard
+      ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.</p>
+    </div>`
+      : ""
+
   const addressHtml = addressLines.length
     ? `<div style="margin-bottom:20px">
       <p style="margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:#888">Shipping to</p>
@@ -145,6 +156,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     <p style="margin:0 0 20px;color:#888;font-size:13px">${new Date(order.createdAt).toLocaleDateString("en-GB")} · Payment: ${paymentLabel}</p>
     ${sepaHtml}
     ${cryptoHtml}
+    ${cardHtml}
     <table style="width:100%;border-collapse:collapse;font-size:14px;border-top:1px solid #eee;margin-bottom:8px">${itemsHtml}</table>
     <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px">${totalsHtml}</table>
     ${addressHtml}

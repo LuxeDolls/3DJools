@@ -182,6 +182,8 @@ export const es: Dictionary = {
     payCard: "Tarjeta de crédito / débito",
     payCardDesc: "Visa, Mastercard, Maestro",
     payCardUnavailable: "El pago con tarjeta no está disponible temporalmente",
+    payCardNote:
+      "Se le redirigirá a una página de pago segura. Nunca vemos el número de su tarjeta. Si ya ha pagado, espere a que se actualice el estado y no pague dos veces.",
     paySepa: "Transferencia bancaria (SEPA)",
     paySepaDesc: "Paga por transferencia IBAN a nuestra cuenta",
     payCrypto: "Criptomoneda",

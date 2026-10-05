@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import { OrderPaymentInstructions } from "@/components/checkout/order-payment-instructions"
+import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -208,6 +209,18 @@ export default async function OrderConfirmationPage({
                 />
               )}
             </div>
+          </div>
+        )}
+
+        {order.paymentMethod === "card" && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            <p>{dict.checkout.payCardNote}</p>
+            <CardPayButton
+              orderNumber={order.orderNumber}
+              locale={locale}
+              label={dict.checkout.payCard}
+              errorLabel={dict.checkout.payCardUnavailable}
+            />
           </div>
         )}
 
