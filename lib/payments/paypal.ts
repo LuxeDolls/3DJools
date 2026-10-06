@@ -1,4 +1,5 @@
 import { COMPANY } from "@/lib/company"
+import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 
 const LIVE_API = "https://api-m.paypal.com"
 const SANDBOX_API = "https://api-m.sandbox.paypal.com"
@@ -34,7 +35,10 @@ type PaypalOrder = {
 }
 
 export function paypalConfigured(): boolean {
-  return Boolean(process.env.PAYPAL_CLIENT_ID?.trim() && process.env.PAYPAL_CLIENT_SECRET?.trim())
+  return (
+    PAYPAL_CHECKOUT_ENABLED &&
+    Boolean(process.env.PAYPAL_CLIENT_ID?.trim() && process.env.PAYPAL_CLIENT_SECRET?.trim())
+  )
 }
 
 export function isPaypalOrderId(value: string): boolean {
