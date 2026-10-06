@@ -142,17 +142,28 @@ export async function notifyOrderStatusChange(
   order: OrderWithItems,
   previousStatus: string,
 ): Promise<void> {
+  const providerPaid =
+    order.status === "paid" && (order.paymentMethod === "card" || order.paymentMethod === "paypal")
+  const title =
+    order.paymentMethod === "paypal" ? "PayPal payment received" : "Card payment received"
   const lines = [
-    `Order status changed: ${previousStatus} → ${order.status}`,
+    providerPaid
+      ? `Payment confirmed: ${previousStatus} → ${order.status}`
+      : `Order status changed: ${previousStatus} → ${order.status}`,
     "",
     ...orderLines(order),
   ]
-  await notifyAdmin({
-    subject: `Order ${order.orderNumber}: ${previousStatus} → ${order.status}`,
-    title: "Order or payment status changed",
-    text: lines.join("\n"),
-    html: linesToHtml(lines),
-  }, false)
+  await notifyAdmin(
+    {
+      subject: providerPaid
+        ? `Payment received for order ${order.orderNumber} — ${euros(order.totalCents)}`
+        : `Order ${order.orderNumber}: ${previousStatus} → ${order.status}`,
+      title: providerPaid ? title : "Order or payment status changed",
+      text: lines.join("\n"),
+      html: linesToHtml(lines),
+    },
+    providerPaid,
+  )
 }
 
 export async function notifyPaymentSubmitted(order: OrderWithItems): Promise<void> {
