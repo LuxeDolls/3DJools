@@ -23,6 +23,7 @@ import { placeOrder } from "@/lib/actions/orders"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
+import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 
 type PaymentId = "card" | "paypal" | "sepa" | "crypto" | "installments"
 
@@ -60,7 +61,9 @@ export function CheckoutView({ locale }: { locale: Locale }) {
     { id: "card", icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
     { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
-    { id: "paypal", icon: Landmark, title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc, mark: "/payments/paypal.svg" },
+    ...(PAYPAL_CHECKOUT_ENABLED
+      ? [{ id: "paypal" as const, icon: Landmark, title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc, mark: "/payments/paypal.svg" }]
+      : []),
     {
       id: "installments",
       icon: CalendarClock,

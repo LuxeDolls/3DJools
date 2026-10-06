@@ -1,4 +1,5 @@
 import Image from "next/image"
+import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 import Link from "next/link"
 import { CreditCard, Landmark, Bitcoin, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
@@ -22,7 +23,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
     { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
     { icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
-    { icon: Landmark, mark: "/payments/paypal.svg", title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc },
+    ...(PAYPAL_CHECKOUT_ENABLED
+      ? [{ icon: Landmark, mark: "/payments/paypal.svg", title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc }]
+      : []),
     {
       icon: CalendarClock,
       title: dict.checkout.payInstallments,
@@ -63,8 +66,8 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
 
       <div className="mt-8 rounded-lg border border-border bg-secondary/40 p-5 text-sm leading-relaxed text-muted-foreground">
         <p>
-          All prices are shown in euro (EUR) and include VAT where applicable. PayPal and card payments open a secure payment
-          page; we never see your PayPal login or card number. Instalment plans split your order into
+          All prices are shown in euro (EUR) and include VAT where applicable. Card payments open a secure payment
+          page; we never see the card number. Instalment plans split your order into
           four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched
           once payment is received on our IBAN, which is shown at checkout and on your order confirmation.
         </p>

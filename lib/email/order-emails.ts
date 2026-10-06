@@ -2,12 +2,25 @@ import "server-only"
 
 import { sendEmail, type SendResult } from "@/lib/email/send"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
+import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 import { getCryptoCoinOption } from "@/lib/payments/crypto"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderWithItems } from "@/lib/orders/queries"
 
 function euros(cents: number): string {
   return `€${(cents / 100).toFixed(2)}`
+}
+
+function paypalAwaitingText(totalCents: number): string {
+  return PAYPAL_CHECKOUT_ENABLED
+    ? `PayPal payment of ${euros(totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
+    : `PayPal is temporarily unavailable, so the payment of ${euros(totalCents)} cannot be completed that way right now. If you have already paid, wait for the status to update and do not pay twice.`
+}
+
+function paypalReminderText(totalCents: number): string {
+  return PAYPAL_CHECKOUT_ENABLED
+    ? `If you haven't approved the PayPal payment of ${euros(totalCents)} yet, open your order page and continue to PayPal. If you have already paid, wait for the status to update and do not pay twice.`
+    : `PayPal is temporarily unavailable, so this order cannot be paid that way right now. If you have already paid ${euros(totalCents)}, wait for the status to update and do not pay twice.`
 }
 
 function siteUrl(): string {
@@ -97,7 +110,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
       ? `\nCard payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
       : null,
     awaitingPayment && isPaypal
-      ? `\nPayPal payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
+      ? `\n${paypalAwaitingText(order.totalCents)}`
       : null,
     addressLines.length ? `\nShipping to:\n${addressLines.join("\n")}` : null,
     orderLink ? `\nView your order: ${orderLink}` : null,
@@ -149,7 +162,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const paypalHtml =
     awaitingPayment && isPaypal
       ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
-      <p style="margin:0;font-size:14px;color:#7a4b00">PayPal payment of <strong>${euros(order.totalCents)}</strong> is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.</p>
+      <p style="margin:0;font-size:14px;color:#7a4b00">${paypalAwaitingText(order.totalCents)}</p>
     </div>`
       : ""
 
@@ -336,9 +349,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     isCrypto
       ? `If you haven't sent the payment yet, here are the details again:\nAmount: ${euros(order.totalCents)}\nNetwork: ${cryptoCoin.coinLabel} · ${cryptoCoin.network}\nAddress: ${cryptoCoin.address}\n\nOnce you've sent it, simply click "I've paid" on your order page so our team can start verifying it.`
       : null,
-    isPaypal
-      ? `If you haven't approved the PayPal payment of ${euros(order.totalCents)} yet, open your order page and continue to PayPal. If you have already paid, wait for the status to update and do not pay twice.`
-      : null,
+    isPaypal ? paypalReminderText(order.totalCents) : null,
     "",
     "If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've changed your mind or run into any trouble, simply reply to this email; we're happy to help.",
     orderLink ? `\nView your order: ${orderLink}` : null,
@@ -366,7 +377,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
 
   const paypalHtml = isPaypal
     ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
-      <p style="margin:0;font-size:14px;color:#7a4b00">If you haven't approved the PayPal payment of <strong>${euros(order.totalCents)}</strong> yet, open your order page and continue to PayPal. If you have already paid, wait for the status to update and do not pay twice.</p>
+      <p style="margin:0;font-size:14px;color:#7a4b00">${paypalReminderText(order.totalCents)}</p>
     </div>`
     : ""
 

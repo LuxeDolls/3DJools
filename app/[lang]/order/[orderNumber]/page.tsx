@@ -13,6 +13,7 @@ import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import { OrderPaymentInstructions } from "@/components/checkout/order-payment-instructions"
 import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
+import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -219,18 +220,24 @@ export default async function OrderConfirmationPage({
 
         {order.paymentMethod === "paypal" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            <p>{dict.checkout.payPaypalNote}</p>
-            {paypal === "cancelled" ? (
-              <p className="mt-2 text-destructive">{dict.checkout.payPaypalCancelled}</p>
-            ) : paypal === "failed" || notes.paypal_last_status === "not_completed" ? (
-              <p className="mt-2 text-destructive">{dict.checkout.payPaypalFailed}</p>
-            ) : null}
-            <PaypalPayButton
-              orderNumber={order.orderNumber}
-              locale={locale}
-              label={dict.checkout.payPaypal}
-              errorLabel={dict.checkout.payPaypalUnavailable}
-            />
+            {PAYPAL_CHECKOUT_ENABLED ? (
+              <>
+                <p>{dict.checkout.payPaypalNote}</p>
+                {paypal === "cancelled" ? (
+                  <p className="mt-2 text-destructive">{dict.checkout.payPaypalCancelled}</p>
+                ) : paypal === "failed" || notes.paypal_last_status === "not_completed" ? (
+                  <p className="mt-2 text-destructive">{dict.checkout.payPaypalFailed}</p>
+                ) : null}
+                <PaypalPayButton
+                  orderNumber={order.orderNumber}
+                  locale={locale}
+                  label={dict.checkout.payPaypal}
+                  errorLabel={dict.checkout.payPaypalUnavailable}
+                />
+              </>
+            ) : (
+              <p>{dict.checkout.payPaypalUnavailable}</p>
+            )}
           </div>
         )}
 

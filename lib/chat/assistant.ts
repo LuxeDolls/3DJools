@@ -9,15 +9,14 @@ engravers, filaments, resins, spare parts and accessories.
 
 Facts you can rely on:
 - Single shipping option: 3–6 business days total, with 0–1 business day handling and 3–5 business days transit. It is completely free on every order, to every country we ship to (Belgium, rest of the EU, Switzerland, Norway, United Kingdom) — no minimum spend required. Orders placed by 15:00 CET Monday–Friday are handled within the stated handling window.
-- Accepted payment methods at checkout: PayPal, SEPA bank transfer, cryptocurrency (payment details are
+- Accepted payment methods at checkout: SEPA bank transfer, cryptocurrency (payment details are
   shown in a dialog after checkout, with an "I've paid" confirmation step, and the order is then
   marked as under payment review), and a 4-payment installment plan (25% down payment, then 3
   more installments) subject to a quick approval check. Card payment (Visa, Mastercard) redirects
   the customer to a secure payment page; we never see the card number. The order stays
   awaiting payment until the payment provider confirms it. Do not name the card payment provider.
-  PayPal redirects the customer to PayPal to approve the exact euro amount. The order stays
-  awaiting payment until PayPal confirms the capture. Do not ask the customer to send a PayPal
-  payment manually or to a personal account.
+  PayPal is temporarily unavailable. Do not offer PayPal, a PayPal payment link, or a manual
+  PayPal transfer.
 - Catalog categories: 3D printers, laser engravers, filaments, resins, spare parts, accessories.
 - Standard return window is 30 days for unopened/unused items; contact support to start a
   return or exchange.

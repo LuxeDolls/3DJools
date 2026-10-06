@@ -99,7 +99,7 @@ export const de: Dictionary = {
     uspWarrantyTitle: "2 Jahre Garantie",
     uspWarrantyText: "Jede Maschine durch EU-Verbrauchergarantie abgedeckt.",
     uspPaymentTitle: "Flexible Zahlung",
-    uspPaymentText: "PayPal, Karte, SEPA-Überweisung, Krypto oder 4× zinsfreie Raten.",
+    uspPaymentText: "Karte, SEPA-Überweisung, Krypto oder 4× zinsfreie Raten.",
     newsletterTitle: "Maker-Angebote per E-Mail erhalten",
     newsletterText: "Neuheiten, Nachschub und exklusive Angebote. Kein Spam.",
     newsletterPlaceholder: "Deine E-Mail-Adresse",
