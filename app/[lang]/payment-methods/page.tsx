@@ -21,6 +21,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
 
   const methods = [
     { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
+    { icon: CreditCard, word: dict.checkout.payApplePay, title: dict.checkout.payApplePay, desc: dict.checkout.payStripeMethodDesc },
+    { icon: CreditCard, word: dict.checkout.payLink, title: dict.checkout.payLink, desc: dict.checkout.payStripeMethodDesc },
+    { icon: CreditCard, word: dict.checkout.payBancontact, title: dict.checkout.payBancontact, desc: dict.checkout.payStripeMethodDesc },
     { icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     ...(PAYPAL_CHECKOUT_ENABLED
@@ -50,7 +53,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
             className="rounded-lg border border-border bg-card p-5"
           >
             <span className="flex h-11 items-center justify-center rounded-md bg-primary/10 px-3 text-primary">
-              {"mark" in m && m.mark ? (
+              {"word" in m && m.word ? (
+                <span className="font-heading text-xs font-bold tracking-tight text-foreground">{m.word}</span>
+              ) : "mark" in m && m.mark ? (
                 <span className="flex h-7 items-center rounded-sm bg-white px-1.5">
                   <Image src={m.mark} alt="" width={72} height={18} className="h-[18px] w-auto" />
                 </span>
@@ -65,12 +70,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
       </div>
 
       <div className="mt-8 rounded-lg border border-border bg-secondary/40 p-5 text-sm leading-relaxed text-muted-foreground">
-        <p>
-          All prices are shown in euro (EUR) and include VAT where applicable. Card payments open a secure payment
-          page; we never see the card number. Instalment plans split your order into
-          four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched
-          once payment is received on our IBAN, which is shown at checkout and on your order confirmation.
-        </p>
+        <p>{dict.checkout.payMethodsNote}</p>
       </div>
 
       <p className="mt-10 border-t border-border pt-6 text-sm text-muted-foreground">
