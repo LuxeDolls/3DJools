@@ -20,6 +20,33 @@ function realDate(year: number, month: number, day: number): string | null {
   return `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
 }
 
+export function dateSeparator(sample: string): "." | "/" | "-" {
+  if (sample.includes(".")) return "."
+  if (sample.includes("-")) return "-"
+  return "/"
+}
+
+/** Inserts the site-language separator while the date is typed. */
+export function maskBirthDate(raw: string, previous: string, separator: "." | "/" | "-"): string {
+  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(raw.trim())
+  if (iso) return `${iso[3]}${separator}${iso[2]}${separator}${iso[1]}`
+
+  const deleting = raw.length < previous.length
+  let digits = raw.replace(/\D/g, "").slice(0, 8)
+  const previousDigits = previous.replace(/\D/g, "")
+  // Backspace on an inserted separator removes the digit before it too.
+  if (deleting && previous.endsWith(separator) && digits === previousDigits) digits = digits.slice(0, -1)
+  if (!digits) return ""
+
+  const day = digits.slice(0, 2)
+  const month = digits.slice(2, 4)
+  const year = digits.slice(4, 8)
+  let masked = day
+  if (month || (!deleting && day.length === 2)) masked += `${separator}${month}`
+  if (year || (!deleting && digits.length >= 4)) masked += `${separator}${year}`
+  return masked
+}
+
 /** Day-first European date, or ISO, as YYYY-MM-DD. Digits without separators count too. */
 export function toIsoDate(value: string): string | null {
   const trimmed = value.trim()
