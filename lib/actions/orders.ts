@@ -21,7 +21,7 @@ import { isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout } from "@/lib/payments/alppay"
-import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName } from "@/lib/payments/cardholder"
+import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 // Prices are authoritative here, never taken from the client — the cart only
@@ -173,7 +173,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
           ? input.cryptoCoin
           : undefined,
       cardholder_name: isCardPayment(input.payment) ? noteSafeName(input.cardholderName ?? "") : undefined,
-      date_of_birth: isCardPayment(input.payment) ? input.dateOfBirth : undefined,
+      date_of_birth: isCardPayment(input.payment) ? toIsoDate(input.dateOfBirth ?? "") ?? undefined : undefined,
     }),
     items,
   })

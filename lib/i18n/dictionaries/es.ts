@@ -193,6 +193,7 @@ export const es: Dictionary = {
       "Te redirigiremos a una página de pago segura. Nunca vemos el número de tu tarjeta. Si ya has pagado, espera a que se actualice el estado y no pagues dos veces.",
     payCardholderName: "Nombre completo",
     payCardholderDob: "Fecha de nacimiento",
+    payCardholderDobPlaceholder: "DD/MM/AAAA",
     payCardholderHint: "Obligatorio para el pago con tarjeta. El titular debe tener 18 años o más.",
     payCardholderRequired: "Introduce el nombre completo del titular de la tarjeta.",
     payCardholderDobInvalid: "Introduce una fecha de nacimiento válida. El titular debe tener 18 años o más.",
