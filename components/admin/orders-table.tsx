@@ -1,6 +1,6 @@
 "use client"
 
-import { Fragment, useState } from "react"
+import { Fragment, useMemo, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { ChevronDown } from "lucide-react"
@@ -22,6 +22,9 @@ const STATUSES: OrderStatus[] = [
   "cancelled",
   "refunded",
 ]
+
+const CLOSED = new Set<OrderStatus>(["delivered", "cancelled", "refunded"])
+type StatusFilter = "all" | "open" | OrderStatus
 
 function label(s: OrderStatus): string {
   return s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
@@ -102,6 +105,22 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
   const router = useRouter()
   const [busy, setBusy] = useState<string | null>(null)
   const [expanded, setExpanded] = useState<string | null>(null)
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all")
+  const counts = useMemo(() => {
+    const map = new Map<OrderStatus, number>()
+    for (const status of STATUSES) map.set(status, 0)
+    for (const order of orders) {
+      const status = order.status as OrderStatus
+      map.set(status, (map.get(status) ?? 0) + 1)
+    }
+    return map
+  }, [orders])
+  const openCount = useMemo(() => orders.filter((order) => !CLOSED.has(order.status as OrderStatus)).length, [orders])
+  const visible = useMemo(() => {
+    if (statusFilter === "all") return orders
+    if (statusFilter === "open") return orders.filter((order) => !CLOSED.has(order.status as OrderStatus))
+    return orders.filter((order) => order.status === statusFilter)
+  }, [orders, statusFilter])
 
   async function changeStatus(orderId: string, status: OrderStatus) {
     setBusy(orderId)
@@ -119,7 +138,43 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
     )
   }
 
+  const filters: { value: StatusFilter; name: string; count: number }[] = [
+    { value: "all", name: "All", count: orders.length },
+    { value: "open", name: "Open", count: openCount },
+    ...STATUSES.filter((status) => (counts.get(status) ?? 0) > 0).map((status) => ({
+      value: status,
+      name: label(status),
+      count: counts.get(status) ?? 0,
+    })),
+  ]
+
   return (
+    <div>
+      <div className="mb-4 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter by status">
+        {filters.map((filter) => {
+          const active = statusFilter === filter.value
+          return (
+            <button
+              key={filter.value}
+              type="button"
+              aria-pressed={active}
+              onClick={() => setStatusFilter(filter.value)}
+              className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium ${
+                active
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-border bg-background text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {filter.name} <span className="tabular-nums">{filter.count}</span>
+            </button>
+          )
+        })}
+      </div>
+      {visible.length === 0 ? (
+        <div className="rounded-lg border border-dashed border-border p-12 text-center">
+          <p className="text-sm font-medium">No orders with this status</p>
+        </div>
+      ) : (
     <div className="overflow-x-auto rounded-lg border border-border">
       <table className="w-full text-sm">
         <thead>
@@ -135,7 +190,7 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
           </tr>
         </thead>
         <tbody>
-          {orders.map((order) => {
+          {visible.map((order) => {
             const isOpen = expanded === order.id
             return (
               <Fragment key={order.id}>
@@ -294,6 +349,8 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
           })}
         </tbody>
       </table>
+    </div>
+      )}
     </div>
   )
 }
