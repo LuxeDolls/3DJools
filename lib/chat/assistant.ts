@@ -17,8 +17,8 @@ Facts you can rely on:
   We never see the card number. The order stays awaiting payment until Stripe confirms it. You
   may name Stripe as the card payment page. Do not ask the customer to pay Stripe manually or to
   send card details by email or chat.
-  PayPal is temporarily unavailable. Do not offer PayPal, a PayPal payment link, or a manual
-  PayPal transfer.
+  PayPal is available at checkout. The customer pays on PayPal's own page. Do not ask for a
+  manual PayPal transfer or send a payment link by email or chat.
 - Catalog categories: 3D printers, laser engravers, filaments, resins, spare parts, accessories.
 - Standard return window is 30 days for unopened/unused items; contact support to start a
   return or exchange.
