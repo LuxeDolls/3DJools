@@ -20,6 +20,7 @@ import { getInstallmentDict } from "@/lib/i18n/installments"
 import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
 import { placeOrder } from "@/lib/actions/orders"
+import { adultDobLimit, isAdultDateOfBirth, isCardPayment, splitFullName } from "@/lib/payments/cardholder"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
@@ -41,6 +42,8 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const [country, setCountry] = useState("Belgium")
   const [submitting, setSubmitting] = useState(false)
   const [termsAccepted, setTermsAccepted] = useState(false)
+  const [cardholderName, setCardholderName] = useState("")
+  const [dateOfBirth, setDateOfBirth] = useState("")
   const [orderError, setOrderError] = useState<string | null>(null)
   const router = useRouter()
 
@@ -81,6 +84,14 @@ export function CheckoutView({ locale }: { locale: Locale }) {
       setOrderError(dict.checkout.termsConsentError)
       return
     }
+    if (isCardPayment(payment) && !splitFullName(cardholderName)) {
+      setOrderError(dict.checkout.payCardholderRequired)
+      return
+    }
+    if (isCardPayment(payment) && !isAdultDateOfBirth(dateOfBirth)) {
+      setOrderError(dict.checkout.payCardholderDobInvalid)
+      return
+    }
     setOrderError(null)
     const fd = new FormData(e.currentTarget)
     const str = (k: string) => String(fd.get(k) ?? "").trim()
@@ -95,6 +106,8 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         postalCode: str("postalCode"),
         country,
         phone: str("phone"),
+        cardholderName: isCardPayment(payment) ? cardholderName : undefined,
+        dateOfBirth: isCardPayment(payment) ? dateOfBirth : undefined,
         payment,
         cryptoCoin: payment === "crypto" ? cryptoCoin : undefined,
         termsAccepted,
@@ -103,7 +116,11 @@ export function CheckoutView({ locale }: { locale: Locale }) {
       })
       if (!res.ok) {
         setOrderError(
-          res.error === "card_unavailable" || res.error === "card_start_failed"
+          res.error === "cardholder_required"
+            ? dict.checkout.payCardholderRequired
+            : res.error === "dob_invalid"
+              ? dict.checkout.payCardholderDobInvalid
+            : res.error === "card_unavailable" || res.error === "card_start_failed"
             ? dict.checkout.payCardUnavailable
             : res.error === "alppay_unavailable" || res.error === "alppay_start_failed"
               ? dict.checkout.payAlppayUnavailable
@@ -226,6 +243,39 @@ export function CheckoutView({ locale }: { locale: Locale }) {
               />
             ))}
           </div>
+
+          {(payment === "card" || payment === "alppay") && (
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div className="space-y-1.5 sm:col-span-2">
+                <Label htmlFor="cardholderName">{dict.checkout.payCardholderName}</Label>
+                <Input
+                  id="cardholderName"
+                  name="cardholderName"
+                  autoComplete="name"
+                  required
+                  value={cardholderName}
+                  onChange={(e) => setCardholderName(e.target.value)}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="dateOfBirth">{dict.checkout.payCardholderDob}</Label>
+                <Input
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  type="date"
+                  autoComplete="bday"
+                  required
+                  min="1900-01-01"
+                  max={adultDobLimit()}
+                  value={dateOfBirth}
+                  onChange={(e) => setDateOfBirth(e.target.value)}
+                />
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground sm:col-span-2">
+                {dict.checkout.payCardholderHint}
+              </p>
+            </div>
+          )}
 
           {/* Contextual panels per payment method */}
           {payment === "card" && (

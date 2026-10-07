@@ -54,7 +54,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "The 3DJools online store is operated by {legalName}, {street}, {postalCode} {city}, Hainaut, Belgium (Company No. {companyNumber}, VAT {vat}), which acts as the data controller for the purposes of this policy. This privacy policy explains how we collect, use and protect your personal data in accordance with the EU General Data Protection Regulation (GDPR).",
     sectionDataWeCollect: "Data we collect",
     dataWeCollect:
-      "We collect the information you provide when placing an order or contacting us (name, address, email, phone, payment details) and technical data such as cookies necessary to run the store and understand how it is used.",
+      "We collect the information you provide when placing an order or contacting us (name, address, email, phone, date of birth for card payments, and payment details) and technical data such as cookies necessary to run the store and understand how it is used.",
     sectionHowWeUse: "How we use your data",
     howWeUse:
       "Your data is used to process orders, arrange delivery, provide support, and — with your consent — to send you marketing communications. We never sell your personal data.",
@@ -119,7 +119,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Der 3DJools-Onlineshop wird betrieben von {legalName}, {street}, {postalCode} {city}, Hainaut, Belgien (Unternehmensnr. {companyNumber}, USt-IdNr. {vat}), das als Verantwortlicher im Sinne dieser Richtlinie handelt. Diese Datenschutzerklärung erläutert, wie wir Ihre personenbezogenen Daten gemäß der EU-Datenschutz-Grundverordnung (DSGVO) erheben, verwenden und schützen.",
     sectionDataWeCollect: "Von uns erhobene Daten",
     dataWeCollect:
-      "Wir erheben die Informationen, die Sie bei einer Bestellung oder Kontaktaufnahme angeben (Name, Adresse, E-Mail, Telefon, Zahlungsdaten) sowie technische Daten wie Cookies, die für den Betrieb des Shops und das Verständnis seiner Nutzung erforderlich sind.",
+      "Wir erheben die Informationen, die Sie bei einer Bestellung oder Kontaktaufnahme angeben (Name, Adresse, E-Mail, Telefon, Geburtsdatum bei Kartenzahlung und Zahlungsdaten) sowie technische Daten wie Cookies, die für den Betrieb des Shops und das Verständnis seiner Nutzung erforderlich sind.",
     sectionHowWeUse: "Wie wir Ihre Daten verwenden",
     howWeUse:
       "Ihre Daten werden zur Bearbeitung von Bestellungen, zur Organisation der Lieferung, zur Bereitstellung von Support und — mit Ihrer Einwilligung — zum Versand von Marketingmitteilungen verwendet. Wir verkaufen Ihre personenbezogenen Daten niemals.",
@@ -184,7 +184,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "La boutique en ligne 3DJools est exploitée par {legalName}, {street}, {postalCode} {city}, Hainaut, Belgique (n° d'entreprise {companyNumber}, TVA {vat}), qui agit en tant que responsable du traitement au sens de la présente politique. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données personnelles conformément au Règlement général sur la protection des données (RGPD).",
     sectionDataWeCollect: "Données que nous collectons",
     dataWeCollect:
-      "Nous collectons les informations que vous fournissez lors d'une commande ou d'un contact (nom, adresse, e-mail, téléphone, informations de paiement), ainsi que des données techniques telles que les cookies nécessaires au fonctionnement de la boutique et à la compréhension de son utilisation.",
+      "Nous collectons les informations que vous fournissez lors d'une commande ou d'un contact (nom, adresse, e-mail, téléphone, date de naissance pour le paiement par carte, informations de paiement), ainsi que des données techniques telles que les cookies nécessaires au fonctionnement de la boutique et à la compréhension de son utilisation.",
     sectionHowWeUse: "Comment nous utilisons vos données",
     howWeUse:
       "Vos données sont utilisées pour traiter les commandes, organiser la livraison, fournir une assistance et — avec votre consentement — vous envoyer des communications marketing. Nous ne vendons jamais vos données personnelles.",
@@ -249,7 +249,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Il negozio online 3DJools è gestito da {legalName}, {street}, {postalCode} {city}, Hainaut, Belgio (n. società {companyNumber}, P.IVA {vat}), che agisce come titolare del trattamento ai fini della presente informativa. Questa informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali in conformità al Regolamento generale sulla protezione dei dati dell'UE (GDPR).",
     sectionDataWeCollect: "Dati che raccogliamo",
     dataWeCollect:
-      "Raccogliamo le informazioni che fornisci al momento dell'ordine o del contatto (nome, indirizzo, e-mail, telefono, dettagli di pagamento) e dati tecnici come i cookie necessari per far funzionare il negozio e comprenderne l'utilizzo.",
+      "Raccogliamo le informazioni che fornisci al momento dell'ordine o del contatto (nome, indirizzo, e-mail, telefono, data di nascita per il pagamento con carta, dettagli di pagamento) e dati tecnici come i cookie necessari per far funzionare il negozio e comprenderne l'utilizzo.",
     sectionHowWeUse: "Come utilizziamo i tuoi dati",
     howWeUse:
       "I tuoi dati vengono utilizzati per elaborare gli ordini, organizzare la consegna, fornire assistenza e — con il tuo consenso — inviarti comunicazioni di marketing. Non vendiamo mai i tuoi dati personali.",
@@ -314,7 +314,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "La tienda online 3DJools está operada por {legalName}, {street}, {postalCode} {city}, Hainaut, Bélgica (N.º de empresa {companyNumber}, IVA {vat}), que actúa como responsable del tratamiento a efectos de esta política. Esta política de privacidad explica cómo recopilamos, utilizamos y protegemos tus datos personales de conformidad con el Reglamento General de Protección de Datos de la UE (RGPD).",
     sectionDataWeCollect: "Datos que recopilamos",
     dataWeCollect:
-      "Recopilamos la información que proporcionas al realizar un pedido o contactarnos (nombre, dirección, correo electrónico, teléfono, datos de pago) y datos técnicos como cookies necesarias para el funcionamiento de la tienda y para entender su uso.",
+      "Recopilamos la información que proporcionas al realizar un pedido o contactarnos (nombre, dirección, correo electrónico, teléfono, fecha de nacimiento para el pago con tarjeta, datos de pago) y datos técnicos como cookies necesarias para el funcionamiento de la tienda y para entender su uso.",
     sectionHowWeUse: "Cómo usamos tus datos",
     howWeUse:
       "Tus datos se utilizan para procesar pedidos, organizar la entrega, ofrecer soporte y — con tu consentimiento — enviarte comunicaciones de marketing. Nunca vendemos tus datos personales.",
@@ -379,7 +379,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "De 3DJools-webshop wordt beheerd door {legalName}, {street}, {postalCode} {city}, Hainaut, België (ondernemingsnr. {companyNumber}, btw {vat}), dat optreedt als verwerkingsverantwoordelijke in de zin van dit beleid. Dit privacybeleid legt uit hoe wij uw persoonsgegevens verzamelen, gebruiken en beschermen in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).",
     sectionDataWeCollect: "Gegevens die wij verzamelen",
     dataWeCollect:
-      "Wij verzamelen de informatie die u verstrekt bij het plaatsen van een bestelling of bij contact met ons (naam, adres, e-mail, telefoon, betaalgegevens) en technische gegevens zoals cookies die nodig zijn om de winkel te laten werken en te begrijpen hoe deze wordt gebruikt.",
+      "Wij verzamelen de informatie die u verstrekt bij het plaatsen van een bestelling of bij contact met ons (naam, adres, e-mail, telefoon, geboortedatum bij kaartbetaling, betaalgegevens) en technische gegevens zoals cookies die nodig zijn om de winkel te laten werken en te begrijpen hoe deze wordt gebruikt.",
     sectionHowWeUse: "Hoe wij uw gegevens gebruiken",
     howWeUse:
       "Uw gegevens worden gebruikt om bestellingen te verwerken, levering te regelen, ondersteuning te bieden en — met uw toestemming — u marketingcommunicatie te sturen. Wij verkopen uw persoonsgegevens nooit.",

@@ -144,6 +144,7 @@ export type AlppayCheckoutInput = {
   email: string
   firstName: string
   lastName: string
+  dateOfBirth?: string
   phone?: string
   address: string
   city: string
@@ -167,6 +168,7 @@ export async function createAlppayCheckout(
     lastName: input.lastName.trim().slice(0, 128),
     locale: input.locale.slice(0, 2).toLowerCase(),
   }
+  if (input.dateOfBirth) customer.dateOfBirth = input.dateOfBirth
   const phone = phoneForGateway(input.phone)
   if (phone) customer.phone = phone
 

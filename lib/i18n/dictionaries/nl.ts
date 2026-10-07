@@ -191,6 +191,11 @@ export const nl: Dictionary = {
     payAlppayFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payAlppayNote:
       "U wordt doorgestuurd naar een beveiligde betaalpagina. Wij zien uw kaartnummer niet. Als u al hebt betaald, wacht u op de statusupdate en betaalt u niet twee keer.",
+    payCardholderName: "Volledige naam",
+    payCardholderDob: "Geboortedatum",
+    payCardholderHint: "Verplicht bij kaartbetaling. De kaarthouder moet 18 jaar of ouder zijn.",
+    payCardholderRequired: "Vul de volledige naam van de kaarthouder in.",
+    payCardholderDobInvalid: "Vul een geldige geboortedatum in. De kaarthouder moet 18 jaar of ouder zijn.",
     payApplePay: "Apple Pay",
     payLink: "Link",
     payBancontact: "Bancontact",
