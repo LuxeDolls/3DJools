@@ -193,6 +193,7 @@ export const de: Dictionary = {
       "Sie werden zu einer sicheren Kartenseite weitergeleitet. Wir sehen Ihre Kartennummer nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     payCardholderName: "Vollständiger Name",
     payCardholderDob: "Geburtsdatum",
+    payCardholderDobPlaceholder: "TT.MM.JJJJ",
     payCardholderHint: "Pflichtangabe für die Kartenzahlung. Der Karteninhaber muss mindestens 18 Jahre alt sein.",
     payCardholderRequired: "Geben Sie den vollständigen Namen des Karteninhabers ein.",
     payCardholderDobInvalid: "Geben Sie ein gültiges Geburtsdatum ein. Der Karteninhaber muss mindestens 18 Jahre alt sein.",

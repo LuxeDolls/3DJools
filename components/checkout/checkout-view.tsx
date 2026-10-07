@@ -20,7 +20,7 @@ import { getInstallmentDict } from "@/lib/i18n/installments"
 import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
 import { placeOrder } from "@/lib/actions/orders"
-import { adultDobLimit, isAdultDateOfBirth, isCardPayment, splitFullName } from "@/lib/payments/cardholder"
+import { isAdultDateOfBirth, isCardPayment, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
@@ -107,7 +107,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         country,
         phone: str("phone"),
         cardholderName: isCardPayment(payment) ? cardholderName : undefined,
-        dateOfBirth: isCardPayment(payment) ? dateOfBirth : undefined,
+        dateOfBirth: isCardPayment(payment) ? toIsoDate(dateOfBirth) ?? undefined : undefined,
         payment,
         cryptoCoin: payment === "crypto" ? cryptoCoin : undefined,
         termsAccepted,
@@ -262,11 +262,12 @@ export function CheckoutView({ locale }: { locale: Locale }) {
                 <Input
                   id="dateOfBirth"
                   name="dateOfBirth"
-                  type="date"
+                  type="text"
+                  inputMode="numeric"
                   autoComplete="bday"
+                  lang={locale}
+                  placeholder={dict.checkout.payCardholderDobPlaceholder}
                   required
-                  min="1900-01-01"
-                  max={adultDobLimit()}
                   value={dateOfBirth}
                   onChange={(e) => setDateOfBirth(e.target.value)}
                 />

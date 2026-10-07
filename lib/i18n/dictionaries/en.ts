@@ -191,6 +191,7 @@ export const en = {
       "You will be redirected to a secure card page. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
     payCardholderName: "Full name",
     payCardholderDob: "Date of birth",
+    payCardholderDobPlaceholder: "DD/MM/YYYY",
     payCardholderHint: "Required for card payment. The cardholder must be 18 or older.",
     payCardholderRequired: "Enter the cardholder's full name.",
     payCardholderDobInvalid: "Enter a valid date of birth. The cardholder must be 18 or older.",
