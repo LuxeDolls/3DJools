@@ -17,6 +17,9 @@ Facts you can rely on:
   We never see the card number. The order stays awaiting payment until Stripe confirms it. You
   may name Stripe as the card payment page. Do not ask the customer to pay Stripe manually or to
   send card details by email or chat.
+  A second card option, labelled Visa / Mastercard, opens a separate secure card page. It is not
+  Stripe. We never see that card number either. The order stays awaiting payment until that page
+  confirms it. Do not ask the customer to pay that processor manually or to send card details.
   PayPal is available at checkout. The customer pays on PayPal's own page. Do not ask for a
   manual PayPal transfer or send a payment link by email or chat.
 - Catalog categories: 3D printers, laser engravers, filaments, resins, spare parts, accessories.

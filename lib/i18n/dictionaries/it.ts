@@ -185,12 +185,18 @@ export const it: Dictionary = {
     payCardFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
     payCardNote:
       "Verrai reindirizzato a una pagina Stripe sicura. Puoi pagare con carta, Apple Pay, Link o Bancontact. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
+    payAlppay: "Visa / Mastercard",
+    payAlppayDesc: "Pagamento sicuro con carta",
+    payAlppayUnavailable: "Il pagamento con carta non è al momento disponibile",
+    payAlppayFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
+    payAlppayNote:
+      "Verrai reindirizzato a una pagina di pagamento sicura. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     payApplePay: "Apple Pay",
     payLink: "Link",
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponibile sulla pagina Stripe sicura quando paghi con carta.",
     payMethodsNote:
-      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. Il pagamento con carta apre una pagina Stripe sicura, dove puoi pagare anche con Apple Pay, Link o Bancontact. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
+      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. Il pagamento con carta apre una pagina Stripe sicura, dove puoi pagare anche con Apple Pay, Link o Bancontact. Visa e Mastercard possono essere pagate anche su una pagina carta sicura separata. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
     payPaypal: "PayPal",
     payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
     payPaypalUnavailable: "PayPal non è al momento disponibile",

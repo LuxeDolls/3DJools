@@ -29,10 +29,10 @@ export default async function OrderConfirmationPage({
   searchParams,
 }: {
   params: Promise<{ lang: string; orderNumber: string }>
-  searchParams: Promise<{ paypal?: string; stripe?: string }>
+  searchParams: Promise<{ paypal?: string; stripe?: string; alppay?: string }>
 }) {
   const { lang, orderNumber } = await params
-  const { paypal, stripe } = await searchParams
+  const { paypal, stripe, alppay } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const order = await getOrderByOrderNumber(decodeURIComponent(orderNumber))
@@ -60,6 +60,7 @@ export default async function OrderConfirmationPage({
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
   const paymentLabels: Record<PaymentMethod, string> = {
     card: dict.checkout.payCard,
+    alppay: dict.checkout.payAlppay,
     paypal: dict.checkout.payPaypal,
     bank_transfer: dict.checkout.paySepa,
     crypto: dict.checkout.payCrypto,
@@ -238,6 +239,24 @@ export default async function OrderConfirmationPage({
             ) : (
               <p>{dict.checkout.payPaypalUnavailable}</p>
             )}
+          </div>
+        )}
+
+        {order.paymentMethod === "alppay" && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            <p>{dict.checkout.payAlppayNote}</p>
+            {alppay === "failed" ||
+            notes.alppay_last_status === "DECLINED" ||
+            notes.alppay_last_status === "CANCELLED" ? (
+              <p className="mt-2 text-destructive">{dict.checkout.payAlppayFailed}</p>
+            ) : null}
+            <CardPayButton
+              orderNumber={order.orderNumber}
+              locale={locale}
+              method="alppay"
+              label={dict.checkout.payAlppay}
+              errorLabel={dict.checkout.payAlppayUnavailable}
+            />
           </div>
         )}
 
