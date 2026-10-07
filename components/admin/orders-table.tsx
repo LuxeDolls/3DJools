@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { setOrderStatus, setOrderTracking } from "@/lib/actions/admin"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
-import type { OrderStatus } from "@/lib/db/schema"
+import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 import type { OrderWithItems } from "@/lib/orders/queries"
 import { parseOrderNotes } from "@/lib/orders/notes"
 
@@ -24,7 +24,19 @@ const STATUSES: OrderStatus[] = [
 ]
 
 const CLOSED = new Set<OrderStatus>(["delivered", "cancelled", "refunded"])
+const METHODS: PaymentMethod[] = ["card", "paypal", "bank_transfer", "crypto", "installments"]
 type StatusFilter = "all" | "open" | OrderStatus
+type PaymentFilter = "all" | string
+
+function matchesStatus(order: OrderWithItems, filter: StatusFilter): boolean {
+  if (filter === "all") return true
+  if (filter === "open") return !CLOSED.has(order.status as OrderStatus)
+  return order.status === filter
+}
+
+function matchesPayment(order: OrderWithItems, filter: PaymentFilter): boolean {
+  return filter === "all" || order.paymentMethod === filter
+}
 
 function label(s: OrderStatus): string {
   return s.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
@@ -98,7 +110,46 @@ function TrackingForm({ order }: { order: OrderWithItems }) {
 }
 
 function paymentLabel(method: string): string {
+  if (method === "paypal") return "PayPal"
   return method.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+}
+
+function FilterRow<T extends string>({
+  label,
+  filters,
+  active,
+  onSelect,
+}: {
+  label: string
+  filters: { value: T; name: string; count: number }[]
+  active: T
+  onSelect: (value: T) => void
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="w-16 shrink-0 text-xs font-medium text-muted-foreground">{label}</span>
+      <div className="flex gap-2 overflow-x-auto pb-1" role="group" aria-label={`Filter by ${label.toLowerCase()}`}>
+        {filters.map((filter) => {
+          const selected = active === filter.value
+          return (
+            <button
+              key={filter.value}
+              type="button"
+              aria-pressed={selected}
+              onClick={() => onSelect(filter.value)}
+              className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium ${
+                selected
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-border bg-background text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {filter.name} <span className="tabular-nums">{filter.count}</span>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
 }
 
 export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
@@ -106,21 +157,37 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
   const [busy, setBusy] = useState<string | null>(null)
   const [expanded, setExpanded] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all")
-  const counts = useMemo(() => {
+  const [paymentFilter, setPaymentFilter] = useState<PaymentFilter>("all")
+  const statusCounts = useMemo(() => {
     const map = new Map<OrderStatus, number>()
     for (const status of STATUSES) map.set(status, 0)
     for (const order of orders) {
+      if (!matchesPayment(order, paymentFilter)) continue
       const status = order.status as OrderStatus
       map.set(status, (map.get(status) ?? 0) + 1)
     }
     return map
-  }, [orders])
-  const openCount = useMemo(() => orders.filter((order) => !CLOSED.has(order.status as OrderStatus)).length, [orders])
-  const visible = useMemo(() => {
-    if (statusFilter === "all") return orders
-    if (statusFilter === "open") return orders.filter((order) => !CLOSED.has(order.status as OrderStatus))
-    return orders.filter((order) => order.status === statusFilter)
+  }, [orders, paymentFilter])
+  const paymentCounts = useMemo(() => {
+    const map = new Map<string, number>()
+    for (const order of orders) {
+      if (!matchesStatus(order, statusFilter)) continue
+      map.set(order.paymentMethod, (map.get(order.paymentMethod) ?? 0) + 1)
+    }
+    return map
   }, [orders, statusFilter])
+  const statusScope = useMemo(
+    () => orders.filter((order) => matchesPayment(order, paymentFilter)),
+    [orders, paymentFilter],
+  )
+  const openCount = useMemo(
+    () => statusScope.filter((order) => !CLOSED.has(order.status as OrderStatus)).length,
+    [statusScope],
+  )
+  const visible = useMemo(
+    () => orders.filter((order) => matchesStatus(order, statusFilter) && matchesPayment(order, paymentFilter)),
+    [orders, statusFilter, paymentFilter],
+  )
 
   async function changeStatus(orderId: string, status: OrderStatus) {
     setBusy(orderId)
@@ -138,41 +205,36 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
     )
   }
 
-  const filters: { value: StatusFilter; name: string; count: number }[] = [
-    { value: "all", name: "All", count: orders.length },
+  const methods = [...new Set<string>([...METHODS, ...orders.map((order) => order.paymentMethod)])]
+  const statusFilters: { value: StatusFilter; name: string; count: number }[] = [
+    { value: "all", name: "All", count: statusScope.length },
     { value: "open", name: "Open", count: openCount },
-    ...STATUSES.filter((status) => (counts.get(status) ?? 0) > 0).map((status) => ({
+    ...STATUSES.filter((status) => status === statusFilter || (statusCounts.get(status) ?? 0) > 0).map((status) => ({
       value: status,
       name: label(status),
-      count: counts.get(status) ?? 0,
+      count: statusCounts.get(status) ?? 0,
     })),
+  ]
+  const paymentFilters: { value: PaymentFilter; name: string; count: number }[] = [
+    { value: "all", name: "All", count: orders.filter((order) => matchesStatus(order, statusFilter)).length },
+    ...methods
+      .filter((method) => method === paymentFilter || (paymentCounts.get(method) ?? 0) > 0)
+      .map((method) => ({
+        value: method,
+        name: paymentLabel(method),
+        count: paymentCounts.get(method) ?? 0,
+      })),
   ]
 
   return (
     <div>
-      <div className="mb-4 flex gap-2 overflow-x-auto pb-1" role="group" aria-label="Filter by status">
-        {filters.map((filter) => {
-          const active = statusFilter === filter.value
-          return (
-            <button
-              key={filter.value}
-              type="button"
-              aria-pressed={active}
-              onClick={() => setStatusFilter(filter.value)}
-              className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium ${
-                active
-                  ? "border-foreground bg-foreground text-background"
-                  : "border-border bg-background text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              {filter.name} <span className="tabular-nums">{filter.count}</span>
-            </button>
-          )
-        })}
+      <div className="mb-4 space-y-2">
+        <FilterRow label="Status" filters={statusFilters} active={statusFilter} onSelect={setStatusFilter} />
+        <FilterRow label="Payment" filters={paymentFilters} active={paymentFilter} onSelect={setPaymentFilter} />
       </div>
       {visible.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border p-12 text-center">
-          <p className="text-sm font-medium">No orders with this status</p>
+          <p className="text-sm font-medium">No orders match these filters</p>
         </div>
       ) : (
     <div className="overflow-x-auto rounded-lg border border-border">
@@ -207,7 +269,8 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
                   <td className="px-4 py-3">
                     <p className="font-medium">{order.orderNumber}</p>
                     <p className="text-xs text-muted-foreground">
-                      {new Date(order.createdAt).toLocaleDateString()} · {order.items.length} items
+                      {new Date(order.createdAt).toLocaleDateString()} · {order.items.length} items ·{" "}
+                      {paymentLabel(order.paymentMethod)}
                     </p>
                   </td>
                   <td className="px-4 py-3">
