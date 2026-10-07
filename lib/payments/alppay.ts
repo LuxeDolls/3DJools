@@ -4,12 +4,14 @@ import { createHmac, timingSafeEqual } from "node:crypto"
 import { COMPANY } from "@/lib/company"
 import { toIsoDate } from "@/lib/payments/cardholder"
 
-// Second card checkout, alongside Stripe. Sandbox only.
+// Second card checkout, alongside Stripe.
 // Docs: https://alp-pay.api-docs.info/
-// Shop 381 is identified by the shop API key. The key is not sent in the body.
+// The shop is identified by its API key. The key is not sent in the body.
 // Hosted page collects the card. We never send card data.
+// Sandbox shop 381 stays first. Live shop 581 is used after it.
 
-const HOST = "https://engine-sandbox.alp-pay.com"
+const SANDBOX_HOST = "https://engine-sandbox.alp-pay.com"
+const LIVE_HOST = "https://engine.alp-pay.com"
 
 const COUNTRY_CODES: Record<string, string> = {
   Belgium: "BE",
@@ -77,8 +79,16 @@ const CALLING_CODES: Record<string, string> = {
   GB: "44",
 }
 
-export function alppayConfigured(): boolean {
+function sandboxReady(): boolean {
   return Boolean(process.env.API?.trim() && process.env.key?.trim())
+}
+
+function liveReady(): boolean {
+  return Boolean(process.env.API_2?.trim() && process.env.Key?.trim())
+}
+
+export function alppayConfigured(): boolean {
+  return liveReady() || sandboxReady()
 }
 
 export function isAlppayPaymentId(id: string): boolean {
@@ -99,15 +109,15 @@ export function countryCode(country: string): string | null {
 }
 
 function apiKey(): string {
-  const key = process.env.API?.trim()
-  if (!key) throw new Error("alppay_not_configured")
-  return key
+  const live = process.env.API_2?.trim()
+  if (liveReady() && live) return live
+  const sandbox = process.env.API?.trim()
+  if (!sandbox) throw new Error("alppay_not_configured")
+  return sandbox
 }
 
-function signingKey(): string {
-  const key = process.env.key?.trim()
-  if (!key) throw new Error("alppay_not_configured")
-  return key
+function host(): string {
+  return liveReady() ? LIVE_HOST : SANDBOX_HOST
 }
 
 function safeEqual(a: string, b: string): boolean {
@@ -117,14 +127,20 @@ function safeEqual(a: string, b: string): boolean {
   return timingSafeEqual(left, right)
 }
 
-/** HMAC-SHA256 of the raw webhook body. Header name is Signature. */
-export function verifyAlppaySignature(rawBody: string, header: string | null): boolean {
-  if (!header || !process.env.key?.trim()) return false
-  const given = header.trim().replace(/^sha256=/i, "")
-  const mac = createHmac("sha256", signingKey()).update(rawBody, "utf8")
-  const hex = mac.digest("hex")
-  const b64 = createHmac("sha256", signingKey()).update(rawBody, "utf8").digest("base64")
+function signatureMatches(rawBody: string, given: string, secret: string): boolean {
+  const hex = createHmac("sha256", secret).update(rawBody, "utf8").digest("hex")
+  const b64 = createHmac("sha256", secret).update(rawBody, "utf8").digest("base64")
   return safeEqual(given, hex) || safeEqual(given.toLowerCase(), hex) || safeEqual(given, b64)
+}
+
+/** HMAC-SHA256 of the raw webhook body. Header name is Signature. Sandbox key first, live key after it. */
+export function verifyAlppaySignature(rawBody: string, header: string | null): boolean {
+  if (!header) return false
+  const given = header.trim().replace(/^sha256=/i, "")
+  const sandbox = process.env.key?.trim()
+  if (sandbox && signatureMatches(rawBody, given, sandbox)) return true
+  const live = process.env.Key?.trim()
+  return Boolean(live && signatureMatches(rawBody, given, live))
 }
 
 export type AlppayPayment = {
@@ -242,7 +258,7 @@ export async function createAlppayCheckout(
     Accept: "application/json",
   }
   const post = async (payload: unknown) => {
-    const response = await fetch(`${HOST}/api/v1/payments`, {
+    const response = await fetch(`${host()}/api/v1/payments`, {
       method: "POST",
       headers,
       body: JSON.stringify(payload),
@@ -280,7 +296,7 @@ export async function createAlppayCheckout(
 
 export async function getAlppayPayment(id: string): Promise<AlppayPayment> {
   if (!isAlppayPaymentId(id)) throw new Error("alppay_bad_id")
-  const response = await fetch(`${HOST}/api/v1/payments/${id}`, {
+  const response = await fetch(`${host()}/api/v1/payments/${id}`, {
     headers: { Authorization: `Bearer ${apiKey()}`, Accept: "application/json" },
     cache: "no-store",
   })
