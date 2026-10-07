@@ -2,6 +2,7 @@ import "server-only"
 
 import { createHmac, timingSafeEqual } from "node:crypto"
 import { COMPANY } from "@/lib/company"
+import { toIsoDate } from "@/lib/payments/cardholder"
 
 // Second card checkout, alongside Stripe. Sandbox only.
 // Docs: https://alp-pay.api-docs.info/
@@ -41,6 +42,39 @@ const COUNTRY_CODES: Record<string, string> = {
   Sweden: "SE",
   Switzerland: "CH",
   "United Kingdom": "GB",
+}
+
+const CALLING_CODES: Record<string, string> = {
+  BE: "32",
+  AT: "43",
+  BG: "359",
+  HR: "385",
+  CY: "357",
+  CZ: "420",
+  DK: "45",
+  EE: "372",
+  FI: "358",
+  FR: "33",
+  DE: "49",
+  GR: "30",
+  HU: "36",
+  IE: "353",
+  IT: "39",
+  LV: "371",
+  LT: "370",
+  LU: "352",
+  MT: "356",
+  NL: "31",
+  NO: "47",
+  PL: "48",
+  PT: "351",
+  RO: "40",
+  SK: "421",
+  SI: "386",
+  ES: "34",
+  SE: "46",
+  CH: "41",
+  GB: "44",
 }
 
 export function alppayConfigured(): boolean {
@@ -125,16 +159,28 @@ function euros(cents: number): number {
   return Number((cents / 100).toFixed(2))
 }
 
-function phoneForGateway(raw: string | undefined): string | undefined {
-  if (!raw) return undefined
-  const stripped = raw
-    .trim()
-    .replace(/^\+/, "")
-    .replace(/[^\d ]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-  if (stripped.length < 8 || stripped.length > 18) return undefined
-  return stripped
+const CALLING_CODE_LIST = Object.values(CALLING_CODES).sort((a, b) => b.length - a.length)
+
+/** AlpPay accepts only "calling-code national-number", one space, no plus. */
+function phoneForGateway(raw: string | undefined, country: string): string | undefined {
+  if (!raw?.trim()) return undefined
+  let digits = raw.replace(/\D/g, "")
+  if (digits.startsWith("00")) digits = digits.slice(2)
+  const prefixed = CALLING_CODE_LIST.find((code) => digits.startsWith(code) && digits.length - code.length >= 6)
+  const localCode = CALLING_CODES[country]
+  const code = prefixed ?? (localCode && digits.startsWith("0") ? localCode : "")
+  const national = prefixed ? digits.slice(prefixed.length) : digits.replace(/^0+/, "")
+  if (!code || national.length < 6) return undefined
+  const formatted = `${code} ${national}`
+  if (!/^\d{1,4} \d{6,14}$/.test(formatted) || formatted.length > 18) return undefined
+  return formatted
+}
+
+function alppayErrorFields(data: unknown): string[] {
+  if (!data || typeof data !== "object" || !Array.isArray((data as { errors?: unknown }).errors)) return []
+  return (data as { errors: { field?: unknown }[] }).errors
+    .map((item) => (typeof item.field === "string" ? item.field : ""))
+    .filter(Boolean)
 }
 
 export type AlppayCheckoutInput = {
@@ -168,8 +214,9 @@ export async function createAlppayCheckout(
     lastName: input.lastName.trim().slice(0, 128),
     locale: input.locale.slice(0, 2).toLowerCase(),
   }
-  if (input.dateOfBirth) customer.dateOfBirth = input.dateOfBirth
-  const phone = phoneForGateway(input.phone)
+  const dateOfBirth = input.dateOfBirth ? toIsoDate(input.dateOfBirth) : null
+  if (dateOfBirth) customer.dateOfBirth = dateOfBirth
+  const phone = phoneForGateway(input.phone, country)
   if (phone) customer.phone = phone
 
   const body = {
@@ -194,29 +241,29 @@ export async function createAlppayCheckout(
     "Content-Type": "application/json",
     Accept: "application/json",
   }
-  // BASIC_CARD_HPP is the hosted card page. If this shop is not enabled for that
-  // method code, retry with the documented hosted example, which omits it.
-  let response = await fetch(`${HOST}/api/v1/payments`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ ...body, paymentMethod: "BASIC_CARD_HPP" }),
-    cache: "no-store",
-  })
-  if (response.status === 400) {
-    response = await fetch(`${HOST}/api/v1/payments`, {
+  const post = async (payload: unknown) => {
+    const response = await fetch(`${HOST}/api/v1/payments`, {
       method: "POST",
       headers,
-      body: JSON.stringify(body),
+      body: JSON.stringify(payload),
       cache: "no-store",
     })
+    const text = await response.text()
+    let data: unknown = null
+    try {
+      data = JSON.parse(text)
+    } catch {
+      data = null
+    }
+    return { response, data }
   }
-  const text = await response.text()
-  let data: unknown = null
-  try {
-    data = JSON.parse(text)
-  } catch {
-    data = null
+  // BASIC_CARD_HPP is the hosted card page. Retry without it only when this shop
+  // rejects that method code, not when another field is invalid.
+  let sent = await post({ ...body, paymentMethod: "BASIC_CARD_HPP" })
+  if (sent.response.status === 400 && alppayErrorFields(sent.data).includes("paymentMethod")) {
+    sent = await post(body)
   }
+  const { response, data } = sent
   const payment = parseAlppayPayment(data)
   const redirectRaw =
     data && typeof data === "object"
@@ -225,7 +272,7 @@ export async function createAlppayCheckout(
       : ""
   const redirectUrl = typeof redirectRaw === "string" ? redirectRaw.trim() : ""
   if (!response.ok || !payment || !redirectUrl.startsWith("https://")) {
-    console.error("[v0] AlpPay create failed", response.status)
+    console.error("[v0] AlpPay create failed", response.status, alppayErrorFields(data).join(",") || "no-field")
     throw new Error("alppay_create_failed")
   }
   return { paymentId: payment.id, redirectUrl }
