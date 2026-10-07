@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
-import { getProductBySlug, getRelatedProducts, getAllProductSlugs } from "@/lib/catalog"
+import { getProductBySlug, getRelatedProducts } from "@/lib/catalog"
 import { categoryLabel } from "@/lib/catalog/category-labels"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Breadcrumb } from "@/components/breadcrumb"
@@ -12,18 +12,10 @@ import { ProductJsonLd } from "@/components/product/product-jsonld"
 import { ProductGrid } from "@/components/product/product-grid"
 import { SectionHeading } from "@/components/section-heading"
 
-export async function generateStaticParams() {
-  try {
-    const slugs = await getAllProductSlugs()
-    return slugs.map((slug) => ({ slug }))
-  } catch (error) {
-    // If the database is temporarily unavailable during build (e.g. a
-    // provider quota hiccup), don't fail the whole deployment. Product pages
-    // will just render on demand instead of being pre-rendered.
-    console.error("[build] Failed to prefetch product slugs for static params:", error)
-    return []
-  }
-}
+// Prices and stock are read live. Prerendering every product in every language
+// opens thousands of database connections during deploy, and one timeout fails
+// the whole build.
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata({
   params,

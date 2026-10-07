@@ -2,22 +2,13 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
-import { getBrandBySlug, getAllBrandSlugs, getAllBrands, getProductsByBrand } from "@/lib/catalog"
+import { getBrandBySlug, getAllBrands, getProductsByBrand } from "@/lib/catalog"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { CatalogView } from "@/components/catalog/catalog-view"
 
-export async function generateStaticParams() {
-  try {
-    const slugs = await getAllBrandSlugs()
-    return slugs.map((slug) => ({ brand: slug }))
-  } catch (error) {
-    // If the database is temporarily unavailable during build (e.g. a
-    // provider quota hiccup), don't fail the whole deployment. Brand pages
-    // will just render on demand instead of being pre-rendered.
-    console.error("[build] Failed to prefetch brand slugs for static params:", error)
-    return []
-  }
-}
+// Same reason as product pages: do not open a database connection for every
+// brand during deploy.
+export const dynamic = "force-dynamic"
 
 export async function generateMetadata({
   params,
