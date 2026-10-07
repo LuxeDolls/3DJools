@@ -21,6 +21,7 @@ import { isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout } from "@/lib/payments/alppay"
+import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName } from "@/lib/payments/cardholder"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 // Prices are authoritative here, never taken from the client — the cart only
@@ -53,6 +54,10 @@ export type PlaceOrderInput = {
   postalCode: string
   country: string
   phone?: string
+  /** Cardholder full name. Required for card payments. */
+  cardholderName?: string
+  /** Cardholder date of birth, YYYY-MM-DD. Required for card payments. */
+  dateOfBirth?: string
   shipping?: CheckoutShipping
   payment: CheckoutPayment
   /** Selected coin/network id when payment is "crypto" (see lib/payments/crypto.ts). */
@@ -92,6 +97,10 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (!isValidEmail(input.email)) return { ok: false, error: "invalid_email" }
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
+  if (isCardPayment(input.payment)) {
+    if (!splitFullName(input.cardholderName ?? "")) return { ok: false, error: "cardholder_required" }
+    if (!input.dateOfBirth || !isAdultDateOfBirth(input.dateOfBirth)) return { ok: false, error: "dob_invalid" }
+  }
   if (input.payment === "card" && !stripeConfigured()) return { ok: false, error: "card_unavailable" }
   if (input.payment === "alppay" && !alppayConfigured()) return { ok: false, error: "alppay_unavailable" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
@@ -163,6 +172,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         paymentMethod === "crypto" && input.cryptoCoin && isCryptoCoinId(input.cryptoCoin)
           ? input.cryptoCoin
           : undefined,
+      cardholder_name: isCardPayment(input.payment) ? noteSafeName(input.cardholderName ?? "") : undefined,
+      date_of_birth: isCardPayment(input.payment) ? input.dateOfBirth : undefined,
     }),
     items,
   })
@@ -190,14 +201,20 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (paymentMethod === "alppay") {
     const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
     await mergeOrderNotes(order.id, { checkout_locale: locale })
+    const holder = splitFullName(input.cardholderName ?? "")
+    if (!holder || !input.dateOfBirth) {
+      await abandonUnpaidOrder(order.id)
+      return { ok: false, error: "cardholder_required" }
+    }
     try {
       const checkout = await createAlppayCheckout({
         orderNumber: order.orderNumber,
         amountCents: totalCents,
         locale,
         email: input.email.trim(),
-        firstName: input.firstName.trim(),
-        lastName: input.lastName.trim(),
+        firstName: holder.firstName,
+        lastName: holder.lastName,
+        dateOfBirth: input.dateOfBirth,
         phone: input.phone,
         address: input.address.trim(),
         city: input.city.trim(),
@@ -283,9 +300,9 @@ export async function startAlppayPayment(orderNumber: string, locale: string): P
 
   const notes = parseOrderNotes(order.notes)
   const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
-  const name = (order.shippingName ?? "").trim().split(/\s+/)
-  const firstName = name[0] || "Customer"
-  const lastName = name.slice(1).join(" ") || firstName
+  const holder = splitFullName(notes.cardholder_name || order.shippingName || "")
+  const firstName = holder?.firstName || "Customer"
+  const lastName = holder?.lastName || firstName
 
   try {
     const checkout = await createAlppayCheckout({
@@ -295,6 +312,7 @@ export async function startAlppayPayment(orderNumber: string, locale: string): P
       email: order.email,
       firstName,
       lastName,
+      dateOfBirth: notes.date_of_birth && isAdultDateOfBirth(notes.date_of_birth) ? notes.date_of_birth : undefined,
       address: order.shippingAddress1 ?? "",
       city: order.shippingCity ?? "",
       postalCode: order.shippingPostalCode ?? "",

@@ -191,6 +191,11 @@ export const it: Dictionary = {
     payAlppayFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
     payAlppayNote:
       "Verrai reindirizzato a una pagina di pagamento sicura. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
+    payCardholderName: "Nome completo",
+    payCardholderDob: "Data di nascita",
+    payCardholderHint: "Obbligatorio per il pagamento con carta. L'intestatario deve avere almeno 18 anni.",
+    payCardholderRequired: "Inserisci il nome completo dell'intestatario della carta.",
+    payCardholderDobInvalid: "Inserisci una data di nascita valida. L'intestatario deve avere almeno 18 anni.",
     payApplePay: "Apple Pay",
     payLink: "Link",
     payBancontact: "Bancontact",
