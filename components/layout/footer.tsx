@@ -49,6 +49,9 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
   const payments = [
     { icon: CreditCard, label: dict.checkout.payCard },
+    { icon: CreditCard, label: dict.checkout.payApplePay, word: dict.checkout.payApplePay },
+    { icon: CreditCard, label: dict.checkout.payLink, word: dict.checkout.payLink },
+    { icon: CreditCard, label: dict.checkout.payBancontact, word: dict.checkout.payBancontact },
     { icon: Landmark, label: dict.checkout.paySepa },
     { icon: Bitcoin, label: dict.checkout.payCrypto },
     ...(PAYPAL_CHECKOUT_ENABLED
@@ -126,14 +129,20 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                 className="flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-xs font-medium text-muted-foreground"
                 title={p.label}
               >
-                {"mark" in p && p.mark ? (
-                  <span className="flex h-5 items-center rounded-sm bg-white px-1">
-                    <Image src={p.mark} alt="" width={56} height={14} className="h-3.5 w-auto" />
-                  </span>
+                {"word" in p && p.word ? (
+                  <span>{p.word}</span>
                 ) : (
-                  <p.icon className="size-4 text-foreground" />
+                  <>
+                    {"mark" in p && p.mark ? (
+                      <span className="flex h-5 items-center rounded-sm bg-white px-1">
+                        <Image src={p.mark} alt="" width={56} height={14} className="h-3.5 w-auto" />
+                      </span>
+                    ) : (
+                      <p.icon className="size-4 text-foreground" />
+                    )}
+                    <span className="hidden sm:inline">{p.label}</span>
+                  </>
                 )}
-                <span className="hidden sm:inline">{p.label}</span>
               </li>
             ))}
           </ul>
