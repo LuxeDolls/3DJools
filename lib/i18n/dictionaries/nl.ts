@@ -185,12 +185,18 @@ export const nl: Dictionary = {
     payCardFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payCardNote:
       "U wordt doorgestuurd naar een beveiligde Stripe-pagina. U kunt betalen met kaart, Apple Pay, Link of Bancontact. Wij zien uw kaartnummer niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
+    payAlppay: "Visa / Mastercard",
+    payAlppayDesc: "Veilige kaartbetaling",
+    payAlppayUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
+    payAlppayFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
+    payAlppayNote:
+      "U wordt doorgestuurd naar een beveiligde betaalpagina. Wij zien uw kaartnummer niet. Als u al hebt betaald, wacht u op de statusupdate en betaalt u niet twee keer.",
     payApplePay: "Apple Pay",
     payLink: "Link",
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetaling opent een beveiligde Stripe-pagina. Daar kunt u ook betalen met Apple Pay, Link of Bancontact. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
+      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetaling opent een beveiligde Stripe-pagina. Daar kunt u ook betalen met Apple Pay, Link of Bancontact. Visa en Mastercard kunnen ook op een aparte beveiligde kaartpagina worden betaald. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",

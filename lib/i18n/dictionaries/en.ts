@@ -183,12 +183,18 @@ export const en = {
     payCardFailed: "The card payment was not completed. You can try again.",
     payCardNote:
       "You will be redirected to a secure Stripe page. You can pay by card, Apple Pay, Link or Bancontact. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
+    payAlppay: "Visa / Mastercard",
+    payAlppayDesc: "Secure card payment",
+    payAlppayUnavailable: "Card payment is temporarily unavailable",
+    payAlppayFailed: "The card payment was not completed. You can try again.",
+    payAlppayNote:
+      "You will be redirected to a secure card page. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
     payApplePay: "Apple Pay",
     payLink: "Link",
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Available on the secure Stripe page when you pay by card.",
     payMethodsNote:
-      "All prices are shown in euro (EUR) and include VAT where applicable. Card payment opens a secure Stripe page, where you can also pay with Apple Pay, Link or Bancontact. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
+      "All prices are shown in euro (EUR) and include VAT where applicable. Card payment opens a secure Stripe page, where you can also pay with Apple Pay, Link or Bancontact. Visa and Mastercard can also be paid on a separate secure card page. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pay with your PayPal balance, bank account or card",
     payPaypalUnavailable: "PayPal is temporarily unavailable",

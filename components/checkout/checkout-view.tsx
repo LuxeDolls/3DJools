@@ -25,7 +25,7 @@ import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 
-type PaymentId = "card" | "paypal" | "sepa" | "crypto" | "installments"
+type PaymentId = "card" | "alppay" | "paypal" | "sepa" | "crypto" | "installments"
 
 export function CheckoutView({ locale }: { locale: Locale }) {
   const { dict } = useI18n()
@@ -59,6 +59,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
     { id: "card", icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
+    { id: "alppay", icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc },
     { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     ...(PAYPAL_CHECKOUT_ENABLED
@@ -104,6 +105,8 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         setOrderError(
           res.error === "card_unavailable" || res.error === "card_start_failed"
             ? dict.checkout.payCardUnavailable
+            : res.error === "alppay_unavailable" || res.error === "alppay_start_failed"
+              ? dict.checkout.payAlppayUnavailable
             : res.error === "paypal_unavailable" || res.error === "paypal_start_failed"
               ? dict.checkout.payPaypalUnavailable
               : dict.checkout.orderError,
@@ -228,6 +231,11 @@ export function CheckoutView({ locale }: { locale: Locale }) {
           {payment === "card" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.payCardNote}</p>
+            </div>
+          )}
+          {payment === "alppay" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{dict.checkout.payAlppayNote}</p>
             </div>
           )}
           {payment === "paypal" && (

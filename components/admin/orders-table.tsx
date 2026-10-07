@@ -24,7 +24,7 @@ const STATUSES: OrderStatus[] = [
 ]
 
 const CLOSED = new Set<OrderStatus>(["delivered", "cancelled", "refunded"])
-const METHODS: PaymentMethod[] = ["card", "paypal", "bank_transfer", "crypto", "installments"]
+const METHODS: PaymentMethod[] = ["card", "alppay", "paypal", "bank_transfer", "crypto", "installments"]
 type StatusFilter = "all" | "open" | OrderStatus
 type PaymentFilter = "all" | string
 
@@ -111,6 +111,7 @@ function TrackingForm({ order }: { order: OrderWithItems }) {
 
 function paymentLabel(method: string): string {
   if (method === "paypal") return "PayPal"
+  if (method === "alppay") return "Visa / Mastercard"
   return method.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
 }
 

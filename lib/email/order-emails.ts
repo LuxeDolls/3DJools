@@ -33,6 +33,7 @@ function siteUrl(): string {
 
 const PAYMENT_LABELS: Record<string, string> = {
   card: "Card",
+  alppay: "Visa / Mastercard",
   paypal: "PayPal",
   bank_transfer: "Bank transfer (SEPA)",
   crypto: "Cryptocurrency",
@@ -61,7 +62,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const awaitingPayment = order.status === "awaiting_payment"
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
-  const isCard = order.paymentMethod === "card"
+  const isCard = order.paymentMethod === "card" || order.paymentMethod === "alppay"
   const isPaypal = order.paymentMethod === "paypal"
   // Same coin/network the customer actually selected at checkout (see lib/payments/crypto.ts),
   // persisted on the order as `crypto_coin=<id>` in the notes field.

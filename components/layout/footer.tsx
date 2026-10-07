@@ -49,6 +49,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
   const payments = [
     { icon: CreditCard, label: dict.checkout.payCard },
+    { icon: CreditCard, label: dict.checkout.payAlppay },
     { icon: CreditCard, label: dict.checkout.payApplePay, word: dict.checkout.payApplePay },
     { icon: CreditCard, label: dict.checkout.payLink, word: dict.checkout.payLink },
     { icon: CreditCard, label: dict.checkout.payBancontact, word: dict.checkout.payBancontact },

@@ -185,12 +185,18 @@ export const fr: Dictionary = {
     payCardFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
     payCardNote:
       "Vous serez redirigé vers une page Stripe sécurisée. Vous pouvez payer par carte, Apple Pay, Link ou Bancontact. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
+    payAlppay: "Visa / Mastercard",
+    payAlppayDesc: "Paiement sécurisé par carte",
+    payAlppayUnavailable: "Le paiement par carte est temporairement indisponible",
+    payAlppayFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
+    payAlppayNote:
+      "Vous serez redirigé vers une page de paiement sécurisée. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     payApplePay: "Apple Pay",
     payLink: "Link",
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponible sur la page Stripe sécurisée lorsque vous payez par carte.",
     payMethodsNote:
-      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Le paiement par carte ouvre une page Stripe sécurisée, où vous pouvez aussi payer avec Apple Pay, Link ou Bancontact. Nous ne voyons jamais le numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
+      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Le paiement par carte ouvre une page Stripe sécurisée, où vous pouvez aussi payer avec Apple Pay, Link ou Bancontact. Visa et Mastercard peuvent aussi être payées sur une page de carte sécurisée distincte. Nous ne voyons jamais le numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
     payPaypal: "PayPal",
     payPaypalDesc: "Payez avec votre solde PayPal, votre compte bancaire ou votre carte",
     payPaypalUnavailable: "PayPal est temporairement indisponible",
