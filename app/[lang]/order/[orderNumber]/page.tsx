@@ -29,10 +29,10 @@ export default async function OrderConfirmationPage({
   searchParams,
 }: {
   params: Promise<{ lang: string; orderNumber: string }>
-  searchParams: Promise<{ paypal?: string }>
+  searchParams: Promise<{ paypal?: string; stripe?: string }>
 }) {
   const { lang, orderNumber } = await params
-  const { paypal } = await searchParams
+  const { paypal, stripe } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const order = await getOrderByOrderNumber(decodeURIComponent(orderNumber))
@@ -244,7 +244,9 @@ export default async function OrderConfirmationPage({
         {order.paymentMethod === "card" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
             <p>{dict.checkout.payCardNote}</p>
-            {notes.aviagram_last_status === "canceled" ||
+            {stripe === "cancelled" ||
+            stripe === "failed" ||
+            notes.aviagram_last_status === "canceled" ||
             notes.aviagram_last_status === "cancelled" ||
             notes.aviagram_last_status === "timeout" ? (
               <p className="mt-2 text-destructive">{dict.checkout.payCardFailed}</p>
