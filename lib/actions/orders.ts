@@ -4,7 +4,6 @@ import { headers } from "next/headers"
 import { after } from "next/server"
 import { auth } from "@/lib/auth"
 import { getProductBySlug } from "@/lib/catalog"
-import { randomBytes } from "node:crypto"
 import { isLocale } from "@/lib/i18n/config"
 import {
   abandonUnpaidOrder,
@@ -19,7 +18,7 @@ import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { isCryptoCoinId } from "@/lib/payments/crypto"
-import { appendProviderOrderId, aviagramConfigured, cardAmount, createCardForm } from "@/lib/payments/aviagram"
+import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -91,7 +90,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (!isValidEmail(input.email)) return { ok: false, error: "invalid_email" }
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
-  if (input.payment === "card" && !aviagramConfigured()) return { ok: false, error: "card_unavailable" }
+  if (input.payment === "card" && !stripeConfigured()) return { ok: false, error: "card_unavailable" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
@@ -167,24 +166,16 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   let paymentUrl: string | undefined
   if (paymentMethod === "card") {
     const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
-    const webhookToken = randomBytes(32).toString("hex")
-    await mergeOrderNotes(order.id, {
-      aviagram_webhook_token: webhookToken,
-      checkout_locale: locale,
-    })
+    await mergeOrderNotes(order.id, { checkout_locale: locale })
     try {
-      const form = await createCardForm({
+      const checkout = await createStripeCheckout({
         orderNumber: order.orderNumber,
         amountCents: totalCents,
         locale,
-        webhookToken,
+        email: input.email.trim(),
       })
-      await mergeOrderNotes(order.id, {
-        aviagram_order_ids: form.providerOrderId,
-        aviagram_requested_amount: cardAmount(totalCents),
-        aviagram_requested_currency: "EUR",
-      })
-      paymentUrl = form.redirectUrl
+      await mergeOrderNotes(order.id, { stripe_session_ids: checkout.sessionId })
+      paymentUrl = checkout.url
     } catch (err) {
       console.error("[v0] Card payment could not start:", err)
       await abandonUnpaidOrder(order.id)
@@ -225,33 +216,26 @@ export type StartCardPaymentResult = { ok: true; paymentUrl: string } | { ok: fa
 
 /** Opens a new hosted card form for an order that is still awaiting payment. */
 export async function startCardPayment(orderNumber: string, locale: string): Promise<StartCardPaymentResult> {
-  if (!aviagramConfigured()) return { ok: false, error: "card_unavailable" }
+  if (!stripeConfigured()) return { ok: false, error: "card_unavailable" }
   const order = await getOrderByOrderNumber(orderNumber)
   if (!order || order.paymentMethod !== "card") return { ok: false, error: "not_found" }
   if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
 
   const notes = parseOrderNotes(order.notes)
-  const existingToken = notes.aviagram_webhook_token ?? ""
-  const webhookToken = /^[a-f0-9]{64}$/.test(existingToken) ? existingToken : randomBytes(32).toString("hex")
   const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
-  if (webhookToken !== notes.aviagram_webhook_token) {
-    await mergeOrderNotes(order.id, { aviagram_webhook_token: webhookToken, checkout_locale: safeLocale })
-  }
 
   try {
-    const form = await createCardForm({
+    const checkout = await createStripeCheckout({
       orderNumber: order.orderNumber,
       amountCents: order.totalCents,
       locale: safeLocale,
-      webhookToken,
+      email: order.email,
     })
     await mergeOrderNotes(order.id, {
-      aviagram_order_ids: appendProviderOrderId(notes.aviagram_order_ids, form.providerOrderId),
-      aviagram_requested_amount: cardAmount(order.totalCents),
-      aviagram_requested_currency: "EUR",
+      stripe_session_ids: appendStripeSessionId(notes.stripe_session_ids, checkout.sessionId),
       checkout_locale: safeLocale,
     })
-    return { ok: true, paymentUrl: form.redirectUrl }
+    return { ok: true, paymentUrl: checkout.url }
   } catch (err) {
     console.error("[v0] Card payment retry failed:", err)
     return { ok: false, error: "card_start_failed" }
