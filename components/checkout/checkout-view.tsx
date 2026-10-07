@@ -20,7 +20,7 @@ import { getInstallmentDict } from "@/lib/i18n/installments"
 import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
 import { placeOrder } from "@/lib/actions/orders"
-import { isAdultDateOfBirth, isCardPayment, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
+import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
@@ -269,13 +269,12 @@ export function CheckoutView({ locale }: { locale: Locale }) {
                   placeholder={dict.checkout.payCardholderDobPlaceholder}
                   required
                   value={dateOfBirth}
-                  onChange={(e) => setDateOfBirth(e.target.value)}
-                  onBlur={() => {
-                    const iso = toIsoDate(dateOfBirth)
-                    if (!iso) return
-                    const sep = dict.checkout.payCardholderDobPlaceholder.match(/[./-]/)?.[0] ?? "/"
-                    const [year, month, day] = iso.split("-")
-                    setDateOfBirth(`${day}${sep}${month}${sep}${year}`)
+                  onChange={(e) => {
+                    const el = e.currentTarget
+                    const typingAtEnd = (el.selectionStart ?? el.value.length) >= el.value.length
+                    const next = maskBirthDate(el.value, dateOfBirth, dateSeparator(dict.checkout.payCardholderDobPlaceholder))
+                    setDateOfBirth(next)
+                    if (typingAtEnd) requestAnimationFrame(() => el.setSelectionRange(next.length, next.length))
                   }}
                 />
               </div>
