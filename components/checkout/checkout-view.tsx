@@ -270,6 +270,13 @@ export function CheckoutView({ locale }: { locale: Locale }) {
                   required
                   value={dateOfBirth}
                   onChange={(e) => setDateOfBirth(e.target.value)}
+                  onBlur={() => {
+                    const iso = toIsoDate(dateOfBirth)
+                    if (!iso) return
+                    const sep = dict.checkout.payCardholderDobPlaceholder.match(/[./-]/)?.[0] ?? "/"
+                    const [year, month, day] = iso.split("-")
+                    setDateOfBirth(`${day}${sep}${month}${sep}${year}`)
+                  }}
                 />
               </div>
               <p className="text-sm leading-relaxed text-muted-foreground sm:col-span-2">
