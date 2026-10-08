@@ -21,6 +21,7 @@ import { isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
+import { squareConfigured } from "@/lib/payments/square"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -33,13 +34,14 @@ import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schem
 const MAX_QTY = 20
 
 type CheckoutShipping = "standard"
-type CheckoutPayment = "card" | "alppay" | "paypal" | "sepa" | "crypto" | "installments"
+type CheckoutPayment = "card" | "alppay" | "paypal" | "square" | "sepa" | "crypto" | "installments"
 
 // Maps the checkout selector id onto the persisted PaymentMethod enum.
 const PAYMENT_METHOD: Record<CheckoutPayment, PaymentMethod> = {
   card: "card",
   alppay: "alppay",
   paypal: "paypal",
+  square: "square",
   sepa: "bank_transfer",
   crypto: "crypto",
   installments: "installments",
@@ -119,6 +121,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (input.payment === "alppay" && !input.region?.trim()) return { ok: false, error: "region_required" }
   if (input.payment === "alppay" && !(await requestIp())) return { ok: false, error: "ip_required" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
+  if (input.payment === "square" && !squareConfigured()) return { ok: false, error: "square_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
   const items: Array<Omit<NewOrderItemRow, "id" | "orderId">> = []
@@ -161,7 +164,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     paymentMethod === "crypto" ||
     paymentMethod === "card" ||
     paymentMethod === "alppay" ||
-    paymentMethod === "paypal"
+    paymentMethod === "paypal" ||
+    paymentMethod === "square"
       ? "awaiting_payment"
       : "paid"
 
@@ -247,6 +251,11 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       await abandonUnpaidOrder(order.id)
       return { ok: false, error: "alppay_start_failed" }
     }
+  }
+
+  if (paymentMethod === "square") {
+    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
+    await mergeOrderNotes(order.id, { checkout_locale: locale })
   }
 
   if (paymentMethod === "paypal") {
