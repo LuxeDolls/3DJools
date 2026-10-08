@@ -44,6 +44,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [cardholderName, setCardholderName] = useState("")
   const [dateOfBirth, setDateOfBirth] = useState("")
+  const [region, setRegion] = useState("")
   const [orderError, setOrderError] = useState<string | null>(null)
   const router = useRouter()
 
@@ -92,9 +93,17 @@ export function CheckoutView({ locale }: { locale: Locale }) {
       setOrderError(dict.checkout.payCardholderDobInvalid)
       return
     }
-    setOrderError(null)
     const fd = new FormData(e.currentTarget)
     const str = (k: string) => String(fd.get(k) ?? "").trim()
+    if (payment === "alppay" && !str("phone")) {
+      setOrderError(dict.checkout.payCardholderPhoneRequired)
+      return
+    }
+    if (payment === "alppay" && !region.trim()) {
+      setOrderError(dict.checkout.payCardholderRegionRequired)
+      return
+    }
+    setOrderError(null)
     setSubmitting(true)
     try {
       const res = await placeOrder({
@@ -106,6 +115,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
         postalCode: str("postalCode"),
         country,
         phone: str("phone"),
+        region: payment === "alppay" ? region : undefined,
         cardholderName: isCardPayment(payment) ? cardholderName : undefined,
         dateOfBirth: isCardPayment(payment) ? toIsoDate(dateOfBirth) ?? undefined : undefined,
         payment,
@@ -120,9 +130,13 @@ export function CheckoutView({ locale }: { locale: Locale }) {
             ? dict.checkout.payCardholderRequired
             : res.error === "dob_invalid"
               ? dict.checkout.payCardholderDobInvalid
+            : res.error === "phone_required"
+              ? dict.checkout.payCardholderPhoneRequired
+            : res.error === "region_required"
+              ? dict.checkout.payCardholderRegionRequired
             : res.error === "card_unavailable" || res.error === "card_start_failed"
             ? dict.checkout.payCardUnavailable
-            : res.error === "alppay_unavailable" || res.error === "alppay_start_failed"
+            : res.error === "alppay_unavailable" || res.error === "alppay_start_failed" || res.error === "ip_required"
               ? dict.checkout.payAlppayUnavailable
             : res.error === "paypal_unavailable" || res.error === "paypal_start_failed"
               ? dict.checkout.payPaypalUnavailable
@@ -207,7 +221,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="phone">{dict.checkout.phone}</Label>
-              <Input id="phone" name="phone" type="tel" autoComplete="tel" />
+              <Input id="phone" name="phone" type="tel" autoComplete="tel" required={payment === "alppay"} />
             </div>
           </div>
         </section>
@@ -257,6 +271,19 @@ export function CheckoutView({ locale }: { locale: Locale }) {
                   onChange={(e) => setCardholderName(e.target.value)}
                 />
               </div>
+              {payment === "alppay" && (
+                <div className="space-y-1.5">
+                  <Label htmlFor="billingRegion">{dict.checkout.payCardholderRegion}</Label>
+                  <Input
+                    id="billingRegion"
+                    name="billingRegion"
+                    autoComplete="address-level1"
+                    required
+                    value={region}
+                    onChange={(e) => setRegion(e.target.value)}
+                  />
+                </div>
+              )}
               <div className="space-y-1.5">
                 <Label htmlFor="dateOfBirth">{dict.checkout.payCardholderDob}</Label>
                 <Input
