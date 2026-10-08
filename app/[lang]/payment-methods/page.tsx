@@ -62,7 +62,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         {methods.map((m) => (
           <div
-            key={m.title}
+            key={`${m.title}-${m.desc}`}
             className="rounded-lg border border-border bg-card p-5"
           >
             <span className="flex h-11 items-center justify-center rounded-md bg-primary/10 px-3 text-primary">
