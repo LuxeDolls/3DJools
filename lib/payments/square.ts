@@ -112,6 +112,32 @@ export async function createSquarePayment(input: {
   }
 }
 
+function readCharge(payment: SquarePayment | undefined): SquareCharge | null {
+  if (!payment?.id) return null
+  return {
+    id: payment.id,
+    status: payment.status ?? "UNKNOWN",
+    amountCents: payment.amount_money?.amount ?? 0,
+    currency: payment.amount_money?.currency ?? "",
+    referenceId: payment.reference_id ?? "",
+  }
+}
+
+/** Reads a payment Square already accepted, so a retry cannot charge the card again. */
+export async function getSquarePayment(paymentId: string): Promise<SquareCharge | null> {
+  if (!/^[A-Za-z0-9]{8,192}$/.test(paymentId)) return null
+  const response = await fetch(`${SQUARE_API}/v2/payments/${encodeURIComponent(paymentId)}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+      "Square-Version": SQUARE_VERSION,
+      Accept: "application/json",
+    },
+  })
+  if (!response.ok) return null
+  const body = (await response.json()) as { payment?: SquarePayment }
+  return readCharge(body.payment)
+}
+
 function signatureMatches(body: string, signature: string, url: string, key: string): boolean {
   const digest = createHmac("sha256", key).update(url + body).digest("base64")
   const left = Buffer.from(digest)

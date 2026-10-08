@@ -185,6 +185,18 @@ export const es: Dictionary = {
     payCardFailed: "El pago con tarjeta no se ha completado. Puedes intentarlo de nuevo.",
     payCardNote:
       "Se le redirigirá a una página segura de Stripe. Puede pagar con tarjeta, Apple Pay, Link o Bancontact. Nunca vemos el número de su tarjeta. Si ya ha pagado, espere a que se actualice el estado y no pague dos veces.",
+    paySquare: "Tarjeta de crédito / débito",
+    paySquareDesc: "Visa y Mastercard, cargo en dólares estadounidenses",
+    paySquareNote:
+      "Después del pedido, introduce la tarjeta en la página del pedido. El importe exacto en dólares se muestra antes de pagar. El extracto muestra HIRA, no 3DJools. Nunca vemos el número de tu tarjeta.",
+    paySquareUnavailable: "El pago con tarjeta no está disponible temporalmente.",
+    paySquareFailed: "El pago con tarjeta no se completó. Puedes intentarlo de nuevo.",
+    paySquarePending: "El pago aún se está procesando. Espera a que cambie el estado y no pagues dos veces.",
+    paySquareRefresh: "El importe en dólares ha cambiado. Actualiza la página antes de pagar.",
+    paySquarePay: "Pagar {amount}",
+    paySquarePaying: "Procesando el pago…",
+    paySquareFx:
+      "Total del pedido {eur}. La tarjeta se carga con {usd} al tipo del Banco Central Europeo de {rate} el {date}. El nombre en el extracto es HIRA.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Pago seguro con tarjeta",
     payAlppayUnavailable: "El pago con tarjeta no está disponible temporalmente",
@@ -205,7 +217,7 @@ export const es: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponible en la página segura de Stripe cuando paga con tarjeta.",
     payMethodsNote:
-      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. El pago con tarjeta abre una página segura de Stripe, donde puede pagar con Visa, Mastercard, Apple Pay, Link o Bancontact. Nunca vemos el número de tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
+      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. El pago con tarjeta se completa en la página del pedido. Visa y Mastercard se cargan en dólares estadounidenses al tipo del Banco Central Europeo, mostrado antes de pagar. El extracto muestra HIRA. Nunca vemos el número de tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pague con saldo de PayPal, cuenta bancaria o tarjeta",
     payPaypalUnavailable: "PayPal no está disponible temporalmente",

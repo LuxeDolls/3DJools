@@ -5,7 +5,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
 import { getOrderByOrderNumber } from "@/lib/orders/queries"
-import { formatPrice } from "@/lib/format"
+import { formatPrice, formatUsd } from "@/lib/format"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -16,6 +16,10 @@ import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
+import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
+import { ensureSquareQuote } from "@/lib/payments/square-order"
+import { countryCode } from "@/lib/payments/country-codes"
+import { SquareCardForm } from "@/components/checkout/square-card-form"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -64,10 +68,24 @@ export default async function OrderConfirmationPage({
     card: dict.checkout.payCard,
     alppay: dict.checkout.payAlppay,
     paypal: dict.checkout.payPaypal,
+    square: dict.checkout.paySquare,
     bank_transfer: dict.checkout.paySepa,
     crypto: dict.checkout.payCrypto,
     installments: dict.checkout.payInstallments,
   }
+  const squareQuote =
+    order.paymentMethod === "square" && status === "awaiting_payment" && SQUARE_CHECKOUT_ENABLED
+      ? await ensureSquareQuote(order)
+      : null
+  const [givenName, ...familyParts] = (order.shippingName ?? "").trim().split(/\s+/)
+  const familyName = familyParts.join(" ") || givenName || "Customer"
+  const squareFx = squareQuote
+    ? dict.checkout.paySquareFx
+        .replace("{eur}", formatPrice(order.totalCents, locale))
+        .replace("{usd}", formatUsd(squareQuote.usdCents, locale))
+        .replace("{rate}", squareQuote.rate)
+        .replace("{date}", squareQuote.date)
+    : ""
   const awaitingOfflinePayment =
     (order.paymentMethod === "bank_transfer" || order.paymentMethod === "crypto") && status === "awaiting_payment"
   const cryptoCoin = parseOrderNotes(order.notes).crypto_coin
@@ -261,6 +279,40 @@ export default async function OrderConfirmationPage({
                 errorLabel={dict.checkout.payAlppayUnavailable}
               />
             ) : null}
+          </div>
+        )}
+
+        {order.paymentMethod === "square" && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            <p>{dict.checkout.paySquareNote}</p>
+            {notes.square_last_status &&
+            notes.square_last_status !== "COMPLETED" &&
+            notes.square_last_status !== "PENDING" &&
+            notes.square_last_status !== "APPROVED" ? (
+              <p className="mt-2 text-destructive">{dict.checkout.paySquareFailed}</p>
+            ) : null}
+            {squareQuote ? (
+              <SquareCardForm
+                orderNumber={order.orderNumber}
+                usdCents={squareQuote.usdCents}
+                givenName={givenName || "Customer"}
+                familyName={familyName}
+                email={order.email}
+                address={order.shippingAddress1 ?? ""}
+                city={order.shippingCity ?? ""}
+                postalCode={order.shippingPostalCode ?? ""}
+                countryCode={countryCode(order.shippingCountry) ?? ""}
+                payLabel={dict.checkout.paySquarePay.replace("{amount}", formatUsd(squareQuote.usdCents, locale))}
+                payingLabel={dict.checkout.paySquarePaying}
+                fxNote={squareFx}
+                failedLabel={dict.checkout.paySquareFailed}
+                unavailableLabel={dict.checkout.paySquareUnavailable}
+                pendingLabel={dict.checkout.paySquarePending}
+                refreshLabel={dict.checkout.paySquareRefresh}
+              />
+            ) : (
+              <p className="mt-2">{dict.checkout.paySquareUnavailable}</p>
+            )}
           </div>
         )}
 

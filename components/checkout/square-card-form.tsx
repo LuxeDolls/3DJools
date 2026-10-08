@@ -101,16 +101,24 @@ export function SquareCardForm({
       await loadSquare()
       const square = squareGlobal()
       if (!square || cancelled) return
-      const color = getComputedStyle(document.body).color || "#111111"
+      const style = getComputedStyle(document.body)
+      const color = style.color || "#111111"
+      const background = style.backgroundColor || "#ffffff"
       const payments = square.payments(SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID)
-      const card = await payments.card({ style: { input: { fontSize: "16px", color } } })
+      const card = await payments.card({
+        style: {
+          ".input-container": { borderColor: "transparent", borderRadius: "6px" },
+          input: { fontSize: "16px", color, backgroundColor: background },
+          "input::placeholder": { color },
+        },
+      })
       if (cancelled) {
         await card.destroy()
         return
       }
       paymentsRef.current = payments
       cardRef.current = card
-      await card.attach("#square-card")
+      await card.attach(`#square-card-${orderNumber.replace(/[^A-Za-z0-9_-]/g, "")}`)
       setReady(true)
     }
 
@@ -125,7 +133,7 @@ export function SquareCardForm({
       paymentsRef.current = null
       void card?.destroy()
     }
-  }, [unavailableLabel])
+  }, [orderNumber, unavailableLabel])
 
   async function pay() {
     if (paying || !ready) return
@@ -189,7 +197,10 @@ export function SquareCardForm({
 
   return (
     <div className="mt-4 space-y-3">
-      <div id="square-card" className="min-h-12 rounded-md border border-border bg-background px-3 py-2" />
+      <div
+        id={`square-card-${orderNumber.replace(/[^A-Za-z0-9_-]/g, "")}`}
+        className="min-h-12 rounded-md border border-border bg-background px-3 py-2"
+      />
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
       <Button type="button" disabled={!ready || paying} onClick={pay}>
         {paying ? payingLabel : payLabel}

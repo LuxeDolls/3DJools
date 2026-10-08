@@ -5,6 +5,7 @@ import { COMPANY, companyStreetLine } from "@/lib/company"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
+import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -50,6 +51,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   const payments = [
+    ...(SQUARE_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.paySquare }] : []),
     ...(STRIPE_CHECKOUT_ENABLED
       ? [
           { icon: CreditCard, label: dict.checkout.payCard },

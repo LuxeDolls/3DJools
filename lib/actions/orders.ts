@@ -22,6 +22,7 @@ import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { squareConfigured } from "@/lib/payments/square"
+import { ensureSquareQuote } from "@/lib/payments/square-order"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -256,6 +257,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (paymentMethod === "square") {
     const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
     await mergeOrderNotes(order.id, { checkout_locale: locale })
+    const created = await getOrderByOrderNumber(order.orderNumber)
+    if (created) await ensureSquareQuote(created)
   }
 
   if (paymentMethod === "paypal") {

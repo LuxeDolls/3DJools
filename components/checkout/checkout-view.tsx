@@ -27,8 +27,9 @@ import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
+import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 
-type PaymentId = "card" | "alppay" | "paypal" | "sepa" | "crypto" | "installments"
+type PaymentId = "card" | "alppay" | "square" | "paypal" | "sepa" | "crypto" | "installments"
 
 export function CheckoutView({ locale }: { locale: Locale }) {
   const { dict } = useI18n()
@@ -39,7 +40,7 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const isMember = Boolean(session?.user)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
 
-  const [payment, setPayment] = useState<PaymentId>("sepa")
+  const [payment, setPayment] = useState<PaymentId>(SQUARE_CHECKOUT_ENABLED ? "square" : "sepa")
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Belgium")
   const [submitting, setSubmitting] = useState(false)
@@ -64,6 +65,9 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
+    ...(SQUARE_CHECKOUT_ENABLED
+      ? [{ id: "square" as const, icon: CreditCard, title: dict.checkout.paySquare, desc: dict.checkout.paySquareDesc }]
+      : []),
     ...(STRIPE_CHECKOUT_ENABLED
       ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
       : []),
@@ -93,6 +97,10 @@ export function CheckoutView({ locale }: { locale: Locale }) {
     }
     if (payment === "card" && !STRIPE_CHECKOUT_ENABLED) {
       setOrderError(dict.checkout.payCardUnavailable)
+      return
+    }
+    if (payment === "square" && !SQUARE_CHECKOUT_ENABLED) {
+      setOrderError(dict.checkout.paySquareUnavailable)
       return
     }
     if (payment === "alppay" && !ALPPAY_CHECKOUT_ENABLED) {
@@ -158,6 +166,8 @@ export function CheckoutView({ locale }: { locale: Locale }) {
               ? dict.checkout.payAlppayUnavailable
             : res.error === "paypal_unavailable" || res.error === "paypal_start_failed"
               ? dict.checkout.payPaypalUnavailable
+            : res.error === "square_unavailable"
+              ? dict.checkout.paySquareUnavailable
               : dict.checkout.orderError,
         )
         setSubmitting(false)
@@ -330,6 +340,11 @@ export function CheckoutView({ locale }: { locale: Locale }) {
           )}
 
           {/* Contextual panels per payment method */}
+          {payment === "square" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{dict.checkout.paySquareNote}</p>
+            </div>
+          )}
           {payment === "card" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.payCardNote}</p>

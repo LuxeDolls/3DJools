@@ -183,6 +183,18 @@ export const en = {
     payCardFailed: "The card payment was not completed. You can try again.",
     payCardNote:
       "You will be redirected to a secure Stripe page. You can pay by card, Apple Pay, Link or Bancontact. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
+    paySquare: "Credit / debit card",
+    paySquareDesc: "Visa and Mastercard, charged in US dollars",
+    paySquareNote:
+      "After you place the order, enter your card on the order page. The exact dollar amount is shown before you pay. Your card statement shows HIRA, not 3DJools. We never see your card number.",
+    paySquareUnavailable: "Card payment is temporarily unavailable.",
+    paySquareFailed: "The card payment was not completed. You can try again.",
+    paySquarePending: "The payment is still processing. Wait for the status to update and do not pay twice.",
+    paySquareRefresh: "The dollar amount changed. Refresh the page before paying.",
+    paySquarePay: "Pay {amount}",
+    paySquarePaying: "Processing payment…",
+    paySquareFx:
+      "Order total {eur}. The card is charged {usd} at the European Central Bank rate of {rate} on {date}. The name on your statement is HIRA.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Secure card payment",
     payAlppayUnavailable: "Card payment is temporarily unavailable",
@@ -203,7 +215,7 @@ export const en = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Available on the secure Stripe page when you pay by card.",
     payMethodsNote:
-      "All prices are shown in euro (EUR) and include VAT where applicable. Card payment opens a secure Stripe page, where you can pay with Visa, Mastercard, Apple Pay, Link or Bancontact. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
+      "All prices are shown in euro (EUR) and include VAT where applicable. Card payment is completed on your order page. Visa and Mastercard are charged in US dollars at the European Central Bank rate, shown before you pay. Your card statement shows HIRA. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pay with your PayPal balance, bank account or card",
     payPaypalUnavailable: "PayPal is temporarily unavailable",

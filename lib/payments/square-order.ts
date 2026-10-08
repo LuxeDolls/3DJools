@@ -5,7 +5,7 @@ import type { OrderWithItems } from "@/lib/orders/queries"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import { countryCode } from "@/lib/payments/country-codes"
 import { SQUARE_CHARGE_CURRENCY, SQUARE_LOCATION_ID } from "@/lib/payments/square-availability"
-import { createSquarePayment, squareIdempotencyKey } from "@/lib/payments/square"
+import { createSquarePayment, getSquarePayment, squareIdempotencyKey } from "@/lib/payments/square"
 
 const PAID_STATUSES = new Set(["paid", "processing", "shipped", "delivered", "partially_paid"])
 const PAYABLE_STATUSES = new Set(["awaiting_payment", "reviewing_payment"])
@@ -119,6 +119,22 @@ export async function chargeStoredSquareOrder(input: {
   if (!PAYABLE_STATUSES.has(order.status)) return { ok: false, error: "invalid_status" }
 
   const notes = parseOrderNotes(order.notes)
+  if (notes.square_payment_id) {
+    const existing = await getSquarePayment(notes.square_payment_id).catch(() => null)
+    if (existing && existing.referenceId === order.orderNumber) {
+      const settled = await settleSquarePayment({
+        orderNumber: order.orderNumber,
+        paymentId: existing.id,
+        status: existing.status,
+        amountCents: existing.amountCents,
+        currency: existing.currency,
+        locationId: SQUARE_LOCATION_ID,
+      })
+      if (settled === "paid") return { ok: true, already: true }
+      if (existing.status === "COMPLETED") return { ok: false, error: "declined" }
+      if (existing.status === "APPROVED" || existing.status === "PENDING") return { ok: false, error: "pending" }
+    }
+  }
   if (inflight(notes)) return { ok: false, error: "in_progress" }
 
   const quote = await ensureSquareQuote(order)
@@ -141,6 +157,7 @@ export async function chargeStoredSquareOrder(input: {
       city: order.shippingCity,
       postalCode: order.shippingPostalCode,
     })
+    await mergeOrderNotes(order.id, { square_payment_id: payment.id })
     const settled = await settleSquarePayment({
       orderNumber: order.orderNumber,
       paymentId: payment.id,
