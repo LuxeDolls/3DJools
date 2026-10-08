@@ -2,6 +2,7 @@ import "server-only"
 
 import { sendEmail, type SendResult } from "@/lib/email/send"
 import type { InstallmentApplication } from "@/lib/db/schema"
+import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 
 function euros(cents: number): string {
   return `€${(cents / 100).toFixed(2)}`
@@ -79,6 +80,13 @@ export async function sendInstallmentApplicationApprovedEmail(app: InstallmentAp
   const text = [
     `Good news, ${app.firstName} — your installment application ${app.applicationRef} has been approved.`,
     `Please pay your down payment of ${euros(app.downPaymentCents)} to activate your order.`,
+    "",
+    `Account name: ${BANK_TRANSFER_ACCOUNT.accountName}`,
+    `IBAN: ${BANK_TRANSFER_ACCOUNT.iban}`,
+    `BIC: ${BANK_TRANSFER_ACCOUNT.bic}`,
+    `Amount: ${euros(app.downPaymentCents)}`,
+    `Reference: ${app.applicationRef}`,
+    "Put the reference in the payment description.",
     link ? `\nPay your down payment: ${link}` : null,
   ]
     .filter((line) => line !== null)
@@ -87,7 +95,14 @@ export async function sendInstallmentApplicationApprovedEmail(app: InstallmentAp
   const html = wrapHtml(
     "Your application was approved",
     `<p style="margin:0 0 4px;color:#555;font-size:14px">Reference <strong>${app.applicationRef}</strong></p>
-    <p style="margin:16px 0;color:#111;font-size:14px;line-height:1.6">Good news, ${app.firstName} — your installment application has been approved. Please pay your down payment of <strong>${euros(app.downPaymentCents)}</strong> to activate your order.</p>
+    <p style="margin:16px 0;color:#111;font-size:14px;line-height:1.6">Good news, ${app.firstName} — your installment application has been approved. Please pay your down payment of <strong>${euros(app.downPaymentCents)}</strong> to activate your order. Put <strong>${app.applicationRef}</strong> in the payment description.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:14px;margin:16px 0">
+      <tr><td style="padding:4px 0;color:#555">Account name</td><td style="padding:4px 0;text-align:right;color:#111">${BANK_TRANSFER_ACCOUNT.accountName}</td></tr>
+      <tr><td style="padding:4px 0;color:#555">IBAN</td><td style="padding:4px 0;text-align:right;color:#111">${BANK_TRANSFER_ACCOUNT.iban}</td></tr>
+      <tr><td style="padding:4px 0;color:#555">BIC</td><td style="padding:4px 0;text-align:right;color:#111">${BANK_TRANSFER_ACCOUNT.bic}</td></tr>
+      <tr><td style="padding:4px 0;color:#555">Amount</td><td style="padding:4px 0;text-align:right;color:#111">${euros(app.downPaymentCents)}</td></tr>
+      <tr><td style="padding:4px 0;color:#555">Reference</td><td style="padding:4px 0;text-align:right;color:#111">${app.applicationRef}</td></tr>
+    </table>
     ${link ? `<p style="margin:20px 0 0"><a href="${link}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">Pay your down payment</a></p>` : ""}`,
   )
 

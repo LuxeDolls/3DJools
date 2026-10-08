@@ -6,6 +6,7 @@ import { getInstallmentDict } from "@/lib/i18n/installments"
 import { formatPrice } from "@/lib/format"
 import { markInstallmentPaymentSubmitted } from "@/lib/actions/installments"
 import { PaymentInstructionsDialog } from "@/components/checkout/payment-instructions-dialog"
+import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 import type { ScheduleEntry, ApplicationCartItem } from "@/lib/db/schema"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Clock, XCircle } from "lucide-react"
@@ -68,6 +69,11 @@ export function StatusView({ data, paymentDict }: { data: StatusData; paymentDic
   }
 
   const meta = statusMeta[data.status] ?? statusMeta.pending
+  const payable = data.schedule.find((entry, index) => {
+    const entryStatus = entry.status ?? (entry.paid ? "paid" : "unpaid")
+    const previousPaid = index === 0 || (data.schedule[index - 1]?.status ?? "unpaid") === "paid"
+    return data.status === "approved" && previousPaid && (entryStatus === "unpaid" || entryStatus === "reviewing")
+  })
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
@@ -150,6 +156,37 @@ export function StatusView({ data, paymentDict }: { data: StatusData; paymentDic
             )
           })}
         </ol>
+        {payable ? (
+          <div className="mt-4 rounded-md border border-border bg-background p-4 text-sm">
+            <p className="font-medium">{t.paymentDetails}</p>
+            <p className="mt-1 text-pretty text-muted-foreground">{t.paymentDetailsHint}</p>
+            {(payable.status ?? "unpaid") === "reviewing" ? (
+              <p className="mt-2 text-pretty text-muted-foreground">{t.transferWaiting}</p>
+            ) : null}
+            <dl className="mt-3 space-y-1.5">
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">{t.amountLabel}</dt>
+                <dd className="font-mono font-semibold">{formatPrice(payable.amountCents, locale)}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">{t.accountName}</dt>
+                <dd className="text-right font-mono">{BANK_TRANSFER_ACCOUNT.accountName}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">IBAN</dt>
+                <dd className="text-right font-mono">{BANK_TRANSFER_ACCOUNT.iban}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">BIC</dt>
+                <dd className="font-mono">{BANK_TRANSFER_ACCOUNT.bic}</dd>
+              </div>
+              <div className="flex justify-between gap-4">
+                <dt className="text-muted-foreground">{t.paymentReference}</dt>
+                <dd className="font-mono">{data.applicationRef}</dd>
+              </div>
+            </dl>
+          </div>
+        ) : null}
         <div className="mt-4 flex justify-between border-t border-border pt-3 text-sm">
           <span className="text-muted-foreground">{t.orderTotal}</span>
           <span className="font-semibold">{formatPrice(data.totalAmountCents, locale)}</span>
