@@ -20,6 +20,7 @@ import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
+import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -109,7 +110,9 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     if (!input.dateOfBirth || !isAdultDateOfBirth(input.dateOfBirth)) return { ok: false, error: "dob_invalid" }
   }
   if (input.payment === "card" && !stripeConfigured()) return { ok: false, error: "card_unavailable" }
-  if (input.payment === "alppay" && !alppayConfigured()) return { ok: false, error: "alppay_unavailable" }
+  if (input.payment === "alppay" && (!ALPPAY_CHECKOUT_ENABLED || !alppayConfigured())) {
+    return { ok: false, error: "alppay_unavailable" }
+  }
   if (input.payment === "alppay" && !formatAlppayPhone(input.phone, input.country.trim())) {
     return { ok: false, error: "phone_required" }
   }
@@ -309,7 +312,7 @@ export type StartAlppayPaymentResult = { ok: true; paymentUrl: string } | { ok: 
 
 /** Opens a new hosted Visa/Mastercard page for an order that is still awaiting payment. */
 export async function startAlppayPayment(orderNumber: string, locale: string): Promise<StartAlppayPaymentResult> {
-  if (!alppayConfigured()) return { ok: false, error: "alppay_unavailable" }
+  if (!ALPPAY_CHECKOUT_ENABLED || !alppayConfigured()) return { ok: false, error: "alppay_unavailable" }
   const order = await getOrderByOrderNumber(orderNumber)
   if (!order || order.paymentMethod !== "alppay") return { ok: false, error: "not_found" }
   if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }

@@ -14,6 +14,7 @@ import { OrderPaymentInstructions } from "@/components/checkout/order-payment-in
 import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -245,19 +246,21 @@ export default async function OrderConfirmationPage({
 
         {order.paymentMethod === "alppay" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            <p>{dict.checkout.payAlppayNote}</p>
+            {ALPPAY_CHECKOUT_ENABLED ? <p>{dict.checkout.payAlppayNote}</p> : <p>{dict.checkout.payAlppayUnavailable}</p>}
             {alppay === "failed" ||
             notes.alppay_last_status === "DECLINED" ||
             notes.alppay_last_status === "CANCELLED" ? (
               <p className="mt-2 text-destructive">{dict.checkout.payAlppayFailed}</p>
             ) : null}
-            <CardPayButton
-              orderNumber={order.orderNumber}
-              locale={locale}
-              method="alppay"
-              label={dict.checkout.payAlppay}
-              errorLabel={dict.checkout.payAlppayUnavailable}
-            />
+            {ALPPAY_CHECKOUT_ENABLED ? (
+              <CardPayButton
+                orderNumber={order.orderNumber}
+                locale={locale}
+                method="alppay"
+                label={dict.checkout.payAlppay}
+                errorLabel={dict.checkout.payAlppayUnavailable}
+              />
+            ) : null}
           </div>
         )}
 

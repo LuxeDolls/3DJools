@@ -205,7 +205,7 @@ export const fr: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponible sur la page Stripe sécurisée lorsque vous payez par carte.",
     payMethodsNote:
-      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Le paiement par carte ouvre une page Stripe sécurisée, où vous pouvez aussi payer avec Apple Pay, Link ou Bancontact. Visa et Mastercard peuvent aussi être payées sur une page de carte sécurisée distincte. Nous ne voyons jamais le numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
+      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Le paiement par carte ouvre une page Stripe sécurisée, où vous pouvez payer avec Visa, Mastercard, Apple Pay, Link ou Bancontact. Nous ne voyons jamais le numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
     payPaypal: "PayPal",
     payPaypalDesc: "Payez avec votre solde PayPal, votre compte bancaire ou votre carte",
     payPaypalUnavailable: "PayPal est temporairement indisponible",
