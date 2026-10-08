@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import Link from "next/link"
 import { CreditCard, Landmark, Bitcoin, CalendarClock } from "lucide-react"
@@ -29,7 +30,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
           { icon: CreditCard, word: dict.checkout.payBancontact, title: dict.checkout.payBancontact, desc: dict.checkout.payStripeMethodDesc },
         ]
       : []),
-    { icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc },
+    ...(ALPPAY_CHECKOUT_ENABLED
+      ? [{ icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc }]
+      : []),
     { icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     ...(PAYPAL_CHECKOUT_ENABLED
