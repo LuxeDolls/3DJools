@@ -25,6 +25,7 @@ import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 
 type PaymentId = "card" | "alppay" | "paypal" | "sepa" | "crypto" | "installments"
 
@@ -62,7 +63,9 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
-    { id: "card", icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
+    ...(STRIPE_CHECKOUT_ENABLED
+      ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
+      : []),
     { id: "alppay", icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc },
     { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
@@ -83,6 +86,14 @@ export function CheckoutView({ locale }: { locale: Locale }) {
     if (submitting) return
     if (!termsAccepted) {
       setOrderError(dict.checkout.termsConsentError)
+      return
+    }
+    if (payment === "card" && !STRIPE_CHECKOUT_ENABLED) {
+      setOrderError(dict.checkout.payCardUnavailable)
+      return
+    }
+    if (payment === "paypal" && !PAYPAL_CHECKOUT_ENABLED) {
+      setOrderError(dict.checkout.payPaypalUnavailable)
       return
     }
     if (isCardPayment(payment) && !splitFullName(cardholderName)) {

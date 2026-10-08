@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import Link from "next/link"
 import { CreditCard, Landmark, Bitcoin, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
@@ -20,11 +21,15 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
-    { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
+    ...(STRIPE_CHECKOUT_ENABLED
+      ? [
+          { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
+          { icon: CreditCard, word: dict.checkout.payApplePay, title: dict.checkout.payApplePay, desc: dict.checkout.payStripeMethodDesc },
+          { icon: CreditCard, word: dict.checkout.payLink, title: dict.checkout.payLink, desc: dict.checkout.payStripeMethodDesc },
+          { icon: CreditCard, word: dict.checkout.payBancontact, title: dict.checkout.payBancontact, desc: dict.checkout.payStripeMethodDesc },
+        ]
+      : []),
     { icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc },
-    { icon: CreditCard, word: dict.checkout.payApplePay, title: dict.checkout.payApplePay, desc: dict.checkout.payStripeMethodDesc },
-    { icon: CreditCard, word: dict.checkout.payLink, title: dict.checkout.payLink, desc: dict.checkout.payStripeMethodDesc },
-    { icon: CreditCard, word: dict.checkout.payBancontact, title: dict.checkout.payBancontact, desc: dict.checkout.payStripeMethodDesc },
     { icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     ...(PAYPAL_CHECKOUT_ENABLED
