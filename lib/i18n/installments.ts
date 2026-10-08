@@ -73,6 +73,12 @@ export type InstallmentDict = {
   statusRejectedBody: string
   payDownPayment: string
   payInstallment: string
+  paymentDetails: string
+  paymentDetailsHint: string
+  transferWaiting: string
+  accountName: string
+  paymentReference: string
+  amountLabel: string
   lookupTitle: string
   lookupCta: string
   notFound: string
@@ -153,6 +159,12 @@ const en: InstallmentDict = {
   statusRejectedBody: "Unfortunately we could not approve this application. You can still pay by another method.",
   payDownPayment: "Pay down payment",
   payInstallment: "Pay installment",
+  paymentDetails: "Payment details",
+  paymentDetailsHint: "Transfer this amount and put the reference in the payment description.",
+  transferWaiting: "We are waiting for this transfer. If you have not sent it yet, use these details. Do not pay twice.",
+  accountName: "Account name",
+  paymentReference: "Reference",
+  amountLabel: "Amount",
   lookupTitle: "Track your application",
   lookupCta: "View status",
   notFound: "No application found with that reference.",
@@ -233,6 +245,12 @@ const de: InstallmentDict = {
   statusRejectedBody: "Leider konnten wir diesen Antrag nicht genehmigen. Sie können mit einer anderen Methode zahlen.",
   payDownPayment: "Anzahlung zahlen",
   payInstallment: "Rate zahlen",
+  paymentDetails: "Zahlungsdaten",
+  paymentDetailsHint: "Überweisen Sie diesen Betrag und setzen Sie die Referenz in den Verwendungszweck.",
+  transferWaiting: "Wir warten auf diese Überweisung. Falls Sie sie noch nicht gesendet haben, nutzen Sie diese Daten. Bitte nicht doppelt zahlen.",
+  accountName: "Kontoinhaber",
+  paymentReference: "Referenz",
+  amountLabel: "Betrag",
   lookupTitle: "Antrag verfolgen",
   lookupCta: "Status ansehen",
   notFound: "Kein Antrag mit dieser Referenz gefunden.",
@@ -313,6 +331,12 @@ const fr: InstallmentDict = {
   statusRejectedBody: "Nous n'avons pas pu approuver cette demande. Vous pouvez payer par un autre moyen.",
   payDownPayment: "Payer l'acompte",
   payInstallment: "Payer l'échéance",
+  paymentDetails: "Coordonnées de paiement",
+  paymentDetailsHint: "Virez ce montant et indiquez la référence dans le libellé.",
+  transferWaiting: "Nous attendons ce virement. Si vous ne l'avez pas encore envoyé, utilisez ces coordonnées. Ne payez pas deux fois.",
+  accountName: "Titulaire",
+  paymentReference: "Référence",
+  amountLabel: "Montant",
   lookupTitle: "Suivre votre demande",
   lookupCta: "Voir le statut",
   notFound: "Aucune demande trouvée avec cette référence.",
@@ -393,6 +417,12 @@ const it: InstallmentDict = {
   statusRejectedBody: "Purtroppo non abbiamo potuto approvare questa richiesta. Puoi pagare con un altro metodo.",
   payDownPayment: "Paga l'acconto",
   payInstallment: "Paga la rata",
+  paymentDetails: "Dati di pagamento",
+  paymentDetailsHint: "Bonifica questo importo e inserisci il riferimento nella causale.",
+  transferWaiting: "Siamo in attesa di questo bonifico. Se non l'hai ancora inviato, usa questi dati. Non pagare due volte.",
+  accountName: "Intestatario",
+  paymentReference: "Riferimento",
+  amountLabel: "Importo",
   lookupTitle: "Segui la tua richiesta",
   lookupCta: "Vedi stato",
   notFound: "Nessuna richiesta trovata con questo riferimento.",
@@ -473,6 +503,12 @@ const nl: InstallmentDict = {
   statusRejectedBody: "Helaas konden we deze aanvraag niet goedkeuren. Je kunt met een andere methode betalen.",
   payDownPayment: "Aanbetaling betalen",
   payInstallment: "Termijn betalen",
+  paymentDetails: "Betaalgegevens",
+  paymentDetailsHint: "Maak dit bedrag over en zet de referentie in de mededeling.",
+  transferWaiting: "We wachten op deze overschrijving. Als u die nog niet heeft verstuurd, gebruik dan deze gegevens. Betaal niet twee keer.",
+  accountName: "Naam",
+  paymentReference: "Referentie",
+  amountLabel: "Bedrag",
   lookupTitle: "Volg je aanvraag",
   lookupCta: "Status bekijken",
   notFound: "Geen aanvraag gevonden met die referentie.",
@@ -553,6 +589,12 @@ const es: InstallmentDict = {
   statusRejectedBody: "Lamentablemente no pudimos aprobar esta solicitud. Puedes pagar con otro método.",
   payDownPayment: "Pagar inicial",
   payInstallment: "Pagar cuota",
+  paymentDetails: "Datos de pago",
+  paymentDetailsHint: "Transfiera este importe e indique la referencia en el concepto.",
+  transferWaiting: "Estamos esperando esta transferencia. Si aún no la ha enviado, use estos datos. No pague dos veces.",
+  accountName: "Titular",
+  paymentReference: "Referencia",
+  amountLabel: "Importe",
   lookupTitle: "Sigue tu solicitud",
   lookupCta: "Ver estado",
   notFound: "No se encontró ninguna solicitud con esa referencia.",
