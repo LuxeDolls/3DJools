@@ -31,6 +31,21 @@ function squareGlobal(): SquareGlobal | undefined {
   return (window as Window & { Square?: SquareGlobal }).Square
 }
 
+function hexColor(value: string, fallback: string): string {
+  const probe = document.createElement("canvas").getContext("2d")
+  if (!probe) return fallback
+  probe.fillStyle = fallback
+  probe.fillStyle = value
+  const normalized = probe.fillStyle
+  if (normalized.startsWith("#")) return normalized
+  const match = normalized.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
+  if (!match) return fallback
+  return `#${match
+    .slice(1)
+    .map((part) => Number(part).toString(16).padStart(2, "0"))
+    .join("")}`
+}
+
 function loadSquare(): Promise<void> {
   if (squareGlobal()) return Promise.resolve()
   return new Promise((resolve, reject) => {
@@ -102,8 +117,8 @@ export function SquareCardForm({
       const square = squareGlobal()
       if (!square || cancelled) return
       const style = getComputedStyle(document.body)
-      const color = style.color || "#111111"
-      const background = style.backgroundColor || "#ffffff"
+      const color = hexColor(style.color, "#111111")
+      const background = hexColor(style.backgroundColor, "#ffffff")
       const payments = square.payments(SQUARE_APPLICATION_ID, SQUARE_LOCATION_ID)
       const card = await payments.card({
         style: {
