@@ -185,6 +185,18 @@ export const de: Dictionary = {
     payCardFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     payCardNote:
       "Sie werden zu einer sicheren Stripe-Seite weitergeleitet. Sie können mit Karte, Apple Pay, Link oder Bancontact zahlen. Wir sehen Ihre Kartennummer nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
+    paySquare: "Visa / Mastercard",
+    paySquareDesc: "Abbuchung in US-Dollar · Kontoauszug: HIRA",
+    paySquareNote:
+      "Nach der Bestellung geben Sie die Karte auf der Bestellseite ein. Der genaue Dollarbetrag steht dort vor der Zahlung. Auf dem Kontoauszug erscheint HIRA, nicht 3DJools. Wir sehen Ihre Kartennummer nicht.",
+    paySquareUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar.",
+    paySquareFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
+    paySquarePending: "Die Zahlung wird noch verarbeitet. Warten Sie auf die Statusänderung und zahlen Sie nicht zweimal.",
+    paySquareRefresh: "Der Dollarbetrag hat sich geändert. Laden Sie die Seite neu, bevor Sie zahlen.",
+    paySquarePay: "{amount} zahlen",
+    paySquarePaying: "Zahlung wird verarbeitet…",
+    paySquareFx:
+      "Bestellsumme {eur}. Die Karte wird mit {usd} belastet, zum Kurs der Europäischen Zentralbank von {rate} am {date}. Auf dem Kontoauszug steht HIRA.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Sichere Kartenzahlung",
     payAlppayUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",
@@ -205,7 +217,7 @@ export const de: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Verfügbar auf der sicheren Stripe-Seite, wenn Sie mit Karte zahlen.",
     payMethodsNote:
-      "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Die Kartenzahlung öffnet eine sichere Stripe-Seite. Dort können Sie mit Visa, Mastercard, Apple Pay, Link oder Bancontact zahlen. Wir sehen die Kartennummer nicht. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate. Bestellungen per SEPA-Überweisung werden reserviert und versendet, sobald die Zahlung auf unserer IBAN eingegangen ist. Die Bankdaten sehen Sie an der Kasse und in der Bestellbestätigung.",
+      "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Visa und Mastercard können auf der Bestellseite in US-Dollar zum Kurs der Europäischen Zentralbank bezahlt werden. Der Betrag steht vor der Zahlung. Auf dem Kontoauszug erscheint HIRA. Apple Pay, Link und Bancontact öffnen eine sichere Stripe-Seite. Wir sehen die Kartennummer nicht. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate. Bestellungen per SEPA-Überweisung werden reserviert und versendet, sobald die Zahlung auf unserer IBAN eingegangen ist. Die Bankdaten sehen Sie an der Kasse und in der Bestellbestätigung.",
     payPaypal: "PayPal",
     payPaypalDesc: "Mit PayPal-Guthaben, Bankkonto oder Karte zahlen",
     payPaypalUnavailable: "PayPal ist vorübergehend nicht verfügbar",

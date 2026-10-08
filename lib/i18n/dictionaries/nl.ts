@@ -185,6 +185,18 @@ export const nl: Dictionary = {
     payCardFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payCardNote:
       "U wordt doorgestuurd naar een beveiligde Stripe-pagina. U kunt betalen met kaart, Apple Pay, Link of Bancontact. Wij zien uw kaartnummer niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
+    paySquare: "Visa / Mastercard",
+    paySquareDesc: "Afschrijving in Amerikaanse dollars · afschrift: HIRA",
+    paySquareNote:
+      "Na de bestelling voert u de kaart in op de bestelpagina. Het exacte dollarbedrag staat daar vóór de betaling. Op het afschrift staat HIRA, niet 3DJools. Wij zien uw kaartnummer nooit.",
+    paySquareUnavailable: "Kaartbetaling is tijdelijk niet beschikbaar.",
+    paySquareFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
+    paySquarePending: "De betaling wordt nog verwerkt. Wacht op de statusupdate en betaal niet twee keer.",
+    paySquareRefresh: "Het dollarbedrag is gewijzigd. Vernieuw de pagina voordat u betaalt.",
+    paySquarePay: "{amount} betalen",
+    paySquarePaying: "Betaling wordt verwerkt…",
+    paySquareFx:
+      "Besteltotaal {eur}. De kaart wordt belast met {usd} tegen de koers van de Europese Centrale Bank van {rate} op {date}. De naam op het afschrift is HIRA.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Veilige kaartbetaling",
     payAlppayUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
@@ -205,7 +217,7 @@ export const nl: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetaling opent een beveiligde Stripe-pagina. Daar kunt u betalen met Visa, Mastercard, Apple Pay, Link of Bancontact. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
+      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Visa en Mastercard kunnen op de bestelpagina in Amerikaanse dollars worden betaald tegen de koers van de Europese Centrale Bank. Het bedrag staat vóór de betaling. Op het afschrift staat HIRA. Apple Pay, Link en Bancontact openen een beveiligde Stripe-pagina. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",

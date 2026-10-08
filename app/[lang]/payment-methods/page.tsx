@@ -2,6 +2,7 @@ import Image from "next/image"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
+import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import Link from "next/link"
 import { CreditCard, Landmark, Bitcoin, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
@@ -22,6 +23,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
+    ...(SQUARE_CHECKOUT_ENABLED
+      ? [{ icon: CreditCard, title: dict.checkout.paySquare, desc: dict.checkout.paySquareDesc }]
+      : []),
     ...(STRIPE_CHECKOUT_ENABLED
       ? [
           { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
@@ -58,7 +62,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         {methods.map((m) => (
           <div
-            key={m.title}
+            key={`${m.title}-${m.desc}`}
             className="rounded-lg border border-border bg-card p-5"
           >
             <span className="flex h-11 items-center justify-center rounded-md bg-primary/10 px-3 text-primary">

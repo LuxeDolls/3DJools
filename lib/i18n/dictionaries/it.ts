@@ -185,6 +185,18 @@ export const it: Dictionary = {
     payCardFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
     payCardNote:
       "Verrai reindirizzato a una pagina Stripe sicura. Puoi pagare con carta, Apple Pay, Link o Bancontact. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
+    paySquare: "Visa / Mastercard",
+    paySquareDesc: "Addebito in dollari USA · estratto conto: HIRA",
+    paySquareNote:
+      "Dopo l'ordine, inserisci la carta nella pagina dell'ordine. L'importo esatto in dollari è mostrato prima del pagamento. L'estratto conto indica HIRA, non 3DJools. Non vediamo mai il numero della carta.",
+    paySquareUnavailable: "Il pagamento con carta è temporaneamente non disponibile.",
+    paySquareFailed: "Il pagamento con carta non è stato completato. Puoi riprovare.",
+    paySquarePending: "Il pagamento è ancora in elaborazione. Attendi l'aggiornamento dello stato e non pagare due volte.",
+    paySquareRefresh: "L'importo in dollari è cambiato. Aggiorna la pagina prima di pagare.",
+    paySquarePay: "Paga {amount}",
+    paySquarePaying: "Pagamento in corso…",
+    paySquareFx:
+      "Totale ordine {eur}. La carta viene addebitata di {usd} al tasso della Banca centrale europea di {rate} del {date}. Il nome sull'estratto conto è HIRA.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Pagamento sicuro con carta",
     payAlppayUnavailable: "Il pagamento con carta non è al momento disponibile",
@@ -205,7 +217,7 @@ export const it: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponibile sulla pagina Stripe sicura quando paghi con carta.",
     payMethodsNote:
-      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. Il pagamento con carta apre una pagina Stripe sicura, dove puoi pagare con Visa, Mastercard, Apple Pay, Link o Bancontact. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
+      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. Visa e Mastercard si pagano nella pagina dell'ordine in dollari USA al tasso della Banca centrale europea, mostrato prima del pagamento. L'estratto conto indica HIRA. Apple Pay, Link e Bancontact aprono una pagina Stripe sicura. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
     payPaypal: "PayPal",
     payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
     payPaypalUnavailable: "PayPal non è al momento disponibile",

@@ -24,7 +24,7 @@ const STATUSES: OrderStatus[] = [
 ]
 
 const CLOSED = new Set<OrderStatus>(["delivered", "cancelled", "refunded"])
-const METHODS: PaymentMethod[] = ["card", "alppay", "paypal", "bank_transfer", "crypto", "installments"]
+const METHODS: PaymentMethod[] = ["card", "alppay", "paypal", "square", "bank_transfer", "crypto", "installments"]
 type StatusFilter = "all" | "open" | OrderStatus
 type PaymentFilter = "all" | string
 

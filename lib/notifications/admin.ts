@@ -144,7 +144,10 @@ export async function notifyOrderStatusChange(
 ): Promise<void> {
   const providerPaid =
     order.status === "paid" &&
-    (order.paymentMethod === "card" || order.paymentMethod === "alppay" || order.paymentMethod === "paypal")
+    (order.paymentMethod === "card" ||
+      order.paymentMethod === "alppay" ||
+      order.paymentMethod === "paypal" ||
+      order.paymentMethod === "square")
   const title =
     order.paymentMethod === "paypal"
       ? "PayPal payment received"
