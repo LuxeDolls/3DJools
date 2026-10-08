@@ -19,8 +19,7 @@ import type { Locale } from "@/lib/i18n/config"
 import { getInstallmentDict } from "@/lib/i18n/installments"
 import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
-import { placeOrder } from "@/lib/actions/orders"
-import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
+import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName } from "@/lib/payments/cardholder"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
@@ -31,11 +30,33 @@ import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 
 type PaymentId = "card" | "alppay" | "square" | "paypal" | "sepa" | "crypto" | "installments"
 
-export function CheckoutView({ locale }: { locale: Locale }) {
+function checkoutErrorText(checkout: {
+  payCardholderRequired: string
+  payCardholderDobInvalid: string
+  payCardholderPhoneRequired: string
+  payCardholderRegionRequired: string
+  payCardUnavailable: string
+  payAlppayUnavailable: string
+  payPaypalUnavailable: string
+  paySquareUnavailable: string
+  orderError: string
+}, code: string): string {
+  if (code === "cardholder_required") return checkout.payCardholderRequired
+  if (code === "dob_invalid") return checkout.payCardholderDobInvalid
+  if (code === "phone_required") return checkout.payCardholderPhoneRequired
+  if (code === "region_required") return checkout.payCardholderRegionRequired
+  if (code === "card_unavailable" || code === "card_start_failed") return checkout.payCardUnavailable
+  if (code === "alppay_unavailable" || code === "alppay_start_failed" || code === "ip_required") return checkout.payAlppayUnavailable
+  if (code === "paypal_unavailable" || code === "paypal_start_failed") return checkout.payPaypalUnavailable
+  if (code === "square_unavailable") return checkout.paySquareUnavailable
+  return checkout.orderError
+}
+
+export function CheckoutView({ locale, initialError }: { locale: Locale; initialError?: string }) {
   const { dict } = useI18n()
   const it = getInstallmentDict(locale)
   const lp = useLocalizedPath()
-  const { lines, subtotalCents, clear } = useCart()
+  const { lines, subtotalCents } = useCart()
   const { data: session } = useSession()
   const isMember = Boolean(session?.user)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
@@ -48,7 +69,9 @@ export function CheckoutView({ locale }: { locale: Locale }) {
   const [cardholderName, setCardholderName] = useState("")
   const [dateOfBirth, setDateOfBirth] = useState("")
   const [region, setRegion] = useState("")
-  const [orderError, setOrderError] = useState<string | null>(null)
+  const [orderError, setOrderError] = useState<string | null>(
+    initialError ? checkoutErrorText(dict.checkout, initialError) : null,
+  )
   const router = useRouter()
 
   if (lines.length === 0) {
@@ -88,9 +111,10 @@ export function CheckoutView({ locale }: { locale: Locale }) {
     },
   ]
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (submitting) return
+    if (payment === "installments") return
     if (!termsAccepted) {
       setOrderError(dict.checkout.termsConsentError)
       return
@@ -131,73 +155,22 @@ export function CheckoutView({ locale }: { locale: Locale }) {
     }
     setOrderError(null)
     setSubmitting(true)
-    try {
-      const res = await placeOrder({
-        email: str("email"),
-        firstName: str("firstName"),
-        lastName: str("lastName"),
-        address: str("address"),
-        city: str("city"),
-        postalCode: str("postalCode"),
-        country,
-        phone: str("phone"),
-        region: payment === "alppay" ? region : undefined,
-        cardholderName: isCardPayment(payment) ? cardholderName : undefined,
-        dateOfBirth: isCardPayment(payment) ? toIsoDate(dateOfBirth) ?? undefined : undefined,
-        payment,
-        cryptoCoin: payment === "crypto" ? cryptoCoin : undefined,
-        termsAccepted,
-        locale,
-        items: lines.map((l) => ({ slug: l.slug, quantity: l.quantity, brand: l.brand, image: l.image })),
-      })
-      if (!res.ok) {
-        setOrderError(
-          res.error === "cardholder_required"
-            ? dict.checkout.payCardholderRequired
-            : res.error === "dob_invalid"
-              ? dict.checkout.payCardholderDobInvalid
-            : res.error === "phone_required"
-              ? dict.checkout.payCardholderPhoneRequired
-            : res.error === "region_required"
-              ? dict.checkout.payCardholderRegionRequired
-            : res.error === "card_unavailable" || res.error === "card_start_failed"
-            ? dict.checkout.payCardUnavailable
-            : res.error === "alppay_unavailable" || res.error === "alppay_start_failed" || res.error === "ip_required"
-              ? dict.checkout.payAlppayUnavailable
-            : res.error === "paypal_unavailable" || res.error === "paypal_start_failed"
-              ? dict.checkout.payPaypalUnavailable
-            : res.error === "square_unavailable"
-              ? dict.checkout.paySquareUnavailable
-              : dict.checkout.orderError,
-        )
-        setSubmitting(false)
-        return
-      }
-      clear()
-      if (res.paymentUrl) {
-        try {
-          if (window.top && window.top !== window.self) {
-            window.top.location.href = res.paymentUrl
-            return
-          }
-        } catch {
-          window.open(res.paymentUrl, "_blank", "noopener,noreferrer")
-          router.push(lp(`/order/${res.orderNumber}`))
-          return
-        }
-        window.location.href = res.paymentUrl
-        return
-      }
-      router.push(lp(`/order/${res.orderNumber}`))
-    } catch {
-      setOrderError(dict.checkout.orderError)
-      setSubmitting(false)
-    }
+    // Native submit, not a server action: the preview was leaving that promise pending.
+    e.currentTarget.submit()
   }
   const { downPaymentCents, remainingCents } = computeInstallmentAmounts(totalCents)
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-[1fr_22rem]">
+    <form method="post" action="/api/checkout" onSubmit={handleSubmit} className="grid gap-8 lg:grid-cols-[1fr_22rem]">
+      <input type="hidden" name="locale" value={locale} />
+      <input type="hidden" name="payment" value={payment} />
+      <input type="hidden" name="country" value={country} />
+      <input type="hidden" name="cryptoCoin" value={cryptoCoin} />
+      <input
+        type="hidden"
+        name="items"
+        value={JSON.stringify(lines.map((line) => ({ slug: line.slug, quantity: line.quantity, brand: line.brand, image: line.image })))}
+      />
       <div className="space-y-8">
         {/* Contact */}
         <section>

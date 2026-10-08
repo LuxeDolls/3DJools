@@ -10,10 +10,18 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return { title: dict.checkout.title }
 }
 
-export default async function CheckoutPage({ params }: { params: Promise<{ lang: string }> }) {
+export default async function CheckoutPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ lang: string }>
+  searchParams: Promise<{ error?: string | string[] }>
+}) {
   const { lang } = await params
+  const { error } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
+  const initialError = Array.isArray(error) ? error[0] : error
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
@@ -27,7 +35,7 @@ export default async function CheckoutPage({ params }: { params: Promise<{ lang:
       />
       <h1 className="mt-4 font-heading text-3xl font-bold tracking-tight text-foreground">{dict.checkout.title}</h1>
       <div className="mt-8">
-        <CheckoutView locale={locale} />
+        <CheckoutView locale={locale} initialError={initialError} />
       </div>
     </div>
   )

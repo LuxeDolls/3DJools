@@ -20,6 +20,7 @@ import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { ensureSquareQuote } from "@/lib/payments/square-order"
 import { countryCode } from "@/lib/payments/country-codes"
 import { SquareCardForm } from "@/components/checkout/square-card-form"
+import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -92,6 +93,7 @@ export default async function OrderConfirmationPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
+      <ClearCart />
       <Breadcrumb
         locale={locale}
         items={[{ label: dict.common.home, href: "/" }, { label: dict.orderConfirmation.orderNumber }]}
