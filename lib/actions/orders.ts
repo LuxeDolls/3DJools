@@ -20,7 +20,7 @@ import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
-import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout } from "@/lib/payments/alppay"
+import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -54,6 +54,8 @@ export type PlaceOrderInput = {
   postalCode: string
   country: string
   phone?: string
+  /** Billing region or state. Required for Visa / Mastercard. */
+  region?: string
   /** Cardholder full name. Required for card payments. */
   cardholderName?: string
   /** Cardholder date of birth, YYYY-MM-DD. Required for card payments. */
@@ -73,6 +75,11 @@ export type PlaceOrderResult =
 
 function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
+async function requestIp(): Promise<string | null> {
+  const h = await headers()
+  return formatAlppayIp(h.get("x-forwarded-for") ?? h.get("x-real-ip") ?? "")
 }
 
 /**
@@ -103,6 +110,11 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   }
   if (input.payment === "card" && !stripeConfigured()) return { ok: false, error: "card_unavailable" }
   if (input.payment === "alppay" && !alppayConfigured()) return { ok: false, error: "alppay_unavailable" }
+  if (input.payment === "alppay" && !formatAlppayPhone(input.phone, input.country.trim())) {
+    return { ok: false, error: "phone_required" }
+  }
+  if (input.payment === "alppay" && !input.region?.trim()) return { ok: false, error: "region_required" }
+  if (input.payment === "alppay" && !(await requestIp())) return { ok: false, error: "ip_required" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
@@ -174,6 +186,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
           : undefined,
       cardholder_name: isCardPayment(input.payment) ? noteSafeName(input.cardholderName ?? "") : undefined,
       date_of_birth: isCardPayment(input.payment) ? toIsoDate(input.dateOfBirth ?? "") ?? undefined : undefined,
+      phone: input.payment === "alppay" ? noteSafeName(input.phone ?? "") : undefined,
+      billing_state: input.payment === "alppay" ? noteSafeName(input.region ?? "") : undefined,
     }),
     items,
   })
@@ -214,13 +228,15 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         email: input.email.trim(),
         firstName: holder.firstName,
         lastName: holder.lastName,
-        dateOfBirth: input.dateOfBirth,
-        phone: input.phone,
-        address: input.address.trim(),
-        city: input.city.trim(),
-        postalCode: input.postalCode.trim(),
-        country: input.country.trim(),
-      })
+      dateOfBirth: input.dateOfBirth ?? "",
+      phone: input.phone ?? "",
+      ip: (await requestIp()) ?? "",
+      address: input.address.trim(),
+      city: input.city.trim(),
+      postalCode: input.postalCode.trim(),
+      country: input.country.trim(),
+      state: input.region?.trim() ?? "",
+    })
       await mergeOrderNotes(order.id, { alppay_payment_ids: checkout.paymentId })
       paymentUrl = checkout.redirectUrl
     } catch (err) {
@@ -312,11 +328,14 @@ export async function startAlppayPayment(orderNumber: string, locale: string): P
       email: order.email,
       firstName,
       lastName,
-      dateOfBirth: notes.date_of_birth && isAdultDateOfBirth(notes.date_of_birth) ? notes.date_of_birth : undefined,
+      dateOfBirth: notes.date_of_birth && isAdultDateOfBirth(notes.date_of_birth) ? notes.date_of_birth : "",
+      phone: notes.phone ?? "",
+      ip: (await requestIp()) ?? "",
       address: order.shippingAddress1 ?? "",
       city: order.shippingCity ?? "",
       postalCode: order.shippingPostalCode ?? "",
       country: order.shippingCountry ?? "",
+      state: notes.billing_state ?? "",
     })
     await mergeOrderNotes(order.id, {
       alppay_payment_ids: appendAlppayPaymentId(notes.alppay_payment_ids, checkout.paymentId),
