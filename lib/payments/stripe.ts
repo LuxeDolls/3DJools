@@ -2,6 +2,7 @@ import "server-only"
 
 import Stripe from "stripe"
 import { COMPANY } from "@/lib/company"
+import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 
 // SDK 23 pins Stripe-Version 2026-09-30.endive. Do not override it.
 let client: Stripe | null = null
@@ -16,7 +17,7 @@ function stripeSecretKey(): string {
 }
 
 export function stripeConfigured(): boolean {
-  return Boolean(stripeSecretKey())
+  return STRIPE_CHECKOUT_ENABLED && Boolean(stripeSecretKey())
 }
 
 export function getStripe(): Stripe {

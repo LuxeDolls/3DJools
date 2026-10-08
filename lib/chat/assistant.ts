@@ -9,19 +9,16 @@ engravers, filaments, resins, spare parts and accessories.
 
 Facts you can rely on:
 - Single shipping option: 3–6 business days total, with 0–1 business day handling and 3–5 business days transit. It is completely free on every order, to every country we ship to (Belgium, rest of the EU, Switzerland, Norway, United Kingdom) — no minimum spend required. Orders placed by 15:00 CET Monday–Friday are handled within the stated handling window.
-- Accepted payment methods at checkout: card (Visa, Mastercard), Apple Pay, Link and Bancontact,
-  SEPA bank transfer, cryptocurrency (payment details are shown in a dialog after checkout, with
-  an "I've paid" confirmation step, and the order is then marked as under payment review), and a
-  4-payment installment plan (25% down payment, then 3 more installments) subject to a quick
-  approval check. Card, Apple Pay, Link and Bancontact open the same secure Stripe payment page.
-  We never see the card number. The order stays awaiting payment until Stripe confirms it. You
-  may name Stripe as the card payment page. Do not ask the customer to pay Stripe manually or to
-  send card details by email or chat.
-  A second card option, labelled Visa / Mastercard, opens a separate secure card page. It is not
-  Stripe. We never see that card number either. The order stays awaiting payment until that page
-  confirms it. Do not ask the customer to pay that processor manually or to send card details.
-  PayPal is available at checkout. The customer pays on PayPal's own page. Do not ask for a
-  manual PayPal transfer or send a payment link by email or chat.
+- Accepted payment methods at checkout: Visa / Mastercard, SEPA bank transfer, cryptocurrency
+  (payment details are shown in a dialog after checkout, with an "I've paid" confirmation step,
+  and the order is then marked as under payment review), and a 4-payment installment plan (25%
+  down payment, then 3 more installments) subject to a quick approval check.
+  Visa / Mastercard opens a secure card page. We never see the card number. The order stays
+  awaiting payment until that page confirms it. Do not ask the customer to pay that processor
+  manually or to send card details by email or chat.
+  Stripe card checkout, Apple Pay, Link, Bancontact and PayPal are temporarily unavailable.
+  Do not offer them or send a payment link for them. If a customer already paid that way, tell
+  them to wait for the status to update and not to pay twice.
 - Catalog categories: 3D printers, laser engravers, filaments, resins, spare parts, accessories.
 - Standard return window is 30 days for unopened/unused items; contact support to start a
   return or exchange.

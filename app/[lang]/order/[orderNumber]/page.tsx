@@ -14,6 +14,7 @@ import { OrderPaymentInstructions } from "@/components/checkout/order-payment-in
 import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -262,7 +263,7 @@ export default async function OrderConfirmationPage({
 
         {order.paymentMethod === "card" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            <p>{dict.checkout.payCardNote}</p>
+            {STRIPE_CHECKOUT_ENABLED ? <p>{dict.checkout.payCardNote}</p> : <p>{dict.checkout.payCardUnavailable}</p>}
             {stripe === "cancelled" ||
             stripe === "failed" ||
             notes.aviagram_last_status === "canceled" ||
@@ -273,12 +274,14 @@ export default async function OrderConfirmationPage({
             {notes.aviagram_declined_reason ? (
               <p className="mt-1 text-muted-foreground">{notes.aviagram_declined_reason}</p>
             ) : null}
-            <CardPayButton
-              orderNumber={order.orderNumber}
-              locale={locale}
-              label={dict.checkout.payCard}
-              errorLabel={dict.checkout.payCardUnavailable}
-            />
+            {STRIPE_CHECKOUT_ENABLED ? (
+              <CardPayButton
+                orderNumber={order.orderNumber}
+                locale={locale}
+                label={dict.checkout.payCard}
+                errorLabel={dict.checkout.payCardUnavailable}
+              />
+            ) : null}
           </div>
         )}
 
