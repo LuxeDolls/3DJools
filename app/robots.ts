@@ -16,6 +16,7 @@ const disallow = [
   "/*/sign-in",
   "/*/sign-up",
   "/*/track-order",
+  "/*/product/test-card-payment",
 ]
 
 // /media is the same-origin image proxy. /api/product-image stays allowed as a

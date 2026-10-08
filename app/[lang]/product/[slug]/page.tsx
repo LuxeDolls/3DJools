@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { getProductBySlug, getRelatedProducts } from "@/lib/catalog"
+import { isCardPaymentTest } from "@/lib/catalog/hidden-products"
 import { categoryLabel } from "@/lib/catalog/category-labels"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Breadcrumb } from "@/components/breadcrumb"
@@ -30,6 +31,7 @@ export async function generateMetadata({
   return {
     title: product.name,
     description: product.shortDescription,
+    robots: isCardPaymentTest(product.slug) ? { index: false, follow: false } : undefined,
     alternates: { canonical },
     openGraph: {
       title: product.name,
@@ -58,7 +60,7 @@ export default async function ProductPage({
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
-      <ProductJsonLd product={product} url={url} />
+      {isCardPaymentTest(product.slug) ? null : <ProductJsonLd product={product} url={url} />}
 
       <Breadcrumb
         locale={locale}

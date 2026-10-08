@@ -2,6 +2,7 @@ import "server-only"
 import { and, asc, eq, isNotNull, ne, notInArray, or } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { brands as brandsTable, categories as categoriesTable, products as productsTable } from "@/lib/db/schema"
+import { CARD_PAYMENT_TEST_SLUG } from "./hidden-products"
 import { storefrontImageUrl } from "./image-urls"
 import { localizeProduct, localizeProducts } from "./localize"
 import type { Availability, Brand, Category, CategorySlug, Product, ProductSpec, Technology, UseCase } from "./types"
@@ -58,6 +59,11 @@ function rowToBrand(r: typeof brandsTable.$inferSelect): Brand {
   return { slug: r.slug, name: r.name, blurb: r.blurb, country: r.country }
 }
 
+/** Public lists never include the direct-link card test, even if it is unarchived. */
+function storefrontVisible() {
+  return and(eq(productsTable.archived, false), ne(productsTable.slug, CARD_PAYMENT_TEST_SLUG))
+}
+
 function rowToCategory(r: typeof categoriesTable.$inferSelect): Category {
   return { slug: r.slug as CategorySlug, key: r.key }
 }
@@ -67,7 +73,7 @@ export async function getAllProducts(locale = "en"): Promise<Product[]> {
     .select({ p: productsTable, brandName: brandsTable.name })
     .from(productsTable)
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
-    .where(eq(productsTable.archived, false))
+    .where(storefrontVisible())
     .orderBy(asc(productsTable.name))
   return localizeProducts(rows.map((r) => rowToProduct(r.p, r.brandName ?? undefined)), locale)
 }
@@ -87,7 +93,12 @@ export async function getProductBySlug(slug: string, locale = "en"): Promise<Pro
     .select({ p: productsTable, brandName: brandsTable.name })
     .from(productsTable)
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
-    .where(and(eq(productsTable.slug, slug), eq(productsTable.archived, false)))
+    .where(
+      and(
+        eq(productsTable.slug, slug),
+        or(eq(productsTable.archived, false), eq(productsTable.slug, CARD_PAYMENT_TEST_SLUG)),
+      ),
+    )
     .limit(1)
   return row ? localizeProduct(rowToProduct(row.p, row.brandName ?? undefined), locale) : undefined
 }
@@ -107,7 +118,7 @@ export async function getProductsByCategory(category: CategorySlug, locale = "en
     .select({ p: productsTable, brandName: brandsTable.name })
     .from(productsTable)
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
-    .where(and(eq(productsTable.category, category), eq(productsTable.archived, false)))
+    .where(and(eq(productsTable.category, category), storefrontVisible()))
     .orderBy(asc(productsTable.name))
   return localizeProducts(rows.map((r) => rowToProduct(r.p, r.brandName ?? undefined)), locale)
 }
@@ -117,7 +128,7 @@ export async function getProductsByBrand(brandSlug: string, locale = "en"): Prom
     .select({ p: productsTable, brandName: brandsTable.name })
     .from(productsTable)
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
-    .where(and(eq(productsTable.brandSlug, brandSlug), eq(productsTable.archived, false)))
+    .where(and(eq(productsTable.brandSlug, brandSlug), storefrontVisible()))
     .orderBy(asc(productsTable.name))
   return localizeProducts(rows.map((r) => rowToProduct(r.p, r.brandName ?? undefined)), locale)
 }
@@ -127,7 +138,7 @@ export async function getFeaturedProducts(locale = "en"): Promise<Product[]> {
     .select({ p: productsTable, brandName: brandsTable.name })
     .from(productsTable)
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
-    .where(and(eq(productsTable.featured, true), eq(productsTable.archived, false)))
+    .where(and(eq(productsTable.featured, true), storefrontVisible()))
   return localizeProducts(rows.map((r) => rowToProduct(r.p, r.brandName ?? undefined)), locale)
 }
 
@@ -136,7 +147,7 @@ export async function getBestsellers(locale = "en"): Promise<Product[]> {
     .select({ p: productsTable, brandName: brandsTable.name })
     .from(productsTable)
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
-    .where(and(eq(productsTable.bestseller, true), eq(productsTable.archived, false)))
+    .where(and(eq(productsTable.bestseller, true), storefrontVisible()))
   return localizeProducts(rows.map((r) => rowToProduct(r.p, r.brandName ?? undefined)), locale)
 }
 
@@ -148,7 +159,7 @@ export async function getRelatedProducts(product: Product, limit = 4, locale = "
     .where(
       and(
         ne(productsTable.id, product.id),
-        eq(productsTable.archived, false),
+        storefrontVisible(),
         or(eq(productsTable.brandSlug, product.brandSlug), eq(productsTable.category, product.category)),
       ),
     )
@@ -164,7 +175,7 @@ export async function getActiveSale(): Promise<{ active: boolean; endsAt: Date |
   const rows = await db
     .select({ saleEndsAt: productsTable.saleEndsAt })
     .from(productsTable)
-    .where(and(eq(productsTable.archived, false), isNotNull(productsTable.saleEndsAt)))
+    .where(and(storefrontVisible(), isNotNull(productsTable.saleEndsAt)))
 
   const now = Date.now()
   const active = rows.filter((r) => r.saleEndsAt != null && r.saleEndsAt.getTime() > now)
@@ -179,7 +190,7 @@ export async function getActiveSale(): Promise<{ active: boolean; endsAt: Date |
 
 /** All non-archived product slugs — for generateStaticParams. */
 export async function getAllProductSlugs(): Promise<string[]> {
-  const rows = await db.select({ slug: productsTable.slug }).from(productsTable).where(eq(productsTable.archived, false))
+  const rows = await db.select({ slug: productsTable.slug }).from(productsTable).where(storefrontVisible())
   return rows.map((r) => r.slug)
 }
 
@@ -198,7 +209,7 @@ export async function getSitemapProducts(): Promise<
       updatedAt: productsTable.updatedAt,
     })
     .from(productsTable)
-    .where(and(eq(productsTable.archived, false), notInArray(productsTable.category, [...unlistedCategories])))
+    .where(and(storefrontVisible(), notInArray(productsTable.category, [...unlistedCategories])))
 }
 
 export async function getAllBrandSlugs(): Promise<string[]> {
@@ -306,6 +317,6 @@ export async function getAdminProductBySlug(slug: string): Promise<AdminProductD
 }
 
 export async function getProductCount(): Promise<number> {
-  const rows = await db.select({ slug: productsTable.slug }).from(productsTable).where(eq(productsTable.archived, false))
+  const rows = await db.select({ slug: productsTable.slug }).from(productsTable).where(storefrontVisible())
   return rows.length
 }
