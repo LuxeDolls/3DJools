@@ -34,11 +34,28 @@ type PaypalOrder = {
   links?: PaypalLink[]
 }
 
+// Flip back to "previous" to restore the original PayPal app.
+// Those credentials stay in PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET.
+const PAYPAL_ACCOUNT: "current" | "previous" = "current"
+
+const CURRENT_PAYPAL_CLIENT_ID =
+  "BAAcfmQdYrRFdeBfaPlDmJYMNRl8MTG-rJIXkFMP1NlogUo3k2clmGeDvvnHzuyiB9fDfVp6Nu_hiALc2U"
+
+function paypalCredentials(): { id: string; secret: string } | null {
+  const id =
+    PAYPAL_ACCOUNT === "current"
+      ? CURRENT_PAYPAL_CLIENT_ID
+      : process.env.PAYPAL_CLIENT_ID?.trim()
+  const secret =
+    PAYPAL_ACCOUNT === "current"
+      ? process.env.API_KEY_2?.trim()
+      : process.env.PAYPAL_CLIENT_SECRET?.trim()
+  if (!id || !secret) return null
+  return { id, secret }
+}
+
 export function paypalConfigured(): boolean {
-  return (
-    PAYPAL_CHECKOUT_ENABLED &&
-    Boolean(process.env.PAYPAL_CLIENT_ID?.trim() && process.env.PAYPAL_CLIENT_SECRET?.trim())
-  )
+  return PAYPAL_CHECKOUT_ENABLED && paypalCredentials() !== null
 }
 
 export function isPaypalOrderId(value: string): boolean {
@@ -86,9 +103,9 @@ function paypalHost(href: string): boolean {
 }
 
 async function accessToken(): Promise<string> {
-  const id = process.env.PAYPAL_CLIENT_ID?.trim()
-  const secret = process.env.PAYPAL_CLIENT_SECRET?.trim()
-  if (!id || !secret) throw new Error("paypal_unconfigured")
+  const credentials = paypalCredentials()
+  if (!credentials) throw new Error("paypal_unconfigured")
+  const { id, secret } = credentials
   const res = await fetch(`${apiBase()}/v1/oauth2/token`, {
     method: "POST",
     headers: {
