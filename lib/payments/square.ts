@@ -2,6 +2,8 @@ import "server-only"
 
 import { createHash, createHmac, timingSafeEqual } from "node:crypto"
 import { COMPANY } from "@/lib/company"
+import { isLocale } from "@/lib/i18n/config"
+import { localizedPath } from "@/lib/i18n/paths"
 import { SQUARE_CHARGE_CURRENCY, SQUARE_CHECKOUT_ENABLED, SQUARE_LOCATION_ID } from "@/lib/payments/square-availability"
 
 const SQUARE_VERSION = "2026-09-16"
@@ -30,11 +32,90 @@ export function isSquareSourceId(value: string): boolean {
   return /^[A-Za-z0-9:_-]{10,255}$/.test(value)
 }
 
+const ORDER_NUMBER = /^V3-\d{8}-[A-Z0-9]{4,10}$/
+
+export function isSquareCheckoutUrl(value: string): boolean {
+  try {
+    const host = new URL(value).hostname
+    return host === "square.link" || host === "checkout.square.site" || host.endsWith(".square.site")
+  } catch {
+    return false
+  }
+}
+
+export type SquareCheckoutLink = {
+  url: string
+  linkId: string
+  squareOrderId: string
+}
+
+/** Opens Square's own card page for the locked dollar amount. */
+export async function createSquareCheckout(input: {
+  orderNumber: string
+  amountCents: number
+  email: string
+  locale: string
+}): Promise<SquareCheckoutLink> {
+  if (!ORDER_NUMBER.test(input.orderNumber)) throw new Error("square_bad_order")
+  if (!Number.isInteger(input.amountCents) || input.amountCents < 1) throw new Error("square_bad_amount")
+  const locale = isLocale(input.locale) ? input.locale : "en"
+  const redirectUrl = `${COMPANY.url}${localizedPath(locale, `/order/${input.orderNumber}`)}`
+  const response = await fetch(`${SQUARE_API}/v2/online-checkout/payment-links`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken()}`,
+      "Content-Type": "application/json",
+      "Square-Version": SQUARE_VERSION,
+    },
+    body: JSON.stringify({
+      idempotency_key: createHash("sha256").update(`link:${input.orderNumber}:${input.amountCents}`).digest("hex").slice(0, 45),
+      description: `3DJools ${input.orderNumber}`,
+      payment_note: input.orderNumber,
+      order: {
+        location_id: SQUARE_LOCATION_ID,
+        reference_id: input.orderNumber,
+        line_items: [
+          {
+            name: `3DJools ${input.orderNumber}`,
+            quantity: "1",
+            base_price_money: { amount: input.amountCents, currency: SQUARE_CHARGE_CURRENCY },
+          },
+        ],
+      },
+      checkout_options: {
+        redirect_url: redirectUrl,
+        ask_for_shipping_address: false,
+        allow_tipping: false,
+        enable_coupon: false,
+        enable_loyalty: false,
+        merchant_support_email: COMPANY.email,
+        accepted_payment_methods: {
+          apple_pay: false,
+          google_pay: false,
+          cash_app_pay: false,
+          afterpay_clearpay: false,
+        },
+      },
+      pre_populated_data: { buyer_email: input.email.slice(0, 255) },
+    }),
+  })
+  const body = (await response.json()) as SquareErrorBody & {
+    payment_link?: { id?: string; url?: string; order_id?: string }
+  }
+  const url = body.payment_link?.url ?? ""
+  if (!response.ok || !body.payment_link?.id || !body.payment_link.order_id || !isSquareCheckoutUrl(url)) {
+    throw new Error(`square_${safeCode(body.errors?.[0]?.code)}`)
+  }
+  return { url, linkId: body.payment_link.id, squareOrderId: body.payment_link.order_id }
+}
+
 type SquareErrorBody = { errors?: { code?: string }[] }
 type SquarePayment = {
   id?: string
   status?: string
   reference_id?: string
+  note?: string
+  order_id?: string
   location_id?: string
   amount_money?: { amount?: number; currency?: string }
 }
@@ -157,9 +238,16 @@ export type SquareWebhookPayment = {
   id: string
   status: string
   referenceId: string
+  note: string
+  orderId: string
   amountCents: number
   currency: string
   locationId: string
+}
+
+export function squareOrderNumber(payment: { referenceId: string; note: string }): string {
+  if (ORDER_NUMBER.test(payment.referenceId)) return payment.referenceId
+  return payment.note.match(ORDER_NUMBER)?.[0] ?? ""
 }
 
 export function readSquareWebhookPayment(body: string): { type: string; payment: SquareWebhookPayment | null } {
@@ -168,13 +256,15 @@ export function readSquareWebhookPayment(body: string): { type: string; payment:
     data?: { object?: { payment?: SquarePayment } }
   }
   const payment = event.data?.object?.payment
-  if (!payment?.id || !payment.reference_id) return { type: event.type ?? "", payment: null }
+  if (!payment?.id) return { type: event.type ?? "", payment: null }
   return {
     type: event.type ?? "",
-    payment: {
+payment: {
       id: payment.id,
       status: payment.status ?? "",
-      referenceId: payment.reference_id,
+      referenceId: payment.reference_id ?? "",
+      note: payment.note ?? "",
+      orderId: payment.order_id ?? "",
       amountCents: payment.amount_money?.amount ?? 0,
       currency: payment.amount_money?.currency ?? "",
       locationId: payment.location_id ?? "",

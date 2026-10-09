@@ -48,7 +48,7 @@ function checkoutErrorText(checkout: {
   if (code === "card_unavailable" || code === "card_start_failed") return checkout.payCardUnavailable
   if (code === "alppay_unavailable" || code === "alppay_start_failed" || code === "ip_required") return checkout.payAlppayUnavailable
   if (code === "paypal_unavailable" || code === "paypal_start_failed") return checkout.payPaypalUnavailable
-  if (code === "square_unavailable") return checkout.paySquareUnavailable
+  if (code === "square_unavailable" || code === "square_start_failed") return checkout.paySquareUnavailable
   return checkout.orderError
 }
 

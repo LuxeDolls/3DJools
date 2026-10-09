@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server"
-import { readSquareWebhookPayment, verifySquareWebhook } from "@/lib/payments/square"
+import { getOrderNumberBySquareOrderId } from "@/lib/orders/queries"
+import { readSquareWebhookPayment, squareOrderNumber, verifySquareWebhook } from "@/lib/payments/square"
 import { settleSquarePayment } from "@/lib/payments/square-order"
 
 export const dynamic = "force-dynamic"
@@ -22,8 +23,14 @@ export async function POST(request: NextRequest) {
   }
   if (!HANDLED.has(event.type) || !event.payment) return NextResponse.json({ ok: true })
 
+  const orderNumber =
+    squareOrderNumber(event.payment) ||
+    (event.payment.orderId ? await getOrderNumberBySquareOrderId(event.payment.orderId) : "") ||
+    ""
+  if (!orderNumber) return NextResponse.json({ ok: true })
+
   const settled = await settleSquarePayment({
-    orderNumber: event.payment.referenceId,
+    orderNumber,
     paymentId: event.payment.id,
     status: event.payment.status,
     amountCents: event.payment.amountCents,

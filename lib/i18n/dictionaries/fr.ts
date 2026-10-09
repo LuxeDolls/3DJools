@@ -186,9 +186,9 @@ export const fr: Dictionary = {
     payCardNote:
       "Vous serez redirigé vers une page Stripe sécurisée. Vous pouvez payer par carte, Apple Pay, Link ou Bancontact. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     paySquare: "Visa / Mastercard",
-    paySquareDesc: "Débit en dollars américains · relevé : HIRA",
+    paySquareDesc: "Ouvre la page sécurisée Square · débit en dollars américains · relevé : HIRA",
     paySquareNote:
-      "Après la commande, saisissez la carte sur la page de commande. Le montant exact en dollars y est affiché avant le paiement. Le relevé indique HIRA, et non 3DJools. Nous ne voyons jamais votre numéro de carte.",
+      "Après la commande, vous êtes redirigé vers la page de paiement sécurisée de Square. La carte est débitée en dollars américains au taux de la Banque centrale européenne, affiché avant le paiement. Le relevé indique HIRA, pas 3DJools. Nous ne voyons jamais le numéro de carte.",
     paySquareUnavailable: "Le paiement par carte est temporairement indisponible.",
     paySquareFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
     paySquarePending: "Le paiement est encore en cours. Attendez la mise à jour du statut et ne payez pas deux fois.",
@@ -217,7 +217,7 @@ export const fr: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponible sur la page Stripe sécurisée lorsque vous payez par carte.",
     payMethodsNote:
-      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Visa et Mastercard peuvent être payés sur la page de commande en dollars américains au taux de la Banque centrale européenne, affiché avant le paiement. Le relevé indique HIRA. Apple Pay, Link et Bancontact ouvrent une page Stripe sécurisée. Nous ne voyons jamais le numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
+      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Visa et Mastercard ouvrent la page de paiement sécurisée de Square et sont débités en dollars américains au taux de la Banque centrale européenne, affiché avant le paiement. Le relevé indique HIRA. Apple Pay, Link et Bancontact ouvrent une page Stripe sécurisée. Nous ne voyons jamais le numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
     payPaypal: "PayPal",
     payPaypalDesc: "Payez avec votre solde PayPal, votre compte bancaire ou votre carte",
     payPaypalUnavailable: "PayPal est temporairement indisponible",

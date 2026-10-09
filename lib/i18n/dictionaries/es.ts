@@ -186,9 +186,9 @@ export const es: Dictionary = {
     payCardNote:
       "Se le redirigirá a una página segura de Stripe. Puede pagar con tarjeta, Apple Pay, Link o Bancontact. Nunca vemos el número de su tarjeta. Si ya ha pagado, espere a que se actualice el estado y no pague dos veces.",
     paySquare: "Visa / Mastercard",
-    paySquareDesc: "Cargo en dólares estadounidenses · extracto: HIRA",
+    paySquareDesc: "Abre la página segura de Square · cargo en dólares estadounidenses · extracto: HIRA",
     paySquareNote:
-      "Después del pedido, introduce la tarjeta en la página del pedido. El importe exacto en dólares se muestra antes de pagar. El extracto muestra HIRA, no 3DJools. Nunca vemos el número de tu tarjeta.",
+      "Después del pedido se abre la página de pago segura de Square. La tarjeta se carga en dólares estadounidenses al tipo del Banco Central Europeo, mostrado antes de pagar. El extracto muestra HIRA, no 3DJools. Nunca vemos el número de tarjeta.",
     paySquareUnavailable: "El pago con tarjeta no está disponible temporalmente.",
     paySquareFailed: "El pago con tarjeta no se completó. Puedes intentarlo de nuevo.",
     paySquarePending: "El pago aún se está procesando. Espera a que cambie el estado y no pagues dos veces.",
@@ -217,7 +217,7 @@ export const es: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponible en la página segura de Stripe cuando paga con tarjeta.",
     payMethodsNote:
-      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Visa y Mastercard se pagan en la página del pedido en dólares estadounidenses al tipo del Banco Central Europeo, mostrado antes de pagar. El extracto muestra HIRA. Apple Pay, Link y Bancontact abren una página segura de Stripe. Nunca vemos el número de tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
+      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Visa y Mastercard abren la página de pago segura de Square y se cargan en dólares estadounidenses al tipo del Banco Central Europeo, mostrado antes de pagar. El extracto muestra HIRA. Apple Pay, Link y Bancontact abren una página segura de Stripe. Nunca vemos el número de tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pague con saldo de PayPal, cuenta bancaria o tarjeta",
     payPaypalUnavailable: "PayPal no está disponible temporalmente",

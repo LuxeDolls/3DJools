@@ -22,7 +22,7 @@ import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { squareConfigured } from "@/lib/payments/square"
-import { ensureSquareQuote } from "@/lib/payments/square-order"
+import { openSquareCheckout } from "@/lib/payments/square-order"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -257,8 +257,15 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (paymentMethod === "square") {
     const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
     await mergeOrderNotes(order.id, { checkout_locale: locale })
-    const created = await getOrderByOrderNumber(order.orderNumber)
-    if (created) await ensureSquareQuote(created)
+    try {
+      const created = await getOrderByOrderNumber(order.orderNumber)
+      if (!created) throw new Error("square_missing_order")
+      paymentUrl = await openSquareCheckout(created, locale)
+    } catch (err) {
+      console.error("[v0] Square payment could not start:", err)
+      await abandonUnpaidOrder(order.id)
+      return { ok: false, error: "square_start_failed" }
+    }
   }
 
   if (paymentMethod === "paypal") {
@@ -288,6 +295,26 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   }
 
   return { ok: true, orderNumber: order.orderNumber, paymentUrl }
+}
+
+export type StartSquarePaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
+
+/** Opens Square's hosted card page for an order that is still awaiting payment. */
+export async function startSquarePayment(orderNumber: string, locale: string): Promise<StartSquarePaymentResult> {
+  if (!squareConfigured()) return { ok: false, error: "square_unavailable" }
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order || order.paymentMethod !== "square") return { ok: false, error: "not_found" }
+  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
+  const notes = parseOrderNotes(order.notes)
+  const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
+  try {
+    const paymentUrl = await openSquareCheckout(order, safeLocale)
+    await mergeOrderNotes(order.id, { checkout_locale: safeLocale })
+    return { ok: true, paymentUrl }
+  } catch (err) {
+    console.error("[v0] Square payment retry failed:", err)
+    return { ok: false, error: "square_start_failed" }
+  }
 }
 
 export type StartCardPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }

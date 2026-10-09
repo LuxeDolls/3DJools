@@ -186,9 +186,9 @@ export const nl: Dictionary = {
     payCardNote:
       "U wordt doorgestuurd naar een beveiligde Stripe-pagina. U kunt betalen met kaart, Apple Pay, Link of Bancontact. Wij zien uw kaartnummer niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
     paySquare: "Visa / Mastercard",
-    paySquareDesc: "Afschrijving in Amerikaanse dollars · afschrift: HIRA",
+    paySquareDesc: "Opent de beveiligde Square-pagina · afschrijving in Amerikaanse dollars · afschrift: HIRA",
     paySquareNote:
-      "Na de bestelling voert u de kaart in op de bestelpagina. Het exacte dollarbedrag staat daar vóór de betaling. Op het afschrift staat HIRA, niet 3DJools. Wij zien uw kaartnummer nooit.",
+      "Na de bestelling gaat u naar de beveiligde betaalpagina van Square. De kaart wordt afgeschreven in Amerikaanse dollars tegen de koers van de Europese Centrale Bank. Het bedrag staat vóór de betaling. Op het afschrift staat HIRA, niet 3DJools. Wij zien het kaartnummer niet.",
     paySquareUnavailable: "Kaartbetaling is tijdelijk niet beschikbaar.",
     paySquareFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     paySquarePending: "De betaling wordt nog verwerkt. Wacht op de statusupdate en betaal niet twee keer.",
@@ -217,7 +217,7 @@ export const nl: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Visa en Mastercard kunnen op de bestelpagina in Amerikaanse dollars worden betaald tegen de koers van de Europese Centrale Bank. Het bedrag staat vóór de betaling. Op het afschrift staat HIRA. Apple Pay, Link en Bancontact openen een beveiligde Stripe-pagina. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
+      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Visa en Mastercard openen de beveiligde betaalpagina van Square en worden afgeschreven in Amerikaanse dollars tegen de koers van de Europese Centrale Bank. Het bedrag staat vóór de betaling. Op het afschrift staat HIRA. Apple Pay, Link en Bancontact openen een beveiligde Stripe-pagina. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",
