@@ -18,8 +18,6 @@ import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { ensureSquareQuote } from "@/lib/payments/square-order"
-import { countryCode } from "@/lib/payments/country-codes"
-import { SquareCardForm } from "@/components/checkout/square-card-form"
 import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -78,8 +76,6 @@ export default async function OrderConfirmationPage({
     order.paymentMethod === "square" && status === "awaiting_payment" && SQUARE_CHECKOUT_ENABLED
       ? await ensureSquareQuote(order)
       : null
-  const [givenName, ...familyParts] = (order.shippingName ?? "").trim().split(/\s+/)
-  const familyName = familyParts.join(" ") || givenName || "Customer"
   const squareFx = squareQuote
     ? dict.checkout.paySquareFx
         .replace("{eur}", formatPrice(order.totalCents, locale))
@@ -294,24 +290,16 @@ export default async function OrderConfirmationPage({
               <p className="mt-2 text-destructive">{dict.checkout.paySquareFailed}</p>
             ) : null}
             {squareQuote ? (
-              <SquareCardForm
-                orderNumber={order.orderNumber}
-                usdCents={squareQuote.usdCents}
-                givenName={givenName || "Customer"}
-                familyName={familyName}
-                email={order.email}
-                address={order.shippingAddress1 ?? ""}
-                city={order.shippingCity ?? ""}
-                postalCode={order.shippingPostalCode ?? ""}
-                countryCode={countryCode(order.shippingCountry) ?? ""}
-                payLabel={dict.checkout.paySquarePay.replace("{amount}", formatUsd(squareQuote.usdCents, locale))}
-                payingLabel={dict.checkout.paySquarePaying}
-                fxNote={squareFx}
-                failedLabel={dict.checkout.paySquareFailed}
-                unavailableLabel={dict.checkout.paySquareUnavailable}
-                pendingLabel={dict.checkout.paySquarePending}
-                refreshLabel={dict.checkout.paySquareRefresh}
-              />
+              <>
+                <p className="mt-2">{squareFx}</p>
+                <CardPayButton
+                  orderNumber={order.orderNumber}
+                  locale={locale}
+                  method="square"
+                  label={dict.checkout.paySquarePay.replace("{amount}", formatUsd(squareQuote.usdCents, locale))}
+                  errorLabel={dict.checkout.paySquareUnavailable}
+                />
+              </>
             ) : (
               <p className="mt-2">{dict.checkout.paySquareUnavailable}</p>
             )}

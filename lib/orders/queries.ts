@@ -1,6 +1,6 @@
 import "server-only"
 
-import { and, desc, eq } from "drizzle-orm"
+import { and, desc, eq, like } from "drizzle-orm"
 import { after } from "next/server"
 import { db } from "@/lib/db"
 import {
@@ -122,6 +122,16 @@ export async function getOrderForUser(userId: string, orderId: string): Promise<
  * order number acts as the access token for the post-checkout thank-you page
  * so guests (no account) can still see their confirmation.
  */
+export async function getOrderNumberBySquareOrderId(squareOrderId: string): Promise<string | null> {
+  if (!/^[A-Za-z0-9]{8,64}$/.test(squareOrderId)) return null
+  const [row] = await db
+    .select({ orderNumber: orders.orderNumber })
+    .from(orders)
+    .where(like(orders.notes, `%square_order_id=${squareOrderId}%`))
+    .limit(1)
+  return row?.orderNumber ?? null
+}
+
 export async function getOrderByOrderNumber(orderNumber: string): Promise<OrderWithItems | null> {
   const [order] = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1)
   if (!order) return null

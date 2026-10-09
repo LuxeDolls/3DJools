@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { startAlppayPayment, startCardPayment } from "@/lib/actions/orders"
+import { startAlppayPayment, startCardPayment, startSquarePayment } from "@/lib/actions/orders"
 
 export function CardPayButton({
   orderNumber,
@@ -15,7 +15,7 @@ export function CardPayButton({
   locale: string
   label: string
   errorLabel: string
-  method?: "card" | "alppay"
+  method?: "card" | "alppay" | "square"
 }) {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState(false)
@@ -27,7 +27,9 @@ export function CardPayButton({
     try {
       const result = method === "alppay"
         ? await startAlppayPayment(orderNumber, locale)
-        : await startCardPayment(orderNumber, locale)
+        : method === "square"
+          ? await startSquarePayment(orderNumber, locale)
+          : await startCardPayment(orderNumber, locale)
       if (!result.ok) {
         setError(true)
         setPending(false)

@@ -5,7 +5,7 @@ import type { OrderWithItems } from "@/lib/orders/queries"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import { countryCode } from "@/lib/payments/country-codes"
 import { SQUARE_CHARGE_CURRENCY, SQUARE_LOCATION_ID } from "@/lib/payments/square-availability"
-import { createSquarePayment, getSquarePayment, squareIdempotencyKey } from "@/lib/payments/square"
+import { createSquareCheckout, createSquarePayment, getSquarePayment, isSquareCheckoutUrl, squareIdempotencyKey } from "@/lib/payments/square"
 
 const PAID_STATUSES = new Set(["paid", "processing", "shipped", "delivered", "partially_paid"])
 const PAYABLE_STATUSES = new Set(["awaiting_payment", "reviewing_payment"])
@@ -105,6 +105,33 @@ export async function settleSquarePayment(input: {
 export type SquareChargeResult =
   | { ok: true; already: boolean }
   | { ok: false; error: "unavailable" | "not_found" | "invalid_status" | "in_progress" | "quote_unavailable" | "quote_changed" | "pending" | "declined" }
+
+/** Returns Square's hosted card page, reusing the link when the dollar amount has not changed. */
+export async function openSquareCheckout(order: OrderWithItems, locale: string): Promise<string> {
+  const quote = await ensureSquareQuote(order)
+  if (!quote) throw new Error("square_quote_unavailable")
+  const notes = parseOrderNotes(order.notes)
+  if (
+    notes.square_checkout_url &&
+    notes.square_usd_cents === String(quote.usdCents) &&
+    isSquareCheckoutUrl(notes.square_checkout_url)
+  ) {
+    return notes.square_checkout_url
+  }
+
+  const checkout = await createSquareCheckout({
+    orderNumber: order.orderNumber,
+    amountCents: quote.usdCents,
+    email: order.email,
+    locale,
+  })
+  await mergeOrderNotes(order.id, {
+    square_checkout_url: checkout.url,
+    square_link_id: checkout.linkId,
+    square_order_id: checkout.squareOrderId,
+  })
+  return checkout.url
+}
 
 /** Charges the stored dollar amount after the card form returns a one-time token. */
 export async function chargeStoredSquareOrder(input: {

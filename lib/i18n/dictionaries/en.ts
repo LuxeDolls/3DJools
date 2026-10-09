@@ -184,9 +184,9 @@ export const en = {
     payCardNote:
       "You will be redirected to a secure Stripe page. You can pay by card, Apple Pay, Link or Bancontact. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
     paySquare: "Visa / Mastercard",
-    paySquareDesc: "Charged in US dollars · statement name HIRA",
+    paySquareDesc: "Opens Square's secure page · charged in US dollars · statement name HIRA",
     paySquareNote:
-      "After you place the order, enter your card on the order page. The exact dollar amount is shown before you pay. Your card statement shows HIRA, not 3DJools. We never see your card number.",
+      "After you place the order, you are taken to Square's secure payment page. The card is charged in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA, not 3DJools. We never see your card number.",
     paySquareUnavailable: "Card payment is temporarily unavailable.",
     paySquareFailed: "The card payment was not completed. You can try again.",
     paySquarePending: "The payment is still processing. Wait for the status to update and do not pay twice.",
@@ -215,7 +215,7 @@ export const en = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Available on the secure Stripe page when you pay by card.",
     payMethodsNote:
-      "All prices are shown in euro (EUR) and include VAT where applicable. Visa and Mastercard can be paid on the order page in US dollars at the European Central Bank rate, shown before you pay. That charge appears as HIRA on the card statement. Apple Pay, Link and Bancontact open a secure Stripe page. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
+      "All prices are shown in euro (EUR) and include VAT where applicable. Visa and Mastercard open Square's secure payment page and are charged in US dollars at the European Central Bank rate, shown before you pay. That charge appears as HIRA on the card statement. Apple Pay, Link and Bancontact open a secure Stripe page. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pay with your PayPal balance, bank account or card",
     payPaypalUnavailable: "PayPal is temporarily unavailable",
