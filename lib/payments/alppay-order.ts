@@ -1,10 +1,10 @@
 import { parseOrderNotes } from "@/lib/orders/notes"
 import { getOrderByOrderNumber, mergeOrderNotes, updateOrderStatus } from "@/lib/orders/queries"
 import { getAlppayPayment, isAlppayPaymentId } from "@/lib/payments/alppay"
+import { isAlppayFailureState, recordAlppayFailure } from "@/lib/payments/alppay-limit"
 
 const PAID_STATUSES = new Set(["paid", "processing", "shipped", "delivered", "partially_paid"])
 const PAYABLE_STATUSES = new Set(["awaiting_payment", "reviewing_payment"])
-const FAILED_STATES = new Set(["DECLINED", "CANCELLED"])
 
 export type AlppaySettleResult =
   | { ok: true; already: boolean; locale: string }
@@ -27,7 +27,15 @@ export async function settleAlppayPayment(paymentId: string): Promise<AlppaySett
   }
   if (payment.state !== "COMPLETED") {
     await mergeOrderNotes(order.id, { alppay_last_status: payment.state || "unpaid" })
-    return { ok: false, reason: FAILED_STATES.has(payment.state) ? "declined" : "not_completed", locale }
+    if (isAlppayFailureState(payment.state)) {
+      await recordAlppayFailure({
+        email: order.email,
+        paymentId: payment.id,
+        orderNumber: order.orderNumber,
+        state: payment.state,
+      })
+    }
+    return { ok: false, reason: isAlppayFailureState(payment.state) ? "declined" : "not_completed", locale }
   }
 
   await mergeOrderNotes(order.id, { alppay_last_status: "COMPLETED", alppay_payment_id: payment.id })

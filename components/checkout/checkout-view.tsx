@@ -37,6 +37,7 @@ function checkoutErrorText(checkout: {
   payCardholderRegionRequired: string
   payCardUnavailable: string
   payAlppayUnavailable: string
+  payAlppayHold: string
   payPaypalUnavailable: string
   paySquareUnavailable: string
   orderError: string
@@ -46,6 +47,7 @@ function checkoutErrorText(checkout: {
   if (code === "phone_required") return checkout.payCardholderPhoneRequired
   if (code === "region_required") return checkout.payCardholderRegionRequired
   if (code === "card_unavailable" || code === "card_start_failed") return checkout.payCardUnavailable
+  if (code === "alppay_hold") return checkout.payAlppayHold
   if (code === "alppay_unavailable" || code === "alppay_start_failed" || code === "ip_required") return checkout.payAlppayUnavailable
   if (code === "paypal_unavailable" || code === "paypal_start_failed") return checkout.payPaypalUnavailable
   if (code === "square_unavailable" || code === "square_start_failed") return checkout.paySquareUnavailable

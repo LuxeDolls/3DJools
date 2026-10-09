@@ -1,5 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server"
+import { getOrderByOrderNumber } from "@/lib/orders/queries"
 import { parseAlppayPayment, verifyAlppaySignature } from "@/lib/payments/alppay"
+import { isAlppayFailureState, recordAlppayFailure } from "@/lib/payments/alppay-limit"
 import { settleAlppayPayment } from "@/lib/payments/alppay-order"
 
 export const dynamic = "force-dynamic"
@@ -21,6 +23,17 @@ export async function POST(request: NextRequest) {
   if (!payment) return NextResponse.json({ ok: false }, { status: 400 })
 
   try {
+    if (payment.referenceId && isAlppayFailureState(payment.state)) {
+      const order = await getOrderByOrderNumber(payment.referenceId)
+      if (order?.email) {
+        await recordAlppayFailure({
+          email: order.email,
+          paymentId: payment.id,
+          orderNumber: order.orderNumber,
+          state: payment.state,
+        })
+      }
+    }
     const settled = await settleAlppayPayment(payment.id)
     if (!settled.ok && settled.reason !== "not_found" && settled.reason !== "not_completed" && settled.reason !== "declined") {
       console.error("[v0] AlpPay payment was not settled", settled.reason)

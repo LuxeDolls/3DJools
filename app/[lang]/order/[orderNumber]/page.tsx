@@ -15,6 +15,7 @@ import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
+import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { ensureSquareQuote } from "@/lib/payments/square-order"
@@ -59,6 +60,7 @@ export default async function OrderConfirmationPage({
 
   const status = order.status as OrderStatus
   const notes = parseOrderNotes(order.notes)
+  const alppayHeld = order.paymentMethod === "alppay" ? Boolean(await alppayHoldUntil(order.email)) : false
   const memberFromNotes = Number(notes.member_discount_cents || 0)
   const personalDiscountCents = Number(notes.personal_discount_cents || 0)
   const discountGap = order.subtotalCents + order.shippingCents - order.totalCents
@@ -268,13 +270,16 @@ export default async function OrderConfirmationPage({
             notes.alppay_last_status === "CANCELLED" ? (
               <p className="mt-2 text-destructive">{dict.checkout.payAlppayFailed}</p>
             ) : null}
-            {ALPPAY_CHECKOUT_ENABLED ? (
+            {alppayHeld ? (
+              <p className="mt-2 text-destructive">{dict.checkout.payAlppayHold}</p>
+            ) : ALPPAY_CHECKOUT_ENABLED ? (
               <CardPayButton
                 orderNumber={order.orderNumber}
                 locale={locale}
                 method="alppay"
                 label={dict.checkout.payAlppay}
                 errorLabel={dict.checkout.payAlppayUnavailable}
+                holdLabel={dict.checkout.payAlppayHold}
               />
             ) : null}
           </div>

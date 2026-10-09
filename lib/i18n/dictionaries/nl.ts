@@ -201,6 +201,8 @@ export const nl: Dictionary = {
     payAlppayDesc: "Veilige kaartbetaling",
     payAlppayUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
     payAlppayFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
+    payAlppayHold:
+      "Kaartbetaling is 24 uur gepauzeerd na drie mislukte pogingen. Probeer het later opnieuw of kies een andere betaalmethode.",
     payAlppayNote:
       "U wordt doorgestuurd naar een beveiligde betaalpagina. Wij zien uw kaartnummer niet. Als u al hebt betaald, wacht u op de statusupdate en betaalt u niet twee keer.",
     payCardholderName: "Volledige naam",

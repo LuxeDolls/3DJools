@@ -24,6 +24,7 @@ import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { squareConfigured } from "@/lib/payments/square"
 import { openSquareCheckout } from "@/lib/payments/square-order"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
+import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
@@ -121,6 +122,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   }
   if (input.payment === "alppay" && !input.region?.trim()) return { ok: false, error: "region_required" }
   if (input.payment === "alppay" && !(await requestIp())) return { ok: false, error: "ip_required" }
+  if (input.payment === "alppay" && (await alppayHoldUntil(input.email))) return { ok: false, error: "alppay_hold" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
   if (input.payment === "square" && !squareConfigured()) return { ok: false, error: "square_unavailable" }
 
@@ -355,6 +357,7 @@ export async function startAlppayPayment(orderNumber: string, locale: string): P
   const order = await getOrderByOrderNumber(orderNumber)
   if (!order || order.paymentMethod !== "alppay") return { ok: false, error: "not_found" }
   if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
+  if (await alppayHoldUntil(order.email)) return { ok: false, error: "alppay_hold" }
 
   const notes = parseOrderNotes(order.notes)
   const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
