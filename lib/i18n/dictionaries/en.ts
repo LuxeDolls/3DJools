@@ -199,6 +199,8 @@ export const en = {
     payAlppayDesc: "Secure card payment",
     payAlppayUnavailable: "Card payment is temporarily unavailable",
     payAlppayFailed: "The card payment was not completed. You can try again.",
+    payAlppayHold:
+      "Card payment is paused for 24 hours after three unsuccessful attempts. Please try again later, or choose another payment method.",
     payAlppayNote:
       "You will be redirected to a secure card page. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
     payCardholderName: "Full name",

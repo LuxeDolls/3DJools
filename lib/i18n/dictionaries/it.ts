@@ -201,6 +201,8 @@ export const it: Dictionary = {
     payAlppayDesc: "Pagamento sicuro con carta",
     payAlppayUnavailable: "Il pagamento con carta non è al momento disponibile",
     payAlppayFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
+    payAlppayHold:
+      "Il pagamento con carta è sospeso per 24 ore dopo tre tentativi non riusciti. Riprova più tardi oppure scegli un altro metodo di pagamento.",
     payAlppayNote:
       "Verrai reindirizzato a una pagina di pagamento sicura. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     payCardholderName: "Nome completo",

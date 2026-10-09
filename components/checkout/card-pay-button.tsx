@@ -9,21 +9,23 @@ export function CardPayButton({
   locale,
   label,
   errorLabel,
+  holdLabel,
   method = "card",
 }: {
   orderNumber: string
   locale: string
   label: string
   errorLabel: string
+  holdLabel?: string
   method?: "card" | "alppay" | "square"
 }) {
   const [pending, setPending] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   async function pay() {
     if (pending) return
     setPending(true)
-    setError(false)
+    setError(null)
     try {
       const result = method === "alppay"
         ? await startAlppayPayment(orderNumber, locale)
@@ -31,7 +33,7 @@ export function CardPayButton({
           ? await startSquarePayment(orderNumber, locale)
           : await startCardPayment(orderNumber, locale)
       if (!result.ok) {
-        setError(true)
+        setError(result.error === "alppay_hold" && holdLabel ? holdLabel : errorLabel)
         setPending(false)
         return
       }
@@ -47,7 +49,7 @@ export function CardPayButton({
       }
       window.location.href = result.paymentUrl
     } catch {
-      setError(true)
+      setError(errorLabel)
       setPending(false)
     }
   }
@@ -57,7 +59,7 @@ export function CardPayButton({
       <Button type="button" onClick={pay} disabled={pending}>
         {label}
       </Button>
-      {error ? <p className="text-sm text-destructive">{errorLabel}</p> : null}
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
     </div>
   )
 }

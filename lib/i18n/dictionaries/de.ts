@@ -201,6 +201,8 @@ export const de: Dictionary = {
     payAlppayDesc: "Sichere Kartenzahlung",
     payAlppayUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",
     payAlppayFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
+    payAlppayHold:
+      "Die Kartenzahlung ist nach drei fehlgeschlagenen Versuchen für 24 Stunden pausiert. Bitte versuchen Sie es später erneut oder wählen Sie eine andere Zahlungsart.",
     payAlppayNote:
       "Sie werden zu einer sicheren Kartenseite weitergeleitet. Wir sehen Ihre Kartennummer nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     payCardholderName: "Vollständiger Name",

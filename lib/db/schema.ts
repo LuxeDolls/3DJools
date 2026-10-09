@@ -330,3 +330,20 @@ export type ChatConversationRow = typeof chatConversations.$inferSelect
 export type NewChatConversationRow = typeof chatConversations.$inferInsert
 export type ChatMessageRow = typeof chatMessages.$inferSelect
 export type NewChatMessageRow = typeof chatMessages.$inferInsert
+
+/** One row per unsuccessful AlpPay payment. The same payment id is never counted twice. */
+export const alppayAttempts = pgTable("alppay_attempts", {
+  paymentId: text("payment_id").primaryKey(),
+  email: text("email").notNull(),
+  orderNumber: text("order_number").notNull(),
+  state: text("state").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+})
+
+/** Pauses an email for 24 hours after three unsuccessful AlpPay attempts. */
+export const alppayHolds = pgTable("alppay_holds", {
+  email: text("email").primaryKey(),
+  failCount: integer("fail_count").notNull().default(0),
+  holdUntil: timestamp("hold_until", { withTimezone: true }),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+})
