@@ -217,7 +217,7 @@ export const it: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponibile sulla pagina Stripe sicura quando paghi con carta.",
     payMethodsNote:
-      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. Visa e Mastercard aprono la pagina di pagamento sicura di Square e vengono addebitate in dollari USA al tasso della Banca centrale europea, mostrato prima del pagamento. L'estratto conto indica HIRA. Apple Pay, Link e Bancontact aprono una pagina Stripe sicura. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
+      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. Visa e Mastercard aprono la pagina di pagamento sicura di Square e vengono addebitate in dollari USA al tasso della Banca centrale europea, mostrato prima del pagamento. L'estratto conto indica HIRA. Non vediamo mai il numero della carta.  Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
     payPaypal: "PayPal",
     payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
     payPaypalUnavailable: "PayPal non è al momento disponibile",
