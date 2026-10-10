@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { MessageCircle, X, Send, Bot } from "lucide-react"
+import { MessageCircle, X, Send, Headphones } from "lucide-react"
 import { useI18n } from "@/components/i18n-provider"
 import { cn } from "@/lib/utils"
 import { getChatMessages, initChat, sendChatMessage } from "@/lib/actions/chat"
@@ -83,7 +83,7 @@ export function ChatWidget() {
         {/* Header */}
         <div className="flex items-center gap-3 bg-primary px-4 py-3 text-primary-foreground">
           <div className="flex size-9 items-center justify-center rounded-full bg-primary-foreground/15">
-            <Bot className="size-5" />
+            <Headphones className="size-5" />
           </div>
           <div className="min-w-0">
             <p className="font-heading text-sm font-semibold leading-tight">{dict.chat.title}</p>
