@@ -1,51 +1,15 @@
 import "server-only"
 
-import { generateText } from "ai"
-import type { ChatMessageRow } from "@/lib/db/schema"
+const AUTO_REPLIES: Record<string, string> = {
+  en: "Please wait for an operator to connect, or send your question to info@3djools.com.",
+  nl: "Wacht tot een medewerker verbinding maakt, of stuur uw vraag naar info@3djools.com.",
+  de: "Bitte warten Sie, bis ein Mitarbeiter verbunden ist, oder senden Sie Ihre Frage an info@3djools.com.",
+  fr: "Veuillez patienter le temps qu'un opérateur se connecte, ou envoyez votre question à info@3djools.com.",
+  it: "Attenda il collegamento di un operatore, oppure invii la sua domanda a info@3djools.com.",
+  es: "Espere a que se conecte un operador, o envíe su pregunta a info@3djools.com.",
+}
 
-const SHOP_FACTS = `
-You are the support assistant for 3DJools, an online store selling 3D printers, laser
-engravers, filaments, resins, spare parts and accessories.
-
-Facts you can rely on:
-- Single shipping option: 3–6 business days total, with 0–1 business day handling and 3–5 business days transit. It is completely free on every order, to every country we ship to (Belgium, rest of the EU, Switzerland, Norway, United Kingdom) — no minimum spend required. Orders placed by 15:00 CET Monday–Friday are handled within the stated handling window.
-- Accepted payment methods at checkout: Visa / Mastercard, SEPA bank transfer, cryptocurrency
-  (payment details are shown in a dialog after checkout, with an "I've paid" confirmation step,
-  and the order is then marked as under payment review), and a 4-payment installment plan (25%
-  down payment, then 3 more installments) subject to a quick approval check.
-  Visa / Mastercard opens a secure card page. We never see the card number. The order stays
-  awaiting payment until that page confirms it. Do not ask the customer to pay that processor
-  manually or to send card details by email or chat.
-  Stripe card checkout, Apple Pay, Link, Bancontact and PayPal are temporarily unavailable.
-  Do not offer them or send a payment link for them. If a customer already paid that way, tell
-  them to wait for the status to update and not to pay twice.
-- Catalog categories: 3D printers, laser engravers, filaments, resins, spare parts, accessories.
-- Standard return window is 30 days for unopened/unused items; contact support to start a
-  return or exchange.
-- Orders can be tracked from the "My account" > "My orders" area once the customer is signed in.
-
-Guidelines:
-- Be concise, friendly, and helpful. Prefer short paragraphs or a short bullet list.
-- If you don't know something specific (e.g. exact stock of a product, exact delivery date),
-  say so honestly and suggest the customer wait for a human teammate to follow up.
-- Never invent prices, tracking numbers, or order statuses.
-- Always reply in the customer's language (the conversation locale is provided to you).
-`.trim()
-
-/**
- * Generates the assistant's reply to the latest user message in a conversation, using the
- * Vercel AI Gateway. Keeps only the last ~10 messages of history to bound the prompt size.
- */
-export async function generateAssistantReply(history: ChatMessageRow[], locale: string): Promise<string> {
-  const recent = history.slice(-10)
-
-  const { text } = await generateText({
-    model: "openai/gpt-5-mini-fast",
-    system: `${SHOP_FACTS}\n\nReply in this locale/language code: "${locale}".`,
-    messages: recent
-      .filter((m) => m.role === "user" || m.role === "assistant")
-      .map((m) => ({ role: m.role as "user" | "assistant", content: m.content })),
-  })
-
-  return text.trim() || "Sorry, I couldn't come up with a reply. A teammate will follow up shortly."
+/** Fixed live-chat reply while no operator is connected. */
+export function liveChatAutoReply(locale: string): string {
+  return AUTO_REPLIES[locale] ?? AUTO_REPLIES.en
 }

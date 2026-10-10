@@ -1,6 +1,6 @@
 "use server"
 
-import { generateAssistantReply } from "@/lib/chat/assistant"
+import { liveChatAutoReply } from "@/lib/chat/assistant"
 import { notifyNewLiveChatVisitor } from "@/lib/notifications/live-chat"
 import {
   findConversation,
@@ -54,18 +54,12 @@ export async function sendChatMessage(
   }
 
   if (conversation.mode === "ai") {
-    try {
-      const history = await getMessagesForConversation(conversation.id)
-      const reply = await generateAssistantReply(history, locale)
+    const reply = liveChatAutoReply(locale)
+    const history = await getMessagesForConversation(conversation.id)
+    const lastAssistant = [...history].reverse().find((message) => message.role === "assistant")
+    if (lastAssistant?.content !== reply) {
       await insertMessage(conversation.id, "assistant", reply)
       await touchConversation(conversation.id, {})
-    } catch (error) {
-      console.error("[v0] chat assistant error:", error)
-      await insertMessage(
-        conversation.id,
-        "assistant",
-        "Sorry, I'm having trouble replying right now. A teammate will follow up here shortly.",
-      )
     }
   }
 
