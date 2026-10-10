@@ -36,7 +36,7 @@ type PaypalOrder = {
 
 // Flip back to "previous" to restore the original PayPal app.
 // Those credentials stay in PAYPAL_CLIENT_ID and PAYPAL_CLIENT_SECRET.
-const PAYPAL_ACCOUNT: "current" | "previous" = "current"
+const PAYPAL_ACCOUNT: "current" | "previous" = "previous"
 
 const CURRENT_PAYPAL_CLIENT_ID =
   "BAAcfmQdYrRFdeBfaPlDmJYMNRl8MTG-rJIXkFMP1NlogUo3k2clmGeDvvnHzuyiB9fDfVp6Nu_hiALc2U"
