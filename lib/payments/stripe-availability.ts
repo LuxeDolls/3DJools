@@ -1,2 +1,2 @@
-// Storefront switch. Set this to true to show Stripe checkout again.
-export const STRIPE_CHECKOUT_ENABLED = false
+// Storefront switch. Card checkout charges the order amount in euros.
+export const STRIPE_CHECKOUT_ENABLED = true
