@@ -280,6 +280,8 @@ export default async function OrderConfirmationPage({
                 label={dict.checkout.payAlppay}
                 errorLabel={dict.checkout.payAlppayUnavailable}
                 holdLabel={dict.checkout.payAlppayHold}
+                needsPhone={!notes.phone}
+                phoneLabel={dict.checkout.phone}
               />
             ) : null}
           </div>

@@ -352,7 +352,11 @@ export async function startCardPayment(orderNumber: string, locale: string): Pro
 export type StartAlppayPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
 
 /** Opens a new hosted Visa/Mastercard page for an order that is still awaiting payment. */
-export async function startAlppayPayment(orderNumber: string, locale: string): Promise<StartAlppayPaymentResult> {
+export async function startAlppayPayment(
+  orderNumber: string,
+  locale: string,
+  phone?: string,
+): Promise<StartAlppayPaymentResult> {
   if (!ALPPAY_CHECKOUT_ENABLED || !alppayConfigured()) return { ok: false, error: "alppay_unavailable" }
   const order = await getOrderByOrderNumber(orderNumber)
   if (!order || order.paymentMethod !== "alppay") return { ok: false, error: "not_found" }
@@ -364,6 +368,10 @@ export async function startAlppayPayment(orderNumber: string, locale: string): P
   const holder = splitFullName(notes.cardholder_name || order.shippingName || "")
   const firstName = holder?.firstName || "Customer"
   const lastName = holder?.lastName || firstName
+  const country = order.shippingCountry ?? ""
+  const suppliedPhone = formatAlppayPhone(phone, country) ? phone?.trim() : ""
+  const phoneValue = suppliedPhone || notes.phone || ""
+  const state = notes.billing_state || order.shippingCity || ""
 
   try {
     const checkout = await createAlppayCheckout({
@@ -374,17 +382,19 @@ export async function startAlppayPayment(orderNumber: string, locale: string): P
       firstName,
       lastName,
       dateOfBirth: notes.date_of_birth && isAdultDateOfBirth(notes.date_of_birth) ? notes.date_of_birth : "",
-      phone: notes.phone ?? "",
+      phone: phoneValue,
       ip: (await requestIp()) ?? "",
       address: order.shippingAddress1 ?? "",
       city: order.shippingCity ?? "",
       postalCode: order.shippingPostalCode ?? "",
-      country: order.shippingCountry ?? "",
-      state: notes.billing_state ?? "",
+      country,
+      state,
     })
     await mergeOrderNotes(order.id, {
       alppay_payment_ids: appendAlppayPaymentId(notes.alppay_payment_ids, checkout.paymentId),
       checkout_locale: safeLocale,
+      phone: formatAlppayPhone(phoneValue, country) ? noteSafeName(phoneValue) : undefined,
+      billing_state: state ? noteSafeName(state) : undefined,
     })
     return { ok: true, paymentUrl: checkout.redirectUrl }
   } catch (err) {
