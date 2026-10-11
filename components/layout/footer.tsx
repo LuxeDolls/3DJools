@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { CreditCard, Landmark, Bitcoin, CalendarClock, Clock, Mail, Phone } from "lucide-react"
 import { COMPANY, companyStreetLine } from "@/lib/company"
-import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
@@ -63,7 +63,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     ...(ALPPAY_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.payAlppay }] : []),
     { icon: Landmark, label: dict.checkout.paySepa },
     { icon: Bitcoin, label: dict.checkout.payCrypto },
-    ...(PAYPAL_CHECKOUT_ENABLED
+    ...(isPaypalCheckoutEnabled()
       ? [{ icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" }]
       : []),
     { icon: CalendarClock, label: dict.checkout.payInstallments },

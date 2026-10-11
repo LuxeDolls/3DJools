@@ -13,7 +13,7 @@ import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import { OrderPaymentInstructions } from "@/components/checkout/order-payment-instructions"
 import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
-import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
@@ -241,7 +241,7 @@ export default async function OrderConfirmationPage({
 
         {order.paymentMethod === "paypal" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            {PAYPAL_CHECKOUT_ENABLED ? (
+            {isPaypalCheckoutEnabled() ? (
               <>
                 <p>{dict.checkout.payPaypalNote}</p>
                 {paypal === "cancelled" ? (

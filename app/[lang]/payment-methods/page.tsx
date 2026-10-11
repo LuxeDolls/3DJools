@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
@@ -39,7 +39,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
       : []),
     { icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
-    ...(PAYPAL_CHECKOUT_ENABLED
+    ...(isPaypalCheckoutEnabled()
       ? [{ icon: Landmark, mark: "/payments/paypal.svg", title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc }]
       : []),
     {
