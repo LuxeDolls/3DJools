@@ -1,5 +1,5 @@
 import { COMPANY } from "@/lib/company"
-import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 
 const LIVE_API = "https://api-m.paypal.com"
 const SANDBOX_API = "https://api-m.sandbox.paypal.com"
@@ -55,7 +55,7 @@ function paypalCredentials(): { id: string; secret: string } | null {
 }
 
 export function paypalConfigured(): boolean {
-  return PAYPAL_CHECKOUT_ENABLED && paypalCredentials() !== null
+  return isPaypalCheckoutEnabled() && paypalCredentials() !== null
 }
 
 export function isPaypalOrderId(value: string): boolean {

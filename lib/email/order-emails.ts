@@ -2,7 +2,7 @@ import "server-only"
 
 import { sendEmail, type SendResult } from "@/lib/email/send"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
-import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { getCryptoCoinOption } from "@/lib/payments/crypto"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderWithItems } from "@/lib/orders/queries"
@@ -12,13 +12,13 @@ function euros(cents: number): string {
 }
 
 function paypalAwaitingText(totalCents: number): string {
-  return PAYPAL_CHECKOUT_ENABLED
+  return isPaypalCheckoutEnabled()
     ? `PayPal payment of ${euros(totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
     : `PayPal is temporarily unavailable, so the payment of ${euros(totalCents)} cannot be completed that way right now. If you have already paid, wait for the status to update and do not pay twice.`
 }
 
 function paypalReminderText(totalCents: number): string {
-  return PAYPAL_CHECKOUT_ENABLED
+  return isPaypalCheckoutEnabled()
     ? `If you haven't approved the PayPal payment of ${euros(totalCents)} yet, open your order page and continue to PayPal. If you have already paid, wait for the status to update and do not pay twice.`
     : `PayPal is temporarily unavailable, so this order cannot be paid that way right now. If you have already paid ${euros(totalCents)}, wait for the status to update and do not pay twice.`
 }

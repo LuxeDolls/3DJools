@@ -23,7 +23,7 @@ import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitF
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
-import { PAYPAL_CHECKOUT_ENABLED } from "@/lib/payments/paypal-availability"
+import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
@@ -101,7 +101,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
       : []),
     { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
-    ...(PAYPAL_CHECKOUT_ENABLED
+    ...(isPaypalCheckoutEnabled()
       ? [{ id: "paypal" as const, icon: Landmark, title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc, mark: "/payments/paypal.svg" }]
       : []),
     {
@@ -133,7 +133,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
       setOrderError(dict.checkout.payAlppayUnavailable)
       return
     }
-    if (payment === "paypal" && !PAYPAL_CHECKOUT_ENABLED) {
+    if (payment === "paypal" && !isPaypalCheckoutEnabled()) {
       setOrderError(dict.checkout.payPaypalUnavailable)
       return
     }
