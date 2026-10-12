@@ -3,8 +3,9 @@
 import { Fragment, useMemo, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { ChevronDown } from "lucide-react"
+import { ChevronDown, Search, X } from "lucide-react"
 import { setOrderStatus, setOrderTracking } from "@/lib/actions/admin"
+import { Input } from "@/components/ui/input"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
 import type { OrderWithItems } from "@/lib/orders/queries"
@@ -246,35 +247,41 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
   const [expanded, setExpanded] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all")
   const [paymentFilter, setPaymentFilter] = useState<PaymentFilter>("all")
+  const [query, setQuery] = useState("")
+  const needle = query.trim().toLowerCase().replace(/\s+/g, "")
+  const searched = useMemo(
+    () => (needle ? orders.filter((order) => order.orderNumber.toLowerCase().replace(/\s+/g, "").includes(needle)) : orders),
+    [orders, needle],
+  )
   const statusCounts = useMemo(() => {
     const map = new Map<OrderStatus, number>()
     for (const status of STATUSES) map.set(status, 0)
-    for (const order of orders) {
+    for (const order of searched) {
       if (!matchesPayment(order, paymentFilter)) continue
       const status = order.status as OrderStatus
       map.set(status, (map.get(status) ?? 0) + 1)
     }
     return map
-  }, [orders, paymentFilter])
+  }, [searched, paymentFilter])
   const paymentCounts = useMemo(() => {
     const map = new Map<string, number>()
-    for (const order of orders) {
+    for (const order of searched) {
       if (!matchesStatus(order, statusFilter)) continue
       map.set(order.paymentMethod, (map.get(order.paymentMethod) ?? 0) + 1)
     }
     return map
-  }, [orders, statusFilter])
+  }, [searched, statusFilter])
   const statusScope = useMemo(
-    () => orders.filter((order) => matchesPayment(order, paymentFilter)),
-    [orders, paymentFilter],
+    () => searched.filter((order) => matchesPayment(order, paymentFilter)),
+    [searched, paymentFilter],
   )
   const openCount = useMemo(
     () => statusScope.filter((order) => !CLOSED.has(order.status as OrderStatus)).length,
     [statusScope],
   )
   const visible = useMemo(
-    () => orders.filter((order) => matchesStatus(order, statusFilter) && matchesPayment(order, paymentFilter)),
-    [orders, statusFilter, paymentFilter],
+    () => searched.filter((order) => matchesStatus(order, statusFilter) && matchesPayment(order, paymentFilter)),
+    [searched, statusFilter, paymentFilter],
   )
 
   async function changeStatus(orderId: string, status: OrderStatus) {
@@ -293,7 +300,7 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
     )
   }
 
-  const methods = [...new Set<string>([...METHODS, ...orders.map((order) => order.paymentMethod)])]
+  const methods = [...new Set<string>([...METHODS, ...searched.map((order) => order.paymentMethod)])]
   const statusFilters: { value: StatusFilter; name: string; count: number }[] = [
     { value: "all", name: "All", count: statusScope.length },
     { value: "open", name: "Open", count: openCount },
@@ -304,7 +311,7 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
     })),
   ]
   const paymentFilters: { value: PaymentFilter; name: string; count: number }[] = [
-    { value: "all", name: "All", count: orders.filter((order) => matchesStatus(order, statusFilter)).length },
+    { value: "all", name: "All", count: searched.filter((order) => matchesStatus(order, statusFilter)).length },
     ...methods
       .filter((method) => method === paymentFilter || (paymentCounts.get(method) ?? 0) > 0)
       .map((method) => ({
@@ -316,13 +323,34 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
 
   return (
     <div>
-      <div className="mb-4 space-y-2">
+      <div className="mb-4 space-y-3">
+        <div className="relative w-full sm:max-w-sm">
+          <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search by order number"
+            className="h-11 pl-9 pr-10 text-base lg:text-sm"
+            aria-label="Search by order number"
+            inputMode="search"
+          />
+          {query ? (
+            <button
+              type="button"
+              onClick={() => setQuery("")}
+              className="absolute right-2 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center text-muted-foreground hover:text-foreground"
+              aria-label="Clear order number search"
+            >
+              <X className="size-4" />
+            </button>
+          ) : null}
+        </div>
         <FilterRow label="Status" filters={statusFilters} active={statusFilter} onSelect={setStatusFilter} />
         <FilterRow label="Payment" filters={paymentFilters} active={paymentFilter} onSelect={setPaymentFilter} />
       </div>
       {visible.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border p-12 text-center">
-          <p className="text-sm font-medium">No orders match these filters</p>
+          <p className="text-sm font-medium">{needle ? "No orders match this number" : "No orders match these filters"}</p>
         </div>
       ) : (
         <>
