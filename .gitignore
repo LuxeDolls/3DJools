@@ -16,3 +16,7 @@ node_modules
 
 # Customer invoices contain personal data and must not be committed
 /public/invoices/
+
+# Internal order reports contain customer data and must not be committed
+/reports/
+/public/reports/
