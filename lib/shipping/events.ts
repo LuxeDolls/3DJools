@@ -89,6 +89,7 @@ export async function ensureShipmentOnShip(orderId: string): Promise<void> {
     id: eventId(),
     orderId,
     status: "label_created",
+    location: null,
     carrier: order.carrier || OWN_CARRIER,
     comment: null,
     createdAt: new Date(),
@@ -98,6 +99,7 @@ export async function ensureShipmentOnShip(orderId: string): Promise<void> {
 export async function insertShipmentEvent(input: {
   orderId: string
   status: ShipmentStatus
+  location: string | null
   comment: string | null
   carrier: string
 }): Promise<ShipmentEventRow> {
@@ -105,6 +107,7 @@ export async function insertShipmentEvent(input: {
     id: eventId(),
     orderId: input.orderId,
     status: input.status,
+    location: input.location,
     comment: input.comment,
     carrier: input.carrier,
     createdAt: new Date(),

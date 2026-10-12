@@ -340,7 +340,7 @@ function escapeHtml(value: string): string {
 
 export async function sendShipmentEventEmail(
   order: OrderWithItems,
-  event: { status: ShipmentStatus; comment: string | null; carrier: string | null },
+  event: { status: ShipmentStatus; location: string | null; comment: string | null; carrier: string | null },
 ): Promise<SendResult> {
   const locale = localeForCountry(order.shippingCountry)
   const copy = shipmentEmailCopy(locale)
@@ -348,11 +348,13 @@ export async function sendShipmentEventEmail(
   const trackingNumber = order.trackingNumber?.trim() ?? ""
   const trackingUrl = order.trackingUrl?.trim() || (trackingNumber ? `${siteUrl()}/${locale}/track/${encodeURIComponent(trackingNumber)}` : "")
   const carrier = event.carrier?.trim() || order.carrier?.trim() || ""
+  const location = event.location?.trim() ?? ""
   const comment = event.comment?.trim() ?? ""
   const subject = copy.subject(order.orderNumber, statusLabel)
 
   const text = [
     copy.body(order.orderNumber, statusLabel),
+    location ? `${copy.location}: ${location}` : null,
     comment ? `${copy.comment}: ${comment}` : null,
     carrier ? `${copy.carrier}: ${carrier}` : null,
     trackingNumber ? `${copy.tracking}: ${trackingNumber}` : null,
@@ -365,6 +367,7 @@ export async function sendShipmentEventEmail(
 <div style="max-width:560px;margin:0 auto;padding:24px"><div style="background:#fff;border-radius:12px;padding:32px">
 <h1 style="margin:0 0 8px;font-size:20px;color:#111">${escapeHtml(copy.heading)}</h1>
 <p style="margin:0 0 16px;color:#111;font-size:15px;line-height:1.6">${escapeHtml(copy.body(order.orderNumber, statusLabel))}</p>
+${location ? `<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.6"><strong>${escapeHtml(copy.location)}:</strong> ${escapeHtml(location)}</p>` : ""}
 ${comment ? `<p style="margin:0 0 16px;color:#333;font-size:14px;line-height:1.6"><strong>${escapeHtml(copy.comment)}:</strong> ${escapeHtml(comment)}</p>` : ""}
 <div style="background:#f8f8f8;border-radius:8px;padding:16px;margin-bottom:20px">
 ${carrier ? `<p style="margin:0 0 4px;font-size:14px;color:#111"><strong>${escapeHtml(copy.carrier)}:</strong> ${escapeHtml(carrier)}</p>` : ""}

@@ -3,7 +3,7 @@
 import { useEffect, useState, type FormEvent } from "react"
 import { Loader2 } from "lucide-react"
 import { addShipmentEvent, getShipmentDetail, searchShipmentOrders } from "@/lib/actions/shipments"
-import { CARRIERS, OWN_CARRIER, SHIPMENT_STATUSES, SHIPMENT_STATUS_HINTS } from "@/lib/shipping/tracking"
+import { ADMIN_STATUS_LABELS, CARRIERS, OWN_CARRIER, SHIPMENT_STATUSES } from "@/lib/shipping/tracking"
 import { ShipmentTimeline, type ShipmentEventView } from "@/components/orders/shipment-timeline"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -32,9 +32,11 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
   const [selectedId, setSelectedId] = useState<string | null>(initialOrders[0]?.id ?? null)
   const [events, setEvents] = useState<ShipmentEventView[]>([])
   const [detail, setDetail] = useState<ShipmentOrder | null>(initialOrders[0] ?? null)
-  const [status, setStatus] = useState<string>("collected")
+  const [status, setStatus] = useState<string>("in_transit")
+  const [location, setLocation] = useState("")
   const [carrier, setCarrier] = useState<string>(initialOrders[0]?.carrier || OWN_CARRIER)
   const [comment, setComment] = useState("")
+  const [copied, setCopied] = useState(false)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -81,14 +83,15 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
     setSaving(true)
     setMessage(null)
     setError(null)
-    const result = await addShipmentEvent({ orderId: selectedId, status, comment, carrier })
+    const result = await addShipmentEvent({ orderId: selectedId, status, location, comment, carrier })
     setSaving(false)
     if (!result.ok) {
-      setError(result.error ?? "Could not save the status.")
+      setError(result.error ?? "Не удалось сохранить статус.")
       return
     }
     setComment("")
-    setMessage(result.emailed ? "Status saved. The customer was emailed." : "Status saved. The email was not sent.")
+    setLocation("")
+    setMessage(result.emailed ? "Статус сохранён. Письмо отправлено покупателю." : "Статус сохранён. Письмо не отправилось.")
     await load(selectedId)
   }
 
@@ -99,16 +102,16 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
           <Input
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Order, email, tracking"
-            aria-label="Search orders"
+            placeholder="Заказ, email, трек"
+            aria-label="Найти заказ"
           />
           <Button type="submit" variant="secondary" disabled={searching}>
-            {searching ? <Loader2 className="size-4 animate-spin" /> : "Find"}
+            {searching ? <Loader2 className="size-4 animate-spin" /> : "Найти"}
           </Button>
         </form>
         <ul className="mt-3 divide-y divide-border rounded-lg border border-border">
           {orders.length === 0 ? (
-            <li className="p-3 text-sm text-muted-foreground">No orders found.</li>
+            <li className="p-3 text-sm text-muted-foreground">Заказы не найдены.</li>
           ) : (
             orders.map((order) => (
               <li key={order.id}>
@@ -145,86 +148,111 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
             <p className="text-sm text-muted-foreground">{detail.status}</p>
           </div>
 
-          {detail.trackingNumber ? (
-            <p className="mt-4 rounded-md bg-muted px-3 py-2 font-mono text-sm text-foreground">
-              {detail.carrier ? `${detail.carrier} · ` : ""}
-              {detail.trackingNumber}
-            </p>
-          ) : (
-            <p className="mt-4 text-sm text-muted-foreground">
-              A tracking number is created when you add the first status, or when the order is marked Shipped.
-            </p>
-          )}
+          <div className="mt-5">
+            <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Доставка курьером</p>
+            {detail.trackingNumber ? (
+              <p className="mt-2 text-sm text-foreground">
+                Трек-номер: <span className="font-mono">{detail.trackingNumber}</span>
+              </p>
+            ) : (
+              <p className="mt-2 text-sm text-muted-foreground">
+                Трек-номер создастся при первом статусе или когда заказ перейдёт в Shipped.
+              </p>
+            )}
+            {detail.trackingUrl ? (
+              <div className="mt-3 flex gap-2">
+                <Input value={detail.trackingUrl} readOnly aria-label="Ссылка на отслеживание" className="font-mono text-xs" />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(detail.trackingUrl ?? "")
+                      setCopied(true)
+                      window.setTimeout(() => setCopied(false), 1500)
+                    } catch {
+                      setCopied(false)
+                    }
+                  }}
+                >
+                  {copied ? "Скопировано" : "Копировать"}
+                </Button>
+              </div>
+            ) : null}
+          </div>
 
           <div className="mt-6">
-            <ShipmentTimeline
-              events={events}
-              locale="en"
-              emptyLabel="No delivery statuses yet."
-            />
+            <ShipmentTimeline events={events} locale="en" admin emptyLabel="Статусов доставки пока нет." />
           </div>
 
           <form onSubmit={save} className="mt-6 grid gap-4 border-t border-border pt-6">
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="shipment-status">Delivery status</Label>
+                <Label htmlFor="shipment-status" className="sr-only">
+                  Статус
+                </Label>
                 <select
                   id="shipment-status"
                   value={status}
-                  onChange={(event) => {
-                    const next = event.target.value
-                    setStatus(next)
-                    if (next === "handed_to_partner" && carrier === OWN_CARRIER) setCarrier("DHL")
-                  }}
-                  className="h-9 rounded-md border border-border bg-background px-2 text-sm"
+                  onChange={(event) => setStatus(event.target.value)}
+                  aria-label="Статус"
+                  className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground"
                 >
                   {SHIPMENT_STATUSES.map((item) => (
                     <option key={item} value={item}>
-                      {item.replaceAll("_", " ")}
+                      {ADMIN_STATUS_LABELS[item]}
                     </option>
                   ))}
                 </select>
-                <p className="text-xs text-muted-foreground">
-                  {SHIPMENT_STATUS_HINTS[status as keyof typeof SHIPMENT_STATUS_HINTS]}
-                </p>
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="shipment-carrier">Carrier</Label>
-                <select
-                  id="shipment-carrier"
-                  value={carrier}
-                  onChange={(event) => setCarrier(event.target.value)}
-                  className="h-9 rounded-md border border-border bg-background px-2 text-sm"
-                >
-                  {CARRIERS.map((item) => (
-                    <option key={item} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
+                <Label htmlFor="shipment-location" className="sr-only">
+                  Место
+                </Label>
+                <Input
+                  id="shipment-location"
+                  value={location}
+                  onChange={(event) => setLocation(event.target.value)}
+                  placeholder="Место (напр. Brussels, BE)"
+                  aria-label="Место"
+                  maxLength={120}
+                />
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <Label htmlFor="shipment-comment">Comment for the customer</Label>
-              <Textarea
-                id="shipment-comment"
-                value={comment}
-                onChange={(event) => setComment(event.target.value)}
-                placeholder="Write this in the customer's language. It is emailed as written."
-                rows={4}
-                maxLength={1000}
-              />
+              <Label htmlFor="shipment-carrier">Служба</Label>
+              <select
+                id="shipment-carrier"
+                value={carrier}
+                onChange={(event) => setCarrier(event.target.value)}
+                className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground"
+              >
+                {CARRIERS.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
             </div>
+            <Textarea
+              id="shipment-comment"
+              value={comment}
+              onChange={(event) => setComment(event.target.value)}
+              placeholder="Комментарий для покупателя (необязательно)"
+              aria-label="Комментарий для покупателя"
+              rows={3}
+              maxLength={1000}
+            />
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
             {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
-            <Button type="submit" disabled={saving} className="w-fit">
+            <Button type="submit" disabled={saving} variant="outline" className="w-fit uppercase tracking-wide">
               {saving ? <Loader2 className="size-4 animate-spin" /> : null}
-              Add status and email customer
+              Добавить статус
             </Button>
           </form>
         </div>
       ) : (
-        <p className="text-sm text-muted-foreground">Select an order to add a delivery status.</p>
+        <p className="text-sm text-muted-foreground">Выберите заказ, чтобы добавить статус доставки.</p>
       )}
     </div>
   )

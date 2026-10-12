@@ -280,6 +280,7 @@ export const shipmentEvents = pgTable("shipment_events", {
     .notNull()
     .references(() => orders.id, { onDelete: "cascade" }),
   status: text("status").notNull(),
+  location: text("location"),
   comment: text("comment"),
   carrier: text("carrier"),
   createdAt: timestamp("created_at").notNull().defaultNow(),

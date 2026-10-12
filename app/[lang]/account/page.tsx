@@ -122,6 +122,7 @@ export default async function AccountPage({ params }: { params: Promise<{ lang: 
               events: (eventsByOrder[order.id] ?? []).map((event) => ({
                 id: event.id,
                 status: event.status,
+                location: event.location,
                 comment: event.comment,
                 carrier: event.carrier,
                 createdAt: event.createdAt.toISOString(),
