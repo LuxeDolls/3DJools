@@ -12,7 +12,8 @@ import {
   type OrderStatus,
 } from "@/lib/db/schema"
 import { notifyNewOrder, notifyOrderStatusChange } from "@/lib/notifications/admin"
-import { sendOrderStatusUpdateEmail } from "@/lib/email/order-emails"
+import { sendOrderShippedEmail, sendOrderStatusUpdateEmail } from "@/lib/email/order-emails"
+import { ensureShipmentOnShip } from "@/lib/shipping/events"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 
 export type OrderWithItems = OrderRow & { items: OrderItemRow[] }
@@ -175,6 +176,9 @@ export async function updateOrderStatus(orderId: string, status: OrderStatus): P
   }
 
   await db.update(orders).set({ status, updatedAt: new Date() }).where(eq(orders.id, orderId))
+  if (status === "shipped") {
+    await ensureShipmentOnShip(orderId)
+  }
   const updated = await getOrderById(orderId)
   if (updated) {
     after(() =>
@@ -182,11 +186,15 @@ export async function updateOrderStatus(orderId: string, status: OrderStatus): P
         console.error("[v0] Order-status admin notification failed:", error)
       }),
     )
-    after(() =>
-      sendOrderStatusUpdateEmail(updated, previous.status).catch((error) => {
+    after(() => {
+      const send =
+        status === "shipped"
+          ? sendOrderShippedEmail(updated)
+          : sendOrderStatusUpdateEmail(updated, previous.status)
+      return send.catch((error) => {
         console.error("[v0] Order-status customer email failed:", error)
-      }),
-    )
+      })
+    })
   }
 }
 
@@ -209,15 +217,16 @@ export async function updateOrderTracking(orderId: string, tracking: TrackingInp
       updatedAt: new Date(),
     })
     .where(eq(orders.id, orderId))
+  await ensureShipmentOnShip(orderId)
   const updated = await getOrderById(orderId)
-  if (updated && previous && previous.status !== updated.status) {
+  if (updated && previous && previous.status !== "shipped") {
     after(() =>
       notifyOrderStatusChange(updated, previous.status).catch((error) => {
         console.error("[v0] Shipment admin notification failed:", error)
       }),
     )
     after(() =>
-      sendOrderStatusUpdateEmail(updated, previous.status).catch((error) => {
+      sendOrderShippedEmail(updated).catch((error) => {
         console.error("[v0] Shipment customer email failed:", error)
       }),
     )

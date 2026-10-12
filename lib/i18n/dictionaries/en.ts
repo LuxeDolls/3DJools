@@ -217,7 +217,7 @@ export const en = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Available on the secure Stripe page when you pay by card.",
     payMethodsNote:
-      "All prices are shown in euro (EUR) and include VAT where applicable. Visa and Mastercard open Square's secure payment page and are charged in US dollars at the European Central Bank rate, shown before you pay. That charge appears as HIRA on the card statement. We never see your card number.  Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
+      "All prices are shown in euro (EUR) and include VAT where applicable. Card payments are charged in euros on a secure payment page. Apple Pay, Link and Bancontact are available when you pay by card. PayPal is available. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pay with your PayPal balance, bank account or card",
     payPaypalUnavailable: "PayPal is temporarily unavailable",

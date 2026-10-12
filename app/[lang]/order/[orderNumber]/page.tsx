@@ -5,6 +5,9 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
 import { getOrderByOrderNumber } from "@/lib/orders/queries"
+import { getShipmentEvents } from "@/lib/shipping/events"
+import { trackingPageCopy } from "@/lib/shipping/tracking"
+import { ShipmentTimeline } from "@/components/orders/shipment-timeline"
 import { formatPrice, formatUsd } from "@/lib/format"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { Button } from "@/components/ui/button"
@@ -59,6 +62,8 @@ export default async function OrderConfirmationPage({
   }
 
   const status = order.status as OrderStatus
+  const shipmentEvents = await getShipmentEvents(order.id)
+  const trackingCopy = trackingPageCopy(locale)
   const notes = parseOrderNotes(order.notes)
   const alppayHeld = order.paymentMethod === "alppay" ? Boolean(await alppayHoldUntil(order.email)) : false
   const memberFromNotes = Number(notes.member_discount_cents || 0)
@@ -229,12 +234,32 @@ export default async function OrderConfirmationPage({
                   className="mt-3"
                   size="sm"
                   render={
-                    <a href={order.trackingUrl} target="_blank" rel="noopener noreferrer">
+                    <a href={order.trackingUrl}>
                       {dict.orderConfirmation.trackParcel}
                     </a>
                   }
                 />
               )}
+              {shipmentEvents.length > 0 ? (
+                <div className="mt-4">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    {trackingCopy.history}
+                  </p>
+                  <div className="mt-3">
+                    <ShipmentTimeline
+                      events={shipmentEvents.map((event) => ({
+                        id: event.id,
+                        status: event.status,
+                        comment: event.comment,
+                        carrier: event.carrier,
+                        createdAt: event.createdAt.toISOString(),
+                      }))}
+                      locale={locale}
+                      emptyLabel={trackingCopy.noUpdates}
+                    />
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         )}

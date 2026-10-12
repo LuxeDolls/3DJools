@@ -78,7 +78,7 @@ function TrackingForm({ order }: { order: OrderWithItems }) {
         type="text"
         value={carrier}
         onChange={(e) => setCarrier(e.target.value)}
-        placeholder="Carrier (e.g. DHL, UPS)"
+        placeholder="Carrier (3DJools Courier, DHL, DPD)"
         className={inputClass}
       />
       <input
