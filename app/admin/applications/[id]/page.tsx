@@ -18,7 +18,7 @@ export default async function AdminApplicationDetailPage({ params }: { params: P
     <div>
       <Link
         href="/admin/applications"
-        className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+        className="mb-4 inline-flex min-h-11 items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
       >
         <ChevronLeft className="h-4 w-4" />
         All applications

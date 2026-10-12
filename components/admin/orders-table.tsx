@@ -127,9 +127,9 @@ function FilterRow<T extends string>({
   onSelect: (value: T) => void
 }) {
   return (
-    <div className="flex items-center gap-2">
-      <span className="w-16 shrink-0 text-xs font-medium text-muted-foreground">{label}</span>
-      <div className="flex gap-2 overflow-x-auto pb-1" role="group" aria-label={`Filter by ${label.toLowerCase()}`}>
+    <div className="space-y-1.5">
+      <span className="text-xs font-medium text-muted-foreground">{label}</span>
+      <div className="flex flex-wrap gap-2" role="group" aria-label={`Filter by ${label.toLowerCase()}`}>
         {filters.map((filter) => {
           const selected = active === filter.value
           return (
@@ -138,7 +138,7 @@ function FilterRow<T extends string>({
               type="button"
               aria-pressed={selected}
               onClick={() => onSelect(filter.value)}
-              className={`shrink-0 rounded-full border px-3 py-1 text-xs font-medium ${
+              className={`min-h-9 rounded-full border px-3 py-1.5 text-xs font-medium ${
                 selected
                   ? "border-foreground bg-foreground text-background"
                   : "border-border bg-background text-muted-foreground hover:text-foreground"
@@ -148,6 +148,93 @@ function FilterRow<T extends string>({
             </button>
           )
         })}
+      </div>
+    </div>
+  )
+}
+
+function OrderDetails({ order }: { order: OrderWithItems }) {
+  return (
+    <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
+      <div>
+        <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Items ordered</h3>
+        <ul className="space-y-3">
+          {order.items.map((item) => (
+            <li key={item.id} className="flex items-center gap-3">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md border border-border bg-background">
+                {item.image ? (
+                  <Image src={item.image || "/placeholder.svg"} alt={item.productName} fill sizes="56px" className="object-cover" />
+                ) : null}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-medium">{item.productName}</p>
+                <p className="text-xs text-muted-foreground">
+                  {item.brandName ? `${item.brandName} · ` : ""}
+                  {item.productSlug}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  {item.quantity} × {euros(item.unitPriceCents)}
+                </p>
+              </div>
+              <div className="shrink-0 font-medium">{euros(item.lineTotalCents)}</div>
+            </li>
+          ))}
+        </ul>
+        <dl className="mt-4 space-y-1 border-t border-border pt-3 text-sm">
+          <div className="flex justify-between gap-3">
+            <dt className="text-muted-foreground">Subtotal</dt>
+            <dd>{euros(order.subtotalCents)}</dd>
+          </div>
+          {Number(parseOrderNotes(order.notes).member_discount_cents || 0) > 0 && (
+            <div className="flex justify-between gap-3">
+              <dt className="text-muted-foreground">Member discount</dt>
+              <dd>-{euros(Number(parseOrderNotes(order.notes).member_discount_cents))}</dd>
+            </div>
+          )}
+          {Number(parseOrderNotes(order.notes).personal_discount_cents || 0) > 0 && (
+            <div className="flex justify-between gap-3">
+              <dt className="text-muted-foreground">Personal discount</dt>
+              <dd>-{euros(Number(parseOrderNotes(order.notes).personal_discount_cents))}</dd>
+            </div>
+          )}
+          <div className="flex justify-between gap-3">
+            <dt className="text-muted-foreground">Shipping</dt>
+            <dd>{order.shippingCents === 0 ? "Free" : euros(order.shippingCents)}</dd>
+          </div>
+          <div className="flex justify-between gap-3 font-semibold">
+            <dt>Total</dt>
+            <dd>{euros(order.totalCents)}</dd>
+          </div>
+        </dl>
+      </div>
+      <div className="space-y-4">
+        <div>
+          <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Shipping to</h3>
+          <address className="not-italic text-sm leading-relaxed">
+            {order.shippingName ? <p>{order.shippingName}</p> : null}
+            {order.shippingAddress1 ? <p>{order.shippingAddress1}</p> : null}
+            {order.shippingAddress2 ? <p>{order.shippingAddress2}</p> : null}
+            <p>{[order.shippingPostalCode, order.shippingCity].filter(Boolean).join(" ")}</p>
+            {order.shippingCountry ? <p>{order.shippingCountry}</p> : null}
+            {!order.shippingAddress1 && !order.shippingCity ? (
+              <p className="text-muted-foreground">No shipping address on file</p>
+            ) : null}
+          </address>
+        </div>
+        <div>
+          <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Payment</h3>
+          <p className="text-sm">{paymentLabel(order.paymentMethod)}</p>
+        </div>
+        <div>
+          <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tracking</h3>
+          <TrackingForm order={order} />
+        </div>
+        {order.notes ? (
+          <div>
+            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Notes</h3>
+            <p className="break-words text-sm text-muted-foreground">{order.notes}</p>
+          </div>
+        ) : null}
       </div>
     </div>
   )
@@ -238,7 +325,65 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
           <p className="text-sm font-medium">No orders match these filters</p>
         </div>
       ) : (
-    <div className="overflow-x-auto rounded-lg border border-border">
+        <>
+          <ul className="space-y-3 lg:hidden">
+            {visible.map((order) => {
+              const isOpen = expanded === order.id
+              return (
+                <li key={order.id} className="rounded-lg border border-border bg-card">
+                  <button
+                    type="button"
+                    onClick={() => setExpanded(isOpen ? null : order.id)}
+                    className="flex w-full items-start gap-3 px-3 py-3 text-left"
+                  >
+                    <ChevronDown
+                      className={`mt-0.5 h-5 w-5 shrink-0 text-muted-foreground transition-transform ${isOpen ? "rotate-180" : ""}`}
+                      aria-hidden="true"
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="flex items-start justify-between gap-3">
+                        <span className="font-medium">{order.orderNumber}</span>
+                        <span className="shrink-0 font-medium">{euros(order.totalCents)}</span>
+                      </span>
+                      <span className="mt-1 block text-sm">{order.shippingName ?? "—"}</span>
+                      <span className="block truncate text-xs text-muted-foreground">{order.email}</span>
+                      <span className="mt-1 block text-xs text-muted-foreground">
+                        {new Date(order.createdAt).toLocaleDateString()} · {order.items.length} items ·{" "}
+                        {paymentLabel(order.paymentMethod)}
+                      </span>
+                      <span className="mt-2 block">
+                        <OrderStatusBadge status={order.status as OrderStatus} label={label(order.status as OrderStatus)} />
+                      </span>
+                    </span>
+                  </button>
+                  <div className="border-t border-border px-3 py-3">
+                    <label htmlFor={`order-status-${order.id}`} className="mb-1.5 block text-xs font-medium text-muted-foreground">
+                      Change status
+                    </label>
+                    <select
+                      id={`order-status-${order.id}`}
+                      value={order.status}
+                      disabled={busy === order.id}
+                      onChange={(e) => changeStatus(order.id, e.target.value as OrderStatus)}
+                      className="h-11 w-full rounded-md border border-border bg-background px-3 text-base"
+                    >
+                      {STATUSES.map((s) => (
+                        <option key={s} value={s}>
+                          {label(s)}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {isOpen ? (
+                    <div className="border-t border-border px-3 py-4">
+                      <OrderDetails order={order} />
+                    </div>
+                  ) : null}
+                </li>
+              )
+            })}
+          </ul>
+    <div className="hidden overflow-x-auto rounded-lg border border-border lg:block">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-border bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
@@ -300,111 +445,7 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
                 {isOpen && (
                   <tr className="border-b border-border bg-muted/20 last:border-0">
                     <td colSpan={6} className="px-4 py-4">
-                      <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
-                        <div>
-                          <h3 className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                            Items ordered
-                          </h3>
-                          <ul className="space-y-3">
-                            {order.items.map((item) => (
-                              <li key={item.id} className="flex items-center gap-3">
-                                <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded-md border border-border bg-background">
-                                  {item.image ? (
-                                    <Image
-                                      src={item.image || "/placeholder.svg"}
-                                      alt={item.productName}
-                                      fill
-                                      sizes="56px"
-                                      className="object-cover"
-                                    />
-                                  ) : null}
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                  <p className="truncate font-medium">{item.productName}</p>
-                                  <p className="text-xs text-muted-foreground">
-                                    {item.brandName ? `${item.brandName} · ` : ""}
-                                    {item.productSlug}
-                                  </p>
-                                  <p className="text-xs text-muted-foreground">
-                                    {item.quantity} × {euros(item.unitPriceCents)}
-                                  </p>
-                                </div>
-                                <div className="shrink-0 font-medium">{euros(item.lineTotalCents)}</div>
-                              </li>
-                            ))}
-                          </ul>
-
-                          <dl className="mt-4 space-y-1 border-t border-border pt-3 text-sm">
-                            <div className="flex justify-between">
-                              <dt className="text-muted-foreground">Subtotal</dt>
-                              <dd>{euros(order.subtotalCents)}</dd>
-                            </div>
-                            {Number(parseOrderNotes(order.notes).member_discount_cents || 0) > 0 && (
-                              <div className="flex justify-between">
-                                <dt className="text-muted-foreground">Member discount</dt>
-                                <dd>-{euros(Number(parseOrderNotes(order.notes).member_discount_cents))}</dd>
-                              </div>
-                            )}
-                            {Number(parseOrderNotes(order.notes).personal_discount_cents || 0) > 0 && (
-                              <div className="flex justify-between">
-                                <dt className="text-muted-foreground">Personal discount</dt>
-                                <dd>-{euros(Number(parseOrderNotes(order.notes).personal_discount_cents))}</dd>
-                              </div>
-                            )}
-                            <div className="flex justify-between">
-                              <dt className="text-muted-foreground">Shipping</dt>
-                              <dd>{order.shippingCents === 0 ? "Free" : euros(order.shippingCents)}</dd>
-                            </div>
-                            <div className="flex justify-between font-semibold">
-                              <dt>Total</dt>
-                              <dd>{euros(order.totalCents)}</dd>
-                            </div>
-                          </dl>
-                        </div>
-
-                        <div className="space-y-4">
-                          <div>
-                            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                              Shipping to
-                            </h3>
-                            <address className="not-italic text-sm leading-relaxed">
-                              {order.shippingName ? <p>{order.shippingName}</p> : null}
-                              {order.shippingAddress1 ? <p>{order.shippingAddress1}</p> : null}
-                              {order.shippingAddress2 ? <p>{order.shippingAddress2}</p> : null}
-                              <p>
-                                {[order.shippingPostalCode, order.shippingCity].filter(Boolean).join(" ")}
-                              </p>
-                              {order.shippingCountry ? <p>{order.shippingCountry}</p> : null}
-                              {!order.shippingAddress1 && !order.shippingCity ? (
-                                <p className="text-muted-foreground">No shipping address on file</p>
-                              ) : null}
-                            </address>
-                          </div>
-
-                          <div>
-                            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                              Payment
-                            </h3>
-                            <p className="text-sm">{paymentLabel(order.paymentMethod)}</p>
-                          </div>
-
-                          <div>
-                            <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                              Tracking
-                            </h3>
-                            <TrackingForm order={order} />
-                          </div>
-
-                          {order.notes ? (
-                            <div>
-                              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                                Notes
-                              </h3>
-                              <p className="text-sm text-muted-foreground">{order.notes}</p>
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
+                      <OrderDetails order={order} />
                     </td>
                   </tr>
                 )}
@@ -414,6 +455,7 @@ export function OrdersTable({ orders }: { orders: OrderWithItems[] }) {
         </tbody>
       </table>
     </div>
+        </>
       )}
     </div>
   )
