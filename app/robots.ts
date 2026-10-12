@@ -16,6 +16,7 @@ const disallow = [
   "/*/sign-in",
   "/*/sign-up",
   "/*/track-order",
+  "/*/track/*",
   "/*/product/test-card-payment",
 ]
 

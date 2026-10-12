@@ -1,6 +1,12 @@
 import "server-only"
 
 import { sendEmail, type SendResult } from "@/lib/email/send"
+import {
+  localeForCountry,
+  shipmentEmailCopy,
+  shipmentStatusLabel,
+  type ShipmentStatus,
+} from "@/lib/shipping/tracking"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { getCryptoCoinOption } from "@/lib/payments/crypto"
@@ -319,6 +325,53 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
   </div>
   <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p>
 </div>
+</body></html>`
+
+  return sendEmail({ to: order.email, subject, html, text })
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+}
+
+export async function sendShipmentEventEmail(
+  order: OrderWithItems,
+  event: { status: ShipmentStatus; comment: string | null; carrier: string | null },
+): Promise<SendResult> {
+  const locale = localeForCountry(order.shippingCountry)
+  const copy = shipmentEmailCopy(locale)
+  const statusLabel = shipmentStatusLabel(event.status, locale)
+  const trackingNumber = order.trackingNumber?.trim() ?? ""
+  const trackingUrl = order.trackingUrl?.trim() || (trackingNumber ? `${siteUrl()}/${locale}/track/${encodeURIComponent(trackingNumber)}` : "")
+  const carrier = event.carrier?.trim() || order.carrier?.trim() || ""
+  const comment = event.comment?.trim() ?? ""
+  const subject = copy.subject(order.orderNumber, statusLabel)
+
+  const text = [
+    copy.body(order.orderNumber, statusLabel),
+    comment ? `${copy.comment}: ${comment}` : null,
+    carrier ? `${copy.carrier}: ${carrier}` : null,
+    trackingNumber ? `${copy.tracking}: ${trackingNumber}` : null,
+    trackingUrl ? trackingUrl : null,
+  ]
+    .filter((line) => line !== null)
+    .join("\n")
+
+  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
+<div style="max-width:560px;margin:0 auto;padding:24px"><div style="background:#fff;border-radius:12px;padding:32px">
+<h1 style="margin:0 0 8px;font-size:20px;color:#111">${escapeHtml(copy.heading)}</h1>
+<p style="margin:0 0 16px;color:#111;font-size:15px;line-height:1.6">${escapeHtml(copy.body(order.orderNumber, statusLabel))}</p>
+${comment ? `<p style="margin:0 0 16px;color:#333;font-size:14px;line-height:1.6"><strong>${escapeHtml(copy.comment)}:</strong> ${escapeHtml(comment)}</p>` : ""}
+<div style="background:#f8f8f8;border-radius:8px;padding:16px;margin-bottom:20px">
+${carrier ? `<p style="margin:0 0 4px;font-size:14px;color:#111"><strong>${escapeHtml(copy.carrier)}:</strong> ${escapeHtml(carrier)}</p>` : ""}
+${trackingNumber ? `<p style="margin:0 0 12px;font-size:14px;color:#111"><strong>${escapeHtml(copy.tracking)}:</strong> ${escapeHtml(trackingNumber)}</p>` : ""}
+${trackingUrl ? `<a href="${escapeHtml(trackingUrl)}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">${escapeHtml(copy.button)}</a>` : ""}
+</div>
+</div><p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p></div>
 </body></html>`
 
   return sendEmail({ to: order.email, subject, html, text })

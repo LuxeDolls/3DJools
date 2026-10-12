@@ -274,6 +274,20 @@ export type NewOrderRow = typeof orders.$inferInsert
 export type OrderItemRow = typeof orderItems.$inferSelect
 export type NewOrderItemRow = typeof orderItems.$inferInsert
 
+export const shipmentEvents = pgTable("shipment_events", {
+  id: text("id").primaryKey(),
+  orderId: text("order_id")
+    .notNull()
+    .references(() => orders.id, { onDelete: "cascade" }),
+  status: text("status").notNull(),
+  comment: text("comment"),
+  carrier: text("carrier"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+})
+
+export type ShipmentEventRow = typeof shipmentEvents.$inferSelect
+export type NewShipmentEventRow = typeof shipmentEvents.$inferInsert
+
 /* ------------------------------------------------------------------ */
 /* Contact messages — feedback form submissions for the admin inbox.   */
 /* ------------------------------------------------------------------ */

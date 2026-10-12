@@ -1,18 +1,20 @@
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import { Package, User, CreditCard, Truck } from "lucide-react"
+import { Package, User, CreditCard } from "lucide-react"
 import { auth } from "@/lib/auth"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
 import { getOrdersByUserId } from "@/lib/orders/queries"
+import { getShipmentEventsForOrders } from "@/lib/shipping/events"
+import { trackingPageCopy } from "@/lib/shipping/tracking"
+import { AccountOrders } from "@/components/account/account-orders"
 import { getApplicationsByEmail } from "@/lib/actions/installments"
 import { formatPrice } from "@/lib/format"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { SignOutButton } from "@/components/auth/sign-out-button"
-import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import type { OrderStatus } from "@/lib/db/schema"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
@@ -37,6 +39,8 @@ export default async function AccountPage({ params }: { params: Promise<{ lang: 
     getOrdersByUserId(user.id),
     getApplicationsByEmail(user.email),
   ])
+  const eventsByOrder = await getShipmentEventsForOrders(orders.map((order) => order.id))
+  const trackingCopy = trackingPageCopy(locale)
 
   const memberSince = new Intl.DateTimeFormat(locale, { year: "numeric", month: "long" }).format(
     new Date(user.createdAt),
@@ -94,37 +98,36 @@ export default async function AccountPage({ params }: { params: Promise<{ lang: 
             </Link>
           </div>
         ) : (
-          <ul className="mt-4 divide-y divide-border">
-            {orders.map((order) => (
-              <li key={order.id}>
-                <Link
-                  href={localizedPath(locale, `/order/${order.orderNumber}`)}
-                  className="flex flex-wrap items-center justify-between gap-3 py-4 transition-colors hover:bg-muted/40 -mx-2 rounded-md px-2"
-                >
-                  <div>
-                    <p className="text-sm font-semibold text-foreground">
-                      {dict.account.orderNumber} {order.orderNumber}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(order.createdAt))} ·{" "}
-                      {order.items.length} × {formatPrice(order.totalCents, locale)}
-                    </p>
-                    {order.trackingNumber && (
-                      <p className="mt-1 inline-flex items-center gap-1 text-xs text-muted-foreground">
-                        <Truck className="size-3" />
-                        {order.carrier ? `${order.carrier} · ` : ""}
-                        {order.trackingNumber}
-                      </p>
-                    )}
-                  </div>
-                  <OrderStatusBadge
-                    status={order.status as OrderStatus}
-                    label={dict.auth.orderStatus[order.status as OrderStatus]}
-                  />
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <AccountOrders
+            locale={locale}
+            labels={{
+              orderNumber: dict.account.orderNumber,
+              viewOrder: dict.account.viewOrder,
+              trackingNo: dict.orderConfirmation.trackingNo,
+              carrier: dict.orderConfirmation.carrier,
+              trackParcel: dict.orderConfirmation.trackParcel,
+              history: trackingCopy.history,
+              noUpdates: trackingCopy.noUpdates,
+            }}
+            orders={orders.map((order) => ({
+              id: order.id,
+              orderNumber: order.orderNumber,
+              dateLabel: new Intl.DateTimeFormat(locale, { dateStyle: "medium" }).format(new Date(order.createdAt)),
+              itemCount: order.items.length,
+              totalLabel: formatPrice(order.totalCents, locale),
+              status: order.status as OrderStatus,
+              statusLabel: dict.auth.orderStatus[order.status as OrderStatus],
+              trackingNumber: order.trackingNumber,
+              carrier: order.carrier,
+              events: (eventsByOrder[order.id] ?? []).map((event) => ({
+                id: event.id,
+                status: event.status,
+                comment: event.comment,
+                carrier: event.carrier,
+                createdAt: event.createdAt.toISOString(),
+              })),
+            }))}
+          />
         )}
       </section>
 

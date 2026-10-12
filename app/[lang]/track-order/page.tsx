@@ -2,6 +2,8 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { TrackOrderForm } from "@/components/orders/track-order-form"
+import { TrackingLookup } from "@/components/orders/tracking-lookup"
+import { trackingPageCopy } from "@/lib/shipping/tracking"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -14,6 +16,7 @@ export default async function TrackOrderPage({ params }: { params: Promise<{ lan
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
+  const tracking = trackingPageCopy(locale)
 
   return (
     <div className="mx-auto max-w-md px-4 py-8">
@@ -25,6 +28,11 @@ export default async function TrackOrderPage({ params }: { params: Promise<{ lan
       <p className="mt-2 text-pretty text-muted-foreground">{dict.trackOrder.subtitle}</p>
 
       <div className="mt-8 rounded-lg border border-border bg-card p-6">
+        <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{tracking.lookupHint}</p>
+        <TrackingLookup locale={locale} />
+      </div>
+
+      <div className="mt-4 rounded-lg border border-border bg-card p-6">
         <TrackOrderForm />
       </div>
 
