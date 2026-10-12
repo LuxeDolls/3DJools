@@ -1,9 +1,10 @@
 import type { Locale } from "@/lib/i18n/config"
-import { isShipmentStatus, shipmentStatusLabel } from "@/lib/shipping/tracking"
+import { shipmentAdminLabel, shipmentStatusLabel } from "@/lib/shipping/tracking"
 
 export type ShipmentEventView = {
   id: string
   status: string
+  location: string | null
   comment: string | null
   carrier: string | null
   createdAt: string
@@ -13,10 +14,12 @@ export function ShipmentTimeline({
   events,
   locale,
   emptyLabel,
+  admin = false,
 }: {
   events: ShipmentEventView[]
   locale: Locale
   emptyLabel: string
+  admin?: boolean
 }) {
   if (events.length === 0) {
     return <p className="text-sm text-muted-foreground">{emptyLabel}</p>
@@ -25,8 +28,8 @@ export function ShipmentTimeline({
   return (
     <ol className="flex flex-col">
       {events.map((event, index) => {
-        const label = isShipmentStatus(event.status) ? shipmentStatusLabel(event.status, locale) : event.status
-        const when = new Intl.DateTimeFormat(locale, {
+        const label = admin ? shipmentAdminLabel(event.status) : shipmentStatusLabel(event.status, locale)
+        const when = new Intl.DateTimeFormat(admin ? "ru" : locale, {
           dateStyle: "medium",
           timeStyle: "short",
         }).format(new Date(event.createdAt))
@@ -43,6 +46,7 @@ export function ShipmentTimeline({
               <p className="text-sm font-medium text-foreground">{label}</p>
               <p className="text-xs text-muted-foreground">
                 {when}
+                {event.location ? ` · ${event.location}` : ""}
                 {event.carrier ? ` · ${event.carrier}` : ""}
               </p>
               {event.comment ? <p className="mt-1 text-sm leading-relaxed text-foreground">{event.comment}</p> : null}

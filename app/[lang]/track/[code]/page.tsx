@@ -71,6 +71,7 @@ export default async function TrackCodePage({ params }: { params: Promise<{ lang
               events={shipment.events.map((event) => ({
                 id: event.id,
                 status: event.status,
+                location: event.location,
                 comment: event.comment,
                 carrier: event.carrier,
                 createdAt: event.createdAt.toISOString(),

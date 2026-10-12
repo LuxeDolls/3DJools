@@ -13,7 +13,7 @@ import {
   insertShipmentEvent,
   listShipmentOrders,
 } from "@/lib/shipping/events"
-import { isCarrierName, isShipmentStatus, OWN_CARRIER, PARTNER_CARRIERS } from "@/lib/shipping/tracking"
+import { isCarrierName, isShipmentStatus, OWN_CARRIER } from "@/lib/shipping/tracking"
 
 async function assertAdmin() {
   if (!(await isAdmin())) throw new Error("Unauthorized")
@@ -35,6 +35,7 @@ export async function getShipmentDetail(orderId: string) {
     events: events.map((event) => ({
       id: event.id,
       status: event.status,
+      location: event.location,
       comment: event.comment,
       carrier: event.carrier,
       createdAt: event.createdAt.toISOString(),
@@ -45,29 +46,29 @@ export async function getShipmentDetail(orderId: string) {
 export async function addShipmentEvent(input: {
   orderId: string
   status: string
+  location: string
   comment: string
   carrier: string
 }): Promise<{ ok: boolean; error?: string; emailed?: boolean }> {
   await assertAdmin()
-  if (!isShipmentStatus(input.status)) return { ok: false, error: "Choose a delivery status." }
-  if (!isCarrierName(input.carrier)) return { ok: false, error: "Choose a carrier." }
-  if (input.status === "handed_to_partner" && !(PARTNER_CARRIERS as readonly string[]).includes(input.carrier)) {
-    return { ok: false, error: "Handing over requires DHL or DPD." }
-  }
+  if (!isShipmentStatus(input.status)) return { ok: false, error: "Выберите статус доставки." }
+  if (!isCarrierName(input.carrier)) return { ok: false, error: "Выберите службу доставки." }
 
+  const location = input.location.trim().slice(0, 120)
   const comment = input.comment.trim().slice(0, 1000)
   const existing = await getOrderById(input.orderId)
-  if (!existing) return { ok: false, error: "Order not found." }
+  if (!existing) return { ok: false, error: "Заказ не найден." }
   if (existing.status === "cancelled" || existing.status === "refunded") {
-    return { ok: false, error: "This order is cancelled or refunded." }
+    return { ok: false, error: "Заказ отменён или возвращён." }
   }
   const order = await ensureTrackingNumber(input.orderId)
-  if (!order) return { ok: false, error: "Order not found." }
+  if (!order) return { ok: false, error: "Заказ не найден." }
 
   const carrier = input.carrier || order.carrier || OWN_CARRIER
   await insertShipmentEvent({
     orderId: order.id,
     status: input.status,
+    location: location || null,
     comment: comment || null,
     carrier,
   })
@@ -87,6 +88,7 @@ export async function addShipmentEvent(input: {
   if (updated) {
     const result = await sendShipmentEventEmail(updated, {
       status: input.status,
+      location: location || null,
       comment: comment || null,
       carrier,
     })
