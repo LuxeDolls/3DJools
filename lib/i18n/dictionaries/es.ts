@@ -219,7 +219,7 @@ export const es: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponible en la página segura de Stripe cuando paga con tarjeta.",
     payMethodsNote:
-      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Visa y Mastercard abren la página de pago segura de Square y se cargan en dólares estadounidenses al tipo del Banco Central Europeo, mostrado antes de pagar. El extracto muestra HIRA. Nunca vemos el número de tarjeta.  El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
+      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Los pagos con tarjeta se cargan en euros en una página de pago segura. Apple Pay, Link y Bancontact están disponibles al pagar con tarjeta. PayPal está disponible. Nunca vemos el número de tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pague con saldo de PayPal, cuenta bancaria o tarjeta",
     payPaypalUnavailable: "PayPal no está disponible temporalmente",
