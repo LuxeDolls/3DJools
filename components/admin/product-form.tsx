@@ -248,7 +248,7 @@ export function ProductForm({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="flex w-full flex-col gap-0 p-0 sm:!max-w-xl">
+      <SheetContent side="right" className="flex w-full max-w-none flex-col gap-0 p-0 sm:!max-w-xl">
         <SheetHeader className="border-b border-border">
           <SheetTitle>{isEdit ? "Edit product" : "Add product"}</SheetTitle>
           <SheetDescription>
@@ -263,7 +263,7 @@ export function ProductForm({
             <Input id="pf-name" value={form.name} onChange={(e) => set("name", e.target.value)} />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label htmlFor="pf-brand">Brand</Label>
               <select
@@ -297,7 +297,7 @@ export function ProductForm({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label htmlFor="pf-tech">Technology</Label>
               <select
@@ -329,7 +329,7 @@ export function ProductForm({
           </div>
 
           {/* Pricing & stock */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="space-y-1.5">
               <Label htmlFor="pf-price">Price €</Label>
               <Input id="pf-price" inputMode="decimal" value={form.price} onChange={(e) => set("price", e.target.value)} />
@@ -351,7 +351,7 @@ export function ProductForm({
           </div>
 
           {/* Identifiers */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="space-y-1.5">
               <Label htmlFor="pf-ean">EAN</Label>
               <Input id="pf-ean" value={form.ean} onChange={(e) => set("ean", e.target.value)} />
@@ -507,7 +507,7 @@ export function ProductForm({
           </div>
 
           {/* Flags & logistics */}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="flex items-center gap-2 text-sm">
               <input type="checkbox" className="size-4" checked={form.featured} onChange={(e) => set("featured", e.target.checked)} />
               Featured
@@ -518,7 +518,7 @@ export function ProductForm({
             </label>
           </div>
 
-          <div className="grid grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="space-y-1.5">
               <Label htmlFor="pf-weight">Weight kg</Label>
               <Input id="pf-weight" inputMode="decimal" value={form.weight} onChange={(e) => set("weight", e.target.value)} />

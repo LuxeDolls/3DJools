@@ -62,8 +62,8 @@ export function CatalogTable({
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between gap-3">
-        <div className="relative w-full max-w-sm">
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative w-full sm:max-w-sm">
           <Search className="pointer-events-none absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={query}
@@ -83,12 +83,71 @@ export function CatalogTable({
             </button>
           )}
         </div>
-        <Button onClick={openCreate}>
+        <Button onClick={openCreate} className="min-h-11 w-full sm:w-auto">
           <Plus className="size-4" /> Add product
         </Button>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-border">
+      <ul className="space-y-2 lg:hidden">
+        {filteredRows.length === 0 ? (
+          <li className="rounded-lg border border-border px-4 py-8 text-center text-sm text-muted-foreground">
+            No products match &quot;{query}&quot;.
+          </li>
+        ) : null}
+        {filteredRows.map((row) => (
+          <li key={row.slug} className={`rounded-lg border border-border p-3 ${row.archived ? "opacity-55" : ""}`}>
+            <div className="flex items-start gap-3">
+              <div className="relative h-14 w-14 shrink-0 overflow-hidden rounded bg-muted">
+                {row.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={row.image || "/placeholder.svg"} alt="" className="h-full w-full object-cover" />
+                ) : null}
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-medium leading-snug">{row.name}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  {row.brandName} · {row.category}
+                </p>
+                <p className="mt-1 text-sm">
+                  €{euros(row.priceCents)}
+                  <span className={row.stock === 0 ? "text-destructive" : "text-muted-foreground"}>
+                    {" "}
+                    · {row.stock} in stock
+                  </span>
+                </p>
+                {row.archived ? (
+                  <Badge variant="secondary" className="mt-1 text-[10px]">
+                    Archived
+                  </Badge>
+                ) : null}
+              </div>
+            </div>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <Button variant="outline" className="min-h-11" onClick={() => openEdit(row.slug)} disabled={loadingSlug === row.slug}>
+                {loadingSlug === row.slug ? <Loader2 className="h-4 w-4 animate-spin" /> : <Pencil className="h-4 w-4" />}
+                Edit
+              </Button>
+              <Button
+                variant="outline"
+                className="min-h-11"
+                onClick={() => toggleArchive(row.slug, !row.archived)}
+                disabled={busySlug === row.slug}
+              >
+                {busySlug === row.slug ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : row.archived ? (
+                  <ArchiveRestore className="h-4 w-4" />
+                ) : (
+                  <Archive className="h-4 w-4" />
+                )}
+                {row.archived ? "Restore" : "Archive"}
+              </Button>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <div className="hidden overflow-x-auto rounded-lg border border-border lg:block">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">

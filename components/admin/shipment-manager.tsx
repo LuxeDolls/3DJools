@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, type FormEvent } from "react"
-import { Loader2 } from "lucide-react"
+import { ArrowLeft, Loader2 } from "lucide-react"
 import { addShipmentEvent, getShipmentDetail, searchShipmentOrders } from "@/lib/actions/shipments"
 import { ADMIN_STATUS_LABELS, CARRIERS, OWN_CARRIER, SHIPMENT_STATUSES } from "@/lib/shipping/tracking"
 import { ShipmentTimeline, type ShipmentEventView } from "@/components/orders/shipment-timeline"
@@ -40,6 +40,7 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [mobileDetail, setMobileDetail] = useState(false)
 
   async function load(orderId: string, list = orders) {
     setSelectedId(orderId)
@@ -69,6 +70,7 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
     const rows = await searchShipmentOrders(query)
     setOrders(rows)
     setSearching(false)
+    setMobileDetail(false)
     if (rows[0]) await load(rows[0].id, rows)
     else {
       setSelectedId(null)
@@ -97,7 +99,7 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
 
   return (
     <div className="grid gap-6 lg:grid-cols-[280px_minmax(0,1fr)]">
-      <div>
+      <div className={mobileDetail ? "max-lg:hidden" : undefined}>
         <form onSubmit={search} className="flex gap-2">
           <Input
             value={query}
@@ -105,7 +107,7 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
             placeholder="Заказ, email, трек"
             aria-label="Найти заказ"
           />
-          <Button type="submit" variant="secondary" disabled={searching}>
+          <Button type="submit" variant="secondary" className="min-h-11 shrink-0" disabled={searching}>
             {searching ? <Loader2 className="size-4 animate-spin" /> : "Найти"}
           </Button>
         </form>
@@ -117,8 +119,11 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
               <li key={order.id}>
                 <button
                   type="button"
-                  onClick={() => load(order.id)}
-                  className={`w-full px-3 py-2.5 text-left text-sm ${
+                  onClick={() => {
+                    setMobileDetail(true)
+                    void load(order.id)
+                  }}
+                  className={`min-h-14 w-full px-3 py-3 text-left text-sm ${
                     selectedId === order.id ? "bg-muted text-foreground" : "text-foreground hover:bg-muted/50"
                   }`}
                 >
@@ -134,7 +139,11 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
       </div>
 
       {detail ? (
-        <div className="rounded-lg border border-border p-4 sm:p-6">
+        <div className={`rounded-lg border border-border p-4 sm:p-6 ${mobileDetail ? "" : "max-lg:hidden"}`}>
+          <Button variant="ghost" size="sm" className="mb-3 -ml-2 min-h-11 lg:hidden" onClick={() => setMobileDetail(false)}>
+            <ArrowLeft className="h-4 w-4" />
+            К заказам
+          </Button>
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <h2 className="font-sans text-lg font-semibold">{detail.orderNumber}</h2>
@@ -160,11 +169,12 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
               </p>
             )}
             {detail.trackingUrl ? (
-              <div className="mt-3 flex gap-2">
+              <div className="mt-3 flex flex-col gap-2 sm:flex-row">
                 <Input value={detail.trackingUrl} readOnly aria-label="Ссылка на отслеживание" className="font-mono text-xs" />
                 <Button
                   type="button"
                   variant="outline"
+                  className="min-h-11 shrink-0"
                   onClick={async () => {
                     try {
                       await navigator.clipboard.writeText(detail.trackingUrl ?? "")
@@ -196,7 +206,7 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
                   value={status}
                   onChange={(event) => setStatus(event.target.value)}
                   aria-label="Статус"
-                  className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground"
+                  className="h-11 rounded-md border border-border bg-background px-3 text-base text-foreground lg:text-sm"
                 >
                   {SHIPMENT_STATUSES.map((item) => (
                     <option key={item} value={item}>
@@ -225,7 +235,7 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
                 id="shipment-carrier"
                 value={carrier}
                 onChange={(event) => setCarrier(event.target.value)}
-                className="h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground"
+                className="h-11 rounded-md border border-border bg-background px-3 text-base text-foreground lg:text-sm"
               >
                 {CARRIERS.map((item) => (
                   <option key={item} value={item}>
@@ -245,14 +255,16 @@ export function ShipmentManager({ initialOrders }: { initialOrders: ShipmentOrde
             />
             {error ? <p className="text-sm text-destructive">{error}</p> : null}
             {message ? <p className="text-sm text-muted-foreground">{message}</p> : null}
-            <Button type="submit" disabled={saving} variant="outline" className="w-fit uppercase tracking-wide">
+            <Button type="submit" disabled={saving} variant="outline" className="min-h-11 w-full uppercase tracking-wide sm:w-fit">
               {saving ? <Loader2 className="size-4 animate-spin" /> : null}
               Добавить статус
             </Button>
           </form>
         </div>
       ) : (
-        <p className="text-sm text-muted-foreground">Выберите заказ, чтобы добавить статус доставки.</p>
+        <p className={`text-sm text-muted-foreground ${mobileDetail ? "" : "max-lg:hidden"}`}>
+          Выберите заказ, чтобы добавить статус доставки.
+        </p>
       )}
     </div>
   )

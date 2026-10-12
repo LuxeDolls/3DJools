@@ -70,7 +70,7 @@ export function ApplicationDetail({ app }: { app: InstallmentApplication & { ord
       <div className="space-y-6">
         {/* KYC */}
         <Card title="Applicant (KYC)">
-          <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+          <dl className="grid grid-cols-1 gap-x-4 gap-y-3 text-sm sm:grid-cols-2">
             <Item label="First name" value={app.firstName} />
             <Item label="Last name" value={app.lastName} />
             <Item label="Email" value={app.email} />
@@ -79,7 +79,7 @@ export function ApplicationDetail({ app }: { app: InstallmentApplication & { ord
             <Item label="Nationality" value={app.nationality} />
             <Item label="Employment" value={app.employmentStatus} />
             <Item label="Monthly income" value={formatPrice(app.monthlyIncomeCents, "en")} />
-            <div className="col-span-2">
+            <div className="sm:col-span-2">
               <Item
                 label="Address"
                 value={`${app.addressLine1}${app.addressLine2 ? `, ${app.addressLine2}` : ""}, ${app.postalCode} ${app.city}, ${app.country}`}
@@ -201,14 +201,14 @@ export function ApplicationDetail({ app }: { app: InstallmentApplication & { ord
             placeholder="Internal notes (optional)"
             rows={3}
           />
-          <div className="mt-3 flex gap-2">
-            <Button className="flex-1" onClick={() => decide("approved")} disabled={pending !== null}>
+          <div className="mt-3 flex flex-col gap-2 sm:flex-row">
+            <Button className="min-h-11 flex-1" onClick={() => decide("approved")} disabled={pending !== null}>
               {pending === "approved" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
               Approve
             </Button>
             <Button
               variant="outline"
-              className="flex-1"
+              className="min-h-11 flex-1"
               onClick={() => decide("rejected")}
               disabled={pending !== null}
             >

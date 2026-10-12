@@ -74,16 +74,17 @@ export function MessagesInbox({ messages }: { messages: ContactMessageRow[] }) {
             {isOpen ? (
               <div className="border-t border-border px-4 py-3">
                 <p className="whitespace-pre-wrap text-sm text-foreground">{m.message}</p>
-                <div className="mt-3 flex items-center gap-2">
+                <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
                   <a
                     href={`mailto:${m.email}?subject=Re: ${encodeURIComponent(m.subject || "Your enquiry")}`}
-                    className="inline-flex h-9 items-center justify-center rounded-md border border-border bg-background px-3 text-sm font-medium transition-colors hover:bg-muted"
+                    className="inline-flex min-h-11 items-center justify-center rounded-md border border-border bg-background px-3 text-sm font-medium transition-colors hover:bg-muted"
                   >
                     Reply by email
                   </a>
                   <Button
                     variant="ghost"
                     size="sm"
+                    className="min-h-11"
                     disabled={busy === m.id}
                     onClick={() => mark(m.id, m.status === "resolved" ? "read" : "resolved")}
                   >

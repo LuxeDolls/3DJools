@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { ArrowLeft } from "lucide-react"
 import { getChatThread, listChatConversations, sendAdminReply, setChatMode } from "@/lib/actions/admin"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -25,6 +26,7 @@ export function ChatInbox({ initialConversations }: { initialConversations: Conv
   const [thread, setThread] = useState<ChatMessageRow[]>([])
   const [reply, setReply] = useState("")
   const [busy, setBusy] = useState(false)
+  const [mobileThread, setMobileThread] = useState(false)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -89,15 +91,18 @@ export function ChatInbox({ initialConversations }: { initialConversations: Conv
   }
 
   return (
-    <div className="grid gap-4 md:grid-cols-[18rem_1fr]">
-      <ul className="space-y-2 md:max-h-[36rem] md:overflow-y-auto">
+    <div className="grid gap-4 lg:grid-cols-[18rem_1fr]">
+      <ul className={cn("space-y-2 lg:max-h-[36rem] lg:overflow-y-auto", mobileThread && "max-lg:hidden")}>
         {conversations.map((c) => {
           const isActive = c.id === activeId
           return (
             <li key={c.id}>
               <button
                 type="button"
-                onClick={() => setActiveId(c.id)}
+                onClick={() => {
+                  setActiveId(c.id)
+                  setMobileThread(true)
+                }}
                 className={cn(
                   "flex w-full flex-col gap-1 rounded-lg border px-3 py-2.5 text-left transition-colors",
                   isActive ? "border-primary bg-primary/5" : "border-border bg-card hover:bg-muted",
@@ -130,16 +135,20 @@ export function ChatInbox({ initialConversations }: { initialConversations: Conv
         })}
       </ul>
 
-      <div className="flex flex-col rounded-lg border border-border bg-card">
+      <div className={cn("flex flex-col rounded-lg border border-border bg-card", !mobileThread && "max-lg:hidden")}>
         {active ? (
           <>
-            <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
-              <div>
-                <p className="text-sm font-medium">Visitor {active.visitorId.slice(0, 8)}</p>
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border px-3 py-2 md:px-4 md:py-3">
+              <Button variant="ghost" size="sm" className="min-h-11 lg:hidden" onClick={() => setMobileThread(false)}>
+                <ArrowLeft className="h-4 w-4" />
+                Chats
+              </Button>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium">Visitor {active.visitorId.slice(0, 8)}</p>
                 <p className="text-xs text-muted-foreground">Locale: {active.locale.toUpperCase()}</p>
               </div>
               {active.mode === "human" ? (
-                <Button variant="ghost" size="sm" disabled={busy} onClick={returnToAi}>
+                <Button variant="ghost" size="sm" className="min-h-11" disabled={busy} onClick={returnToAi}>
                   Return to AI
                 </Button>
               ) : null}
@@ -171,9 +180,9 @@ export function ChatInbox({ initialConversations }: { initialConversations: Conv
                 onChange={(e) => setReply(e.target.value)}
                 placeholder="Reply as support…"
                 aria-label="Reply as support"
-                className="h-10 flex-1 rounded-full border border-input bg-background px-4 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
+                className="h-11 min-w-0 flex-1 rounded-full border border-input bg-background px-4 text-base outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 md:text-sm"
               />
-              <Button type="submit" size="sm" disabled={!reply.trim() || busy}>
+              <Button type="submit" className="min-h-11 shrink-0" disabled={!reply.trim() || busy}>
                 Send
               </Button>
             </form>

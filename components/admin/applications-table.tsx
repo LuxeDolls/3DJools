@@ -33,7 +33,30 @@ export function ApplicationsTable({ rows }: { rows: Row[] }) {
   }
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-border">
+    <>
+    <ul className="space-y-2 lg:hidden">
+      {rows.map((r) => (
+        <li key={r.id}>
+          <Link href={`/admin/applications/${r.id}`} className="block rounded-lg border border-border bg-card p-3">
+            <span className="flex items-start justify-between gap-3">
+              <span className="font-mono text-sm font-medium text-primary">{r.applicationRef}</span>
+              <Badge className={`${STATUS_TONE[r.status] ?? ""} border-0`}>{r.status}</Badge>
+            </span>
+            <span className="mt-2 block font-medium">
+              {r.firstName} {r.lastName}
+            </span>
+            <span className="block truncate text-xs text-muted-foreground">{r.email}</span>
+            <span className="mt-2 flex items-center justify-between gap-3 text-sm">
+              <span className="font-medium tabular-nums">{formatPrice(r.totalAmountCents, "en")}</span>
+              <span className="text-xs text-muted-foreground">
+                {r.country} · {new Date(r.createdAt).toLocaleDateString("en", { month: "short", day: "numeric" })}
+              </span>
+            </span>
+          </Link>
+        </li>
+      ))}
+    </ul>
+    <div className="hidden overflow-x-auto rounded-lg border border-border lg:block">
       <table className="w-full text-sm">
         <thead className="border-b border-border bg-muted/40 text-left text-xs uppercase tracking-wide text-muted-foreground">
           <tr>
@@ -74,5 +97,6 @@ export function ApplicationsTable({ rows }: { rows: Row[] }) {
         </tbody>
       </table>
     </div>
+    </>
   )
 }
