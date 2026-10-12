@@ -52,7 +52,7 @@ export async function getShipmentEventsForOrders(orderIds: string[]): Promise<Re
   return grouped
 }
 
-/** Assigns a 3DJools tracking number and our tracking page when an order ships. */
+/** Assigns a DHL- or FedEx-style tracking number and our tracking page when an order ships. */
 export async function ensureTrackingNumber(orderId: string): Promise<OrderRow | null> {
   const [order] = await db.select().from(orders).where(eq(orders.id, orderId)).limit(1)
   if (!order) return null

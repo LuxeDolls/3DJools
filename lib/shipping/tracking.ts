@@ -172,7 +172,7 @@ const PAGE_COPY: Record<
     title: "Track a delivery",
     subtitle: "Enter the tracking number from your shipping email.",
     numberLabel: "Tracking number",
-    placeholder: "e.g. 3DJ7K4M2Q9XP",
+    placeholder: "e.g. JD014600011234567890",
     submit: "Track",
     notFound: "We could not find that tracking number. Check the code in your shipping email.",
     order: "Order",
@@ -188,7 +188,7 @@ const PAGE_COPY: Record<
     title: "Sendung verfolgen",
     subtitle: "Geben Sie die Sendungsnummer aus der Versand-E-Mail ein.",
     numberLabel: "Sendungsnummer",
-    placeholder: "z. B. 3DJ7K4M2Q9XP",
+    placeholder: "z. B. JD014600011234567890",
     submit: "Verfolgen",
     notFound: "Diese Sendungsnummer wurde nicht gefunden. Prüfen Sie den Code in der Versand-E-Mail.",
     order: "Bestellung",
@@ -204,7 +204,7 @@ const PAGE_COPY: Record<
     title: "Suivre une livraison",
     subtitle: "Saisissez le numéro de suivi reçu dans l'e-mail d'expédition.",
     numberLabel: "Numéro de suivi",
-    placeholder: "ex. 3DJ7K4M2Q9XP",
+    placeholder: "ex. JD014600011234567890",
     submit: "Suivre",
     notFound: "Ce numéro de suivi est introuvable. Vérifiez le code dans l'e-mail d'expédition.",
     order: "Commande",
@@ -220,7 +220,7 @@ const PAGE_COPY: Record<
     title: "Traccia una consegna",
     subtitle: "Inserisci il numero di tracciamento dell'e-mail di spedizione.",
     numberLabel: "Numero di tracciamento",
-    placeholder: "es. 3DJ7K4M2Q9XP",
+    placeholder: "es. JD014600011234567890",
     submit: "Traccia",
     notFound: "Numero di tracciamento non trovato. Controlla il codice nell'e-mail di spedizione.",
     order: "Ordine",
@@ -236,7 +236,7 @@ const PAGE_COPY: Record<
     title: "Seguir un envío",
     subtitle: "Introduce el número de seguimiento del correo de envío.",
     numberLabel: "Número de seguimiento",
-    placeholder: "p. ej. 3DJ7K4M2Q9XP",
+    placeholder: "p. ej. JD014600011234567890",
     submit: "Seguir",
     notFound: "No encontramos ese número. Revisa el código del correo de envío.",
     order: "Pedido",
@@ -252,7 +252,7 @@ const PAGE_COPY: Record<
     title: "Zending volgen",
     subtitle: "Vul het trackingnummer uit de verzendmail in.",
     numberLabel: "Trackingnummer",
-    placeholder: "bijv. 3DJ7K4M2Q9XP",
+    placeholder: "bijv. JD014600011234567890",
     submit: "Volgen",
     notFound: "Dit trackingnummer is niet gevonden. Controleer de code in de verzendmail.",
     order: "Bestelling",
@@ -377,12 +377,36 @@ export function normalizeTrackingCode(value: string): string | null {
   return code
 }
 
-const TRACKING_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
+function randomDigits(length: number): string {
+  const bytes = new Uint8Array(length)
+  crypto.getRandomValues(bytes)
+  let out = ""
+  for (let i = 0; i < length; i++) out += String(bytes[i] % 10)
+  return out
+}
+
+function randomIndex(max: number): number {
+  const bytes = new Uint8Array(1)
+  crypto.getRandomValues(bytes)
+  return bytes[0] % max
+}
+
+/** DHL Express piece ID (JD + 18 digits) or 10-digit airway bill. */
+function dhlTrackingNumber(): string {
+  if (randomIndex(2) === 0) return `JD${randomDigits(18)}`
+  const bill = randomDigits(10)
+  return bill.startsWith("0") ? `1${bill.slice(1)}` : bill
+}
+
+/** FedEx Express (12 digits) or Ground (15 digits, 96…). */
+function fedexTrackingNumber(): string {
+  if (randomIndex(2) === 0) {
+    const number = randomDigits(12)
+    return number.startsWith("0") ? `7${number.slice(1)}` : number
+  }
+  return `96${randomDigits(13)}`
+}
 
 export function randomTrackingNumber(): string {
-  let body = ""
-  for (let i = 0; i < 10; i++) {
-    body += TRACKING_ALPHABET[Math.floor(Math.random() * TRACKING_ALPHABET.length)]
-  }
-  return `3DJ${body}`
+  return randomIndex(2) === 0 ? dhlTrackingNumber() : fedexTrackingNumber()
 }
