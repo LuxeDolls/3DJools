@@ -3,9 +3,6 @@ import nodemailer from "nodemailer"
 import fs from "node:fs"
 import path from "node:path"
 
-const FONT_REGULAR = "/tmp/fonts/NotoSans-Regular.ttf"
-const FONT_BOLD = "/tmp/fonts/NotoSans-Bold.ttf"
-
 const orders = [
   { invoiceNumber: 913, buyer: "Michel Maggi", date: "06/10/2026", amount: "606.69", txnId: "9PY64520G6169761K" },
   { invoiceNumber: 914, buyer: "Sheng Feng", date: "06/10/2026", amount: "606.69", txnId: "6WC56829M7504601D" },
@@ -17,7 +14,7 @@ const orders = [
   { invoiceNumber: 920, buyer: "Heidi Schaffrinna", date: "13/10/2026", amount: "630.99", txnId: "74457110N0683080E" },
 ]
 
-const SERVICE_LABEL = "Оказание платных услуг / продажа товара"
+const SERVICE_LABEL = "Paid services rendered / goods sold"
 
 function buildInvoicePdf(order) {
   return new Promise((resolve, reject) => {
@@ -27,39 +24,36 @@ function buildInvoicePdf(order) {
     doc.on("end", () => resolve(Buffer.concat(chunks)))
     doc.on("error", reject)
 
-    doc.registerFont("Regular", FONT_REGULAR)
-    doc.registerFont("Bold", FONT_BOLD)
-
-    doc.font("Bold").fontSize(22).text("77 AUTO SERVICE", 50, 50)
-    doc.font("Regular").fontSize(12).fillColor("#555").text("SERVICE INVOICE", 50, 82)
+    doc.font("Helvetica-Bold").fontSize(22).text("77 AUTO SERVICE", 50, 50)
+    doc.font("Helvetica").fontSize(12).fillColor("#555").text("SERVICE INVOICE", 50, 82)
 
     doc.fillColor("#000")
-    doc.font("Bold").fontSize(10).text("BILL TO", 50, 120)
-    doc.font("Regular").fontSize(11).text(order.buyer, 50, 136)
+    doc.font("Helvetica-Bold").fontSize(10).text("BILL TO", 50, 120)
+    doc.font("Helvetica").fontSize(11).text(order.buyer, 50, 136)
 
-    doc.font("Bold").fontSize(10)
+    doc.font("Helvetica-Bold").fontSize(10)
     doc.text(`Order date: ${order.date}`, 50, 170)
     doc.text("Service type: General", 50, 184)
     doc.text(`Invoice number: ${order.invoiceNumber}`, 50, 198)
 
     const tableTop = 230
-    doc.font("Bold").fontSize(10)
+    doc.font("Helvetica-Bold").fontSize(10)
     doc.text("SERVICE", 50, tableTop)
     doc.text("AMOUNT (EUR)", 400, tableTop)
     doc.moveTo(50, tableTop + 16).lineTo(545, tableTop + 16).strokeColor("#ccc").stroke()
 
-    doc.font("Regular").fontSize(10)
+    doc.font("Helvetica").fontSize(10)
     doc.text(SERVICE_LABEL, 50, tableTop + 26, { width: 330 })
     doc.text(`EUR ${order.amount}`, 400, tableTop + 26)
 
     const totalsTop = tableTop + 80
     doc.moveTo(50, totalsTop - 10).lineTo(545, totalsTop - 10).strokeColor("#ccc").stroke()
-    doc.font("Bold").fontSize(11)
+    doc.font("Helvetica-Bold").fontSize(11)
     doc.text("TOTAL PAID", 50, totalsTop)
     doc.text(`EUR ${order.amount}`, 400, totalsTop)
 
     const paymentTop = totalsTop + 60
-    doc.font("Regular").fontSize(10)
+    doc.font("Helvetica").fontSize(10)
     doc.text("Payment status: Paid", 400, paymentTop)
     doc.text("Payment method: PayPal", 400, paymentTop + 14)
     doc.text("PayPal transaction ID:", 400, paymentTop + 28)
