@@ -1,2 +1,2 @@
-// Storefront switch. Card checkout charges the order amount in euros.
-export const STRIPE_CHECKOUT_ENABLED = true
+// Off until card checkout should be offered again. Existing paid orders are unchanged.
+export const STRIPE_CHECKOUT_ENABLED = false
