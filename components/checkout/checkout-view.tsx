@@ -64,7 +64,15 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
 
   const [payment, setPayment] = useState<PaymentId>(
-    SQUARE_CHECKOUT_ENABLED ? "square" : STRIPE_CHECKOUT_ENABLED ? "card" : ALPPAY_CHECKOUT_ENABLED ? "alppay" : "crypto",
+    SQUARE_CHECKOUT_ENABLED
+      ? "square"
+      : STRIPE_CHECKOUT_ENABLED
+        ? "card"
+        : ALPPAY_CHECKOUT_ENABLED
+          ? "alppay"
+          : BANK_TRANSFER_CHECKOUT_ENABLED
+            ? "sepa"
+            : "crypto",
   )
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Belgium")
