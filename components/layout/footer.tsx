@@ -6,6 +6,7 @@ import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
+import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -61,7 +62,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         ]
       : []),
     ...(ALPPAY_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.payAlppay }] : []),
-    { icon: Landmark, label: dict.checkout.paySepa },
+    ...(BANK_TRANSFER_CHECKOUT_ENABLED ? [{ icon: Landmark, label: dict.checkout.paySepa }] : []),
     { icon: Bitcoin, label: dict.checkout.payCrypto },
     ...(isPaypalCheckoutEnabled()
       ? [{ icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" }]

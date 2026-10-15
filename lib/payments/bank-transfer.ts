@@ -1,3 +1,7 @@
+// Off while the receiving account is being changed. Existing unpaid orders still
+// show the account below; new checkout orders cannot select bank transfer.
+export const BANK_TRANSFER_CHECKOUT_ENABLED = false
+
 // SEPA receiving account (Finom), shown at checkout and on order confirmation for the
 // "sepa" / bank_transfer payment method.
 export const BANK_TRANSFER_ACCOUNT = {

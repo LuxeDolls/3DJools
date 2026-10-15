@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils"
 import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName } from "@/lib/payments/cardholder"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
-import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
+import { BANK_TRANSFER_ACCOUNT, BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
@@ -63,7 +63,9 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const isMember = Boolean(session?.user)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
 
-  const [payment, setPayment] = useState<PaymentId>(SQUARE_CHECKOUT_ENABLED ? "square" : "sepa")
+  const [payment, setPayment] = useState<PaymentId>(
+    SQUARE_CHECKOUT_ENABLED ? "square" : STRIPE_CHECKOUT_ENABLED ? "card" : ALPPAY_CHECKOUT_ENABLED ? "alppay" : "crypto",
+  )
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Belgium")
   const [submitting, setSubmitting] = useState(false)
@@ -99,7 +101,9 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     ...(ALPPAY_CHECKOUT_ENABLED
       ? [{ id: "alppay" as const, icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc }]
       : []),
-    { id: "sepa", icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc },
+    ...(BANK_TRANSFER_CHECKOUT_ENABLED
+      ? [{ id: "sepa" as const, icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc }]
+      : []),
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     ...(isPaypalCheckoutEnabled()
       ? [{ id: "paypal" as const, icon: Landmark, title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc, mark: "/payments/paypal.svg" }]
@@ -135,6 +139,10 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     }
     if (payment === "paypal" && !isPaypalCheckoutEnabled()) {
       setOrderError(dict.checkout.payPaypalUnavailable)
+      return
+    }
+    if (payment === "sepa" && !BANK_TRANSFER_CHECKOUT_ENABLED) {
+      setOrderError(dict.checkout.orderError)
       return
     }
     if (isCardPayment(payment) && !splitFullName(cardholderName)) {
