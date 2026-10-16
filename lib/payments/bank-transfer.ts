@@ -1,5 +1,5 @@
-// Storefront switch. Set this to false to hide bank transfer from new checkout orders.
-export const BANK_TRANSFER_CHECKOUT_ENABLED = true
+// Off until bank transfer should be offered again. Existing unpaid orders still show the account below.
+export const BANK_TRANSFER_CHECKOUT_ENABLED = false
 
 // SEPA receiving account (Finom), shown at checkout and on order confirmation for the
 // "sepa" / bank_transfer payment method.
