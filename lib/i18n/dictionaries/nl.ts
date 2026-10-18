@@ -1,7 +1,11 @@
 import type { Dictionary } from "./en"
 
 export const nl: Dictionary = {
-  brandName: "3DJools",
+  brandName: "DnD3D",
+  maintenance: {
+    label: "Technisch onderhoud",
+    text: "De winkel wordt bijgewerkt. Het nieuwe adres wordt dnd3d.com. Wacht met een nieuwe bestelling.",
+  },
   tagline: "Serieuze 3D-printers. Eerlijke prijzen.",
   nav: {
     catalog: "Catalogus",
@@ -113,13 +117,13 @@ export const nl: Dictionary = {
   },
   promo: {
     memberEyebrow: "Leden besparen meer",
-    memberTitle: "10% korting op elke bestelling",
-    memberText: "Maak een gratis 3DJools-account aan en een exclusieve ledenkorting van 10% wordt automatisch toegepast bij het afrekenen — op elk product, elke keer.",
+    memberTitle: "7% korting op elke bestelling",
+    memberText: "Maak een gratis DnD3D-account aan en een exclusieve ledenkorting van 7% wordt automatisch toegepast bij het afrekenen — op elk product, elke keer.",
     memberCtaGuest: "Gratis account aanmaken",
     memberCtaSignIn: "Inloggen",
-    memberActiveTitle: "Je ledenkorting van 10% is actief",
-    memberActiveText: "Bedankt dat je lid bent — 10% wordt automatisch van je subtotaal afgetrokken bij het afrekenen.",
-    memberBadge: "-10%",
+    memberActiveTitle: "Je ledenkorting van 7% is actief",
+    memberActiveText: "Bedankt dat je lid bent — 7% wordt automatisch van je subtotaal afgetrokken bij het afrekenen.",
+    memberBadge: "-7%",
   },
   product: {
     specifications: "Specificaties",
@@ -133,7 +137,7 @@ export const nl: Dictionary = {
     brand: "Merk",
     availability: "Beschikbaarheid",
     delivery: "Levering",
-    deliveryEstimate: "Verwerkt binnen 0–1 werkdag · levering in 3–6 werkdagen",
+    deliveryEstimate: "Verwerkt binnen 0–2 werkdagen · levering in 3–7 werkdagen",
     freeShipping: "Gratis verzending",
     securePayment: "Veilig betalen",
     warranty: "2 jaar garantie",
@@ -152,9 +156,9 @@ export const nl: Dictionary = {
     freeShippingProgress: "Voeg {amount} toe voor gratis verzending",
     freeShippingReached: "Je hebt gratis verzending ontgrendeld!",
     vatIncluded: "Btw inbegrepen indien van toepassing",
-    memberDiscount: "Ledenkorting (10%)",
+    memberDiscount: "Ledenkorting (7%)",
     personalDiscount: "Persoonlijke korting (5%)",
-    signInToSave: "Log in om 10% te besparen op deze bestelling",
+    signInToSave: "Log in om 7% te besparen op deze bestelling",
   },
   checkout: {
     title: "Afrekenen",
@@ -318,6 +322,9 @@ export const nl: Dictionary = {
     sentTitle: "Bedankt — je bericht is onderweg",
     sentText: "We hebben je vraag ontvangen en nemen snel per e-mail contact met je op.",
     errorText: "Er ging iets mis bij het versturen van je bericht. Probeer het opnieuw.",
+    captchaLabel: "Vul de tekens uit de afbeelding in",
+    captchaRefresh: "Nieuwe code",
+    captchaError: "Die code klopt niet. Hieronder staat een nieuwe.",
     otherWays: "Andere manieren om ons te bereiken",
     email_label: "E-mail",
     phone_label: "Telefoon",

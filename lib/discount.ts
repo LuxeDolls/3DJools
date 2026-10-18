@@ -1,6 +1,6 @@
 // Registered-member discount. Centralized here so display (cart/checkout) and
 // server-side order creation (Step 3) apply the exact same rule.
-export const MEMBER_DISCOUNT_PERCENT = 10
+export const MEMBER_DISCOUNT_PERCENT = 7
 export const MEMBER_DISCOUNT_RATE = MEMBER_DISCOUNT_PERCENT / 100
 
 // Discount amount in integer cents, rounded to the nearest cent.

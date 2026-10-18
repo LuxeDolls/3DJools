@@ -1,8 +1,12 @@
 import type { Dictionary } from "./en"
 
 export const de: Dictionary = {
-  brandName: "3DJools",
+  brandName: "DnD3D",
   tagline: "Ernsthafte 3D-Drucker. Ehrliche Preise.",
+  maintenance: {
+    label: "Technische Wartung",
+    text: "Der Shop wird gerade aktualisiert. Die neue Adresse wird dnd3d.com. Bitte warten Sie mit einer neuen Bestellung.",
+  },
   nav: {
     catalog: "Katalog",
     printers: "3D-Drucker",
@@ -113,13 +117,13 @@ export const de: Dictionary = {
   },
   promo: {
     memberEyebrow: "Mitglieder sparen mehr",
-    memberTitle: "10% Rabatt auf jede Bestellung",
-    memberText: "Erstelle ein kostenloses 3DJools-Konto und ein exklusiver 10%-Mitgliederrabatt wird an der Kasse automatisch angewendet — auf jedes Produkt, jedes Mal.",
+    memberTitle: "7% Rabatt auf jede Bestellung",
+    memberText: "Erstelle ein kostenloses DnD3D-Konto und ein exklusiver 7%-Mitgliederrabatt wird an der Kasse automatisch angewendet — auf jedes Produkt, jedes Mal.",
     memberCtaGuest: "Kostenloses Konto erstellen",
     memberCtaSignIn: "Anmelden",
-    memberActiveTitle: "Dein 10%-Mitgliederrabatt ist aktiv",
-    memberActiveText: "Danke, dass du Mitglied bist — 10% werden an der Kasse automatisch von deinem Zwischensumme abgezogen.",
-    memberBadge: "10% RABATT",
+    memberActiveTitle: "Dein 7%-Mitgliederrabatt ist aktiv",
+    memberActiveText: "Danke, dass du Mitglied bist — 7% werden an der Kasse automatisch von deinem Zwischensumme abgezogen.",
+    memberBadge: "7% RABATT",
   },
   product: {
     specifications: "Spezifikationen",
@@ -133,7 +137,7 @@ export const de: Dictionary = {
     brand: "Marke",
     availability: "Verfügbarkeit",
     delivery: "Lieferung",
-    deliveryEstimate: "Versand innerhalb von 0–1 Werktag · Lieferung in 3–6 Werktagen",
+    deliveryEstimate: "Versand innerhalb von 0–2 Werktagen · Lieferung in 3–7 Werktagen",
     freeShipping: "Kostenloser Versand",
     securePayment: "Sichere Zahlung",
     warranty: "2 Jahre Garantie",
@@ -152,9 +156,9 @@ export const de: Dictionary = {
     freeShippingProgress: "Noch {amount} für kostenlosen Versand",
     freeShippingReached: "Du hast kostenlosen Versand freigeschaltet!",
     vatIncluded: "MwSt. ggf. inbegriffen",
-    memberDiscount: "Mitgliederrabatt (10%)",
+    memberDiscount: "Mitgliederrabatt (7%)",
     personalDiscount: "Persönlicher Rabatt (5%)",
-    signInToSave: "Anmelden und 10% bei dieser Bestellung sparen",
+    signInToSave: "Anmelden und 7% bei dieser Bestellung sparen",
   },
   checkout: {
     title: "Kasse",
@@ -318,6 +322,9 @@ export const de: Dictionary = {
     sentTitle: "Danke — deine Nachricht ist unterwegs",
     sentText: "Wir haben deine Anfrage erhalten und melden uns in Kürze per E-Mail.",
     errorText: "Beim Senden deiner Nachricht ist etwas schiefgelaufen. Bitte versuche es erneut.",
+    captchaLabel: "Zeichen aus dem Bild eingeben",
+    captchaRefresh: "Neuer Code",
+    captchaError: "Der Code stimmt nicht. Unten steht ein neuer.",
     otherWays: "Andere Wege, uns zu erreichen",
     email_label: "E-Mail",
     phone_label: "Telefon",

@@ -2,6 +2,7 @@
 
 import { db } from "@/lib/db"
 import { contactMessages } from "@/lib/db/schema"
+import { issueContactCaptcha, verifyContactCaptcha, type ContactCaptcha } from "@/lib/contact/captcha"
 import { sendEmail } from "@/lib/email/send"
 
 export type ContactInput = {
@@ -11,6 +12,12 @@ export type ContactInput = {
   orderRef?: string
   message: string
   locale: string
+  captchaToken: string
+  captchaAnswer: string
+}
+
+export async function refreshContactCaptcha(): Promise<ContactCaptcha> {
+  return issueContactCaptcha()
 }
 
 export type ContactResult = { ok: true } | { ok: false; error: string }
@@ -49,6 +56,9 @@ export async function submitContactMessage(input: ContactInput): Promise<Contact
   if (!name || !email || !message) return { ok: false, error: "Missing required fields" }
   if (!isValidEmail(email)) return { ok: false, error: "Invalid email" }
   if (message.length > 5000) return { ok: false, error: "Message too long" }
+  if (!verifyContactCaptcha(input.captchaToken ?? "", input.captchaAnswer ?? "")) {
+    return { ok: false, error: "captcha" }
+  }
 
   // Fold the optional order reference into the subject so it reaches the inbox.
   const subjectParts = [input.subject?.trim(), input.orderRef?.trim() ? `Order: ${input.orderRef.trim()}` : ""].filter(
@@ -73,7 +83,7 @@ export async function submitContactMessage(input: ContactInput): Promise<Contact
   await sendEmail({
     to: "info@3djools.com",
     replyTo: storedEmail,
-    subject: `[3DJools] ${normalizedSubject}`,
+    subject: `[DnD3D] ${normalizedSubject}`,
     text: `New contact form message\n\nFrom: ${storedName} <${storedEmail}>\nSubject: ${normalizedSubject}\n\n${storedMessage}`,
     html: `<h1>New contact form message</h1><p><strong>From:</strong> ${escapeHtml(storedName)} &lt;${escapeHtml(storedEmail)}&gt;</p><p><strong>Subject:</strong> ${escapeHtml(normalizedSubject)}</p><p>${escapeHtml(storedMessage).replace(/\n/g, "<br>")}</p>`,
   })

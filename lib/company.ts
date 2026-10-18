@@ -1,7 +1,7 @@
 // Single source for the store's legal identity. Visible pages, the installment
 // contract and schema.org Organization all read from here.
 export const COMPANY = {
-  tradingName: "3DJools",
+  tradingName: "DnD3D",
   legalName: "LN-SQUARED",
   street: "Rue du Chénia 17",
   postalCode: "7170",

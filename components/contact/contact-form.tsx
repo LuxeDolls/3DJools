@@ -1,19 +1,20 @@
 "use client"
 
 import { useState } from "react"
-import { CheckCircle2, Send } from "lucide-react"
+import { CheckCircle2, RefreshCw, Send } from "lucide-react"
 import { useI18n } from "@/components/i18n-provider"
-import { submitContactMessage } from "@/lib/actions/contact"
+import { refreshContactCaptcha, submitContactMessage } from "@/lib/actions/contact"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 
-export function ContactForm() {
+export function ContactForm({ captcha }: { captcha: { token: string; svg: string } }) {
   const { dict, locale } = useI18n()
   const [sent, setSent] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [challenge, setChallenge] = useState(captcha)
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -28,11 +29,14 @@ export function ContactForm() {
         orderRef: String(form.get("orderRef") ?? ""),
         message: String(form.get("message") ?? ""),
         locale,
+        captchaToken: challenge.token,
+        captchaAnswer: String(form.get("captcha") ?? ""),
       })
       if (result.ok) {
         setSent(true)
       } else {
-        setError(dict.contact.errorText)
+        setChallenge(await refreshContactCaptcha())
+        setError(result.error === "captcha" ? dict.contact.captchaError : dict.contact.errorText)
       }
     } catch {
       setError(dict.contact.errorText)
@@ -77,7 +81,28 @@ export function ContactForm() {
         <Label htmlFor="message">{dict.contact.message}</Label>
         <Textarea id="message" name="message" required rows={6} />
       </div>
-      <Button type="submit" size="lg">
+      <div className="space-y-1.5">
+        <Label htmlFor="captcha">{dict.contact.captchaLabel}</Label>
+        <div className="flex flex-wrap items-center gap-3">
+          <div
+            className="overflow-hidden rounded-md border border-border bg-secondary"
+            dangerouslySetInnerHTML={{ __html: challenge.svg }}
+          />
+          <Button
+            type="button"
+            variant="outline"
+            onClick={async () => {
+              setChallenge(await refreshContactCaptcha())
+              setError(null)
+            }}
+          >
+            <RefreshCw className="size-4" />
+            {dict.contact.captchaRefresh}
+          </Button>
+        </div>
+        <Input id="captcha" name="captcha" required autoComplete="off" spellCheck={false} maxLength={8} className="max-w-40 uppercase" />
+      </div>
+      <Button type="submit" size="lg" disabled={loading}>
         <Send className="size-4" />
         {dict.contact.send}
       </Button>

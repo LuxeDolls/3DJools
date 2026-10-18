@@ -1,7 +1,11 @@
 import type { Dictionary } from "./en"
 
 export const fr: Dictionary = {
-  brandName: "3DJools",
+  brandName: "DnD3D",
+  maintenance: {
+    label: "Maintenance technique",
+    text: "La boutique est en cours de mise à jour. La nouvelle adresse sera dnd3d.com. Merci de patienter avant de passer une nouvelle commande.",
+  },
   tagline: "Des imprimantes 3D sérieuses. Des prix honnêtes.",
   nav: {
     catalog: "Catalogue",
@@ -113,13 +117,13 @@ export const fr: Dictionary = {
   },
   promo: {
     memberEyebrow: "Les membres économisent plus",
-    memberTitle: "10% de remise sur chaque commande",
-    memberText: "Créez un compte 3DJools gratuit et une remise membre exclusive de 10% est appliquée automatiquement au paiement — sur chaque produit, à chaque fois.",
+    memberTitle: "7% de remise sur chaque commande",
+    memberText: "Créez un compte DnD3D gratuit et une remise membre exclusive de 7% est appliquée automatiquement au paiement — sur chaque produit, à chaque fois.",
     memberCtaGuest: "Créer un compte gratuit",
     memberCtaSignIn: "Se connecter",
-    memberActiveTitle: "Votre remise membre de 10% est active",
-    memberActiveText: "Merci d'être membre — 10% sont déduits automatiquement de votre sous-total au paiement.",
-    memberBadge: "-10%",
+    memberActiveTitle: "Votre remise membre de 7% est active",
+    memberActiveText: "Merci d'être membre — 7% sont déduits automatiquement de votre sous-total au paiement.",
+    memberBadge: "-7%",
   },
   product: {
     specifications: "Spécifications",
@@ -133,7 +137,7 @@ export const fr: Dictionary = {
     brand: "Marque",
     availability: "Disponibilité",
     delivery: "Livraison",
-    deliveryEstimate: "Traité sous 0–1 jour ouvré · livraison en 3–6 jours ouvrés",
+    deliveryEstimate: "Traité sous 0–2 jours ouvrés · livraison en 3–7 jours ouvrés",
     freeShipping: "Livraison gratuite",
     securePayment: "Paiement sécurisé",
     warranty: "Garantie 2 ans",
@@ -152,9 +156,9 @@ export const fr: Dictionary = {
     freeShippingProgress: "Ajoutez {amount} pour la livraison gratuite",
     freeShippingReached: "Livraison gratuite débloquée !",
     vatIncluded: "TVA incluse le cas échéant",
-    memberDiscount: "Remise membre (10%)",
+    memberDiscount: "Remise membre (7%)",
     personalDiscount: "Remise personnelle (5%)",
-    signInToSave: "Connectez-vous pour économiser 10% sur cette commande",
+    signInToSave: "Connectez-vous pour économiser 7% sur cette commande",
   },
   checkout: {
     title: "Paiement",
@@ -318,6 +322,9 @@ export const fr: Dictionary = {
     sentTitle: "Merci — votre message est en route",
     sentText: "Nous avons bien reçu votre demande et reviendrons vers vous par e-mail rapidement.",
     errorText: "Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer.",
+    captchaLabel: "Saisissez les caractères de l'image",
+    captchaRefresh: "Nouveau code",
+    captchaError: "Ce code ne correspond pas. Un nouveau est affiché ci-dessous.",
     otherWays: "Autres moyens de nous joindre",
     email_label: "E-mail",
     phone_label: "Téléphone",

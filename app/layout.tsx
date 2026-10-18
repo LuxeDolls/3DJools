@@ -19,8 +19,8 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: {
-    default: '3DJools — 3D Printers, Filament & Accessories',
-    template: '%s · 3DJools',
+    default: 'DnD3D — 3D Printers, Filament & Accessories',
+    template: '%s · DnD3D',
   },
   description:
     'Top-tier 3D printers, filament and accessories at honest prices. Free shipping on every order across the EU. Bambu Lab, Prusa, Creality, Anycubic, Elegoo and more.',

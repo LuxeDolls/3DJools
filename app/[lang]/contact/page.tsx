@@ -6,6 +6,7 @@ import { localizedPath } from "@/lib/i18n/paths"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { ContactForm } from "@/components/contact/contact-form"
 import { COMPANY, companyStreetLine } from "@/lib/company"
+import { issueContactCaptcha } from "@/lib/contact/captcha"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -18,6 +19,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
+  const captcha = issueContactCaptcha()
 
   const details = [
     { icon: Mail, label: dict.contact.email_label, value: COMPANY.email, href: `mailto:${COMPANY.email}` },
@@ -46,7 +48,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_20rem]">
         <div className="rounded-lg border border-border bg-card p-6">
-          <ContactForm />
+          <ContactForm captcha={captcha} />
         </div>
 
         <aside>

@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Logo } from "./logo"
+import { MaintenanceBanner } from "./maintenance-banner"
 import { SearchBar } from "./search-bar"
 import { LocaleSwitcher } from "./locale-switcher"
 import { ThemeToggle } from "./theme-toggle"
@@ -25,6 +26,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <MaintenanceBanner label={dict.maintenance.label} text={dict.maintenance.text} />
       {/* Announcement strip */}
       <div className="border-b border-border bg-secondary text-secondary-foreground">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-4 px-4 text-xs">
