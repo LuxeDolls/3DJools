@@ -31,7 +31,7 @@ import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schem
 
 // Prices are authoritative here, never taken from the client — the cart only
 // supplies slugs + quantities. Shipping cost is recomputed from lib/shipping
-// (single EU/UK shipping method, 3–6 working days) using the destination
+// (single EU/UK shipping method, 3–7 working days) using the destination
 // country submitted at checkout; it becomes free automatically once the
 // subtotal reaches the threshold.
 const MAX_QTY = 20

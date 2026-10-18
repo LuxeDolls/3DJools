@@ -40,7 +40,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "How long does delivery take, and how much does it cost?",
             answer:
-              "Standard shipping takes 3–6 business days in total and is completely free on every order, to every destination we deliver to — no minimum spend required. Handling takes 0–1 business day and transit takes 3–5 business days. Orders placed by 15:00 CET Monday to Friday enter the handling window that day.",
+              "Standard shipping takes 3–7 business days in total and is completely free on every order, to every destination we deliver to — no minimum spend required. Handling takes 0–2 business days and transit takes 3–5 business days. Orders placed by 15:00 CET Monday to Friday enter the handling window that day.",
           },
           {
             question: "What are your business hours?",
@@ -138,7 +138,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wie lange dauert die Lieferung und was kostet sie?",
             answer:
-              "Der Standardversand dauert insgesamt 3–6 Werktage und ist bei jeder Bestellung und in jedes Lieferland vollständig kostenlos — ohne Mindestbestellwert. Die Bearbeitung dauert 0–1 Werktag, der Transport 3–5 Werktage. Bestellungen, die montags bis freitags bis 15:00 Uhr MEZ eingehen, werden noch am selben Tag bearbeitet.",
+              "Der Standardversand dauert insgesamt 3–7 Werktage und ist bei jeder Bestellung und in jedes Lieferland vollständig kostenlos — ohne Mindestbestellwert. Die Bearbeitung dauert 0–2 Werktage, der Transport 3–5 Werktage. Bestellungen, die montags bis freitags bis 15:00 Uhr MEZ eingehen, werden noch am selben Tag bearbeitet.",
           },
           {
             question: "Wann sind Sie erreichbar?",
@@ -236,7 +236,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Combien de temps prend la livraison et combien coûte-t-elle ?",
             answer:
-              "La livraison standard prend 3 à 6 jours ouvrables au total et est entièrement gratuite pour chaque commande, vers toutes les destinations que nous desservons, sans montant minimum. Le traitement prend 0 à 1 jour ouvrable et le transport 3 à 5 jours ouvrables. Les commandes passées avant 15:00 CET du lundi au vendredi entrent dans le délai de traitement le jour même.",
+              "La livraison standard prend 3 à 7 jours ouvrables au total et est entièrement gratuite pour chaque commande, vers toutes les destinations que nous desservons, sans montant minimum. Le traitement prend 0 à 2 jours ouvrables et le transport 3 à 5 jours ouvrables. Les commandes passées avant 15:00 CET du lundi au vendredi entrent dans le délai de traitement le jour même.",
           },
           {
             question: "Quels sont vos horaires ?",
@@ -334,7 +334,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quanto tempo richiede la consegna e quanto costa?",
             answer:
-              "La spedizione standard richiede in totale 3–6 giorni lavorativi ed è completamente gratuita per ogni ordine, verso ogni destinazione che serviamo, senza importo minimo. La preparazione richiede 0–1 giorno lavorativo e il trasporto 3–5 giorni lavorativi. Gli ordini effettuati entro le 15:00 CET dal lunedì al venerdì entrano nella finestra di preparazione lo stesso giorno.",
+              "La spedizione standard richiede in totale 3–7 giorni lavorativi ed è completamente gratuita per ogni ordine, verso ogni destinazione che serviamo, senza importo minimo. La preparazione richiede 0–2 giorni lavorativi e il trasporto 3–5 giorni lavorativi. Gli ordini effettuati entro le 15:00 CET dal lunedì al venerdì entrano nella finestra di preparazione lo stesso giorno.",
           },
           {
             question: "Quali sono gli orari?",
@@ -432,7 +432,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿Cuánto tarda la entrega y cuánto cuesta?",
             answer:
-              "El envío estándar tarda de 3 a 6 días laborables en total y es completamente gratuito en todos los pedidos y a todos los destinos a los que enviamos, sin pedido mínimo. La preparación tarda de 0 a 1 día laborable y el tránsito de 3 a 5 días laborables. Los pedidos realizados antes de las 15:00 CET de lunes a viernes entran en la ventana de preparación ese mismo día.",
+              "El envío estándar tarda de 3 a 7 días laborables en total y es completamente gratuito en todos los pedidos y a todos los destinos a los que enviamos, sin pedido mínimo. La preparación tarda de 0 a 2 días laborables y el tránsito de 3 a 5 días laborables. Los pedidos realizados antes de las 15:00 CET de lunes a viernes entran en la ventana de preparación ese mismo día.",
           },
           {
             question: "¿Cuál es vuestro horario?",
@@ -530,7 +530,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Hoe lang duurt de levering en wat kost die?",
             answer:
-              "De standaardverzending duurt in totaal 3–6 werkdagen en is volledig gratis bij elke bestelling, naar elke bestemming die we bedienen, zonder minimumbedrag. De verwerking duurt 0–1 werkdag en het transport 3–5 werkdagen. Bestellingen die maandag tot vrijdag vóór 15:00 CET worden geplaatst, vallen die dag nog binnen het verwerkingstijdvenster.",
+              "De standaardverzending duurt in totaal 3–7 werkdagen en is volledig gratis bij elke bestelling, naar elke bestemming die we bedienen, zonder minimumbedrag. De verwerking duurt 0–2 werkdagen en het transport 3–5 werkdagen. Bestellingen die maandag tot vrijdag vóór 15:00 CET worden geplaatst, vallen die dag nog binnen het verwerkingstijdvenster.",
           },
           {
             question: "Wat zijn jullie openingstijden?",
