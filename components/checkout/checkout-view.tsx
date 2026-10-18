@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useState, type FormEvent } from "react"
+import { useEffect, useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
@@ -22,7 +22,7 @@ import { cn } from "@/lib/utils"
 import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName } from "@/lib/payments/cardholder"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
-import { BANK_TRANSFER_ACCOUNT, BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
+import { BANK_TRANSFER_ACCOUNT, BANK_TRANSFER_CHECKOUT_ENABLED, isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
@@ -61,6 +61,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const { lines, subtotalCents } = useCart()
   const { data: session } = useSession()
   const isMember = Boolean(session?.user)
+  const bankTransferEnabled = isBankTransferCheckoutEnabled(session?.user?.email)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
 
   const [payment, setPayment] = useState<PaymentId>(
@@ -74,6 +75,11 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
             ? "sepa"
             : "crypto",
   )
+  useEffect(() => {
+    if (bankTransferEnabled && !BANK_TRANSFER_CHECKOUT_ENABLED) {
+      setPayment((current) => (current === "alppay" ? "sepa" : current))
+    }
+  }, [bankTransferEnabled])
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Belgium")
   const [submitting, setSubmitting] = useState(false)
@@ -109,7 +115,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     ...(ALPPAY_CHECKOUT_ENABLED
       ? [{ id: "alppay" as const, icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc }]
       : []),
-    ...(BANK_TRANSFER_CHECKOUT_ENABLED
+    ...(bankTransferEnabled
       ? [{ id: "sepa" as const, icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc }]
       : []),
     { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
@@ -149,7 +155,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
       setOrderError(dict.checkout.payPaypalUnavailable)
       return
     }
-    if (payment === "sepa" && !BANK_TRANSFER_CHECKOUT_ENABLED) {
+    if (payment === "sepa" && !bankTransferEnabled) {
       setOrderError(dict.checkout.orderError)
       return
     }
