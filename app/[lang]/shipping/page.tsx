@@ -38,7 +38,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "Shipping is completely free on every order, to every destination we deliver to — no minimum spend required. We deliver with our own courier service, DnD3D Courier. If our courier cannot cover the route, we hand the parcel to DHL or DPD. Orders are handled within 0–2 business days Monday to Friday, and transit takes 3–5 business days. Orders placed by 15:00 CET on a working day enter the handling window that day.",
     sectionHours: "Business hours",
     hoursParagraph:
-      "Our team works Monday to Friday, 9:00–18:00 CET (excluding Belgian public holidays). The total estimated delivery time is 3–7 business days: 0–2 business days handling plus 3–5 business days in transit. Orders placed by 15:00 CET are processed within the stated handling window.",
+      "Our team works Monday to Friday, 9:00–18:00 CET (excluding Dutch public holidays). The total estimated delivery time is 3–7 business days: 0–2 business days handling plus 3–5 business days in transit. Orders placed by 15:00 CET are processed within the stated handling window.",
     sectionZones: "Shipping zones",
     zonesParagraph:
       "We ship to Belgium and to the rest of the European Union plus a handful of neighbouring countries (Switzerland, Norway, United Kingdom) — shipping is free to every one of these destinations.",
@@ -59,7 +59,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "Der Versand ist bei jeder Bestellung und zu jedem Lieferziel völlig kostenlos — kein Mindestbestellwert erforderlich. Wir liefern mit unserem eigenen Kurierdienst, DnD3D Courier. Wenn unser Kurier die Strecke nicht abdecken kann, übergeben wir das Paket an DHL oder DPD. Bestellungen werden von Montag bis Freitag innerhalb von 0–2 Werktagen bearbeitet; der Transport dauert 3–5 Werktage. Bestellungen, die bis 15:00 Uhr MEZ an einem Werktag eingehen, werden an diesem Tag in das Bearbeitungsfenster aufgenommen.",
     sectionHours: "Geschäftszeiten",
     hoursParagraph:
-      "Unser Team arbeitet Montag bis Freitag von 9:00 bis 18:00 Uhr MEZ (außer an belgischen Feiertagen). Die voraussichtliche Gesamtlieferzeit beträgt 3–7 Werktage: 0–2 Werktage Bearbeitung plus 3–5 Werktage Transport. Bestellungen bis 15:00 Uhr MEZ werden innerhalb des angegebenen Bearbeitungsfensters bearbeitet.",
+      "Unser Team arbeitet Montag bis Freitag von 9:00 bis 18:00 Uhr MEZ (außer an niederländischen Feiertagen). Die voraussichtliche Gesamtlieferzeit beträgt 3–7 Werktage: 0–2 Werktage Bearbeitung plus 3–5 Werktage Transport. Bestellungen bis 15:00 Uhr MEZ werden innerhalb des angegebenen Bearbeitungsfensters bearbeitet.",
     sectionZones: "Versandzonen",
     zonesParagraph:
       "Wir versenden nach Belgien sowie in die übrige Europäische Union und einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) — der Versand ist zu jedem dieser Ziele kostenlos.",
@@ -80,7 +80,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "La livraison est entièrement gratuite pour toute commande, vers toutes les destinations que nous livrons — aucun montant minimum requis. Nous livrons avec notre propre service de coursier, DnD3D Courier. Si notre coursier ne peut pas couvrir le trajet, nous remettons le colis à DHL ou DPD. Les commandes sont traitées sous 0 à 2 jours ouvrés du lundi au vendredi ; le transport prend 3 à 5 jours ouvrés. Les commandes passées avant 15h00 CET un jour ouvré entrent dans le délai de traitement du jour.",
     sectionHours: "Horaires d'ouverture",
     hoursParagraph:
-      "Notre équipe travaille du lundi au vendredi, de 9h00 à 18h00 CET (hors jours fériés belges). Le délai total estimé est de 3 à 7 jours ouvrés : 0 à 2 jours ouvrés de traitement, puis 3 à 5 jours ouvrés de transport. Les commandes passées avant 15h00 CET sont traitées dans le délai indiqué.",
+      "Notre équipe travaille du lundi au vendredi, de 9h00 à 18h00 CET (hors jours fériés néerlandais). Le délai total estimé est de 3 à 7 jours ouvrés : 0 à 2 jours ouvrés de traitement, puis 3 à 5 jours ouvrés de transport. Les commandes passées avant 15h00 CET sont traitées dans le délai indiqué.",
     sectionZones: "Zones de livraison",
     zonesParagraph:
       "Nous livrons en Belgique ainsi que dans le reste de l'Union européenne et quelques pays voisins (Suisse, Norvège, Royaume-Uni) — la livraison est gratuite vers chacune de ces destinations.",
@@ -101,7 +101,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "La spedizione è sempre completamente gratuita, per qualsiasi ordine e verso tutte le destinazioni servite — nessun importo minimo richiesto. Consegniamo con il nostro servizio di corriere, DnD3D Courier. Se il nostro corriere non può coprire il percorso, affidiamo il pacco a DHL o DPD. Ogni ordine viene elaborato entro 0–2 giorni lavorativi dal lunedì al venerdì; il trasporto richiede 3–5 giorni lavorativi. Gli ordini effettuati entro le 15:00 CET di un giorno lavorativo entrano nel periodo di gestione della giornata.",
     sectionHours: "Orari di apertura",
     hoursParagraph:
-      "Il nostro team lavora dal lunedì al venerdì, dalle 9:00 alle 18:00 CET (escluse le festività belghe). Il tempo totale stimato di consegna è di 3–7 giorni lavorativi: 0–2 giorni lavorativi di gestione più 3–5 giorni lavorativi di trasporto. Gli ordini effettuati entro le 15:00 CET vengono elaborati entro il periodo indicato.",
+      "Il nostro team lavora dal lunedì al venerdì, dalle 9:00 alle 18:00 CET (escluse le festività olandesi). Il tempo totale stimato di consegna è di 3–7 giorni lavorativi: 0–2 giorni lavorativi di gestione più 3–5 giorni lavorativi di trasporto. Gli ordini effettuati entro le 15:00 CET vengono elaborati entro il periodo indicato.",
     sectionZones: "Zone di spedizione",
     zonesParagraph:
       "Spediamo in Belgio e nel resto dell'Unione Europea, oltre ad alcuni paesi limitrofi (Svizzera, Norvegia, Regno Unito) — la spedizione è gratuita verso ciascuna di queste destinazioni.",
@@ -122,7 +122,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "El envío es siempre completamente gratuito, en cualquier pedido y hacia todos los destinos a los que entregamos, sin importe mínimo. Entregamos con nuestro propio servicio de mensajería, DnD3D Courier. Si nuestro mensajero no puede cubrir la ruta, entregamos el paquete a DHL o DPD. Cada pedido se procesa en un plazo de 0–2 días laborables de lunes a viernes; el transporte tarda 3–5 días laborables. Los pedidos realizados antes de las 15:00 CET en un día laborable entran en el plazo de gestión de ese día.",
     sectionHours: "Horario de atención",
     hoursParagraph:
-      "Nuestro equipo trabaja de lunes a viernes, de 9:00 a 18:00 CET (excepto festivos belgas). El plazo total estimado de entrega es de 3–7 días laborables: 0–2 días laborables de gestión más 3–5 días laborables de transporte. Los pedidos realizados antes de las 15:00 CET se procesan dentro del plazo indicado.",
+      "Nuestro equipo trabaja de lunes a viernes, de 9:00 a 18:00 CET (excepto festivos neerlandeses). El plazo total estimado de entrega es de 3–7 días laborables: 0–2 días laborables de gestión más 3–5 días laborables de transporte. Los pedidos realizados antes de las 15:00 CET se procesan dentro del plazo indicado.",
     sectionZones: "Zonas de envío",
     zonesParagraph:
       "Enviamos a Bélgica y al resto de la Unión Europea, además de algunos países vecinos (Suiza, Noruega, Reino Unido) — el envío es gratuito a cada uno de estos destinos.",
@@ -143,7 +143,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "De verzending is altijd volledig gratis, voor elke bestelling en naar elke bestemming die wij bedienen — geen minimumbedrag vereist. Wij leveren met onze eigen koeriersdienst, DnD3D Courier. Als onze koerier de route niet kan dekken, geven wij het pakket door aan DHL of DPD. Elke bestelling wordt van maandag tot vrijdag binnen 0–2 werkdagen verwerkt; het transport duurt 3–5 werkdagen. Bestellingen die vóór 15:00 CET op een werkdag worden geplaatst, vallen die dag binnen het verwerkingstijdvenster.",
     sectionHours: "Openingstijden",
     hoursParagraph:
-      "Ons team werkt van maandag tot vrijdag, 9:00–18:00 CET (met uitzondering van Belgische feestdagen). De totale geschatte levertijd bedraagt 3–7 werkdagen: 0–2 werkdagen verwerking plus 3–5 werkdagen transport. Bestellingen vóór 15:00 CET worden binnen het vermelde verwerkingstijdvenster verwerkt.",
+      "Ons team werkt van maandag tot vrijdag, 9:00–18:00 CET (met uitzondering van Nederlandse feestdagen). De totale geschatte levertijd bedraagt 3–7 werkdagen: 0–2 werkdagen verwerking plus 3–5 werkdagen transport. Bestellingen vóór 15:00 CET worden binnen het vermelde verwerkingstijdvenster verwerkt.",
     sectionZones: "Verzendzones",
     zonesParagraph:
       "Wij verzenden naar Belgïe en de rest van de Europese Unie plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk) — de verzending is gratis naar elk van deze bestemmingen.",

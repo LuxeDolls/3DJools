@@ -301,7 +301,7 @@ export const nl: Dictionary = {
     impressum: "Colofon",
     rights: "Alle rechten voorbehouden.",
     paymentsSecured: "Betalingen beveiligd & versleuteld",
-    operatedBy: "3DJools wordt beheerd door LN-SQUARED.",
+    operatedBy: "DnD3D wordt beheerd door BJX Business Group B.V.",
     companyBlurb: "Jouw Europese winkel voor 3D-printers, filament en accessoires van de merken die makers vertrouwen.",
     companyNumber: "KvK-nummer",
     vatId: "Btw-nummer",

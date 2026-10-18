@@ -51,7 +51,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
   en: {
     sectionWhoWeAre: "Who we are",
     whoWeAre:
-      "The 3DJools online store is operated by {legalName}, {street}, {postalCode} {city}, Hainaut, Belgium (Company No. {companyNumber}, VAT {vat}), which acts as the data controller for the purposes of this policy. This privacy policy explains how we collect, use and protect your personal data in accordance with the EU General Data Protection Regulation (GDPR).",
+      "The DnD3D online store is operated by {legalName}, {street}, {postalCode} {city}, Netherlands (KvK {companyNumber}, VAT {vat}), which acts as the data controller for the purposes of this policy. This privacy policy explains how we collect, use and protect your personal data in accordance with the EU General Data Protection Regulation (GDPR).",
     sectionDataWeCollect: "Data we collect",
     dataWeCollect:
       "We collect the information you provide when placing an order or contacting us (name, address, email, phone, date of birth for card payments, billing region for Visa and Mastercard, and payment details) and technical data such as your IP address and cookies necessary to run the store, process card payments, and understand how it is used.",
@@ -62,7 +62,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
     legalBasisIntro: "We only process your personal data where we have a valid legal basis to do so:",
     legalBasis: [
       { title: "Contract performance", text: "processing your order, payment and delivery details to fulfil a purchase or instalment agreement" },
-      { title: "Legal obligation", text: "retaining invoicing and tax records as required by Belgian and EU law" },
+      { title: "Legal obligation", text: "retaining invoicing and tax records as required by Dutch and EU law" },
       { title: "Legitimate interest", text: "preventing fraud, securing our systems, and running essential store functionality" },
       { title: "Consent", text: "sending marketing communications and using non-essential analytics cookies, which you can withdraw at any time" },
     ],
@@ -97,8 +97,8 @@ const COPY: Record<Locale, PrivacyCopy> = {
     rightsContactBefore: "To exercise any of these rights, contact us at ",
     rightsContactAfter: ".",
     dpaBefore:
-      "As our company is established in Belgium, you also have the right to lodge a complaint directly with the Belgian Data Protection Authority (Autorité de protection des données / Gegevensbeschermingsautoriteit), ",
-    dpaAddress: "Rue de la Presse 35, 1000 Brussels, Belgium",
+      "As our company is established in the Netherlands, you also have the right to lodge a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens), ",
+    dpaAddress: "Postbus 93374, 2509 AJ The Hague, Netherlands",
     dpaAfter: " — ",
     sectionCookies: "Cookies",
     cookiesBefore:
@@ -110,13 +110,13 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "We may update this privacy policy from time to time to reflect changes in our practices or legal requirements. Material changes will be reflected on this page with an updated \u201clast updated\u201d date.",
     sectionContact: "Contact us",
     contactBefore: "For any question about this policy or your data, contact {legalName} at ",
-    contactPhoneLabel: ", by phone at {phone}, or by post at {street}, {postalCode} {city}, Hainaut, Belgium.",
+    contactPhoneLabel: ", by phone at {phone}, or by post at {street}, {postalCode} {city}, Netherlands.",
     contactAfter: "",
   },
   de: {
     sectionWhoWeAre: "Wer wir sind",
     whoWeAre:
-      "Der 3DJools-Onlineshop wird betrieben von {legalName}, {street}, {postalCode} {city}, Hainaut, Belgien (Unternehmensnr. {companyNumber}, USt-IdNr. {vat}), das als Verantwortlicher im Sinne dieser Richtlinie handelt. Diese Datenschutzerklärung erläutert, wie wir Ihre personenbezogenen Daten gemäß der EU-Datenschutz-Grundverordnung (DSGVO) erheben, verwenden und schützen.",
+      "Der DnD3D-Onlineshop wird betrieben von {legalName}, {street}, {postalCode} {city}, Niederlande (KvK {companyNumber}, USt-IdNr. {vat}), das als Verantwortlicher im Sinne dieser Richtlinie handelt. Diese Datenschutzerklärung erläutert, wie wir Ihre personenbezogenen Daten gemäß der EU-Datenschutz-Grundverordnung (DSGVO) erheben, verwenden und schützen.",
     sectionDataWeCollect: "Von uns erhobene Daten",
     dataWeCollect:
       "Wir erheben die Informationen, die Sie bei einer Bestellung oder Kontaktaufnahme angeben (Name, Adresse, E-Mail, Telefon, Geburtsdatum bei Kartenzahlung, Region bei Visa und Mastercard und Zahlungsdaten) sowie technische Daten wie Ihre IP-Adresse und Cookies, die für den Betrieb des Shops, die Kartenzahlung und das Verständnis seiner Nutzung erforderlich sind.",
@@ -127,7 +127,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
     legalBasisIntro: "Wir verarbeiten Ihre personenbezogenen Daten nur, wenn eine gültige Rechtsgrundlage vorliegt:",
     legalBasis: [
       { title: "Vertragserfüllung", text: "Verarbeitung Ihrer Bestell-, Zahlungs- und Lieferdaten zur Erfüllung eines Kauf- oder Ratenzahlungsvertrags" },
-      { title: "Rechtliche Verpflichtung", text: "Aufbewahrung von Rechnungs- und Steuerunterlagen gemäß belgischem und EU-Recht" },
+      { title: "Rechtliche Verpflichtung", text: "Aufbewahrung von Rechnungs- und Steuerunterlagen gemäß niederländischem und EU-Recht" },
       { title: "Berechtigtes Interesse", text: "Betrugsprävention, Absicherung unserer Systeme und Aufrechterhaltung wesentlicher Shop-Funktionen" },
       { title: "Einwilligung", text: "Versand von Marketingmitteilungen und Verwendung nicht essenzieller Analyse-Cookies, die Sie jederzeit widerrufen können" },
     ],
@@ -162,8 +162,8 @@ const COPY: Record<Locale, PrivacyCopy> = {
     rightsContactBefore: "Um eines dieser Rechte auszuüben, kontaktieren Sie uns unter ",
     rightsContactAfter: ".",
     dpaBefore:
-      "Da unser Unternehmen in Belgien niedergelassen ist, haben Sie außerdem das Recht, sich direkt bei der belgischen Datenschutzbehörde (Autorité de protection des données / Gegevensbeschermingsautoriteit), ",
-    dpaAddress: "Rue de la Presse 35, 1000 Brüssel, Belgien",
+      "Da unser Unternehmen in den Niederlanden niedergelassen ist, haben Sie außerdem das Recht, sich bei der niederländischen Datenschutzbehörde (Autoriteit Persoonsgegevens), ",
+    dpaAddress: "Postbus 93374, 2509 AJ Den Haag, Niederlande",
     dpaAfter: ", zu beschweren — ",
     sectionCookies: "Cookies",
     cookiesBefore:
@@ -175,13 +175,13 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren, um Änderungen unserer Praktiken oder rechtlicher Anforderungen widerzuspiegeln. Wesentliche Änderungen werden auf dieser Seite mit einem aktualisierten „zuletzt aktualisiert“-Datum angezeigt.",
     sectionContact: "Kontakt",
     contactBefore: "Bei Fragen zu dieser Richtlinie oder Ihren Daten kontaktieren Sie {legalName} unter ",
-    contactPhoneLabel: ", telefonisch unter {phone} oder postalisch unter {street}, {postalCode} {city}, Hainaut, Belgien.",
+    contactPhoneLabel: ", telefonisch unter {phone} oder postalisch unter {street}, {postalCode} {city}, Niederlande.",
     contactAfter: "",
   },
   fr: {
     sectionWhoWeAre: "Qui nous sommes",
     whoWeAre:
-      "La boutique en ligne 3DJools est exploitée par {legalName}, {street}, {postalCode} {city}, Hainaut, Belgique (n° d'entreprise {companyNumber}, TVA {vat}), qui agit en tant que responsable du traitement au sens de la présente politique. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données personnelles conformément au Règlement général sur la protection des données (RGPD).",
+      "La boutique en ligne DnD3D est exploitée par {legalName}, {street}, {postalCode} {city}, Pays-Bas (KvK {companyNumber}, TVA {vat}), qui agit en tant que responsable du traitement au sens de la présente politique. Cette politique de confidentialité explique comment nous collectons, utilisons et protégeons vos données personnelles conformément au Règlement général sur la protection des données (RGPD).",
     sectionDataWeCollect: "Données que nous collectons",
     dataWeCollect:
       "Nous collectons les informations que vous fournissez lors d'une commande ou d'un contact (nom, adresse, e-mail, téléphone, date de naissance pour le paiement par carte, région pour Visa et Mastercard, informations de paiement), ainsi que des données techniques telles que votre adresse IP et les cookies nécessaires au fonctionnement de la boutique, au paiement par carte et à la compréhension de son utilisation.",
@@ -192,7 +192,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
     legalBasisIntro: "Nous ne traitons vos données personnelles que lorsque nous disposons d'une base légale valable :",
     legalBasis: [
       { title: "Exécution du contrat", text: "traitement de vos informations de commande, de paiement et de livraison pour honorer un achat ou un contrat de paiement échelonné" },
-      { title: "Obligation légale", text: "conservation des données de facturation et fiscales conformément au droit belge et européen" },
+      { title: "Obligation légale", text: "conservation des données de facturation et fiscales conformément au droit néerlandais et européen" },
       { title: "Intérêt légitime", text: "prévention de la fraude, sécurisation de nos systèmes et fonctionnement essentiel de la boutique" },
       { title: "Consentement", text: "envoi de communications marketing et utilisation de cookies analytiques non essentiels, que vous pouvez retirer à tout moment" },
     ],
@@ -227,8 +227,8 @@ const COPY: Record<Locale, PrivacyCopy> = {
     rightsContactBefore: "Pour exercer l'un de ces droits, contactez-nous à ",
     rightsContactAfter: ".",
     dpaBefore:
-      "Notre société étant établie en Belgique, vous avez également le droit de déposer une plainte directement auprès de l'Autorité de protection des données belge, ",
-    dpaAddress: "Rue de la Presse 35, 1000 Bruxelles, Belgique",
+      "Notre société étant établie aux Pays-Bas, vous avez également le droit de déposer une plainte auprès de l'autorité néerlandaise de protection des données (Autoriteit Persoonsgegevens), ",
+    dpaAddress: "Postbus 93374, 2509 AJ La Haye, Pays-Bas",
     dpaAfter: " — ",
     sectionCookies: "Cookies",
     cookiesBefore:
@@ -240,13 +240,13 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Nous pouvons mettre à jour cette politique de confidentialité de temps à autre pour refléter les changements de nos pratiques ou des exigences légales. Les modifications substantielles seront reflétées sur cette page avec une date de « dernière mise à jour » actualisée.",
     sectionContact: "Nous contacter",
     contactBefore: "Pour toute question concernant cette politique ou vos données, contactez {legalName} à ",
-    contactPhoneLabel: ", par téléphone au {phone}, ou par courrier à {street}, {postalCode} {city}, Hainaut, Belgique.",
+    contactPhoneLabel: ", par téléphone au {phone}, ou par courrier à {street}, {postalCode} {city}, Pays-Bas.",
     contactAfter: "",
   },
   it: {
     sectionWhoWeAre: "Chi siamo",
     whoWeAre:
-      "Il negozio online 3DJools è gestito da {legalName}, {street}, {postalCode} {city}, Hainaut, Belgio (n. società {companyNumber}, P.IVA {vat}), che agisce come titolare del trattamento ai fini della presente informativa. Questa informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali in conformità al Regolamento generale sulla protezione dei dati dell'UE (GDPR).",
+      "Il negozio online DnD3D è gestito da {legalName}, {street}, {postalCode} {city}, Paesi Bassi (KvK {companyNumber}, P.IVA {vat}), che agisce come titolare del trattamento ai fini della presente informativa. Questa informativa sulla privacy spiega come raccogliamo, utilizziamo e proteggiamo i tuoi dati personali in conformità al Regolamento generale sulla protezione dei dati dell'UE (GDPR).",
     sectionDataWeCollect: "Dati che raccogliamo",
     dataWeCollect:
       "Raccogliamo le informazioni che fornisci al momento dell'ordine o del contatto (nome, indirizzo, e-mail, telefono, data di nascita per il pagamento con carta, regione per Visa e Mastercard, dettagli di pagamento) e dati tecnici come il tuo indirizzo IP e i cookie necessari per far funzionare il negozio, elaborare il pagamento con carta e comprenderne l'utilizzo.",
@@ -257,7 +257,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
     legalBasisIntro: "Trattiamo i tuoi dati personali solo quando disponiamo di una base giuridica valida:",
     legalBasis: [
       { title: "Esecuzione del contratto", text: "trattamento dei dati di ordine, pagamento e consegna per adempiere a un acquisto o a un contratto di rateizzazione" },
-      { title: "Obbligo legale", text: "conservazione dei registri di fatturazione e fiscali come richiesto dalla legge belga e dell'UE" },
+      { title: "Obbligo legale", text: "conservazione dei registri di fatturazione e fiscali come richiesto dalla legge olandese e dell'UE" },
       { title: "Interesse legittimo", text: "prevenzione delle frodi, protezione dei nostri sistemi e funzionamento essenziale del negozio" },
       { title: "Consenso", text: "invio di comunicazioni di marketing e utilizzo di cookie analitici non essenziali, che puoi revocare in qualsiasi momento" },
     ],
@@ -292,8 +292,8 @@ const COPY: Record<Locale, PrivacyCopy> = {
     rightsContactBefore: "Per esercitare uno di questi diritti, contattaci all'indirizzo ",
     rightsContactAfter: ".",
     dpaBefore:
-      "Poiché la nostra azienda è stabilita in Belgio, hai anche il diritto di presentare un reclamo direttamente all'Autorità belga per la protezione dei dati (Autorité de protection des données / Gegevensbeschermingsautoriteit), ",
-    dpaAddress: "Rue de la Presse 35, 1000 Bruxelles, Belgio",
+      "Poiché la nostra azienda è stabilita nei Paesi Bassi, hai anche il diritto di presentare un reclamo all'Autorità olandese per la protezione dei dati (Autoriteit Persoonsgegevens), ",
+    dpaAddress: "Postbus 93374, 2509 AJ L'Aia, Paesi Bassi",
     dpaAfter: " — ",
     sectionCookies: "Cookie",
     cookiesBefore:
@@ -305,13 +305,13 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Potremmo aggiornare questa informativa sulla privacy di tanto in tanto per riflettere modifiche alle nostre pratiche o ai requisiti legali. Le modifiche sostanziali saranno riportate in questa pagina con una data di \u201cultimo aggiornamento\u201d aggiornata.",
     sectionContact: "Contattaci",
     contactBefore: "Per qualsiasi domanda su questa informativa o sui tuoi dati, contatta {legalName} all'indirizzo ",
-    contactPhoneLabel: ", per telefono al {phone}, o per posta a {street}, {postalCode} {city}, Hainaut, Belgio.",
+    contactPhoneLabel: ", per telefono al {phone}, o per posta a {street}, {postalCode} {city}, Paesi Bassi.",
     contactAfter: "",
   },
   es: {
     sectionWhoWeAre: "Quiénes somos",
     whoWeAre:
-      "La tienda online 3DJools está operada por {legalName}, {street}, {postalCode} {city}, Hainaut, Bélgica (N.º de empresa {companyNumber}, IVA {vat}), que actúa como responsable del tratamiento a efectos de esta política. Esta política de privacidad explica cómo recopilamos, utilizamos y protegemos tus datos personales de conformidad con el Reglamento General de Protección de Datos de la UE (RGPD).",
+      "La tienda online DnD3D está operada por {legalName}, {street}, {postalCode} {city}, Países Bajos (KvK {companyNumber}, IVA {vat}), que actúa como responsable del tratamiento a efectos de esta política. Esta política de privacidad explica cómo recopilamos, utilizamos y protegemos tus datos personales de conformidad con el Reglamento General de Protección de Datos de la UE (RGPD).",
     sectionDataWeCollect: "Datos que recopilamos",
     dataWeCollect:
       "Recopilamos la información que proporcionas al realizar un pedido o contactarnos (nombre, dirección, correo electrónico, teléfono, fecha de nacimiento para el pago con tarjeta, región para Visa y Mastercard, datos de pago) y datos técnicos como tu dirección IP y cookies necesarias para el funcionamiento de la tienda, el pago con tarjeta y para entender su uso.",
@@ -322,7 +322,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
     legalBasisIntro: "Solo tratamos tus datos personales cuando contamos con una base legal válida para hacerlo:",
     legalBasis: [
       { title: "Ejecución del contrato", text: "tratamiento de los datos de tu pedido, pago y entrega para cumplir una compra o un contrato de financiación a plazos" },
-      { title: "Obligación legal", text: "conservación de registros de facturación e impuestos según lo exige la legislación belga y de la UE" },
+      { title: "Obligación legal", text: "conservación de registros de facturación e impuestos según lo exige la legislación neerlandesa y de la UE" },
       { title: "Interés legítimo", text: "prevención del fraude, protección de nuestros sistemas y funcionamiento esencial de la tienda" },
       { title: "Consentimiento", text: "envío de comunicaciones de marketing y uso de cookies analíticas no esenciales, que puedes retirar en cualquier momento" },
     ],
@@ -357,8 +357,8 @@ const COPY: Record<Locale, PrivacyCopy> = {
     rightsContactBefore: "Para ejercer cualquiera de estos derechos, contáctanos en ",
     rightsContactAfter: ".",
     dpaBefore:
-      "Dado que nuestra empresa está establecida en Bélgica, también tienes derecho a presentar una reclamación directamente ante la Autoridad Belga de Protección de Datos (Autorité de protection des données / Gegevensbeschermingsautoriteit), ",
-    dpaAddress: "Rue de la Presse 35, 1000 Bruselas, Bélgica",
+      "Dado que nuestra empresa está establecida en los Países Bajos, también tienes derecho a presentar una reclamación ante la Autoridad Neerlandesa de Protección de Datos (Autoriteit Persoonsgegevens), ",
+    dpaAddress: "Postbus 93374, 2509 AJ La Haya, Países Bajos",
     dpaAfter: " — ",
     sectionCookies: "Cookies",
     cookiesBefore:
@@ -370,13 +370,13 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Podemos actualizar esta política de privacidad de vez en cuando para reflejar cambios en nuestras prácticas o requisitos legales. Los cambios sustanciales se reflejarán en esta página con una fecha de \u201cúltima actualización\u201d actualizada.",
     sectionContact: "Contáctanos",
     contactBefore: "Para cualquier pregunta sobre esta política o tus datos, contacta con {legalName} en ",
-    contactPhoneLabel: ", por teléfono al {phone}, o por correo postal a {street}, {postalCode} {city}, Hainaut, Bélgica.",
+    contactPhoneLabel: ", por teléfono al {phone}, o por correo postal a {street}, {postalCode} {city}, Países Bajos.",
     contactAfter: "",
   },
   nl: {
     sectionWhoWeAre: "Wie wij zijn",
     whoWeAre:
-      "De 3DJools-webshop wordt beheerd door {legalName}, {street}, {postalCode} {city}, Hainaut, België (ondernemingsnr. {companyNumber}, btw {vat}), dat optreedt als verwerkingsverantwoordelijke in de zin van dit beleid. Dit privacybeleid legt uit hoe wij uw persoonsgegevens verzamelen, gebruiken en beschermen in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).",
+      "De DnD3D-webshop wordt beheerd door {legalName}, {street}, {postalCode} {city}, Nederland (KvK {companyNumber}, btw {vat}), dat optreedt als verwerkingsverantwoordelijke in de zin van dit beleid. Dit privacybeleid legt uit hoe wij uw persoonsgegevens verzamelen, gebruiken en beschermen in overeenstemming met de Algemene Verordening Gegevensbescherming (AVG).",
     sectionDataWeCollect: "Gegevens die wij verzamelen",
     dataWeCollect:
       "Wij verzamelen de informatie die u verstrekt bij het plaatsen van een bestelling of bij contact met ons (naam, adres, e-mail, telefoon, geboortedatum bij kaartbetaling, regio voor Visa en Mastercard, betaalgegevens) en technische gegevens zoals uw IP-adres en cookies die nodig zijn om de winkel te laten werken, kaartbetalingen te verwerken en te begrijpen hoe deze wordt gebruikt.",
@@ -387,7 +387,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
     legalBasisIntro: "Wij verwerken uw persoonsgegevens alleen wanneer wij hiervoor een geldige rechtsgrond hebben:",
     legalBasis: [
       { title: "Uitvoering van de overeenkomst", text: "verwerking van uw bestel-, betaal- en leveringsgegevens om een aankoop of afbetalingsovereenkomst na te komen" },
-      { title: "Wettelijke verplichting", text: "het bewaren van facturerings- en belastinggegevens zoals vereist door Belgisch en EU-recht" },
+      { title: "Wettelijke verplichting", text: "het bewaren van facturerings- en belastinggegevens zoals vereist door Nederlands en EU-recht" },
       { title: "Gerechtvaardigd belang", text: "fraudepreventie, beveiliging van onze systemen en essentiële werking van de winkel" },
       { title: "Toestemming", text: "het versturen van marketingcommunicatie en het gebruik van niet-essentiële analytische cookies, die u op elk moment kunt intrekken" },
     ],
@@ -422,8 +422,8 @@ const COPY: Record<Locale, PrivacyCopy> = {
     rightsContactBefore: "Om een van deze rechten uit te oefenen, neemt u contact met ons op via ",
     rightsContactAfter: ".",
     dpaBefore:
-      "Aangezien ons bedrijf in België is gevestigd, heeft u ook het recht om rechtstreeks een klacht in te dienen bij de Belgische Gegevensbeschermingsautoriteit (Autorité de protection des données / Gegevensbeschermingsautoriteit), ",
-    dpaAddress: "Rue de la Presse 35, 1000 Brussel, België",
+      "Aangezien ons bedrijf in Nederland is gevestigd, heeft u ook het recht een klacht in te dienen bij de Autoriteit Persoonsgegevens, ",
+    dpaAddress: "Postbus 93374, 2509 AJ Den Haag",
     dpaAfter: " — ",
     sectionCookies: "Cookies",
     cookiesBefore:
@@ -435,7 +435,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Wij kunnen dit privacybeleid van tijd tot tijd bijwerken om wijzigingen in onze praktijken of wettelijke vereisten weer te geven. Materiële wijzigingen worden op deze pagina weergegeven met een bijgewerkte datum van \u201claatst bijgewerkt\u201d.",
     sectionContact: "Contact",
     contactBefore: "Voor vragen over dit beleid of uw gegevens, neem contact op met {legalName} via ",
-    contactPhoneLabel: ", telefonisch op {phone}, of per post op {street}, {postalCode} {city}, Hainaut, België.",
+    contactPhoneLabel: ", telefonisch op {phone}, of per post op {street}, {postalCode} {city}, Nederland.",
     contactAfter: "",
   },
 }
@@ -520,7 +520,9 @@ export default async function PrivacyPage({ params }: { params: Promise<{ lang: 
           {c.dpaBefore}
           {c.dpaAddress}
           {c.dpaAfter}
-          <InlineEmail email="contact@apd-gba.be" />
+          <a href="https://www.autoriteitpersoonsgegevens.nl/contact" className={LINK_CLASS}>
+            autoriteitpersoonsgegevens.nl
+          </a>
         </p>
       </ProseSection>
       <ProseSection heading={c.sectionCookies}>

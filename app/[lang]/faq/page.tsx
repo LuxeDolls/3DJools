@@ -45,7 +45,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "What are your business hours?",
             answer:
-              "Our team is available Monday to Friday, 9:00–18:00 CET, excluding Belgian public holidays. Orders and messages received outside these hours are handled on the next business day.",
+              "Our team is available Monday to Friday, 9:00–18:00 CET, excluding Dutch public holidays. Orders and messages received outside these hours are handled on the next business day.",
           },
           {
             question: "Which countries do you ship to?",
@@ -143,7 +143,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wann sind Sie erreichbar?",
             answer:
-              "Unser Team ist montags bis freitags von 9:00 bis 18:00 Uhr MEZ erreichbar, ausgenommen belgische Feiertage. Bestellungen und Nachrichten außerhalb dieser Zeiten bearbeiten wir am nächsten Werktag.",
+              "Unser Team ist montags bis freitags von 9:00 bis 18:00 Uhr MEZ erreichbar, ausgenommen niederländische Feiertage. Bestellungen und Nachrichten außerhalb dieser Zeiten bearbeiten wir am nächsten Werktag.",
           },
           {
             question: "In welche Länder liefern Sie?",
@@ -241,7 +241,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quels sont vos horaires ?",
             answer:
-              "Notre équipe est disponible du lundi au vendredi, de 9:00 à 18:00 CET, hors jours fériés belges. Les commandes et messages reçus en dehors de ces horaires sont traités le jour ouvrable suivant.",
+              "Notre équipe est disponible du lundi au vendredi, de 9:00 à 18:00 CET, hors jours fériés néerlandais. Les commandes et messages reçus en dehors de ces horaires sont traités le jour ouvrable suivant.",
           },
           {
             question: "Vers quels pays livrez-vous ?",
@@ -339,7 +339,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quali sono gli orari?",
             answer:
-              "Il nostro team è disponibile dal lunedì al venerdì, dalle 9:00 alle 18:00 CET, esclusi i giorni festivi belgi. Ordini e messaggi ricevuti fuori da questi orari vengono gestiti il giorno lavorativo successivo.",
+              "Il nostro team è disponibile dal lunedì al venerdì, dalle 9:00 alle 18:00 CET, esclusi i giorni festivi olandesi. Ordini e messaggi ricevuti fuori da questi orari vengono gestiti il giorno lavorativo successivo.",
           },
           {
             question: "In quali Paesi spedite?",
@@ -437,7 +437,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿Cuál es vuestro horario?",
             answer:
-              "Nuestro equipo está disponible de lunes a viernes, de 9:00 a 18:00 CET, excepto festivos belgas. Los pedidos y mensajes recibidos fuera de este horario se atienden el siguiente día laborable.",
+              "Nuestro equipo está disponible de lunes a viernes, de 9:00 a 18:00 CET, excepto festivos neerlandeses. Los pedidos y mensajes recibidos fuera de este horario se atienden el siguiente día laborable.",
           },
           {
             question: "¿A qué países enviáis?",
@@ -535,7 +535,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wat zijn jullie openingstijden?",
             answer:
-              "Ons team is bereikbaar van maandag tot vrijdag, van 9:00 tot 18:00 CET, met uitzondering van Belgische feestdagen. Bestellingen en berichten buiten deze uren worden de volgende werkdag behandeld.",
+              "Ons team is bereikbaar van maandag tot vrijdag, van 9:00 tot 18:00 CET, met uitzondering van Nederlandse feestdagen. Bestellingen en berichten buiten deze uren worden de volgende werkdag behandeld.",
           },
           {
             question: "Naar welke landen verzenden jullie?",

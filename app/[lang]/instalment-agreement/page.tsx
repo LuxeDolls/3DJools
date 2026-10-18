@@ -50,7 +50,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
     s8Heading: "8. Data protection",
     s8: "Personal data and identity documents submitted with an instalment application are processed solely for identity verification and credit assessment, in accordance with the GDPR and our Privacy Policy.",
     s9Heading: "9. Governing law",
-    s9: "This Agreement, and any order-specific agreement generated under it, is governed by the laws of Belgium and applicable EU consumer-protection law.",
+    s9: "This Agreement, and any order-specific agreement generated under it, is governed by the laws of the Netherlands and applicable EU consumer-protection law.",
   },
   de: {
     s1Heading: "1. Parteien",
@@ -73,7 +73,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
     s8Heading: "8. Datenschutz",
     s8: "Personenbezogene Daten und Identitätsnachweise, die mit einem Ratenzahlungsantrag eingereicht werden, werden ausschließlich zur Identitätsprüfung und Bonitätsbewertung gemäß DSGVO und unserer Datenschutzerklärung verarbeitet.",
     s9Heading: "9. Anwendbares Recht",
-    s9: "Dieser Vertrag sowie jeder darauf basierende bestellspezifische Vertrag unterliegt dem Recht Belgiens und dem anwendbaren EU-Verbraucherschutzrecht.",
+    s9: "Dieser Vertrag sowie jeder darauf basierende bestellspezifische Vertrag unterliegt dem Recht der Niederlande und dem anwendbaren EU-Verbraucherschutzrecht.",
   },
   fr: {
     s1Heading: "1. Parties",
@@ -96,7 +96,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
     s8Heading: "8. Protection des données",
     s8: "Les données personnelles et les documents d'identité soumis avec une demande de paiement échelonné sont traités uniquement à des fins de vérification d'identité et d'évaluation de solvabilité, conformément au RGPD et à notre politique de confidentialité.",
     s9Heading: "9. Droit applicable",
-    s9: "Le présent Contrat, ainsi que tout contrat spécifique à une commande généré en vertu de celui-ci, est régi par le droit belge et le droit européen applicable en matière de protection des consommateurs.",
+    s9: "Le présent Contrat, ainsi que tout contrat spécifique à une commande généré en vertu de celui-ci, est régi par le droit néerlandais et le droit européen applicable en matière de protection des consommateurs.",
   },
   it: {
     s1Heading: "1. Parti",
@@ -119,7 +119,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
     s8Heading: "8. Protezione dei dati",
     s8: "I dati personali e i documenti di identità presentati con una richiesta di rateizzazione sono trattati esclusivamente per la verifica dell'identità e la valutazione del merito creditizio, in conformità con il GDPR e la nostra Informativa sulla privacy.",
     s9Heading: "9. Legge applicabile",
-    s9: "Il presente Contratto, e qualsiasi contratto specifico dell'ordine generato ai sensi dello stesso, è disciplinato dalla legge belga e dal diritto UE applicabile in materia di tutela dei consumatori.",
+    s9: "Il presente Contratto, e qualsiasi contratto specifico dell'ordine generato ai sensi dello stesso, è disciplinato dalla legge olandese e dal diritto UE applicabile in materia di tutela dei consumatori.",
   },
   es: {
     s1Heading: "1. Partes",
@@ -142,7 +142,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
     s8Heading: "8. Protección de datos",
     s8: "Los datos personales y los documentos de identidad presentados con una solicitud de pago a plazos se procesan únicamente para la verificación de identidad y la evaluación de solvencia, de conformidad con el RGPD y nuestra Política de privacidad.",
     s9Heading: "9. Ley aplicable",
-    s9: "El presente Contrato, así como cualquier contrato específico del pedido generado en virtud del mismo, se rige por las leyes de Bélgica y el derecho de protección al consumidor de la UE aplicable.",
+    s9: "El presente Contrato, así como cualquier contrato específico del pedido generado en virtud del mismo, se rige por las leyes de los Países Bajos y el derecho de protección al consumidor de la UE aplicable.",
   },
   nl: {
     s1Heading: "1. Partijen",
@@ -165,7 +165,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
     s8Heading: "8. Gegevensbescherming",
     s8: "Persoonsgegevens en identiteitsdocumenten die worden ingediend bij een aanvraag voor gespreide betaling, worden uitsluitend verwerkt voor identiteitsverificatie en kredietbeoordeling, in overeenstemming met de AVG en ons privacybeleid.",
     s9Heading: "9. Toepasselijk recht",
-    s9: "Deze Overeenkomst, en elke daaronder gegenereerde bestellingsspecifieke overeenkomst, wordt beheerst door het Belgische recht en het toepasselijke EU-consumentenbeschermingsrecht.",
+    s9: "Deze Overeenkomst, en elke daaronder gegenereerde bestellingsspecifieke overeenkomst, wordt beheerst door het Nederlandse recht en het toepasselijke EU-consumentenbeschermingsrecht.",
   },
 }
 
