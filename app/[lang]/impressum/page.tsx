@@ -12,8 +12,6 @@ type ImpressumCopy = {
   legalForm: string
   incorporatedLabel: string
   incorporated: string
-  capitalLabel: string
-  capital: string
   activitiesHeading: string
   activities: string
   managementHeading: string
@@ -43,8 +41,6 @@ const COPY: Record<Locale, ImpressumCopy> = {
     legalForm: "Besloten vennootschap (B.V.)",
     incorporatedLabel: "Incorporated",
     incorporated: "15 December 2020, by deed of incorporation. First entry in the Dutch Trade Register on the same date. Statutory seat: Amsterdam.",
-    capitalLabel: "Share capital",
-    capital: "Issued capital EUR 100.00. Paid-up capital EUR 0.00.",
     activitiesHeading: "Registered activities",
     activities: "SBI 46180 — wholesale intermediation in other goods. SBI 47120 — other non-specialised retail. The establishment imports goods and sells them to customers in the EU.",
     managementHeading: "Directors",
@@ -72,8 +68,6 @@ const COPY: Record<Locale, ImpressumCopy> = {
     legalForm: "Besloten vennootschap (B.V.)",
     incorporatedLabel: "Gegründet",
     incorporated: "15. Dezember 2020 durch Gründungsurkunde. Ersteintragung im niederländischen Handelsregister am selben Tag. Satzungssitz: Amsterdam.",
-    capitalLabel: "Kapital",
-    capital: "Gezeichnetes Kapital 100,00 EUR. Eingezahltes Kapital 0,00 EUR.",
     activitiesHeading: "Eingetragene Tätigkeiten",
     activities: "SBI 46180 — Handelsvermittlung im Großhandel mit sonstigen Waren. SBI 47120 — sonstiger nicht spezialisierter Einzelhandel. Die Niederlassung importiert Waren und verkauft sie an Kunden in der EU.",
     managementHeading: "Geschäftsführung",
@@ -101,8 +95,6 @@ const COPY: Record<Locale, ImpressumCopy> = {
     legalForm: "Besloten vennootschap (B.V.)",
     incorporatedLabel: "Constituée le",
     incorporated: "15 décembre 2020, par acte de constitution. Première inscription au registre du commerce néerlandais le même jour. Siège statutaire : Amsterdam.",
-    capitalLabel: "Capital",
-    capital: "Capital émis : 100,00 EUR. Capital libéré : 0,00 EUR.",
     activitiesHeading: "Activités enregistrées",
     activities: "SBI 46180 — intermédiation en gros d'autres marchandises. SBI 47120 — autre commerce de détail non spécialisé. L'établissement importe des marchandises et les vend à des clients dans l'UE.",
     managementHeading: "Administrateurs",
@@ -130,8 +122,6 @@ const COPY: Record<Locale, ImpressumCopy> = {
     legalForm: "Besloten vennootschap (B.V.)",
     incorporatedLabel: "Costituita il",
     incorporated: "15 dicembre 2020, con atto costitutivo. Prima iscrizione nel registro delle imprese olandese lo stesso giorno. Sede legale: Amsterdam.",
-    capitalLabel: "Capitale",
-    capital: "Capitale emesso: 100,00 EUR. Capitale versato: 0,00 EUR.",
     activitiesHeading: "Attività registrate",
     activities: "SBI 46180 — intermediazione all'ingrosso di altri beni. SBI 47120 — altro commercio al dettaglio non specializzato. La sede importa beni e li vende a clienti nell'UE.",
     managementHeading: "Amministratori",
@@ -159,8 +149,6 @@ const COPY: Record<Locale, ImpressumCopy> = {
     legalForm: "Besloten vennootschap (B.V.)",
     incorporatedLabel: "Constituida el",
     incorporated: "15 de diciembre de 2020, por escritura de constitución. Primera inscripción en el registro mercantil neerlandés el mismo día. Domicilio social: Ámsterdam.",
-    capitalLabel: "Capital",
-    capital: "Capital emitido: 100,00 EUR. Capital desembolsado: 0,00 EUR.",
     activitiesHeading: "Actividades registradas",
     activities: "SBI 46180 — intermediación mayorista de otros bienes. SBI 47120 — otro comercio minorista no especializado. El establecimiento importa bienes y los vende a clientes de la UE.",
     managementHeading: "Administradores",
@@ -188,8 +176,6 @@ const COPY: Record<Locale, ImpressumCopy> = {
     legalForm: "Besloten vennootschap",
     incorporatedLabel: "Opgericht",
     incorporated: "15 december 2020, bij akte van oprichting. Eerste inschrijving in het Handelsregister op dezelfde datum. Statutaire zetel: Amsterdam.",
-    capitalLabel: "Kapitaal",
-    capital: "Geplaatst kapitaal EUR 100,00. Gestort kapitaal EUR 0,00.",
     activitiesHeading: "Geregistreerde activiteiten",
     activities: "SBI-code 46180 — handelsbemiddeling in de groothandel in overige goederen. SBI-code 47120 — overige niet-gespecialiseerde detailhandel. De vestiging importeert goederen en verkoopt deze aan EU-klanten.",
     managementHeading: "Bestuurders",
@@ -246,8 +232,6 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
           {t.legalFormLabel}: {t.legalForm}
           <br />
           {t.incorporatedLabel}: {t.incorporated}
-          <br />
-          {t.capitalLabel}: {t.capital}
         </p>
       </ProseSection>
       <ProseSection heading={t.activitiesHeading}>
