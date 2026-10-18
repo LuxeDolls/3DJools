@@ -15,12 +15,12 @@ export const COMPANY = {
   statutorySeat: "Amsterdam",
   phoneDisplay: "+32 460 00 80 70",
   phoneTel: "+32460008070",
-  email: "info@3djools.com",
+  email: "info@dnd3d.com",
   companyNumber: "81194560",
   establishmentNumber: "000047508043",
   rsin: "861980669",
   vat: "NL861980669B01",
-  url: "https://www.3djools.com",
+  url: "https://www.dnd3d.com",
 } as const
 
 export const companyStreetLine = `${COMPANY.street}, ${COMPANY.postalCode} ${COMPANY.city}, ${COMPANY.country}`

@@ -8,10 +8,15 @@ const nextConfig = {
   },
   async rewrites() {
     return {
-      // images.3djools.com/products/... is the dedicated image host.
+      // The image host serves /products/... as catalog photos.
       // Rewrite internally so the response is 200, not a redirect, and
       // robots.txt on that host stays served by the app.
       beforeFiles: [
+        {
+          source: "/products/:path*",
+          has: [{ type: "host", value: "images.dnd3d.com" }],
+          destination: "/media/products/:path*",
+        },
         {
           source: "/products/:path*",
           has: [{ type: "host", value: "images.3djools.com" }],

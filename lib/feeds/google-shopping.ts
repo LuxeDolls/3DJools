@@ -5,7 +5,13 @@ import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
 import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNATIONAL_RATE_CENTS } from "@/lib/shipping/rates"
 
 const BASE_URL = SITE_ORIGIN
-const STORE_NAME = "3DJools"
+const STORE_NAME = "DnD3D"
+
+function absoluteUrl(value: string | undefined): string {
+  if (!value) return ""
+  if (value.startsWith("https://") || value.startsWith("http://")) return value
+  return `${BASE_URL}${value.startsWith("/") ? value : `/${value}`}`
+}
 const DESCRIPTION_LIMIT = 5000
 
 // Machines and accessories. Spare parts, filaments and resins stay on the site.
@@ -229,8 +235,8 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
     const gtin = validGtin(product.ean ?? product.gtin)
     const mpn = product.mpn.trim()
     const hasIdentifier = Boolean(gtin || mpn)
-    const imageLink = product.images[0]
-    const extraImages = product.images.slice(1, 11)
+    const imageLink = absoluteUrl(product.images[0])
+    const extraImages = product.images.slice(1, 11).map((image) => absoluteUrl(image)).filter(Boolean)
     const productUrl = `${BASE_URL}/${locale}/product/${encodeURIComponent(product.slug)}`
     const priceBlock = `\n      <g:price>${formatPrice(product.priceCents)}</g:price>`
     const category = googleCategory(product)

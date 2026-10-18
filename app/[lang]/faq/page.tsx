@@ -32,7 +32,7 @@ function answerText(item: FaqItem) {
 const COPY: Record<Locale, FaqCopy> = {
   en: {
     intro: "Answers to the questions we get asked most about orders, shipping, returns and payments.",
-    description: "Answers to common questions about orders, shipping, returns, warranty and payments at 3DJools.",
+    description: "Answers to common questions about orders, shipping, returns, warranty and payments at DnD3D.",
     groups: [
       {
         heading: "Orders & shipping",
@@ -50,7 +50,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Which countries do you ship to?",
             answer:
-              "We deliver to Belgium and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with our own courier service, 3DJools Courier. If our courier cannot cover the route, we use DHL or DPD. Shipping is free to every one of these destinations.",
+              "We deliver to Belgium and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with our own courier service, DnD3D Courier. If our courier cannot cover the route, we use DHL or DPD. Shipping is free to every one of these destinations.",
           },
           {
             question: "Can I track my order?",
@@ -130,7 +130,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   de: {
     intro: "Antworten auf die Fragen, die uns zu Bestellungen, Versand, Rückgabe und Zahlung am häufigsten gestellt werden.",
-    description: "Antworten auf häufige Fragen zu Bestellungen, Versand, Rückgabe, Garantie und Zahlung bei 3DJools.",
+    description: "Antworten auf häufige Fragen zu Bestellungen, Versand, Rückgabe, Garantie und Zahlung bei DnD3D.",
     groups: [
       {
         heading: "Bestellungen und Versand",
@@ -148,7 +148,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "In welche Länder liefern Sie?",
             answer:
-              "Wir liefern nach Belgien und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) mit unserem eigenen Kurierdienst, 3DJools Courier. Wenn unser Kurier die Strecke nicht abdecken kann, nutzen wir DHL oder DPD. Der Versand ist in jedes dieser Länder kostenlos.",
+              "Wir liefern nach Belgien und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) mit unserem eigenen Kurierdienst, DnD3D Courier. Wenn unser Kurier die Strecke nicht abdecken kann, nutzen wir DHL oder DPD. Der Versand ist in jedes dieser Länder kostenlos.",
           },
           {
             question: "Kann ich meine Bestellung verfolgen?",
@@ -228,7 +228,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   fr: {
     intro: "Réponses aux questions que l'on nous pose le plus souvent sur les commandes, la livraison, les retours et le paiement.",
-    description: "Réponses aux questions fréquentes sur les commandes, la livraison, les retours, la garantie et le paiement chez 3DJools.",
+    description: "Réponses aux questions fréquentes sur les commandes, la livraison, les retours, la garantie et le paiement chez DnD3D.",
     groups: [
       {
         heading: "Commandes et livraison",
@@ -246,7 +246,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Vers quels pays livrez-vous ?",
             answer:
-              "Nous livrons en Belgique et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni), avec notre propre service de coursier, 3DJools Courier. Si notre coursier ne peut pas couvrir le trajet, nous utilisons DHL ou DPD. La livraison est gratuite vers chacune de ces destinations.",
+              "Nous livrons en Belgique et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni), avec notre propre service de coursier, DnD3D Courier. Si notre coursier ne peut pas couvrir le trajet, nous utilisons DHL ou DPD. La livraison est gratuite vers chacune de ces destinations.",
           },
           {
             question: "Puis-je suivre ma commande ?",
@@ -326,7 +326,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   it: {
     intro: "Risposte alle domande che ci vengono poste più spesso su ordini, spedizione, resi e pagamenti.",
-    description: "Risposte alle domande frequenti su ordini, spedizione, resi, garanzia e pagamenti su 3DJools.",
+    description: "Risposte alle domande frequenti su ordini, spedizione, resi, garanzia e pagamenti su DnD3D.",
     groups: [
       {
         heading: "Ordini e spedizione",
@@ -344,7 +344,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "In quali Paesi spedite?",
             answer:
-              "Consegniamo in Belgio e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito), con il nostro servizio di corriere, 3DJools Courier. Se il nostro corriere non può coprire il percorso, usiamo DHL o DPD. La spedizione è gratuita verso ciascuna di queste destinazioni.",
+              "Consegniamo in Belgio e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito), con il nostro servizio di corriere, DnD3D Courier. Se il nostro corriere non può coprire il percorso, usiamo DHL o DPD. La spedizione è gratuita verso ciascuna di queste destinazioni.",
           },
           {
             question: "Posso tracciare il mio ordine?",
@@ -424,7 +424,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   es: {
     intro: "Respuestas a las preguntas que más nos hacen sobre pedidos, envío, devoluciones y pagos.",
-    description: "Respuestas a preguntas frecuentes sobre pedidos, envío, devoluciones, garantía y pagos en 3DJools.",
+    description: "Respuestas a preguntas frecuentes sobre pedidos, envío, devoluciones, garantía y pagos en DnD3D.",
     groups: [
       {
         heading: "Pedidos y envío",
@@ -442,7 +442,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿A qué países enviáis?",
             answer:
-              "Entregamos en Bélgica y en el resto de la Unión Europea, además de en algunos países vecinos (Suiza, Noruega y Reino Unido), con nuestro propio servicio de mensajería, 3DJools Courier. Si nuestro mensajero no puede cubrir la ruta, usamos DHL o DPD. El envío es gratuito a todos estos destinos.",
+              "Entregamos en Bélgica y en el resto de la Unión Europea, además de en algunos países vecinos (Suiza, Noruega y Reino Unido), con nuestro propio servicio de mensajería, DnD3D Courier. Si nuestro mensajero no puede cubrir la ruta, usamos DHL o DPD. El envío es gratuito a todos estos destinos.",
           },
           {
             question: "¿Puedo seguir mi pedido?",
@@ -522,7 +522,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   nl: {
     intro: "Antwoorden op de vragen die we het vaakst krijgen over bestellingen, verzending, retourneren en betaling.",
-    description: "Antwoorden op veelgestelde vragen over bestellingen, verzending, retourneren, garantie en betaling bij 3DJools.",
+    description: "Antwoorden op veelgestelde vragen over bestellingen, verzending, retourneren, garantie en betaling bij DnD3D.",
     groups: [
       {
         heading: "Bestellingen en verzending",
@@ -540,7 +540,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Naar welke landen verzenden jullie?",
             answer:
-              "We leveren in België en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk), met onze eigen koeriersdienst, 3DJools Courier. Als onze koerier de route niet kan dekken, gebruiken we DHL of DPD. Verzending is gratis naar elk van deze bestemmingen.",
+              "We leveren in België en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk), met onze eigen koeriersdienst, DnD3D Courier. Als onze koerier de route niet kan dekken, gebruiken we DHL of DPD. Verzending is gratis naar elk van deze bestemmingen.",
           },
           {
             question: "Kan ik mijn bestelling volgen?",

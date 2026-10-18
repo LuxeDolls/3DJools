@@ -192,7 +192,7 @@ export const de: Dictionary = {
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Öffnet die sichere Square-Seite · Abbuchung in US-Dollar · Kontoauszug: HIRA",
     paySquareNote:
-      "Nach der Bestellung werden Sie zur sicheren Zahlungsseite von Square weitergeleitet. Die Karte wird in US-Dollar zum Kurs der Europäischen Zentralbank belastet. Der Betrag steht vor der Zahlung. Auf dem Kontoauszug erscheint HIRA, nicht 3DJools. Wir sehen die Kartennummer nicht.",
+      "Nach der Bestellung werden Sie zur sicheren Zahlungsseite von Square weitergeleitet. Die Karte wird in US-Dollar zum Kurs der Europäischen Zentralbank belastet. Der Betrag steht vor der Zahlung. Auf dem Kontoauszug erscheint HIRA, nicht DnD3D. Wir sehen die Kartennummer nicht.",
     paySquareUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar.",
     paySquareFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     paySquarePending: "Die Zahlung wird noch verarbeitet. Warten Sie auf die Statusänderung und zahlen Sie nicht zweimal.",
@@ -306,7 +306,7 @@ export const de: Dictionary = {
     companyNumber: "KvK",
     vatId: "USt-IdNr.",
     scamAdviserBadge: "Sehr wahrscheinlich sicher",
-    scamAdviserLink: "3DJools auf ScamAdviser ansehen",
+    scamAdviserLink: "DnD3D auf ScamAdviser ansehen",
     hoursNote: "Mo��Fr, 9:00–18:00 MEZ · Bestellungen werden innerhalb von 0–1 Werktag bearbeitet · Wir antworten innerhalb von 48 Stunden",
   },
   contact: {
@@ -334,11 +334,11 @@ export const de: Dictionary = {
     quickLinks: "Schnelllinks",
   },
   chat: {
-    title: "3DJools Support",
+    title: "DnD3D Support",
     subtitle: "Ein Mitarbeiter meldet sich in Kürze",
     placeholder: "Nachricht eingeben…",
-    greeting: "Bitte warten Sie, bis ein Mitarbeiter verbunden ist, oder senden Sie Ihre Frage an info@3djools.com.",
-    aiDisclaimer: "Ein Mitarbeiter antwortet hier. Sie können auch an info@3djools.com schreiben.",
+    greeting: "Bitte warten Sie, bis ein Mitarbeiter verbunden ist, oder senden Sie Ihre Frage an info@dnd3d.com.",
+    aiDisclaimer: "Ein Mitarbeiter antwortet hier. Sie können auch an info@dnd3d.com schreiben.",
     send: "Senden",
     open: "Chatte mit uns",
   },
@@ -374,7 +374,7 @@ export const de: Dictionary = {
     signInTitle: "Willkommen zurück",
     signInSubtitle: "Melde dich an, um fortzufahren",
     signUpTitle: "Konto erstellen",
-    signUpSubtitle: "Werde Teil von 3DJools — Bestellungen verfolgen und schneller bezahlen",
+    signUpSubtitle: "Werde Teil von DnD3D — Bestellungen verfolgen und schneller bezahlen",
     name: "Vollständiger Name",
     email: "E-Mail-Adresse",
     password: "Passwort",
@@ -414,7 +414,7 @@ export const de: Dictionary = {
   },
   cookiePolicy: {
     title: "Cookie-Richtlinie",
-    intro: "Diese Cookie-Richtlinie erklärt, wie 3DJools Cookies und ähnliche Technologien verwendet, wenn du unseren Onlineshop besuchst.",
+    intro: "Diese Cookie-Richtlinie erklärt, wie DnD3D Cookies und ähnliche Technologien verwendet, wenn du unseren Onlineshop besuchst.",
     sections: [
       {
         heading: "Was sind Cookies?",

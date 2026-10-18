@@ -10,7 +10,7 @@ export async function GET() {
 
   const blobs = await listAllBlobs()
   const manifest = {
-    format: "3djools-blob-manifest",
+    format: "dnd3d-blob-manifest",
     version: 1,
     generatedAt: new Date().toISOString(),
     count: blobs.length,
@@ -28,7 +28,7 @@ export async function GET() {
   return new NextResponse(JSON.stringify(manifest, null, 2), {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Content-Disposition": `attachment; filename="3djools-storage-manifest-${new Date().toISOString().slice(0, 10)}.json"`,
+      "Content-Disposition": `attachment; filename="dnd3d-storage-manifest-${new Date().toISOString().slice(0, 10)}.json"`,
       "Cache-Control": "no-store",
     },
   })

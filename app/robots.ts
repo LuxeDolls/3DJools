@@ -30,7 +30,7 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
 
   // Dedicated image host. Merchant Center checks robots.txt on the host that
   // serves the image, so this file must name Googlebot and Googlebot-Image.
-  if (host === "images.3djools.com") {
+  if (host === "images.dnd3d.com" || host === "images.3djools.com") {
     return {
       rules: [
         { userAgent: "Googlebot", allow: "/" },

@@ -190,7 +190,7 @@ export const en = {
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Opens Square's secure page · charged in US dollars · statement name HIRA",
     paySquareNote:
-      "After you place the order, you are taken to Square's secure payment page. The card is charged in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA, not 3DJools. We never see your card number.",
+      "After you place the order, you are taken to Square's secure payment page. The card is charged in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA, not DnD3D. We never see your card number.",
     paySquareUnavailable: "Card payment is temporarily unavailable.",
     paySquareFailed: "The card payment was not completed. You can try again.",
     paySquarePending: "The payment is still processing. Wait for the status to update and do not pay twice.",
@@ -305,7 +305,7 @@ export const en = {
     vatId: "VAT",
     hoursNote: "Mon–Fri, 9:00–18:00 CET · Orders handled within 0–1 business day · We reply within 48 hours",
     scamAdviserBadge: "Very likely safe",
-    scamAdviserLink: "View 3DJools on ScamAdviser",
+    scamAdviserLink: "View DnD3D on ScamAdviser",
   },
   contact: {
     title: "Contact us",
@@ -332,11 +332,11 @@ export const en = {
     quickLinks: "Quick links",
   },
   chat: {
-    title: "3DJools support",
+    title: "DnD3D support",
     subtitle: "An operator will join shortly",
     placeholder: "Type your message…",
-    greeting: "Please wait for an operator to connect, or send your question to info@3djools.com.",
-    aiDisclaimer: "A teammate will reply here. You can also email info@3djools.com.",
+    greeting: "Please wait for an operator to connect, or send your question to info@dnd3d.com.",
+    aiDisclaimer: "A teammate will reply here. You can also email info@dnd3d.com.",
     send: "Send",
     open: "Chat with us",
   },
@@ -372,7 +372,7 @@ export const en = {
     signInTitle: "Welcome back",
     signInSubtitle: "Sign in to your account to continue",
     signUpTitle: "Create your account",
-    signUpSubtitle: "Join 3DJools to track orders and check out faster",
+    signUpSubtitle: "Join DnD3D to track orders and check out faster",
     name: "Full name",
     email: "Email address",
     password: "Password",
@@ -412,7 +412,7 @@ export const en = {
   },
   cookiePolicy: {
     title: "Cookie Policy",
-    intro: "This Cookie Policy explains how 3DJools uses cookies and similar technologies when you visit our online store.",
+    intro: "This Cookie Policy explains how DnD3D uses cookies and similar technologies when you visit our online store.",
     sections: [
       {
         heading: "What are cookies?",

@@ -75,7 +75,7 @@ export async function createStripeCheckout(input: {
           price_data: {
             currency: "eur",
             unit_amount: input.amountCents,
-            product_data: { name: `3DJools ${input.orderNumber}`.slice(0, 250) },
+            product_data: { name: `DnD3D ${input.orderNumber}`.slice(0, 250) },
           },
         },
       ],

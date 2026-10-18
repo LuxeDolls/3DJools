@@ -9,7 +9,6 @@ import { CategoryTiles } from "@/components/home/category-tiles"
 import { BrandStrip } from "@/components/home/brand-strip"
 import { MemberPromo } from "@/components/home/member-promo"
 import { Newsletter } from "@/components/home/newsletter"
-import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 import { SectionHeading } from "@/components/section-heading"
 import { ProductGrid } from "@/components/product/product-grid"
 
@@ -34,7 +33,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <Hero locale={locale} dict={dict} />
       <UspBar dict={dict} />
       <MemberPromo />
-      <ScamAdviserTrust dict={dict} />
       <CategoryTiles locale={locale} dict={dict} />
 
       <section className="mx-auto max-w-7xl px-4 py-12">

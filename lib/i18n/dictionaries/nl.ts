@@ -192,7 +192,7 @@ export const nl: Dictionary = {
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Opent de beveiligde Square-pagina · afschrijving in Amerikaanse dollars · afschrift: HIRA",
     paySquareNote:
-      "Na de bestelling gaat u naar de beveiligde betaalpagina van Square. De kaart wordt afgeschreven in Amerikaanse dollars tegen de koers van de Europese Centrale Bank. Het bedrag staat vóór de betaling. Op het afschrift staat HIRA, niet 3DJools. Wij zien het kaartnummer niet.",
+      "Na de bestelling gaat u naar de beveiligde betaalpagina van Square. De kaart wordt afgeschreven in Amerikaanse dollars tegen de koers van de Europese Centrale Bank. Het bedrag staat vóór de betaling. Op het afschrift staat HIRA, niet DnD3D. Wij zien het kaartnummer niet.",
     paySquareUnavailable: "Kaartbetaling is tijdelijk niet beschikbaar.",
     paySquareFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     paySquarePending: "De betaling wordt nog verwerkt. Wacht op de statusupdate en betaal niet twee keer.",
@@ -306,7 +306,7 @@ export const nl: Dictionary = {
     companyNumber: "KvK-nummer",
     vatId: "Btw-nummer",
     scamAdviserBadge: "Zeer waarschijnlijk veilig",
-    scamAdviserLink: "Bekijk 3DJools op ScamAdviser",
+    scamAdviserLink: "Bekijk DnD3D op ScamAdviser",
     hoursNote: "Ma–Vr, 9:00–18:00 CET · Bestellingen worden binnen 0–1 werkdag verwerkt · We reageren binnen 48 uur",
   },
   contact: {
@@ -334,11 +334,11 @@ export const nl: Dictionary = {
     quickLinks: "Snelle links",
   },
   chat: {
-    title: "3DJools support",
+    title: "DnD3D support",
     subtitle: "Een medewerker neemt zo contact op",
     placeholder: "Typ je bericht…",
-    greeting: "Wacht tot een medewerker verbinding maakt, of stuur uw vraag naar info@3djools.com.",
-    aiDisclaimer: "Een medewerker antwoordt hier. U kunt ook mailen naar info@3djools.com.",
+    greeting: "Wacht tot een medewerker verbinding maakt, of stuur uw vraag naar info@dnd3d.com.",
+    aiDisclaimer: "Een medewerker antwoordt hier. U kunt ook mailen naar info@dnd3d.com.",
     send: "Versturen",
     open: "Chat met ons",
   },
@@ -374,7 +374,7 @@ export const nl: Dictionary = {
     signInTitle: "Welkom terug",
     signInSubtitle: "Log in op je account om verder te gaan",
     signUpTitle: "Maak je account aan",
-    signUpSubtitle: "Word lid van 3DJools om bestellingen te volgen en sneller af te rekenen",
+    signUpSubtitle: "Word lid van DnD3D om bestellingen te volgen en sneller af te rekenen",
     name: "Volledige naam",
     email: "E-mailadres",
     password: "Wachtwoord",
@@ -414,7 +414,7 @@ export const nl: Dictionary = {
   },
   cookiePolicy: {
     title: "Cookiebeleid",
-    intro: "Dit cookiebeleid legt uit hoe 3DJools cookies en vergelijkbare technologieën gebruikt wanneer je onze webshop bezoekt.",
+    intro: "Dit cookiebeleid legt uit hoe DnD3D cookies en vergelijkbare technologieën gebruikt wanneer je onze webshop bezoekt.",
     sections: [
       {
         heading: "Wat zijn cookies?",

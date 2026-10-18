@@ -81,7 +81,7 @@ export async function submitContactMessage(input: ContactInput): Promise<Contact
   })
 
   await sendEmail({
-    to: "info@3djools.com",
+    to: "info@dnd3d.com",
     replyTo: storedEmail,
     subject: `[DnD3D] ${normalizedSubject}`,
     text: `New contact form message\n\nFrom: ${storedName} <${storedEmail}>\nSubject: ${normalizedSubject}\n\n${storedMessage}`,

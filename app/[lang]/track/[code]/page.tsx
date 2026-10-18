@@ -56,7 +56,7 @@ export default async function TrackCodePage({ params }: { params: Promise<{ lang
             </div>
             <div>
               <dt className="text-xs text-muted-foreground">{copy.carrier}</dt>
-              <dd className="font-medium text-foreground">{shipment.order.carrier || "3DJools Courier"}</dd>
+              <dd className="font-medium text-foreground">{shipment.order.carrier || "DnD3D Courier"}</dd>
             </div>
             {destination ? (
               <div>

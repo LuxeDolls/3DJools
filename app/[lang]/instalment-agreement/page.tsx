@@ -31,7 +31,7 @@ type InstalmentCopy = {
 const COPY: Record<Locale, InstalmentCopy> = {
   en: {
     s1Heading: "1. Parties",
-    s1a: "This Instalment Sale Agreement (\u201cAgreement\u201d) is entered into between the Seller / Creditor and the Buyer / Borrower named on the order confirmation for any order placed on the 3DJools store using the interest-free instalment payment method.",
+    s1a: "This Instalment Sale Agreement (\u201cAgreement\u201d) is entered into between the Seller / Creditor and the Buyer / Borrower named on the order confirmation for any order placed on the DnD3D store using the interest-free instalment payment method.",
     s1SellerLabel: "Seller / Creditor:",
     s1BuyerLabel: "Buyer / Borrower:",
     s1b: "the individual or business identified on the corresponding order confirmation and instalment application.",
@@ -54,7 +54,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
   },
   de: {
     s1Heading: "1. Parteien",
-    s1a: "Dieser Ratenkaufvertrag (\u201cVertrag\u201d) wird zwischen dem Verkäufer/Gläubiger und dem Käufer/Darlehensnehmer geschlossen, die in der Bestellbestätigung für jede über den 3DJools-Shop mit der zinsfreien Ratenzahlungsmethode aufgegebene Bestellung genannt sind.",
+    s1a: "Dieser Ratenkaufvertrag (\u201cVertrag\u201d) wird zwischen dem Verkäufer/Gläubiger und dem Käufer/Darlehensnehmer geschlossen, die in der Bestellbestätigung für jede über den DnD3D-Shop mit der zinsfreien Ratenzahlungsmethode aufgegebene Bestellung genannt sind.",
     s1SellerLabel: "Verkäufer/Gläubiger:",
     s1BuyerLabel: "Käufer/Darlehensnehmer:",
     s1b: "die in der jeweiligen Bestellbestätigung und dem Ratenzahlungsantrag genannte Person oder das genannte Unternehmen.",
@@ -77,7 +77,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
   },
   fr: {
     s1Heading: "1. Parties",
-    s1a: "Le présent contrat de vente à tempérament (\u201cContrat\u201d) est conclu entre le Vendeur/Créancier et l'Acheteur/Emprunteur nommés sur la confirmation de commande pour toute commande passée sur la boutique 3DJools via le mode de paiement échelonné sans intérêt.",
+    s1a: "Le présent contrat de vente à tempérament (\u201cContrat\u201d) est conclu entre le Vendeur/Créancier et l'Acheteur/Emprunteur nommés sur la confirmation de commande pour toute commande passée sur la boutique DnD3D via le mode de paiement échelonné sans intérêt.",
     s1SellerLabel: "Vendeur/Créancier :",
     s1BuyerLabel: "Acheteur/Emprunteur :",
     s1b: "la personne ou l'entreprise identifiée sur la confirmation de commande et la demande de paiement échelonné correspondantes.",
@@ -100,7 +100,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
   },
   it: {
     s1Heading: "1. Parti",
-    s1a: "Il presente Contratto di vendita a rate (\u201cContratto\u201d) è stipulato tra il Venditore/Creditore e l'Acquirente/Debitore indicati nella conferma d'ordine per qualsiasi ordine effettuato sul negozio 3DJools utilizzando il metodo di pagamento rateale senza interessi.",
+    s1a: "Il presente Contratto di vendita a rate (\u201cContratto\u201d) è stipulato tra il Venditore/Creditore e l'Acquirente/Debitore indicati nella conferma d'ordine per qualsiasi ordine effettuato sul negozio DnD3D utilizzando il metodo di pagamento rateale senza interessi.",
     s1SellerLabel: "Venditore/Creditore:",
     s1BuyerLabel: "Acquirente/Debitore:",
     s1b: "la persona o l'azienda identificata nella relativa conferma d'ordine e nella richiesta di rateizzazione.",
@@ -123,7 +123,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
   },
   es: {
     s1Heading: "1. Partes",
-    s1a: "El presente Contrato de venta a plazos (\u201cContrato\u201d) se celebra entre el Vendedor/Acreedor y el Comprador/Prestatario indicados en la confirmación del pedido para cualquier pedido realizado en la tienda 3DJools mediante el método de pago a plazos sin intereses.",
+    s1a: "El presente Contrato de venta a plazos (\u201cContrato\u201d) se celebra entre el Vendedor/Acreedor y el Comprador/Prestatario indicados en la confirmación del pedido para cualquier pedido realizado en la tienda DnD3D mediante el método de pago a plazos sin intereses.",
     s1SellerLabel: "Vendedor/Acreedor:",
     s1BuyerLabel: "Comprador/Prestatario:",
     s1b: "la persona o empresa identificada en la correspondiente confirmación del pedido y solicitud de pago a plazos.",
@@ -146,7 +146,7 @@ const COPY: Record<Locale, InstalmentCopy> = {
   },
   nl: {
     s1Heading: "1. Partijen",
-    s1a: "Deze overeenkomst voor verkoop op afbetaling (\u201cOvereenkomst\u201d) wordt aangegaan tussen de Verkoper/Schuldeiser en de Koper/Kredietnemer die worden genoemd op de orderbevestiging voor elke bestelling die via de webshop van 3DJools wordt geplaatst met de rentevrije gespreide betalingsmethode.",
+    s1a: "Deze overeenkomst voor verkoop op afbetaling (\u201cOvereenkomst\u201d) wordt aangegaan tussen de Verkoper/Schuldeiser en de Koper/Kredietnemer die worden genoemd op de orderbevestiging voor elke bestelling die via de webshop van DnD3D wordt geplaatst met de rentevrije gespreide betalingsmethode.",
     s1SellerLabel: "Verkoper/Schuldeiser:",
     s1BuyerLabel: "Koper/Kredietnemer:",
     s1b: "de persoon of onderneming vermeld op de bijbehorende orderbevestiging en aanvraag voor gespreide betaling.",

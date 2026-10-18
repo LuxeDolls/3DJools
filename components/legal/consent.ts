@@ -1,5 +1,5 @@
 export const CONSENT_KEY = "voltika-cookie-consent"
-export const CONSENT_EVENT = "3djools:cookie-consent"
+export const CONSENT_EVENT = "dnd3d:cookie-consent"
 
 type ConsentChoice = "all" | "essential"
 

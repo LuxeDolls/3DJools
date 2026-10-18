@@ -27,7 +27,7 @@ function addStoreBranding(html: string): string {
   return `${header}${html}`
 }
 
-const smtpUser = process.env.ZOHO_SMTP_USER ?? "info@3djools.com"
+const smtpUser = process.env.ZOHO_SMTP_USER ?? "info@dnd3d.com"
 const smtpHost = process.env.ZOHO_SMTP_HOST ?? "smtp.zoho.eu"
 const smtpPort = Number(process.env.ZOHO_SMTP_PORT ?? "465")
 const smtpPassword = process.env.ZOHO_SMTP_PASSWORD
@@ -52,7 +52,7 @@ export async function sendEmail({ to, subject, html, text, replyTo }: SendEmailI
 
   try {
     await transporter.sendMail({
-      from: `3DJools <${smtpUser}>`,
+      from: `DnD3D <${smtpUser}>`,
       to,
       replyTo,
       subject,

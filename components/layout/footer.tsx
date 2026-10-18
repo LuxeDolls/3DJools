@@ -11,7 +11,6 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Logo } from "./logo"
-import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 
 export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const lp = (p: string) => localizedPath(locale, p)
@@ -96,10 +95,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
             <span>{dict.footer.hoursNote}</span>
           </div>
-          <div className="mt-5">
-            <ScamAdviserTrust dict={dict} compact />
-          </div>
-          <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+          <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
             {dict.footer.operatedBy}
             <br />
             {companyStreetLine}

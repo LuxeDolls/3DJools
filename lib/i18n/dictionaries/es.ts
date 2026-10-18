@@ -192,7 +192,7 @@ export const es: Dictionary = {
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Abre la página segura de Square · cargo en dólares estadounidenses · extracto: HIRA",
     paySquareNote:
-      "Después del pedido se abre la página de pago segura de Square. La tarjeta se carga en dólares estadounidenses al tipo del Banco Central Europeo, mostrado antes de pagar. El extracto muestra HIRA, no 3DJools. Nunca vemos el número de tarjeta.",
+      "Después del pedido se abre la página de pago segura de Square. La tarjeta se carga en dólares estadounidenses al tipo del Banco Central Europeo, mostrado antes de pagar. El extracto muestra HIRA, no DnD3D. Nunca vemos el número de tarjeta.",
     paySquareUnavailable: "El pago con tarjeta no está disponible temporalmente.",
     paySquareFailed: "El pago con tarjeta no se completó. Puedes intentarlo de nuevo.",
     paySquarePending: "El pago aún se está procesando. Espera a que cambie el estado y no pagues dos veces.",
@@ -306,7 +306,7 @@ export const es: Dictionary = {
     companyNumber: "KvK",
     vatId: "NIF/IVA",
     scamAdviserBadge: "Muy probablemente seguro",
-    scamAdviserLink: "Ver 3DJools en ScamAdviser",
+    scamAdviserLink: "Ver DnD3D en ScamAdviser",
     hoursNote: "Lun–Vie, 9:00–18:00 CET · Los pedidos se gestionan en un plazo de 0–1 día laborable · Respondemos en un plazo de 48 horas",
   },
   contact: {
@@ -334,11 +334,11 @@ export const es: Dictionary = {
     quickLinks: "Enlaces rápidos",
   },
   chat: {
-    title: "Soporte 3DJools",
+    title: "Soporte DnD3D",
     subtitle: "Un operador se conectará en breve",
     placeholder: "Escribe tu mensaje…",
-    greeting: "Espere a que se conecte un operador, o envíe su pregunta a info@3djools.com.",
-    aiDisclaimer: "Un operador responderá aquí. También puede escribir a info@3djools.com.",
+    greeting: "Espere a que se conecte un operador, o envíe su pregunta a info@dnd3d.com.",
+    aiDisclaimer: "Un operador responderá aquí. También puede escribir a info@dnd3d.com.",
     send: "Enviar",
     open: "Chatea con nosotros",
   },
@@ -374,7 +374,7 @@ export const es: Dictionary = {
     signInTitle: "Bienvenido de nuevo",
     signInSubtitle: "Inicia sesión en tu cuenta para continuar",
     signUpTitle: "Crea tu cuenta",
-    signUpSubtitle: "Únete a 3DJools para seguir pedidos y pagar más rápido",
+    signUpSubtitle: "Únete a DnD3D para seguir pedidos y pagar más rápido",
     name: "Nombre completo",
     email: "Correo electrónico",
     password: "Contraseña",
@@ -414,7 +414,7 @@ export const es: Dictionary = {
   },
   cookiePolicy: {
     title: "Política de cookies",
-    intro: "Esta Política de cookies explica cómo 3DJools utiliza cookies y tecnologías similares cuando visitas nuestra tienda online.",
+    intro: "Esta Política de cookies explica cómo DnD3D utiliza cookies y tecnologías similares cuando visitas nuestra tienda online.",
     sections: [
       {
         heading: "¿Qué son las cookies?",
