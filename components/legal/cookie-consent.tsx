@@ -4,9 +4,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { Cookie } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
-import { applyAnalyticsConsent, CONSENT_KEY, readConsent } from "./consent"
+import { applyAnalyticsConsent, CONSENT_KEY, hasStoredConsent, readConsent } from "./consent"
 
-export const OPEN_COOKIE_SETTINGS_EVENT = "voltika:open-cookie-settings"
+export const OPEN_COOKIE_SETTINGS_EVENT = "dnd3d:open-cookie-settings"
 
 export function CookieConsent() {
   const { dict } = useI18n()
@@ -16,7 +16,7 @@ export function CookieConsent() {
 
   useEffect(() => {
     applyAnalyticsConsent(readConsent())
-    if (!localStorage.getItem(CONSENT_KEY)) {
+    if (!hasStoredConsent()) {
       setVisible(true)
     }
     const reopen = () => setVisible(true)

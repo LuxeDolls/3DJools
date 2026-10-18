@@ -1,5 +1,24 @@
-export const CONSENT_KEY = "voltika-cookie-consent"
+const LEGACY_CONSENT_KEY = "voltika-cookie-consent"
+export const CONSENT_KEY = "dnd3d-cookie-consent"
 export const CONSENT_EVENT = "dnd3d:cookie-consent"
+
+function storedConsent(): string | null {
+  const current = localStorage.getItem(CONSENT_KEY)
+  if (current) return current
+  const legacy = localStorage.getItem(LEGACY_CONSENT_KEY)
+  if (!legacy) return null
+  localStorage.setItem(CONSENT_KEY, legacy)
+  localStorage.removeItem(LEGACY_CONSENT_KEY)
+  return legacy
+}
+
+export function hasStoredConsent(): boolean {
+  try {
+    return storedConsent() !== null
+  } catch {
+    return false
+  }
+}
 
 type ConsentChoice = "all" | "essential"
 
@@ -14,7 +33,7 @@ declare global {
 
 export function readConsent(): ConsentChoice | null {
   try {
-    const saved = JSON.parse(localStorage.getItem(CONSENT_KEY) || "null") as { value?: string } | null
+    const saved = JSON.parse(storedConsent() || "null") as { value?: string } | null
     return saved?.value === "all" || saved?.value === "essential" ? saved.value : null
   } catch {
     return null

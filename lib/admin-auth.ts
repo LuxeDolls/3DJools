@@ -12,7 +12,8 @@ import crypto from "crypto"
  * the mechanism later is isolated to this file.
  */
 
-const COOKIE_NAME = "v3d_admin"
+const COOKIE_NAME = "dnd3d_admin"
+const LEGACY_COOKIE_NAME = "v3d_admin"
 const SESSION_TTL_MS = 1000 * 60 * 60 * 8 // 8 hours
 
 function secret(): string {
@@ -62,11 +63,12 @@ export async function createAdminSession(): Promise<void> {
 export async function destroyAdminSession(): Promise<void> {
   const jar = await cookies()
   jar.delete(COOKIE_NAME)
+  jar.delete(LEGACY_COOKIE_NAME)
 }
 
 export async function isAdmin(): Promise<boolean> {
   const jar = await cookies()
-  const token = jar.get(COOKIE_NAME)?.value
+  const token = jar.get(COOKIE_NAME)?.value ?? jar.get(LEGACY_COOKIE_NAME)?.value
   if (!token) return false
   const parts = token.split(".")
   if (parts.length !== 3) return false

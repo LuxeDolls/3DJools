@@ -27,7 +27,18 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null)
 
-const STORAGE_KEY = "voltika-cart-v1"
+const STORAGE_KEY = "dnd3d-cart-v1"
+const LEGACY_STORAGE_KEY = "voltika-cart-v1"
+
+function readStoredCart(): string | null {
+  const current = localStorage.getItem(STORAGE_KEY)
+  if (current) return current
+  const legacy = localStorage.getItem(LEGACY_STORAGE_KEY)
+  if (!legacy) return null
+  localStorage.setItem(STORAGE_KEY, legacy)
+  localStorage.removeItem(LEGACY_STORAGE_KEY)
+  return legacy
+}
 const MAX_QTY = 20
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
@@ -37,7 +48,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY)
+      const raw = readStoredCart()
       if (raw) setLines(JSON.parse(raw))
     } catch {
       // ignore malformed storage
@@ -83,6 +94,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setLines([])
     try {
       localStorage.setItem(STORAGE_KEY, "[]")
+      localStorage.removeItem(LEGACY_STORAGE_KEY)
     } catch {
       // storage may be unavailable; the in-memory cart is still cleared
     }

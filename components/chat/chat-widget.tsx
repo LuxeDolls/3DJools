@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils"
 import { getChatMessages, initChat, sendChatMessage } from "@/lib/actions/chat"
 import type { ChatMessageRow } from "@/lib/db/schema"
 
-const VISITOR_ID_KEY = "voltika-chat-visitor-id"
+const VISITOR_ID_KEY = "dnd3d-chat-visitor-id"
+const LEGACY_VISITOR_ID_KEY = "voltika-chat-visitor-id"
 const POLL_INTERVAL_MS = 4000
 
 type ChatIdentity = { name: string; email: string }
@@ -16,9 +17,11 @@ function getVisitorId(): string {
   if (typeof window === "undefined") return ""
   let id = window.localStorage.getItem(VISITOR_ID_KEY)
   if (!id) {
-    id = crypto.randomUUID()
-    window.localStorage.setItem(VISITOR_ID_KEY, id)
+    id = window.localStorage.getItem(LEGACY_VISITOR_ID_KEY)
+    if (id) window.localStorage.removeItem(LEGACY_VISITOR_ID_KEY)
   }
+  if (!id) id = crypto.randomUUID()
+  window.localStorage.setItem(VISITOR_ID_KEY, id)
   return id
 }
 
