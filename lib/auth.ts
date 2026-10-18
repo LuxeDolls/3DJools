@@ -33,6 +33,14 @@ export const auth = betterAuth({
           },
         }
       : {}),
+    ...(process.env.LINKEDIN_CLIENT_ID && process.env.LINKEDIN_CLIENT_SECRET
+      ? {
+          linkedin: {
+            clientId: process.env.LINKEDIN_CLIENT_ID,
+            clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
+          },
+        }
+      : {}),
   },
   databaseHooks: {
     user: {

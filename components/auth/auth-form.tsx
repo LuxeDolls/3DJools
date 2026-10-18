@@ -24,15 +24,15 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
 
   const isSignUp = mode === "sign-up"
   const social = {
-    en: { google: "Continue with Google", facebook: "Continue with Facebook" },
-    de: { google: "Weiter mit Google", facebook: "Weiter mit Facebook" },
-    fr: { google: "Continuer avec Google", facebook: "Continuer avec Facebook" },
-    nl: { google: "Doorgaan met Google", facebook: "Doorgaan met Facebook" },
-    it: { google: "Continua con Google", facebook: "Continua con Facebook" },
-    es: { google: "Continuar con Google", facebook: "Continuar con Facebook" },
+    en: { google: "Continue with Google", facebook: "Continue with Facebook", linkedin: "Continue with LinkedIn" },
+    de: { google: "Weiter mit Google", facebook: "Weiter mit Facebook", linkedin: "Weiter mit LinkedIn" },
+    fr: { google: "Continuer avec Google", facebook: "Continuer avec Facebook", linkedin: "Continuer avec LinkedIn" },
+    nl: { google: "Doorgaan met Google", facebook: "Doorgaan met Facebook", linkedin: "Doorgaan met LinkedIn" },
+    it: { google: "Continua con Google", facebook: "Continua con Facebook", linkedin: "Continua con LinkedIn" },
+    es: { google: "Continuar con Google", facebook: "Continuar con Facebook", linkedin: "Continuar con LinkedIn" },
   }[locale]
 
-  async function signInWith(provider: "google" | "facebook") {
+  async function signInWith(provider: "google" | "facebook" | "linkedin") {
     setError(null)
     setLoading(true)
     const { error } = await authClient.signIn.social({ provider, callbackURL: lp("/account") })
@@ -76,6 +76,9 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
         </Button>
         <Button type="button" variant="outline" disabled={loading} onClick={() => signInWith("facebook")}>
           {social.facebook}
+        </Button>
+        <Button type="button" variant="outline" disabled={loading} onClick={() => signInWith("linkedin")}>
+          {social.linkedin}
         </Button>
       </div>
 
