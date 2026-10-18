@@ -3,7 +3,7 @@
 // and whatever is configured in Google Merchant Center's account-level shipping settings.
 // Shipping is free on every order, to every destination — both rates are 0.
 
-export const DOMESTIC_RATE_CENTS = 0 // Belgium — free shipping
+export const DOMESTIC_RATE_CENTS = 0 // Netherlands — free shipping
 export const INTERNATIONAL_RATE_CENTS = 0 // rest of EU + neighbouring countries — free shipping
 
 export const DELIVERY_TIME_LABEL = "3–7 business days"
@@ -14,11 +14,12 @@ export const HANDLING_MIN_DAYS = 0
 export const HANDLING_MAX_DAYS = 2
 export const ORDER_CUTOFF_TIME = "15:00 CET"
 
-export const DOMESTIC_COUNTRY = { code: "BE", name: "Belgium" } as const
+export const DOMESTIC_COUNTRY = { code: "NL", name: "Netherlands" } as const
 
-// Rest of the EU (26 members excluding Belgium) plus neighbouring countries we also ship to.
+// Rest of the EU (26 members excluding the Netherlands) plus neighbouring countries we also ship to.
 export const INTERNATIONAL_COUNTRIES = [
   { code: "AT", name: "Austria" },
+  { code: "BE", name: "Belgium" },
   { code: "BG", name: "Bulgaria" },
   { code: "HR", name: "Croatia" },
   { code: "CY", name: "Cyprus" },
@@ -36,7 +37,6 @@ export const INTERNATIONAL_COUNTRIES = [
   { code: "LT", name: "Lithuania" },
   { code: "LU", name: "Luxembourg" },
   { code: "MT", name: "Malta" },
-  { code: "NL", name: "Netherlands" },
   { code: "PL", name: "Poland" },
   { code: "PT", name: "Portugal" },
   { code: "RO", name: "Romania" },

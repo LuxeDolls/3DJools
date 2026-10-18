@@ -50,7 +50,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Which countries do you ship to?",
             answer:
-              "We deliver to Belgium and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with our own courier service, DnD3D Courier. If our courier cannot cover the route, we use DHL or DPD. Shipping is free to every one of these destinations.",
+              "We deliver to the Netherlands and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with our own courier service, DnD3D Courier. If our courier cannot cover the route, we use DHL or DPD. Shipping is free to every one of these destinations.",
           },
           {
             question: "Can I track my order?",
@@ -148,7 +148,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "In welche Länder liefern Sie?",
             answer:
-              "Wir liefern nach Belgien und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) mit unserem eigenen Kurierdienst, DnD3D Courier. Wenn unser Kurier die Strecke nicht abdecken kann, nutzen wir DHL oder DPD. Der Versand ist in jedes dieser Länder kostenlos.",
+              "Wir liefern in die Niederlande und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) mit unserem eigenen Kurierdienst, DnD3D Courier. Wenn unser Kurier die Strecke nicht abdecken kann, nutzen wir DHL oder DPD. Der Versand ist in jedes dieser Länder kostenlos.",
           },
           {
             question: "Kann ich meine Bestellung verfolgen?",
@@ -246,7 +246,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Vers quels pays livrez-vous ?",
             answer:
-              "Nous livrons en Belgique et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni), avec notre propre service de coursier, DnD3D Courier. Si notre coursier ne peut pas couvrir le trajet, nous utilisons DHL ou DPD. La livraison est gratuite vers chacune de ces destinations.",
+              "Nous livrons aux Pays-Bas et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni), avec notre propre service de coursier, DnD3D Courier. Si notre coursier ne peut pas couvrir le trajet, nous utilisons DHL ou DPD. La livraison est gratuite vers chacune de ces destinations.",
           },
           {
             question: "Puis-je suivre ma commande ?",
@@ -344,7 +344,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "In quali Paesi spedite?",
             answer:
-              "Consegniamo in Belgio e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito), con il nostro servizio di corriere, DnD3D Courier. Se il nostro corriere non può coprire il percorso, usiamo DHL o DPD. La spedizione è gratuita verso ciascuna di queste destinazioni.",
+              "Consegniamo nei Paesi Bassi e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito), con il nostro servizio di corriere, DnD3D Courier. Se il nostro corriere non può coprire il percorso, usiamo DHL o DPD. La spedizione è gratuita verso ciascuna di queste destinazioni.",
           },
           {
             question: "Posso tracciare il mio ordine?",
@@ -442,7 +442,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿A qué países enviáis?",
             answer:
-              "Entregamos en Bélgica y en el resto de la Unión Europea, además de en algunos países vecinos (Suiza, Noruega y Reino Unido), con nuestro propio servicio de mensajería, DnD3D Courier. Si nuestro mensajero no puede cubrir la ruta, usamos DHL o DPD. El envío es gratuito a todos estos destinos.",
+              "Entregamos en los Países Bajos y en el resto de la Unión Europea, además de en algunos países vecinos (Suiza, Noruega y Reino Unido), con nuestro propio servicio de mensajería, DnD3D Courier. Si nuestro mensajero no puede cubrir la ruta, usamos DHL o DPD. El envío es gratuito a todos estos destinos.",
           },
           {
             question: "¿Puedo seguir mi pedido?",
@@ -540,7 +540,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Naar welke landen verzenden jullie?",
             answer:
-              "We leveren in België en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk), met onze eigen koeriersdienst, DnD3D Courier. Als onze koerier de route niet kan dekken, gebruiken we DHL of DPD. Verzending is gratis naar elk van deze bestemmingen.",
+              "We leveren in Nederland en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk), met onze eigen koeriersdienst, DnD3D Courier. Als onze koerier de route niet kan dekken, gebruiken we DHL of DPD. Verzending is gratis naar elk van deze bestemmingen.",
           },
           {
             question: "Kan ik mijn bestelling volgen?",

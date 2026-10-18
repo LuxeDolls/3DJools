@@ -81,7 +81,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     }
   }, [bankTransferEnabled])
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
-  const [country, setCountry] = useState("Belgium")
+  const [country, setCountry] = useState("Netherlands")
   const [submitting, setSubmitting] = useState(false)
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [cardholderName, setCardholderName] = useState("")

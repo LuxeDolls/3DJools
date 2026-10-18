@@ -11,7 +11,7 @@ type ShippingCopy = {
   colDestination: string
   colDeliveryTime: string
   colCost: string
-  belgium: string
+  home: string
   restOfEu: string
   deliveryTime: (min: number, max: number) => string
   free: string
@@ -30,7 +30,7 @@ const COPY: Record<Locale, ShippingCopy> = {
     colDestination: "Destination",
     colDeliveryTime: "Delivery time",
     colCost: "Cost",
-    belgium: "Belgium",
+    home: "Netherlands",
     restOfEu: "Rest of the EU & neighbouring countries",
     deliveryTime: (min, max) => `${min}–${max} working days`,
     free: "Free",
@@ -41,7 +41,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "Our team works Monday to Friday, 9:00–18:00 CET (excluding Dutch public holidays). The total estimated delivery time is 3–7 business days: 0–2 business days handling plus 3–5 business days in transit. Orders placed by 15:00 CET are processed within the stated handling window.",
     sectionZones: "Shipping zones",
     zonesParagraph:
-      "We ship to Belgium and to the rest of the European Union plus a handful of neighbouring countries (Switzerland, Norway, United Kingdom) — shipping is free to every one of these destinations.",
+      "We ship to the Netherlands and to the rest of the European Union plus a handful of neighbouring countries (Switzerland, Norway, United Kingdom) — shipping is free to every one of these destinations.",
     sectionTracking: "Tracking your order",
     trackingParagraph:
       "Once your order ships you receive an email with a tracking number and a link to follow it on this site. You also receive an email each time the delivery status changes, including a handover to DHL or DPD when our own courier cannot complete the route. Registered customers can open an order in their account to see the full history.",
@@ -51,7 +51,7 @@ const COPY: Record<Locale, ShippingCopy> = {
     colDestination: "Ziel",
     colDeliveryTime: "Lieferzeit",
     colCost: "Kosten",
-    belgium: "Belgien",
+    home: "Niederlande",
     restOfEu: "Restliche EU & Nachbarländer",
     deliveryTime: (min, max) => `${min}–${max} Werktage`,
     free: "Kostenlos",
@@ -62,7 +62,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "Unser Team arbeitet Montag bis Freitag von 9:00 bis 18:00 Uhr MEZ (außer an niederländischen Feiertagen). Die voraussichtliche Gesamtlieferzeit beträgt 3–7 Werktage: 0–2 Werktage Bearbeitung plus 3–5 Werktage Transport. Bestellungen bis 15:00 Uhr MEZ werden innerhalb des angegebenen Bearbeitungsfensters bearbeitet.",
     sectionZones: "Versandzonen",
     zonesParagraph:
-      "Wir versenden nach Belgien sowie in die übrige Europäische Union und einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) — der Versand ist zu jedem dieser Ziele kostenlos.",
+      "Wir versenden in die Niederlande sowie in die übrige Europäische Union und einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) — der Versand ist zu jedem dieser Ziele kostenlos.",
     sectionTracking: "Sendungsverfolgung",
     trackingParagraph:
       "Sobald Ihre Bestellung versandt wurde, erhalten Sie eine E-Mail mit einer Sendungsnummer und einem Link zur Sendungsverfolgung auf dieser Website. Bei jeder Statusänderung erhalten Sie eine weitere E-Mail, auch wenn das Paket an DHL oder DPD übergeben wird. Registrierte Kunden sehen den vollständigen Verlauf in ihrem Konto.",
@@ -72,7 +72,7 @@ const COPY: Record<Locale, ShippingCopy> = {
     colDestination: "Destination",
     colDeliveryTime: "Délai de livraison",
     colCost: "Coût",
-    belgium: "Belgique",
+    home: "Pays-Bas",
     restOfEu: "Reste de l'UE & pays voisins",
     deliveryTime: (min, max) => `${min}–${max} jours ouvrés`,
     free: "Gratuit",
@@ -83,7 +83,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "Notre équipe travaille du lundi au vendredi, de 9h00 à 18h00 CET (hors jours fériés néerlandais). Le délai total estimé est de 3 à 7 jours ouvrés : 0 à 2 jours ouvrés de traitement, puis 3 à 5 jours ouvrés de transport. Les commandes passées avant 15h00 CET sont traitées dans le délai indiqué.",
     sectionZones: "Zones de livraison",
     zonesParagraph:
-      "Nous livrons en Belgique ainsi que dans le reste de l'Union européenne et quelques pays voisins (Suisse, Norvège, Royaume-Uni) — la livraison est gratuite vers chacune de ces destinations.",
+      "Nous livrons aux Pays-Bas ainsi que dans le reste de l'Union européenne et quelques pays voisins (Suisse, Norvège, Royaume-Uni) — la livraison est gratuite vers chacune de ces destinations.",
     sectionTracking: "Suivi de votre commande",
     trackingParagraph:
       "Une fois votre commande expédiée, vous recevez un e-mail avec un numéro de suivi et un lien pour la suivre sur ce site. Vous recevez aussi un e-mail à chaque changement de statut, y compris en cas de remise à DHL ou DPD. Les clients inscrits voient tout l'historique dans leur compte.",
@@ -93,7 +93,7 @@ const COPY: Record<Locale, ShippingCopy> = {
     colDestination: "Destinazione",
     colDeliveryTime: "Tempi di consegna",
     colCost: "Costo",
-    belgium: "Belgio",
+    home: "Paesi Bassi",
     restOfEu: "Resto dell'UE e paesi limitrofi",
     deliveryTime: (min, max) => `${min}–${max} giorni lavorativi`,
     free: "Gratuita",
@@ -104,7 +104,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "Il nostro team lavora dal lunedì al venerdì, dalle 9:00 alle 18:00 CET (escluse le festività olandesi). Il tempo totale stimato di consegna è di 3–7 giorni lavorativi: 0–2 giorni lavorativi di gestione più 3–5 giorni lavorativi di trasporto. Gli ordini effettuati entro le 15:00 CET vengono elaborati entro il periodo indicato.",
     sectionZones: "Zone di spedizione",
     zonesParagraph:
-      "Spediamo in Belgio e nel resto dell'Unione Europea, oltre ad alcuni paesi limitrofi (Svizzera, Norvegia, Regno Unito) — la spedizione è gratuita verso ciascuna di queste destinazioni.",
+      "Spediamo nei Paesi Bassi e nel resto dell'Unione Europea, oltre ad alcuni paesi limitrofi (Svizzera, Norvegia, Regno Unito) — la spedizione è gratuita verso ciascuna di queste destinazioni.",
     sectionTracking: "Tracciamento dell'ordine",
     trackingParagraph:
       "Una volta spedito l'ordine, riceverai un'e-mail con un numero di tracciamento e un link per seguirlo su questo sito. Riceverai un'e-mail a ogni aggiornamento di stato, anche quando il pacco passa a DHL o DPD. I clienti registrati vedono l'intera cronologia nel proprio account.",
@@ -114,7 +114,7 @@ const COPY: Record<Locale, ShippingCopy> = {
     colDestination: "Destino",
     colDeliveryTime: "Tiempo de entrega",
     colCost: "Coste",
-    belgium: "Bélgica",
+    home: "Países Bajos",
     restOfEu: "Resto de la UE y países vecinos",
     deliveryTime: (min, max) => `${min}–${max} días laborables`,
     free: "Gratis",
@@ -125,7 +125,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "Nuestro equipo trabaja de lunes a viernes, de 9:00 a 18:00 CET (excepto festivos neerlandeses). El plazo total estimado de entrega es de 3–7 días laborables: 0–2 días laborables de gestión más 3–5 días laborables de transporte. Los pedidos realizados antes de las 15:00 CET se procesan dentro del plazo indicado.",
     sectionZones: "Zonas de envío",
     zonesParagraph:
-      "Enviamos a Bélgica y al resto de la Unión Europea, además de algunos países vecinos (Suiza, Noruega, Reino Unido) — el envío es gratuito a cada uno de estos destinos.",
+      "Enviamos a los Países Bajos y al resto de la Unión Europea, además de algunos países vecinos (Suiza, Noruega, Reino Unido) — el envío es gratuito a cada uno de estos destinos.",
     sectionTracking: "Seguimiento de tu pedido",
     trackingParagraph:
       "Cuando el pedido se envía, recibes un correo con el número de seguimiento y un enlace para seguirlo en este sitio. También recibes un correo en cada cambio de estado, incluso si el paquete pasa a DHL o DPD. Los clientes registrados ven el historial completo en su cuenta.",
@@ -135,7 +135,7 @@ const COPY: Record<Locale, ShippingCopy> = {
     colDestination: "Bestemming",
     colDeliveryTime: "Levertijd",
     colCost: "Kosten",
-    belgium: "Belgïe",
+    home: "Nederland",
     restOfEu: "Rest van de EU & buurlanden",
     deliveryTime: (min, max) => `${min}–${max} werkdagen`,
     free: "Gratis",
@@ -146,7 +146,7 @@ const COPY: Record<Locale, ShippingCopy> = {
       "Ons team werkt van maandag tot vrijdag, 9:00–18:00 CET (met uitzondering van Nederlandse feestdagen). De totale geschatte levertijd bedraagt 3–7 werkdagen: 0–2 werkdagen verwerking plus 3–5 werkdagen transport. Bestellingen vóór 15:00 CET worden binnen het vermelde verwerkingstijdvenster verwerkt.",
     sectionZones: "Verzendzones",
     zonesParagraph:
-      "Wij verzenden naar Belgïe en de rest van de Europese Unie plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk) — de verzending is gratis naar elk van deze bestemmingen.",
+      "Wij verzenden naar Nederland en de rest van de Europese Unie plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk) — de verzending is gratis naar elk van deze bestemmingen.",
     sectionTracking: "Uw bestelling volgen",
     trackingParagraph:
       "Zodra uw bestelling is verzonden, ontvangt u een e-mail met een trackingnummer en een link om de zending op deze site te volgen. Bij elke statuswijziging ontvangt u opnieuw een e-mail, ook als het pakket naar DHL of DPD gaat. Geregistreerde klanten zien de volledige geschiedenis in hun account.",
@@ -185,7 +185,7 @@ export default async function ShippingPage({ params }: { params: Promise<{ lang:
             </thead>
             <tbody className="divide-y divide-border">
               <tr>
-                <td className="px-4 py-3 font-medium text-foreground">{c.belgium}</td>
+                <td className="px-4 py-3 font-medium text-foreground">{c.home}</td>
                 <td className="px-4 py-3">{c.deliveryTime(DELIVERY_MIN_DAYS, DELIVERY_MAX_DAYS)}</td>
                 <td className="px-4 py-3 font-medium text-primary">{c.free}</td>
               </tr>

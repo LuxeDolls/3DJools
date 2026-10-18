@@ -161,7 +161,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   }
   const discountCents = userId ? memberDiscountCents(subtotalCents) : 0
 
-  // Shipping is recomputed too: Belgium gets the domestic rate, every other
+  // Shipping is recomputed too: the Netherlands gets the domestic rate, every other
   // destination pays the international rate, and both are waived above the
   // free-shipping threshold.
   const shippingCents = computeShippingCents(subtotalCents, input.country)
