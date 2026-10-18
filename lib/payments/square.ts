@@ -32,7 +32,7 @@ export function isSquareSourceId(value: string): boolean {
   return /^[A-Za-z0-9:_-]{10,255}$/.test(value)
 }
 
-const ORDER_NUMBER = /^V3-\d{8}-[A-Z0-9]{4,10}$/
+const ORDER_NUMBER = /^(?:V3|DND)-\d{8}-[A-Z0-9]{4,10}$/
 
 export function isSquareCheckoutUrl(value: string): boolean {
   try {

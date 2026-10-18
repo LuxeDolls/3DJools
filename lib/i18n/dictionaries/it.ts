@@ -273,7 +273,7 @@ export const it: Dictionary = {
     title: "Traccia il tuo ordine",
     subtitle: "Inserisci il numero d'ordine e l'indirizzo e-mail usato al checkout per vedere lo stato.",
     orderNumberLabel: "Numero d'ordine",
-    orderNumberPlaceholder: "es. V3-20250101-ABCDE",
+    orderNumberPlaceholder: "es. DND-20250101-ABCDE",
     emailLabel: "Indirizzo e-mail",
     emailPlaceholder: "tu@esempio.com",
     submit: "Traccia ordine",

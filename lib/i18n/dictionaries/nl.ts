@@ -273,7 +273,7 @@ export const nl: Dictionary = {
     title: "Volg je bestelling",
     subtitle: "Voer je bestelnummer en het e-mailadres van je bestelling in om de status te zien.",
     orderNumberLabel: "Bestelnummer",
-    orderNumberPlaceholder: "bijv. V3-20250101-ABCDE",
+    orderNumberPlaceholder: "bijv. DND-20250101-ABCDE",
     emailLabel: "E-mailadres",
     emailPlaceholder: "jij@voorbeeld.nl",
     submit: "Bestelling volgen",

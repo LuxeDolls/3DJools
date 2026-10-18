@@ -273,7 +273,7 @@ export const fr: Dictionary = {
     title: "Suivre votre commande",
     subtitle: "Saisissez votre numéro de commande et l'adresse e-mail utilisée lors du paiement pour voir son statut.",
     orderNumberLabel: "Numéro de commande",
-    orderNumberPlaceholder: "ex. V3-20250101-ABCDE",
+    orderNumberPlaceholder: "ex. DND-20250101-ABCDE",
     emailLabel: "Adresse e-mail",
     emailPlaceholder: "vous@exemple.com",
     submit: "Suivre la commande",

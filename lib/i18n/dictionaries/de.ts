@@ -273,7 +273,7 @@ export const de: Dictionary = {
     title: "Bestellung verfolgen",
     subtitle: "Geben Sie Ihre Bestellnummer und die beim Bezahlvorgang verwendete E-Mail-Adresse ein, um den Status zu sehen.",
     orderNumberLabel: "Bestellnummer",
-    orderNumberPlaceholder: "z. B. V3-20250101-ABCDE",
+    orderNumberPlaceholder: "z. B. DND-20250101-ABCDE",
     emailLabel: "E-Mail-Adresse",
     emailPlaceholder: "sie@beispiel.de",
     submit: "Bestellung verfolgen",

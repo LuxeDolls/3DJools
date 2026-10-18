@@ -271,7 +271,7 @@ export const en = {
     title: "Track your order",
     subtitle: "Enter your order number and the email address used at checkout to see its status.",
     orderNumberLabel: "Order number",
-    orderNumberPlaceholder: "e.g. V3-20250101-ABCDE",
+    orderNumberPlaceholder: "e.g. DND-20250101-ABCDE",
     emailLabel: "Email address",
     emailPlaceholder: "you@example.com",
     submit: "Track order",

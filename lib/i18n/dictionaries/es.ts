@@ -273,7 +273,7 @@ export const es: Dictionary = {
     title: "Rastrea tu pedido",
     subtitle: "Introduce tu número de pedido y el correo electrónico usado al pagar para ver su estado.",
     orderNumberLabel: "Número de pedido",
-    orderNumberPlaceholder: "p. ej. V3-20250101-ABCDE",
+    orderNumberPlaceholder: "p. ej. DND-20250101-ABCDE",
     emailLabel: "Dirección de correo",
     emailPlaceholder: "tu@ejemplo.com",
     submit: "Rastrear pedido",
