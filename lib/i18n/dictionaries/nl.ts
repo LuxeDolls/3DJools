@@ -436,7 +436,7 @@ export const nl: Dictionary = {
       },
       {
         heading: "Analytische cookies",
-        body: "Helpen ons te begrijpen welke pagina's en producten populair zijn, zodat we de shop kunnen verbeteren. Google Analytics wordt alleen geladen als je alle cookies accepteert, en die gegevens worden maximaal 14 maanden bewaard.",
+        body: "Helpen ons te begrijpen welke pagina's en producten populair zijn, zodat we de shop kunnen verbeteren. Deze cookies worden alleen gebruikt als je alle cookies accepteert.",
       },
     ],
     manageHeading: "Je cookies beheren",

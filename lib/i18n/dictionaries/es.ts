@@ -436,7 +436,7 @@ export const es: Dictionary = {
       },
       {
         heading: "Cookies analíticas",
-        body: "Nos ayudan a entender qué páginas y productos son populares para mejorar la tienda. Google Analytics solo se carga si aceptas todas las cookies, y esos datos se conservan como máximo 14 meses.",
+        body: "Nos ayudan a entender qué páginas y productos son populares para mejorar la tienda. Estas cookies solo se usan si aceptas todas las cookies.",
       },
     ],
     manageHeading: "Gestionar tus cookies",

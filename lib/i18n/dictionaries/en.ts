@@ -434,7 +434,7 @@ export const en = {
       },
       {
         heading: "Analytics cookies",
-        body: "Help us understand which pages and products are popular so we can improve the store. Google Analytics is loaded only after you accept all cookies, and that data is kept for up to 14 months.",
+        body: "Help us understand which pages and products are popular so we can improve the store. These cookies are used only after you accept all cookies.",
       },
     ],
     manageHeading: "Managing your cookies",

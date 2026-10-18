@@ -436,7 +436,7 @@ export const de: Dictionary = {
       },
       {
         heading: "Analyse-Cookies",
-        body: "Helfen uns zu verstehen, welche Seiten und Produkte beliebt sind, um den Shop zu verbessern. Google Analytics wird nur geladen, wenn du alle Cookies akzeptierst, und diese Daten werden höchstens 14 Monate gespeichert.",
+        body: "Helfen uns zu verstehen, welche Seiten und Produkte beliebt sind, um den Shop zu verbessern. Diese Cookies werden nur verwendet, wenn du alle Cookies akzeptierst.",
       },
     ],
     manageHeading: "Deine Cookies verwalten",
