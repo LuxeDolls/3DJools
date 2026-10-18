@@ -1,6 +1,6 @@
 import "server-only"
 
-import { and, asc, desc, eq } from "drizzle-orm"
+import { and, asc, desc, eq, isNull } from "drizzle-orm"
 import { db } from "@/lib/db"
 import {
   chatConversations,
@@ -16,7 +16,7 @@ export async function findConversation(visitorId: string): Promise<ChatConversat
   const existing = await db
     .select()
     .from(chatConversations)
-    .where(eq(chatConversations.visitorId, visitorId))
+    .where(and(eq(chatConversations.visitorId, visitorId), isNull(chatConversations.archivedAt)))
     .orderBy(desc(chatConversations.createdAt))
     .limit(1)
 
@@ -27,7 +27,7 @@ export async function getOrCreateConversation(visitorId: string, locale: string)
   const existing = await db
     .select()
     .from(chatConversations)
-    .where(eq(chatConversations.visitorId, visitorId))
+    .where(and(eq(chatConversations.visitorId, visitorId), isNull(chatConversations.archivedAt)))
     .orderBy(desc(chatConversations.createdAt))
     .limit(1)
 
@@ -79,7 +79,11 @@ export async function touchConversation(
 /* -------------------------------- admin --------------------------------- */
 
 export async function listConversationsForAdmin() {
-  const conversations = await db.select().from(chatConversations).orderBy(desc(chatConversations.lastMessageAt))
+  const conversations = await db
+    .select()
+    .from(chatConversations)
+    .where(isNull(chatConversations.archivedAt))
+    .orderBy(desc(chatConversations.lastMessageAt))
 
   const withLastMessage = await Promise.all(
     conversations.map(async (c) => {
@@ -111,7 +115,7 @@ export async function getUnreadConversationCount(): Promise<number> {
     .select({ conversationId: chatConversations.id })
     .from(chatConversations)
     .innerJoin(chatMessages, eq(chatMessages.conversationId, chatConversations.id))
-    .where(eq(chatConversations.unreadForAdmin, true))
+    .where(and(eq(chatConversations.unreadForAdmin, true), isNull(chatConversations.archivedAt)))
 
   return new Set(rows.map((row) => row.conversationId)).size
 }

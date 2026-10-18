@@ -1,6 +1,7 @@
 "use server"
 
 import { liveChatAutoReply } from "@/lib/chat/assistant"
+import { notifyChatOnTelegram } from "@/lib/notifications/chat-telegram"
 import { notifyNewLiveChatVisitor } from "@/lib/notifications/live-chat"
 import {
   findConversation,
@@ -43,6 +44,9 @@ export async function sendChatMessage(
 
   await insertMessage(conversation.id, "user", content)
   await touchConversation(conversation.id, { unreadForAdmin: true })
+  await notifyChatOnTelegram({ conversationId: conversation.id, body: content }).catch((error) => {
+    console.error("[v0] Telegram chat alert failed:", error)
+  })
 
   if (isNewVisitor) {
     await notifyNewLiveChatVisitor({
