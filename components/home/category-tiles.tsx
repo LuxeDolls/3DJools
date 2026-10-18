@@ -31,7 +31,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
           <Link
             key={tile.href}
             href={localizedPath(locale, tile.href)}
-            className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card"
+            className="group flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
           >
             <div className="relative aspect-square overflow-hidden bg-secondary/40">
               <Image
@@ -42,7 +42,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
             </div>
-            <h3 className="border-t border-border px-4 py-3 font-heading text-base font-bold text-balance text-card-foreground md:text-lg">
+            <h3 className="border-t border-border/70 px-4 py-3.5 font-heading text-base font-semibold text-balance text-card-foreground md:text-lg">
               {tile.key}
             </h3>
           </Link>

@@ -12,7 +12,7 @@ export function SectionHeading({
 }) {
   return (
     <div className="mb-6 flex items-end justify-between gap-4">
-      <h2 className="text-balance font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+      <h2 className="text-balance font-heading text-2xl font-semibold tracking-tight text-foreground sm:text-3xl">
         {title}
       </h2>
       {viewAllHref && viewAllLabel && (
