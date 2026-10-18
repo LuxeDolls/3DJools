@@ -1,7 +1,7 @@
 import "server-only"
 
 import { and, asc, desc, eq, isNull } from "drizzle-orm"
-import { db } from "@/lib/db"
+import { db, pool } from "@/lib/db"
 import {
   chatConversations,
   chatMessages,
@@ -11,8 +11,28 @@ import {
   type ChatRole,
 } from "@/lib/db/schema"
 
+let identityColumnsReady: Promise<void> | null = null
+
+function ensureIdentityColumns(): Promise<void> {
+  if (!identityColumnsReady) {
+    identityColumnsReady = pool
+      .query(
+        `ALTER TABLE chat_conversations
+           ADD COLUMN IF NOT EXISTS visitor_name text,
+           ADD COLUMN IF NOT EXISTS visitor_email text`,
+      )
+      .then(() => undefined)
+      .catch((error) => {
+        identityColumnsReady = null
+        throw error
+      })
+  }
+  return identityColumnsReady
+}
+
 /** Find an existing conversation for this visitor, or create a fresh one. */
 export async function findConversation(visitorId: string): Promise<ChatConversationRow | null> {
+  await ensureIdentityColumns()
   const existing = await db
     .select()
     .from(chatConversations)
@@ -28,6 +48,7 @@ export async function getOrCreateConversation(
   locale: string,
   identity?: { name: string; email: string },
 ): Promise<ChatConversationRow> {
+  await ensureIdentityColumns()
   const existing = await db
     .select()
     .from(chatConversations)
@@ -62,6 +83,7 @@ export async function getOrCreateConversation(
 }
 
 export async function getConversationById(id: string): Promise<ChatConversationRow | null> {
+  await ensureIdentityColumns()
   const rows = await db.select().from(chatConversations).where(eq(chatConversations.id, id)).limit(1)
   return rows[0] ?? null
 }
@@ -95,6 +117,7 @@ export async function touchConversation(
 /* -------------------------------- admin --------------------------------- */
 
 export async function listConversationsForAdmin() {
+  await ensureIdentityColumns()
   const conversations = await db
     .select()
     .from(chatConversations)
