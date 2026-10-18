@@ -21,7 +21,7 @@ import { isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
-import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
+import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { squareConfigured } from "@/lib/payments/square"
 import { openSquareCheckout } from "@/lib/payments/square-order"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
@@ -125,7 +125,6 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (input.payment === "alppay" && !(await requestIp())) return { ok: false, error: "ip_required" }
   if (input.payment === "alppay" && (await alppayHoldUntil(input.email))) return { ok: false, error: "alppay_hold" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
-  if (input.payment === "sepa" && !BANK_TRANSFER_CHECKOUT_ENABLED) return { ok: false, error: "order_failed" }
   if (input.payment === "square" && !squareConfigured()) return { ok: false, error: "square_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
@@ -153,6 +152,13 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   // Member discount depends on a verified server-side session, not the client.
   const session = await auth.api.getSession({ headers: await headers() })
   const userId = session?.user?.id ?? null
+  if (
+    input.payment === "sepa" &&
+    !isBankTransferCheckoutEnabled(input.email) &&
+    !isBankTransferCheckoutEnabled(session?.user?.email)
+  ) {
+    return { ok: false, error: "order_failed" }
+  }
   const discountCents = userId ? memberDiscountCents(subtotalCents) : 0
 
   // Shipping is recomputed too: Belgium gets the domestic rate, every other

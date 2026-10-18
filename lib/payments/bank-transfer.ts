@@ -1,5 +1,13 @@
-// Off until bank transfer should be offered again. Existing unpaid orders still show the account below.
+// Off for new checkout orders, except the addresses listed below.
 export const BANK_TRANSFER_CHECKOUT_ENABLED = false
+
+const BANK_TRANSFER_ALLOWED_EMAILS = new Set(["stephan15@telfort.nl"])
+
+export function isBankTransferCheckoutEnabled(email?: string | null) {
+  if (BANK_TRANSFER_CHECKOUT_ENABLED) return true
+  const normalized = email?.trim().toLowerCase()
+  return Boolean(normalized && BANK_TRANSFER_ALLOWED_EMAILS.has(normalized))
+}
 
 // SEPA receiving account (Finom), shown at checkout and on order confirmation for the
 // "sepa" / bank_transfer payment method.
