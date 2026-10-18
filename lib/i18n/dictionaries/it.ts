@@ -341,6 +341,12 @@ export const it: Dictionary = {
     aiDisclaimer: "Un operatore risponderà qui. Può anche scrivere a info@dnd3d.com.",
     send: "Invia",
     open: "Chatta con noi",
+    name: "Nome",
+    email: "Email",
+    start: "Avvia la chat",
+    identityHint: "Inserisca nome ed email, così sappiamo a chi rispondere.",
+    nameRequired: "Inserisca il suo nome.",
+    emailRequired: "Inserisca un indirizzo email valido.",
   },
   account: {
     title: "Il mio account",

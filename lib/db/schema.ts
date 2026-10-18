@@ -323,6 +323,8 @@ export type ChatMode = (typeof CHAT_MODES)[number]
 export const chatConversations = pgTable("chat_conversations", {
   id: text("id").primaryKey(),
   visitorId: text("visitor_id").notNull(),
+  visitorName: text("visitor_name"),
+  visitorEmail: text("visitor_email"),
   locale: text("locale").notNull().default("en"),
   mode: text("mode").$type<ChatMode>().notNull().default("ai"),
   unreadForAdmin: boolean("unread_for_admin").notNull().default(true),

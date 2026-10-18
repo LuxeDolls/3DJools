@@ -23,7 +23,11 @@ export async function findConversation(visitorId: string): Promise<ChatConversat
   return existing[0] ?? null
 }
 
-export async function getOrCreateConversation(visitorId: string, locale: string): Promise<ChatConversationRow> {
+export async function getOrCreateConversation(
+  visitorId: string,
+  locale: string,
+  identity?: { name: string; email: string },
+): Promise<ChatConversationRow> {
   const existing = await db
     .select()
     .from(chatConversations)
@@ -31,13 +35,25 @@ export async function getOrCreateConversation(visitorId: string, locale: string)
     .orderBy(desc(chatConversations.createdAt))
     .limit(1)
 
-  if (existing[0]) return existing[0]
+  if (existing[0]) {
+    if (identity && (!existing[0].visitorName || !existing[0].visitorEmail)) {
+      const [updated] = await db
+        .update(chatConversations)
+        .set({ visitorName: identity.name, visitorEmail: identity.email })
+        .where(eq(chatConversations.id, existing[0].id))
+        .returning()
+      return updated
+    }
+    return existing[0]
+  }
 
   const [created] = await db
     .insert(chatConversations)
     .values({
       id: crypto.randomUUID(),
       visitorId,
+      visitorName: identity?.name,
+      visitorEmail: identity?.email,
       locale,
     })
     .returning()

@@ -5,7 +5,7 @@ import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import Link from "next/link"
-import { CreditCard, Landmark, Bitcoin, CalendarClock } from "lucide-react"
+import { CreditCard, Landmark, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -41,7 +41,6 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
     ...(BANK_TRANSFER_CHECKOUT_ENABLED
       ? [{ icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc }]
       : []),
-    { icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
     ...(isPaypalCheckoutEnabled()
       ? [{ icon: Landmark, mark: "/payments/paypal.svg", title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc }]
       : []),

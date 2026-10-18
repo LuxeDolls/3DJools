@@ -341,6 +341,12 @@ export const nl: Dictionary = {
     aiDisclaimer: "Een medewerker antwoordt hier. U kunt ook mailen naar info@dnd3d.com.",
     send: "Versturen",
     open: "Chat met ons",
+    name: "Naam",
+    email: "E-mail",
+    start: "Chat starten",
+    identityHint: "Vul uw naam en e-mail in, zodat wij weten aan wie wij antwoorden.",
+    nameRequired: "Vul uw naam in.",
+    emailRequired: "Vul een geldig e-mailadres in.",
   },
   account: {
     title: "Mijn account",

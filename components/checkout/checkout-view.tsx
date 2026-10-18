@@ -21,7 +21,7 @@ import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/insta
 import { cn } from "@/lib/utils"
 import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName } from "@/lib/payments/cardholder"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
-import { CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
+import { CRYPTO_CHECKOUT_ENABLED, CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT, BANK_TRANSFER_CHECKOUT_ENABLED, isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
@@ -71,9 +71,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
         ? "card"
         : ALPPAY_CHECKOUT_ENABLED
           ? "alppay"
-          : BANK_TRANSFER_CHECKOUT_ENABLED
-            ? "sepa"
-            : "crypto",
+          : "sepa",
   )
   useEffect(() => {
     if (bankTransferEnabled && !BANK_TRANSFER_CHECKOUT_ENABLED) {
@@ -118,7 +116,9 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     ...(bankTransferEnabled
       ? [{ id: "sepa" as const, icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc }]
       : []),
-    { id: "crypto", icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc },
+    ...(CRYPTO_CHECKOUT_ENABLED
+      ? [{ id: "crypto" as const, icon: Bitcoin, title: dict.checkout.payCrypto, desc: dict.checkout.payCryptoDesc }]
+      : []),
     ...(isPaypalCheckoutEnabled()
       ? [{ id: "paypal" as const, icon: Landmark, title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc, mark: "/payments/paypal.svg" }]
       : []),

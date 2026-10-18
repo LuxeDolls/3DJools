@@ -10,6 +10,8 @@ import type { ChatMessageRow } from "@/lib/db/schema"
 const VISITOR_ID_KEY = "voltika-chat-visitor-id"
 const POLL_INTERVAL_MS = 4000
 
+type ChatIdentity = { name: string; email: string }
+
 function getVisitorId(): string {
   if (typeof window === "undefined") return ""
   let id = window.localStorage.getItem(VISITOR_ID_KEY)
@@ -20,18 +22,38 @@ function getVisitorId(): string {
   return id
 }
 
+function isValidIdentity(name: string, email: string): boolean {
+  return name.trim().length >= 2 && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
+}
+
+function blockComposingEnter(event: React.KeyboardEvent<HTMLInputElement>) {
+  if (event.key === "Enter" && (event.nativeEvent.isComposing || event.keyCode === 229)) {
+    event.preventDefault()
+  }
+}
+
 export function ChatWidget() {
   const { dict, locale } = useI18n()
   const [open, setOpen] = useState(false)
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<ChatMessageRow[]>([])
   const [sending, setSending] = useState(false)
+  const [ready, setReady] = useState(false)
+  const [needsIdentity, setNeedsIdentity] = useState(true)
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [identity, setIdentity] = useState<ChatIdentity | null>(null)
+  const [identityError, setIdentityError] = useState("")
   const visitorIdRef = useRef<string>("")
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     visitorIdRef.current = getVisitorId()
-    initChat(visitorIdRef.current, locale).then(setMessages)
+    initChat(visitorIdRef.current, locale).then((result) => {
+      setMessages(result.messages)
+      setNeedsIdentity(!result.hasConversation)
+      setReady(true)
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -48,13 +70,30 @@ export function ChatWidget() {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" })
   }, [messages, sending])
 
+  function startChat(event: React.FormEvent) {
+    event.preventDefault()
+    const nextName = name.trim()
+    const nextEmail = email.trim()
+    if (nextName.length < 2) {
+      setIdentityError(dict.chat.nameRequired)
+      return
+    }
+    if (!isValidIdentity(nextName, nextEmail)) {
+      setIdentityError(dict.chat.emailRequired)
+      return
+    }
+    setIdentity({ name: nextName, email: nextEmail })
+    setIdentityError("")
+    setNeedsIdentity(false)
+  }
+
   async function send(e: React.FormEvent) {
     e.preventDefault()
     const text = input.trim()
-    if (!text || sending || !visitorIdRef.current) return
+    if (!text || sending || !visitorIdRef.current || needsIdentity) return
     setInput("")
     setSending(true)
-    const result = await sendChatMessage(visitorIdRef.current, text, locale)
+    const result = await sendChatMessage(visitorIdRef.current, text, locale, identity ?? undefined)
     if (result.ok) setMessages(result.messages)
     setSending(false)
   }
@@ -91,6 +130,44 @@ export function ChatWidget() {
           </div>
         </div>
 
+        {!ready ? (
+          <div className="flex-1 bg-background" />
+        ) : needsIdentity ? (
+          <form onSubmit={startChat} className="flex flex-1 flex-col gap-3 bg-background p-4">
+            <p className="text-sm leading-relaxed text-muted-foreground">{dict.chat.identityHint}</p>
+            <label className="grid gap-1 text-xs font-medium text-foreground">
+              {dict.chat.name}
+              <input
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                onKeyDown={blockComposingEnter}
+                autoComplete="name"
+                required
+                className="h-10 rounded-md border border-input bg-card px-3 text-sm font-normal outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
+              />
+            </label>
+            <label className="grid gap-1 text-xs font-medium text-foreground">
+              {dict.chat.email}
+              <input
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                onKeyDown={blockComposingEnter}
+                type="email"
+                autoComplete="email"
+                required
+                className="h-10 rounded-md border border-input bg-card px-3 text-sm font-normal outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
+              />
+            </label>
+            {identityError ? <p className="text-xs text-destructive">{identityError}</p> : null}
+            <button
+              type="submit"
+              className="mt-auto h-10 rounded-full bg-primary text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              {dict.chat.start}
+            </button>
+          </form>
+        ) : (
+        <>
         {/* Messages */}
         <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto bg-background p-4">
           <p className="rounded-md bg-secondary px-3 py-2 text-center text-[11px] text-muted-foreground">
@@ -135,6 +212,7 @@ export function ChatWidget() {
             onChange={(e) => setInput(e.target.value)}
             placeholder={dict.chat.placeholder}
             aria-label={dict.chat.placeholder}
+            onKeyDown={blockComposingEnter}
             disabled={sending}
             className="h-10 flex-1 rounded-full border border-input bg-background px-4 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 disabled:opacity-60"
           />
@@ -147,6 +225,8 @@ export function ChatWidget() {
             <Send className="size-4" />
           </button>
         </form>
+        </>
+        )}
       </div>
     </>
   )

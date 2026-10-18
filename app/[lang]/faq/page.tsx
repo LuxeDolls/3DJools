@@ -92,7 +92,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Card (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA bank transfer, cryptocurrency and interest-free instalments. Card, Apple Pay, Link and Bancontact open a secure Stripe page. Details are on our ",
+                "Card (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA bank transfer and interest-free instalments. Card, Apple Pay, Link and Bancontact open a secure Stripe page. Details are on our ",
               label: "payment methods page",
               after: ".",
             },
@@ -190,7 +190,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Karte (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-Überweisung, Kryptowährung und zinsfreie Ratenzahlung. Karte, Apple Pay, Link und Bancontact öffnen eine sichere Stripe-Seite. Einzelheiten stehen auf unserer Seite ",
+                "Karte (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-Überweisung und zinsfreie Ratenzahlung. Karte, Apple Pay, Link und Bancontact öffnen eine sichere Stripe-Seite. Einzelheiten stehen auf unserer Seite ",
               label: "Zahlungsarten",
               after: ".",
             },
@@ -288,7 +288,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Carte (Visa, Mastercard), Apple Pay, Link, Bancontact, virement SEPA, cryptomonnaie et paiement en plusieurs fois sans intérêt. La carte, Apple Pay, Link et Bancontact ouvrent une page Stripe sécurisée. Les détails figurent sur notre ",
+                "Carte (Visa, Mastercard), Apple Pay, Link, Bancontact, virement SEPA et paiement en plusieurs fois sans intérêt. La carte, Apple Pay, Link et Bancontact ouvrent une page Stripe sécurisée. Les détails figurent sur notre ",
               label: "page des moyens de paiement",
               after: ".",
             },
@@ -386,7 +386,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Carta (Visa, Mastercard), Apple Pay, Link, Bancontact, bonifico SEPA, criptovaluta e rate senza interessi. Carta, Apple Pay, Link e Bancontact aprono una pagina Stripe sicura. I dettagli sono sulla nostra ",
+                "Carta (Visa, Mastercard), Apple Pay, Link, Bancontact, bonifico SEPA e rate senza interessi. Carta, Apple Pay, Link e Bancontact aprono una pagina Stripe sicura. I dettagli sono sulla nostra ",
               label: "pagina dei metodi di pagamento",
               after: ".",
             },
@@ -484,7 +484,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Tarjeta (Visa, Mastercard), Apple Pay, Link, Bancontact, transferencia SEPA, criptomoneda y plazos sin intereses. La tarjeta, Apple Pay, Link y Bancontact abren una página segura de Stripe. Los detalles están en nuestra ",
+                "Tarjeta (Visa, Mastercard), Apple Pay, Link, Bancontact, transferencia SEPA y plazos sin intereses. La tarjeta, Apple Pay, Link y Bancontact abren una página segura de Stripe. Los detalles están en nuestra ",
               label: "página de métodos de pago",
               after: ".",
             },
@@ -582,7 +582,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Kaart (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-overschrijving, cryptovaluta en renteloze termijnen. Kaart, Apple Pay, Link en Bancontact openen een beveiligde Stripe-pagina. De details staan op onze ",
+                "Kaart (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-overschrijving en renteloze termijnen. Kaart, Apple Pay, Link en Bancontact openen een beveiligde Stripe-pagina. De details staan op onze ",
               label: "pagina met betaalmethoden",
               after: ".",
             },

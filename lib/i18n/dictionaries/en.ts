@@ -339,6 +339,12 @@ export const en = {
     aiDisclaimer: "A teammate will reply here. You can also email info@dnd3d.com.",
     send: "Send",
     open: "Chat with us",
+    name: "Name",
+    email: "Email",
+    start: "Start chat",
+    identityHint: "Enter your name and email so we know who to reply to.",
+    nameRequired: "Enter your name.",
+    emailRequired: "Enter a valid email address.",
   },
   account: {
     title: "My account",

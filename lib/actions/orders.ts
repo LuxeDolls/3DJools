@@ -17,7 +17,7 @@ import { notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
-import { isCryptoCoinId } from "@/lib/payments/crypto"
+import { CRYPTO_CHECKOUT_ENABLED, isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
@@ -152,6 +152,9 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   // Member discount depends on a verified server-side session, not the client.
   const session = await auth.api.getSession({ headers: await headers() })
   const userId = session?.user?.id ?? null
+  if (input.payment === "crypto" && !CRYPTO_CHECKOUT_ENABLED) {
+    return { ok: false, error: "order_failed" }
+  }
   if (
     input.payment === "sepa" &&
     !isBankTransferCheckoutEnabled(input.email) &&
