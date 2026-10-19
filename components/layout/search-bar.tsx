@@ -29,7 +29,7 @@ export function SearchBar({ className, onSubmitted }: { className?: string; onSu
         onChange={(e) => setQuery(e.target.value)}
         placeholder={dict.common.searchPlaceholder}
         aria-label={dict.common.search}
-        className="h-10 w-full rounded-md border border-input bg-background pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
+        className="h-10 w-full rounded-md border border-input bg-secondary/40 pl-9 pr-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:bg-background focus-visible:ring-2 focus-visible:ring-ring/40"
       />
     </form>
   )

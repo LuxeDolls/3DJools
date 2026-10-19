@@ -1,18 +1,18 @@
 import { OptionalAnalytics } from '@/components/legal/optional-analytics'
 import { OrganizationJsonLd } from '@/components/legal/organization-jsonld'
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Outfit, Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 
-const inter = Inter({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-jakarta',
   display: 'swap',
 })
 
-const spaceGrotesk = Space_Grotesk({
+const outfit = Outfit({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  variable: '--font-outfit',
   display: 'swap',
 })
 
@@ -51,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background ${inter.variable} ${spaceGrotesk.variable}`}
+      className={`bg-background ${jakarta.variable} ${outfit.variable}`}
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">

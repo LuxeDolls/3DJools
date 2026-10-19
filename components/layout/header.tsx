@@ -115,7 +115,7 @@ export function Header() {
             <Link
               key={item.href}
               href={lp(item.href)}
-              className="relative px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:text-primary data-[deal=true]:text-primary"
+              className="relative px-3 py-2.5 text-sm font-semibold tracking-tight text-foreground/75 transition-colors hover:text-foreground after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100 data-[deal=true]:text-primary"
               data-deal={item.href === "/deals"}
             >
               {item.label}
