@@ -71,15 +71,25 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
       </div>
 
       <div className="mb-4 flex flex-col gap-2">
-        <Button type="button" variant="outline" disabled={loading} onClick={() => signInWith("google")}>
-          {social.google}
-        </Button>
-        <Button type="button" variant="outline" disabled={loading} onClick={() => signInWith("facebook")}>
-          {social.facebook}
-        </Button>
-        <Button type="button" variant="outline" disabled={loading} onClick={() => signInWith("linkedin")}>
-          {social.linkedin}
-        </Button>
+        {(
+          [
+            ["google", social.google, "/icons/google.svg"],
+            ["facebook", social.facebook, "/icons/facebook.svg"],
+            ["linkedin", social.linkedin, "/icons/linkedin.svg"],
+          ] as const
+        ).map(([provider, label, icon]) => (
+          <Button
+            key={provider}
+            type="button"
+            variant="outline"
+            disabled={loading}
+            className="relative w-full"
+            onClick={() => signInWith(provider)}
+          >
+            <img src={icon} alt="" className="absolute left-3 size-4" />
+            {label}
+          </Button>
+        ))}
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
