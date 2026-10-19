@@ -116,6 +116,33 @@ export function AuthForm({
         <p className="mt-1 text-sm text-muted-foreground">{isSignUp ? t.signUpSubtitle : t.signInSubtitle}</p>
       </div>
 
+      <div className="flex flex-col gap-2">
+        {(
+          [
+            ["google", social.google, "/icons/google.svg"],
+            ["facebook", social.facebook, "/icons/facebook.svg"],
+          ] as const
+        ).map(([provider, label, icon]) => (
+          <Button
+            key={provider}
+            type="button"
+            variant="outline"
+            disabled={loading}
+            className="relative w-full"
+            onClick={() => signInWith(provider)}
+          >
+            <img src={icon} alt="" className="absolute left-3 size-4" />
+            {label}
+          </Button>
+        ))}
+      </div>
+
+      <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
+        <span className="h-px flex-1 bg-border" />
+        {social.or}
+        <span className="h-px flex-1 bg-border" />
+      </div>
+
       <form className="flex flex-col gap-4" onSubmit={onSubmit}>
         {isSignUp && (
           <div className="space-y-1.5">
@@ -171,33 +198,6 @@ export function AuthForm({
           {loading ? t.pleaseWait : isSignUp ? t.signUpCta : t.signInCta}
         </Button>
       </form>
-
-      <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
-        <span className="h-px flex-1 bg-border" />
-        {social.or}
-        <span className="h-px flex-1 bg-border" />
-      </div>
-
-      <div className="flex flex-col gap-2">
-        {(
-          [
-            ["google", social.google, "/icons/google.svg"],
-            ["facebook", social.facebook, "/icons/facebook.svg"],
-          ] as const
-        ).map(([provider, label, icon]) => (
-          <Button
-            key={provider}
-            type="button"
-            variant="outline"
-            disabled={loading}
-            className="relative w-full"
-            onClick={() => signInWith(provider)}
-          >
-            <img src={icon} alt="" className="absolute left-3 size-4" />
-            {label}
-          </Button>
-        ))}
-      </div>
 
       {error && (
         <p className="mt-4 text-sm text-destructive" role="alert">
