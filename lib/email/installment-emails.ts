@@ -1,6 +1,7 @@
 import "server-only"
 
 import { COMPANY } from "@/lib/company"
+import { renderEmail } from "@/lib/email/layout"
 import { sendEmail, type SendResult } from "@/lib/email/send"
 import type { InstallmentApplication } from "@/lib/db/schema"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
@@ -19,15 +20,10 @@ function statusLink(app: InstallmentApplication): string {
 }
 
 function wrapHtml(title: string, bodyHtml: string): string {
-  return `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
-<div style="max-width:560px;margin:0 auto;padding:24px">
-  <div style="background:#fff;border-radius:12px;padding:32px">
-    <h1 style="margin:0 0 8px;font-size:20px;color:#111">${title}</h1>
-    ${bodyHtml}
-  </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p>
-</div>
-</body></html>`
+  return renderEmail({
+    preheader: title,
+    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">${title}</h1>${bodyHtml}`,
+  })
 }
 
 /**
@@ -61,7 +57,7 @@ export async function sendInstallmentApplicationReceivedEmail(app: InstallmentAp
       <tr><td style="padding:4px 0;color:#555">Down payment</td><td style="padding:4px 0;text-align:right;color:#111">${euros(app.downPaymentCents)}</td></tr>
       <tr><td style="padding:4px 0;color:#555">Remaining balance</td><td style="padding:4px 0;text-align:right;color:#111">${euros(app.remainingCents)}</td></tr>
     </table>
-    ${link ? `<p style="margin:20px 0 0"><a href="${link}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">Track your application</a></p>` : ""}`,
+    ${link ? `<p style="margin:20px 0 0"><a href="${link}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">Track your application</a></p>` : ""}`,
   )
 
   return sendEmail({ to: app.email, subject, html, text })
@@ -100,7 +96,7 @@ export async function sendInstallmentApplicationApprovedEmail(app: InstallmentAp
       <tr><td style="padding:4px 0;color:#555">Amount</td><td style="padding:4px 0;text-align:right;color:#111">${euros(app.downPaymentCents)}</td></tr>
       <tr><td style="padding:4px 0;color:#555">Reference</td><td style="padding:4px 0;text-align:right;color:#111">${app.applicationRef}</td></tr>
     </table>
-    ${link ? `<p style="margin:20px 0 0"><a href="${link}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">Pay your down payment</a></p>` : ""}`,
+    ${link ? `<p style="margin:20px 0 0"><a href="${link}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">Pay your down payment</a></p>` : ""}`,
   )
 
   return sendEmail({ to: app.email, subject, html, text })
@@ -131,7 +127,7 @@ export async function sendInstallmentPaymentStatusEmail(
     `<p style="margin:0 0 4px;color:#555;font-size:14px">Reference <strong>${app.applicationRef}</strong></p>
     <p style="margin:16px 0;color:#111;font-size:14px;line-height:1.6">Hi ${app.firstName}, your <strong>${paymentLabel}</strong> of <strong>${euros(entry.amountCents)}</strong> is now <strong>${statusLabel}</strong>.</p>
     <p style="margin:0;color:#111;font-size:14px;line-height:1.6">Your order status is <strong>${orderStatus}</strong>.</p>
-    ${link ? `<p style="margin:20px 0 0"><a href="${link}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your installment plan</a></p>` : ""}`,
+    ${link ? `<p style="margin:20px 0 0"><a href="${link}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">View your installment plan</a></p>` : ""}`,
   )
 
   return sendEmail({ to: app.email, subject, html, text })
