@@ -29,10 +29,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      <SaleBanner locale={locale} dict={dict} />
       <Hero locale={locale} dict={dict} />
       <UspBar dict={dict} />
       <MemberPromo />
+      <SaleBanner locale={locale} dict={dict} />
       <CategoryTiles locale={locale} dict={dict} />
 
       <section className="mx-auto max-w-7xl px-4 py-12">
