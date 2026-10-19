@@ -13,8 +13,7 @@ export const auth = betterAuth({
         ? `https://${process.env.VERCEL_URL}`
         : process.env.V0_RUNTIME_URL),
   emailAndPassword: {
-    enabled: true,
-    autoSignIn: true,
+    enabled: false,
   },
   socialProviders: {
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
