@@ -6,12 +6,12 @@ import { authClient } from "@/lib/auth-client"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { Button } from "@/components/ui/button"
 
-export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
+export function AuthForm({ mode, errorCode }: { mode: "sign-in" | "sign-up"; errorCode?: string }) {
   const { dict, locale } = useI18n()
   const lp = useLocalizedPath()
   const t = dict.auth
 
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(errorCode ? t.genericError : null)
   const [loading, setLoading] = useState(false)
 
   const isSignUp = mode === "sign-up"
@@ -27,7 +27,11 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
   async function signInWith(provider: "google" | "facebook" | "linkedin") {
     setError(null)
     setLoading(true)
-    const { error } = await authClient.signIn.social({ provider, callbackURL: lp("/account") })
+    const { error } = await authClient.signIn.social({
+      provider,
+      callbackURL: `${window.location.origin}${lp("/account")}`,
+      errorCallbackURL: `${window.location.origin}${lp("/sign-in")}`,
+    })
     setLoading(false)
     if (error) setError(t.genericError)
   }

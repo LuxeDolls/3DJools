@@ -3,6 +3,8 @@ import { pool } from "@/lib/db"
 import { notifyNewCustomer } from "@/lib/notifications/admin"
 import { sendWelcomeEmail } from "@/lib/email/auth-emails"
 
+const shareStoreCookies = process.env.BETTER_AUTH_URL?.includes("dnd3d.com") ?? false
+
 export const auth = betterAuth({
   database: pool,
   baseURL:
@@ -15,6 +17,18 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: false,
   },
+  account: {
+    accountLinking: {
+      enabled: true,
+      trustedProviders: ["google", "facebook", "linkedin"],
+      // Checkout accounts were created before email verification existed.
+      // A verified provider email is enough to connect that existing account.
+      requireLocalEmailVerified: false,
+    },
+  },
+  ...(shareStoreCookies
+    ? { onAPIError: { errorURL: "https://dnd3d.com/en/sign-in" } }
+    : {}),
   socialProviders: {
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
       ? {
@@ -89,5 +103,16 @@ export const auth = betterAuth({
           },
         },
       }
-    : {}),
+    : shareStoreCookies
+      ? {
+          advanced: {
+            // Google returns to www while shoppers use the apex domain.
+            // One parent-domain cookie keeps the session on both hosts.
+            crossSubDomainCookies: {
+              enabled: true,
+              domain: "dnd3d.com",
+            },
+          },
+        }
+      : {}),
 })
