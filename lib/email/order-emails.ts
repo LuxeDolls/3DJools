@@ -1,6 +1,7 @@
 import "server-only"
 
 import { COMPANY } from "@/lib/company"
+import { renderEmail } from "@/lib/email/layout"
 import { sendEmail, type SendResult } from "@/lib/email/send"
 import {
   localeForCountry,
@@ -147,7 +148,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
 
   const sepaHtml =
     awaitingPayment && isSepa
-      ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">Please transfer <strong>${euros(order.totalCents)}</strong> and include your order number <strong>${order.orderNumber}</strong> as the payment reference so we can match your payment.</p>
         <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">Name: ${BANK_TRANSFER_ACCOUNT.accountName} · IBAN: ${BANK_TRANSFER_ACCOUNT.iban} · BIC: ${BANK_TRANSFER_ACCOUNT.bic}</p>
     </div>`
@@ -155,7 +156,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
 
   const cryptoHtml =
     awaitingPayment && isCrypto
-      ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">Please send the equivalent of <strong>${euros(order.totalCents)}</strong> and keep your order number <strong>${order.orderNumber}</strong> for your records.</p>
       <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">${cryptoCoin.coinLabel} · ${cryptoCoin.network}: ${cryptoCoin.address}</p>
     </div>`
@@ -163,21 +164,21 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
 
   const cardHtml =
     awaitingPayment && isCard
-      ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.</p>
     </div>`
       : ""
 
   const squareHtml =
     awaitingPayment && isSquare
-      ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> is not confirmed yet. Open your order page to pay by Visa or Mastercard. The charge is in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA. If you have already paid, wait for the status to update and do not pay twice.</p>
     </div>`
       : ""
 
   const paypalHtml =
     awaitingPayment && isPaypal
-      ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+      ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0;font-size:14px;color:#7a4b00">${paypalAwaitingText(order.totalCents)}</p>
     </div>`
       : ""
@@ -189,10 +190,9 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     </div>`
     : ""
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
-<div style="max-width:560px;margin:0 auto;padding:24px">
-  <div style="background:#fff;border-radius:12px;padding:32px">
-    <h1 style="margin:0 0 8px;font-size:20px;color:#111">Thank you for your order</h1>
+  const html = renderEmail({
+    preheader: `Order ${order.orderNumber} is confirmed`,
+    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">Thank you for your order</h1>
     <p style="margin:0 0 4px;color:#555;font-size:14px">Order <strong>${order.orderNumber}</strong></p>
     <p style="margin:0 0 20px;color:#888;font-size:13px">${new Date(order.createdAt).toLocaleDateString("en-GB")} · Payment: ${paymentLabel}</p>
     ${sepaHtml}
@@ -203,11 +203,8 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     <table style="width:100%;border-collapse:collapse;font-size:14px;border-top:1px solid #eee;margin-bottom:8px">${itemsHtml}</table>
     <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px">${totalsHtml}</table>
     ${addressHtml}
-    ${orderLink ? `<p style="margin:0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
-  </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D · This is your order receipt</p>
-</div>
-</body></html>`
+    ${orderLink ? `<p style="margin:0"><a href="${orderLink}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">View your order</a></p>` : ""}`,
+  })
 
   return sendEmail({ to: order.email, subject, html, text })
 }
@@ -247,16 +244,15 @@ export async function sendOrderStatusUpdateEmail(
     .filter((line) => line !== null)
     .join("\n")
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
-<div style="max-width:560px;margin:0 auto;padding:24px"><div style="background:#fff;border-radius:12px;padding:32px">
-<h1 style="margin:0 0 8px;font-size:20px;color:#111">Your order has been updated</h1>
+  const html = renderEmail({
+    preheader: `Order ${order.orderNumber} is now ${statusLabel}`,
+    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">Your order has been updated</h1>
 <p style="margin:0 0 8px;color:#555;font-size:14px">Order <strong>${order.orderNumber}</strong></p>
 <p style="margin:0;color:#111;font-size:15px;line-height:1.6">Status: <strong>${previousLabel}</strong> → <strong>${statusLabel}</strong></p>
 ${order.trackingNumber ? `<p style="margin:16px 0 0;color:#111;font-size:14px">Tracking number: ${order.trackingNumber}</p>` : ""}
-${order.trackingUrl ? `<p style="margin:12px 0 0"><a href="${order.trackingUrl}" style="color:#111">Track your parcel</a></p>` : ""}
-${orderLink ? `<p style="margin:20px 0 0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
-</div><p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p></div>
-</body></html>`
+${order.trackingUrl ? `<p style="margin:12px 0 0"><a href="${order.trackingUrl}" style="color:#c2410c;font-weight:700">Track your parcel</a></p>` : ""}
+${orderLink ? `<p style="margin:20px 0 0"><a href="${orderLink}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">View your order</a></p>` : ""}`,
+  })
 
   return sendEmail({ to: order.email, subject, html, text })
 }
@@ -300,15 +296,14 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
     .join("")
 
   const trackBtn = trackingUrl
-    ? `<a href="${trackingUrl}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">Track your parcel</a>`
+    ? `<a href="${trackingUrl}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">Track your parcel</a>`
     : ""
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
-<div style="max-width:560px;margin:0 auto;padding:24px">
-  <div style="background:#fff;border-radius:12px;padding:32px">
-    <h1 style="margin:0 0 8px;font-size:20px;color:#111">Your order is on its way</h1>
+  const html = renderEmail({
+    preheader: `Order ${order.orderNumber} has shipped`,
+    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">Your order is on its way</h1>
     <p style="margin:0 0 20px;color:#555;font-size:14px">Order <strong>${order.orderNumber}</strong> has shipped.</p>
-    <div style="background:#f8f8f8;border-radius:8px;padding:16px;margin-bottom:20px">
+    <div style="background:#f6f1ec;border-radius:12px;padding:16px;margin-bottom:20px">
       ${carrier ? `<p style="margin:0 0 4px;font-size:14px;color:#111"><strong>Carrier:</strong> ${carrier}</p>` : ""}
       ${trackingNumber ? `<p style="margin:0 0 12px;font-size:14px;color:#111"><strong>Tracking number:</strong> ${trackingNumber}</p>` : ""}
       ${trackBtn}
@@ -318,11 +313,8 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
         order.totalCents,
       )}</td></tr>
     </table>
-    ${orderLink ? `<p style="margin:24px 0 0"><a href="${orderLink}" style="color:#111;font-size:14px">View your order details</a></p>` : ""}
-  </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p>
-</div>
-</body></html>`
+    ${orderLink ? `<p style="margin:24px 0 0"><a href="${orderLink}" style="color:#c2410c;font-size:14px;font-weight:700">View your order details</a></p>` : ""}`,
+  })
 
   return sendEmail({ to: order.email, subject, html, text })
 }
@@ -360,19 +352,18 @@ export async function sendShipmentEventEmail(
     .filter((line) => line !== null)
     .join("\n")
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
-<div style="max-width:560px;margin:0 auto;padding:24px"><div style="background:#fff;border-radius:12px;padding:32px">
-<h1 style="margin:0 0 8px;font-size:20px;color:#111">${escapeHtml(copy.heading)}</h1>
+  const html = renderEmail({
+    preheader: copy.body(order.orderNumber, statusLabel),
+    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">${escapeHtml(copy.heading)}</h1>
 <p style="margin:0 0 16px;color:#111;font-size:15px;line-height:1.6">${escapeHtml(copy.body(order.orderNumber, statusLabel))}</p>
 ${location ? `<p style="margin:0 0 8px;color:#333;font-size:14px;line-height:1.6"><strong>${escapeHtml(copy.location)}:</strong> ${escapeHtml(location)}</p>` : ""}
 ${comment ? `<p style="margin:0 0 16px;color:#333;font-size:14px;line-height:1.6"><strong>${escapeHtml(copy.comment)}:</strong> ${escapeHtml(comment)}</p>` : ""}
-<div style="background:#f8f8f8;border-radius:8px;padding:16px;margin-bottom:20px">
+<div style="background:#f6f1ec;border-radius:12px;padding:16px;margin-bottom:20px">
 ${carrier ? `<p style="margin:0 0 4px;font-size:14px;color:#111"><strong>${escapeHtml(copy.carrier)}:</strong> ${escapeHtml(carrier)}</p>` : ""}
 ${trackingNumber ? `<p style="margin:0 0 12px;font-size:14px;color:#111"><strong>${escapeHtml(copy.tracking)}:</strong> ${escapeHtml(trackingNumber)}</p>` : ""}
-${trackingUrl ? `<a href="${escapeHtml(trackingUrl)}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">${escapeHtml(copy.button)}</a>` : ""}
-</div>
-</div><p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p></div>
-</body></html>`
+${trackingUrl ? `<a href="${escapeHtml(trackingUrl)}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">${escapeHtml(copy.button)}</a>` : ""}
+</div>`,
+  })
 
   return sendEmail({ to: order.email, subject, html, text })
 }
@@ -440,35 +431,34 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     .join("")
 
   const sepaHtml = isSepa
-    ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+    ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">If you haven't sent the transfer yet, here are the details again:</p>
       <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">Amount: ${euros(order.totalCents)} · Reference: ${order.orderNumber}<br>Name: ${BANK_TRANSFER_ACCOUNT.accountName} · IBAN: ${BANK_TRANSFER_ACCOUNT.iban} · BIC: ${BANK_TRANSFER_ACCOUNT.bic}</p>
     </div>`
     : ""
 
   const squareHtml = isSquare
-    ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+    ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> is still open. Open your order page to pay by Visa or Mastercard. The charge is in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA.</p>
     </div>`
     : ""
 
   const paypalHtml = isPaypal
-    ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+    ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0;font-size:14px;color:#7a4b00">${paypalReminderText(order.totalCents)}</p>
     </div>`
     : ""
 
   const cryptoHtml = isCrypto
-    ? `<div style="background:#fff7e6;border:1px solid #ffe0a3;border-radius:8px;padding:16px;margin-bottom:20px">
+    ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0 0 8px;font-size:14px;color:#7a4b00">If you haven't sent the payment yet, here are the details again:</p>
       <p style="margin:0;font-size:13px;color:#7a4b00;font-family:monospace">Amount: ${euros(order.totalCents)} · ${cryptoCoin.coinLabel} · ${cryptoCoin.network}<br>Address: ${cryptoCoin.address}</p>
     </div>`
     : ""
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
-<div style="max-width:560px;margin:0 auto;padding:24px">
-  <div style="background:#fff;border-radius:12px;padding:32px">
-    <h1 style="margin:0 0 8px;font-size:20px;color:#111">Welcome to DnD3D${firstName ? `, ${firstName}` : ""}!</h1>
+  const html = renderEmail({
+    preheader: `Order ${order.orderNumber} is still awaiting payment`,
+    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">Welcome to DnD3D${firstName ? `, ${firstName}` : ""}!</h1>
     <p style="margin:0 0 20px;color:#555;font-size:14px;line-height:1.6">Thank you for your order — we're delighted to have you with us. We noticed order <strong>${order.orderNumber}</strong> is still marked as <strong>awaiting payment</strong>, so we wanted to check in and make sure everything is on track.</p>
     ${sepaHtml}
     ${cryptoHtml}
@@ -479,11 +469,8 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
       <tr><td style="padding:12px 0 0;font-weight:700;color:#111;border-top:1px solid #eee">Total</td><td style="padding:12px 0 0;text-align:right;font-weight:700;color:#111;border-top:1px solid #eee">${euros(order.totalCents)}</td></tr>
     </table>
     <p style="margin:0 0 20px;color:#111;font-size:14px;line-height:1.6">If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've run into any trouble or changed your mind, simply reply to this email; we're happy to help.</p>
-    ${orderLink ? `<p style="margin:0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
-  </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D · We're looking forward to getting your order on its way</p>
-</div>
-</body></html>`
+    ${orderLink ? `<p style="margin:0"><a href="${orderLink}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">View your order</a></p>` : ""}`,
+  })
 
   return sendEmail({ to: order.email, subject, html, text })
 }
@@ -506,17 +493,13 @@ export async function sendPaymentUnderReviewEmail(order: OrderWithItems): Promis
     .filter((line) => line !== null)
     .join("\n")
 
-  const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
-<div style="max-width:560px;margin:0 auto;padding:24px">
-  <div style="background:#fff;border-radius:12px;padding:32px">
-    <h1 style="margin:0 0 8px;font-size:20px;color:#111">We're verifying your payment</h1>
+  const html = renderEmail({
+    preheader: `We're verifying payment for order ${order.orderNumber}`,
+    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">We're verifying your payment</h1>
     <p style="margin:0 0 4px;color:#555;font-size:14px">Order <strong>${order.orderNumber}</strong></p>
     <p style="margin:16px 0 0;color:#111;font-size:14px;line-height:1.6">Thanks — we've received your confirmation and our team is checking your payment. We'll update your order status shortly.</p>
-    ${orderLink ? `<p style="margin:20px 0 0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
-  </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p>
-</div>
-</body></html>`
+    ${orderLink ? `<p style="margin:20px 0 0"><a href="${orderLink}" style="display:inline-block;background:#f97316;color:#111111;padding:13px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px">View your order</a></p>` : ""}`,
+  })
 
   return sendEmail({ to: order.email, subject, html, text })
 }
