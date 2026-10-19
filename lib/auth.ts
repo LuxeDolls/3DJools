@@ -65,6 +65,8 @@ export const auth = betterAuth({
       : []),
     ...(process.env.NODE_ENV === "production"
       ? [
+          "https://dnd3d.com",
+          "https://www.dnd3d.com",
           ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
           ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
             ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`]
