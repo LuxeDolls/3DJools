@@ -46,6 +46,15 @@ export function middleware(request: NextRequest) {
     return new NextResponse("Not found", { status: 404 })
   }
 
+  // The OAuth callback stays on www, but shoppers use the apex domain.
+  // Page requests must not split the session across the two hosts.
+  if (host === "www.dnd3d.com") {
+    const url = request.nextUrl.clone()
+    url.hostname = "dnd3d.com"
+    url.protocol = "https:"
+    return NextResponse.redirect(url, 308)
+  }
+
   const hasLocale = locales.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   )

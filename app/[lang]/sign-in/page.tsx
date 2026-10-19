@@ -13,8 +13,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return { title: `${dict.auth.signInTitle} · ${dict.brandName}` }
 }
 
-export default async function SignInPage({ params }: { params: Promise<{ lang: string }> }) {
+export default async function SignInPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ lang: string }>
+  searchParams: Promise<{ error?: string }>
+}) {
   const { lang } = await params
+  const { error } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
 
   const session = await auth.api.getSession({ headers: await headers() })
@@ -22,7 +29,7 @@ export default async function SignInPage({ params }: { params: Promise<{ lang: s
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 py-12">
-      <AuthForm mode="sign-in" />
+      <AuthForm mode="sign-in" errorCode={error} />
     </div>
   )
 }
