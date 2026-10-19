@@ -21,14 +21,14 @@ export function ProductCard({
   const href = localizedPath(locale, `/product/${product.slug}`)
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg">
-      <Link href={href} className="relative aspect-square overflow-hidden bg-secondary/30">
+    <div className="group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/60">
+      <Link href={href} className="relative aspect-square overflow-hidden bg-secondary/50">
         <Image
           src={product.images[0] || "/placeholder.svg"}
           alt={product.name}
           fill
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-contain p-6 transition-transform duration-500 group-hover:scale-[1.04]"
+          className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
         />
         <div className="absolute left-2.5 top-2.5 flex flex-col gap-1.5">
           {product.bestseller && (

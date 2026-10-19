@@ -25,10 +25,10 @@ export function Header() {
   const navItems = getNavItems(dict)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border/80 bg-background/80 shadow-sm shadow-black/5 backdrop-blur-md">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
       <MaintenanceBanner label={dict.maintenance.label} text={dict.maintenance.text} />
       {/* Announcement strip */}
-      <div className="border-b border-border/70 bg-primary/[0.07] text-foreground/80">
+      <div className="border-b border-border bg-secondary text-secondary-foreground">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-4 px-4 text-xs">
           <p className="flex items-center gap-1.5 font-medium">
             <Truck className="size-3.5 text-primary" />
