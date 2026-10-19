@@ -27,7 +27,7 @@ export async function generateMetadata({
   const locale: Locale = isLocale(lang) ? lang : "en"
   const product = await getProductBySlug(slug, locale)
   if (!product) return {}
-  const canonical = `https://www.3djools.com/${locale}/product/${product.slug}`
+  const canonical = `https://www.dnd3d.com/${locale}/product/${product.slug}`
   return {
     title: product.name,
     description: product.shortDescription,
@@ -56,7 +56,7 @@ export default async function ProductPage({
   if (!product) notFound()
 
   const related = await getRelatedProducts(product, 4, locale)
-  const url = `https://www.3djools.com${localizedPath(locale, `/product/${product.slug}`)}`
+  const url = `https://www.dnd3d.com${localizedPath(locale, `/product/${product.slug}`)}`
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">

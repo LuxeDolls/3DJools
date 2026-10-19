@@ -1,5 +1,6 @@
 import "server-only"
 
+import { COMPANY } from "@/lib/company"
 import { sendEmail, type SendResult } from "@/lib/email/send"
 import type { InstallmentApplication } from "@/lib/db/schema"
 import { BANK_TRANSFER_ACCOUNT } from "@/lib/payments/bank-transfer"
@@ -9,11 +10,7 @@ function euros(cents: number): string {
 }
 
 function siteUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ??
-    ""
-  )
+  return COMPANY.url
 }
 
 function statusLink(app: InstallmentApplication): string {
@@ -28,7 +25,7 @@ function wrapHtml(title: string, bodyHtml: string): string {
     <h1 style="margin:0 0 8px;font-size:20px;color:#111">${title}</h1>
     ${bodyHtml}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p>
 </div>
 </body></html>`
 }

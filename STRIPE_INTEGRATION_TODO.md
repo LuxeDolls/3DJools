@@ -12,8 +12,8 @@ No Checkout Studio placeholders remain in code.
 | Field | Current value | What to set |
 | --- | --- | --- |
 | mode | `payment` | One-time card payment. Do not change unless the store starts selling subscriptions. |
-| success_url | `https://www.3djools.com/api/payments/stripe/return?order=...&session_id={CHECKOUT_SESSION_ID}` | Already the order return route. Keep `{CHECKOUT_SESSION_ID}`. |
-| cancel_url | `https://www.3djools.com/{locale}/order/{orderNumber}?stripe=cancelled` | Already the unpaid order page. |
+| success_url | `https://www.dnd3d.com/api/payments/stripe/return?order=...&session_id={CHECKOUT_SESSION_ID}` | Already the order return route. Keep `{CHECKOUT_SESSION_ID}`. |
+| cancel_url | `https://www.dnd3d.com/{locale}/order/{orderNumber}?stripe=cancelled` | Already the unpaid order page. |
 | line_items | `price_data` for the stored euro total | Do not replace this with a Dashboard Price ID. Catalog prices live in the database and can include discounts. |
 
 ## Configured Parameters
@@ -45,7 +45,7 @@ The server reads `STRIPE_ACCESS_TOKEN` first, then `STRIPE_ACCESS_TOKEN_2`, then
 
 In the Stripe Dashboard, add a webhook endpoint:
 
-`https://www.3djools.com/api/payments/stripe/webhook`
+`https://www.dnd3d.com/api/payments/stripe/webhook`
 
 Subscribe it to:
 

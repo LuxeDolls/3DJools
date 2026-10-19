@@ -24,7 +24,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <header className="sticky top-0 z-30 border-b border-border bg-background">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-3 py-3 sm:px-6 lg:px-8">
           <Link href="/admin" className="truncate font-sans text-sm font-semibold">
-            3DJools · Operations
+            DnD3D · Operations
           </Link>
           <form action={adminLogout} className="shrink-0">
             <Button variant="ghost" size="sm" type="submit" className="min-h-11 md:min-h-8">

@@ -263,7 +263,7 @@ export async function createAlppayCheckout(
     amount: euros(input.amountCents),
     currency: "EUR",
     referenceId: orderNumber.slice(0, 256),
-    description: `3DJools order ${orderNumber}`.slice(0, 512),
+    description: `DnD3D order ${orderNumber}`.slice(0, 512),
     customer,
     billingAddress: {
       addressLine1: input.address.trim().slice(0, 300),

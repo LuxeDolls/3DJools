@@ -28,11 +28,11 @@ function sleep(ms) {
 }
 
 function shippedEmail(order) {
-  const orderLink = `https://www.3djools.com/en/order/${order.order_number}`
+  const orderLink = `https://www.dnd3d.com/en/order/${order.order_number}`
   const carrier = order.carrier?.trim() || ""
   const trackingNumber = order.tracking_number?.trim() || ""
   const trackingUrl = order.tracking_url?.trim() || ""
-  const subject = `Your 3DJools order ${order.order_number} has shipped`
+  const subject = `Your DnD3D order ${order.order_number} has shipped`
   const itemsText = order.items.map((item) => `- ${item.product_name} × ${item.quantity} — ${euros(item.line_total_cents)}`).join("\n")
   const text = [
     `Good news — your order ${order.order_number} is on its way.`,
@@ -79,7 +79,7 @@ function shippedEmail(order) {
     </table>
     <p style="margin:24px 0 0"><a href="${orderLink}" style="color:#111;font-size:14px">View your order details</a></p>
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p>
 </div>
 </body></html>`
   return { subject, html, text }
@@ -129,7 +129,7 @@ for (let index = 0; index < orders.rows.length; index += 1) {
   const message = shippedEmail(order)
   try {
     await transporter.sendMail({
-      from: `3DJools <${process.env.ZOHO_SMTP_USER}>`,
+      from: `DnD3D <${process.env.ZOHO_SMTP_USER}>`,
       to: order.email,
       subject: message.subject,
       html: message.html,

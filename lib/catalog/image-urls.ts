@@ -3,11 +3,19 @@
  *  names Googlebot and Googlebot-Image. Serve those files from our own
  *  domains instead, with no redirect in front of the image response.
  *
- *  - www.3djools.com/media/<pathname>     (feed, product pages, no redirect)
- *  - images.3djools.com/media/<pathname>  (same bytes, kept as a second host)
+ *  Pages use a same-origin /media path so the HTML does not name a host.
+ *  Feeds and schema use SITE_ORIGIN.
  */
-export const SITE_ORIGIN = "https://www.3djools.com"
-export const IMAGE_ORIGIN = "https://images.3djools.com"
+export const SITE_ORIGIN = "https://www.dnd3d.com"
+export const IMAGE_ORIGIN = "https://images.dnd3d.com"
+const OWN_HOSTS = new Set([
+  "dnd3d.com",
+  "www.dnd3d.com",
+  "images.dnd3d.com",
+  "3djools.com",
+  "www.3djools.com",
+  "images.3djools.com",
+])
 export const PUBLIC_BLOB_HOST = "6iwpszoiwj016as8.public.blob.vercel-storage.com"
 export const PUBLIC_BLOB_ORIGIN = `https://${PUBLIC_BLOB_HOST}`
 
@@ -17,26 +25,32 @@ export function storefrontImageUrl(image: string | undefined | null): string | u
   if (image.startsWith("/api/product-image")) {
     const pathname = new URL(image, SITE_ORIGIN).searchParams.get("pathname")
     if (!pathname) return undefined
-    return mediaUrl(pathname)
+    return mediaPath(pathname)
   }
 
-  if (image.startsWith("/")) return `${SITE_ORIGIN}${image}`
+  if (image.startsWith("/")) return image
 
   try {
     const url = new URL(image)
-    if (url.hostname === PUBLIC_BLOB_HOST) return mediaUrl(url.pathname)
-    if (url.hostname === "3djools.com") return `${SITE_ORIGIN}${url.pathname}${url.search}`
-    if (url.hostname === "images.3djools.com") return mediaUrl(url.pathname.replace(/^\/media\//, ""))
-    if (url.hostname === "www.3djools.com") return image
+    if (url.hostname === PUBLIC_BLOB_HOST) return mediaPath(url.pathname)
+    if (OWN_HOSTS.has(url.hostname)) {
+      return url.hostname.startsWith("images.")
+        ? mediaPath(url.pathname.replace(/^\/media\//, ""))
+        : `${url.pathname}${url.search}`
+    }
     return image
   } catch {
     return image
   }
 }
 
-export function mediaUrl(pathname: string): string {
+export function mediaPath(pathname: string): string {
   const clean = pathname.replace(/^\/+/, "").replace(/^media\//, "")
-  return `${SITE_ORIGIN}/media/${clean}`
+  return `/media/${clean}`
+}
+
+export function mediaUrl(pathname: string): string {
+  return `${SITE_ORIGIN}${mediaPath(pathname)}`
 }
 
 export function imageHostUrl(pathname: string): string {

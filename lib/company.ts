@@ -1,24 +1,30 @@
 // Single source for the store's legal identity. Visible pages, the installment
 // contract and schema.org Organization all read from here.
+// Registry facts are from the KvK extract of 18 October 2026 (KvK 81194560).
+// VAT NL861980669B01 is the number published by Creditsafe and confirmed valid
+// in VIES for BJX BUSINESS GROUP B.V. at Herengracht 449 A, Amsterdam.
 export const COMPANY = {
-  tradingName: "3DJools",
-  legalName: "LN-SQUARED",
-  street: "Rue du Chénia 17",
-  postalCode: "7170",
-  city: "Manage",
-  region: "Hainaut",
-  country: "Belgium",
-  countryCode: "BE",
-  phoneDisplay: "+32 460 00 80 70",
-  phoneTel: "+32460008070",
-  email: "info@3djools.com",
-  companyNumber: "0564.743.304",
-  vat: "BE0564743304",
-  url: "https://www.3djools.com",
+  tradingName: "DnD3D",
+  legalName: "BJX Business Group B.V.",
+  street: "Herengracht 449 A",
+  postalCode: "1017 BR",
+  city: "Amsterdam",
+  region: "",
+  country: "Netherlands",
+  countryCode: "NL",
+  statutorySeat: "Amsterdam",
+  phoneDisplay: "+31 970 102 675 78",
+  phoneTel: "+3197010267578",
+  email: "info@dnd3d.com",
+  companyNumber: "81194560",
+  establishmentNumber: "000047508043",
+  rsin: "861980669",
+  vat: "NL861980669B01",
+  url: "https://www.dnd3d.com",
 } as const
 
 export const companyStreetLine = `${COMPANY.street}, ${COMPANY.postalCode} ${COMPANY.city}, ${COMPANY.country}`
-export const companyFullAddress = `${COMPANY.street}, ${COMPANY.postalCode} ${COMPANY.city}, ${COMPANY.region}, ${COMPANY.country}`
+export const companyFullAddress = companyStreetLine
 
 const COMPANY_TOKENS: Record<string, string> = {
   legalName: COMPANY.legalName,
@@ -58,13 +64,13 @@ export function companyJsonLd() {
     email: COMPANY.email,
     telephone: COMPANY.phoneTel,
     vatID: COMPANY.vat,
-    taxID: COMPANY.companyNumber,
+    taxID: COMPANY.rsin,
+    identifier: COMPANY.companyNumber,
     address: {
       "@type": "PostalAddress",
       streetAddress: COMPANY.street,
       postalCode: COMPANY.postalCode,
       addressLocality: COMPANY.city,
-      addressRegion: COMPANY.region,
       addressCountry: COMPANY.countryCode,
     },
   }

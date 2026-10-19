@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 
 export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
   const router = useRouter()
-  const { dict } = useI18n()
+  const { dict, locale } = useI18n()
   const lp = useLocalizedPath()
   const t = dict.auth
 
@@ -23,6 +23,22 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
   const [loading, setLoading] = useState(false)
 
   const isSignUp = mode === "sign-up"
+  const social = {
+    en: { google: "Continue with Google", facebook: "Continue with Facebook", linkedin: "Continue with LinkedIn" },
+    de: { google: "Weiter mit Google", facebook: "Weiter mit Facebook", linkedin: "Weiter mit LinkedIn" },
+    fr: { google: "Continuer avec Google", facebook: "Continuer avec Facebook", linkedin: "Continuer avec LinkedIn" },
+    nl: { google: "Doorgaan met Google", facebook: "Doorgaan met Facebook", linkedin: "Doorgaan met LinkedIn" },
+    it: { google: "Continua con Google", facebook: "Continua con Facebook", linkedin: "Continua con LinkedIn" },
+    es: { google: "Continuar con Google", facebook: "Continuar con Facebook", linkedin: "Continuar con LinkedIn" },
+  }[locale]
+
+  async function signInWith(provider: "google" | "facebook" | "linkedin") {
+    setError(null)
+    setLoading(true)
+    const { error } = await authClient.signIn.social({ provider, callbackURL: lp("/account") })
+    setLoading(false)
+    if (error) setError(t.genericError)
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -52,6 +68,18 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
           {isSignUp ? t.signUpTitle : t.signInTitle}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">{isSignUp ? t.signUpSubtitle : t.signInSubtitle}</p>
+      </div>
+
+      <div className="mb-4 flex flex-col gap-2">
+        <Button type="button" variant="outline" disabled={loading} onClick={() => signInWith("google")}>
+          {social.google}
+        </Button>
+        <Button type="button" variant="outline" disabled={loading} onClick={() => signInWith("facebook")}>
+          {social.facebook}
+        </Button>
+        <Button type="button" variant="outline" disabled={loading} onClick={() => signInWith("linkedin")}>
+          {social.linkedin}
+        </Button>
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">

@@ -1,5 +1,5 @@
-// Off for new checkout orders, except the addresses listed below.
-export const BANK_TRANSFER_CHECKOUT_ENABLED = false
+// On for every checkout. The address list below is only used while this is off.
+export const BANK_TRANSFER_CHECKOUT_ENABLED = true
 
 const BANK_TRANSFER_ALLOWED_EMAILS = new Set(["stephan15@telfort.nl"])
 

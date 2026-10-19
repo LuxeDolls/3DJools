@@ -250,6 +250,7 @@ export const orders = pgTable("orders", {
   trackingUrl: text("tracking_url"),
   carrier: text("carrier"),
   notes: text("notes"),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 })
@@ -305,6 +306,7 @@ export const contactMessages = pgTable("contact_messages", {
   locale: text("locale").notNull().default("en"),
   status: text("status").$type<ContactStatus>().notNull().default("new"),
   adminNotes: text("admin_notes"),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 })
 
@@ -321,9 +323,12 @@ export type ChatMode = (typeof CHAT_MODES)[number]
 export const chatConversations = pgTable("chat_conversations", {
   id: text("id").primaryKey(),
   visitorId: text("visitor_id").notNull(),
+  visitorName: text("visitor_name"),
+  visitorEmail: text("visitor_email"),
   locale: text("locale").notNull().default("en"),
   mode: text("mode").$type<ChatMode>().notNull().default("ai"),
   unreadForAdmin: boolean("unread_for_admin").notNull().default(true),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   lastMessageAt: timestamp("last_message_at", { withTimezone: true }).notNull().defaultNow(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 })
@@ -345,6 +350,15 @@ export type ChatConversationRow = typeof chatConversations.$inferSelect
 export type NewChatConversationRow = typeof chatConversations.$inferInsert
 export type ChatMessageRow = typeof chatMessages.$inferSelect
 export type NewChatMessageRow = typeof chatMessages.$inferInsert
+
+/** Maps an outbound Telegram message to the live-chat conversation it belongs to. */
+export const chatTelegramLinks = pgTable("chat_telegram_links", {
+  telegramMessageId: text("telegram_message_id").primaryKey(),
+  conversationId: text("conversation_id")
+    .notNull()
+    .references(() => chatConversations.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+})
 
 /** One row per unsuccessful AlpPay payment. The same payment id is never counted twice. */
 export const alppayAttempts = pgTable("alppay_attempts", {

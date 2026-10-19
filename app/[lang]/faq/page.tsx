@@ -32,7 +32,7 @@ function answerText(item: FaqItem) {
 const COPY: Record<Locale, FaqCopy> = {
   en: {
     intro: "Answers to the questions we get asked most about orders, shipping, returns and payments.",
-    description: "Answers to common questions about orders, shipping, returns, warranty and payments at 3DJools.",
+    description: "Answers to common questions about orders, shipping, returns, warranty and payments at DnD3D.",
     groups: [
       {
         heading: "Orders & shipping",
@@ -40,17 +40,17 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "How long does delivery take, and how much does it cost?",
             answer:
-              "Standard shipping takes 3–6 business days in total and is completely free on every order, to every destination we deliver to — no minimum spend required. Handling takes 0–1 business day and transit takes 3–5 business days. Orders placed by 15:00 CET Monday to Friday enter the handling window that day.",
+              "Standard shipping takes 3–7 business days in total and is completely free on every order, to every destination we deliver to — no minimum spend required. Handling takes 0–2 business days and transit takes 3–5 business days. Orders placed by 15:00 CET Monday to Friday enter the handling window that day.",
           },
           {
             question: "What are your business hours?",
             answer:
-              "Our team is available Monday to Friday, 9:00–18:00 CET, excluding Belgian public holidays. Orders and messages received outside these hours are handled on the next business day.",
+              "Our team is available Monday to Friday, 9:00–18:00 CET, excluding Dutch public holidays. Orders and messages received outside these hours are handled on the next business day.",
           },
           {
             question: "Which countries do you ship to?",
             answer:
-              "We deliver to Belgium and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with our own courier service, 3DJools Courier. If our courier cannot cover the route, we use DHL or DPD. Shipping is free to every one of these destinations.",
+              "We deliver to the Netherlands and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with our own courier service, DnD3D Courier. If our courier cannot cover the route, we use DHL or DPD. Shipping is free to every one of these destinations.",
           },
           {
             question: "Can I track my order?",
@@ -92,7 +92,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Card (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA bank transfer, cryptocurrency and interest-free instalments. Card, Apple Pay, Link and Bancontact open a secure Stripe page. Details are on our ",
+                "Card (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA bank transfer and interest-free instalments. Card, Apple Pay, Link and Bancontact open a secure Stripe page. Details are on our ",
               label: "payment methods page",
               after: ".",
             },
@@ -130,7 +130,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   de: {
     intro: "Antworten auf die Fragen, die uns zu Bestellungen, Versand, Rückgabe und Zahlung am häufigsten gestellt werden.",
-    description: "Antworten auf häufige Fragen zu Bestellungen, Versand, Rückgabe, Garantie und Zahlung bei 3DJools.",
+    description: "Antworten auf häufige Fragen zu Bestellungen, Versand, Rückgabe, Garantie und Zahlung bei DnD3D.",
     groups: [
       {
         heading: "Bestellungen und Versand",
@@ -138,17 +138,17 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wie lange dauert die Lieferung und was kostet sie?",
             answer:
-              "Der Standardversand dauert insgesamt 3–6 Werktage und ist bei jeder Bestellung und in jedes Lieferland vollständig kostenlos — ohne Mindestbestellwert. Die Bearbeitung dauert 0–1 Werktag, der Transport 3–5 Werktage. Bestellungen, die montags bis freitags bis 15:00 Uhr MEZ eingehen, werden noch am selben Tag bearbeitet.",
+              "Der Standardversand dauert insgesamt 3–7 Werktage und ist bei jeder Bestellung und in jedes Lieferland vollständig kostenlos — ohne Mindestbestellwert. Die Bearbeitung dauert 0–2 Werktage, der Transport 3–5 Werktage. Bestellungen, die montags bis freitags bis 15:00 Uhr MEZ eingehen, werden noch am selben Tag bearbeitet.",
           },
           {
             question: "Wann sind Sie erreichbar?",
             answer:
-              "Unser Team ist montags bis freitags von 9:00 bis 18:00 Uhr MEZ erreichbar, ausgenommen belgische Feiertage. Bestellungen und Nachrichten außerhalb dieser Zeiten bearbeiten wir am nächsten Werktag.",
+              "Unser Team ist montags bis freitags von 9:00 bis 18:00 Uhr MEZ erreichbar, ausgenommen niederländische Feiertage. Bestellungen und Nachrichten außerhalb dieser Zeiten bearbeiten wir am nächsten Werktag.",
           },
           {
             question: "In welche Länder liefern Sie?",
             answer:
-              "Wir liefern nach Belgien und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) mit unserem eigenen Kurierdienst, 3DJools Courier. Wenn unser Kurier die Strecke nicht abdecken kann, nutzen wir DHL oder DPD. Der Versand ist in jedes dieser Länder kostenlos.",
+              "Wir liefern in die Niederlande und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) mit unserem eigenen Kurierdienst, DnD3D Courier. Wenn unser Kurier die Strecke nicht abdecken kann, nutzen wir DHL oder DPD. Der Versand ist in jedes dieser Länder kostenlos.",
           },
           {
             question: "Kann ich meine Bestellung verfolgen?",
@@ -190,7 +190,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Karte (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-Überweisung, Kryptowährung und zinsfreie Ratenzahlung. Karte, Apple Pay, Link und Bancontact öffnen eine sichere Stripe-Seite. Einzelheiten stehen auf unserer Seite ",
+                "Karte (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-Überweisung und zinsfreie Ratenzahlung. Karte, Apple Pay, Link und Bancontact öffnen eine sichere Stripe-Seite. Einzelheiten stehen auf unserer Seite ",
               label: "Zahlungsarten",
               after: ".",
             },
@@ -228,7 +228,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   fr: {
     intro: "Réponses aux questions que l'on nous pose le plus souvent sur les commandes, la livraison, les retours et le paiement.",
-    description: "Réponses aux questions fréquentes sur les commandes, la livraison, les retours, la garantie et le paiement chez 3DJools.",
+    description: "Réponses aux questions fréquentes sur les commandes, la livraison, les retours, la garantie et le paiement chez DnD3D.",
     groups: [
       {
         heading: "Commandes et livraison",
@@ -236,17 +236,17 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Combien de temps prend la livraison et combien coûte-t-elle ?",
             answer:
-              "La livraison standard prend 3 à 6 jours ouvrables au total et est entièrement gratuite pour chaque commande, vers toutes les destinations que nous desservons, sans montant minimum. Le traitement prend 0 à 1 jour ouvrable et le transport 3 à 5 jours ouvrables. Les commandes passées avant 15:00 CET du lundi au vendredi entrent dans le délai de traitement le jour même.",
+              "La livraison standard prend 3 à 7 jours ouvrables au total et est entièrement gratuite pour chaque commande, vers toutes les destinations que nous desservons, sans montant minimum. Le traitement prend 0 à 2 jours ouvrables et le transport 3 à 5 jours ouvrables. Les commandes passées avant 15:00 CET du lundi au vendredi entrent dans le délai de traitement le jour même.",
           },
           {
             question: "Quels sont vos horaires ?",
             answer:
-              "Notre équipe est disponible du lundi au vendredi, de 9:00 à 18:00 CET, hors jours fériés belges. Les commandes et messages reçus en dehors de ces horaires sont traités le jour ouvrable suivant.",
+              "Notre équipe est disponible du lundi au vendredi, de 9:00 à 18:00 CET, hors jours fériés néerlandais. Les commandes et messages reçus en dehors de ces horaires sont traités le jour ouvrable suivant.",
           },
           {
             question: "Vers quels pays livrez-vous ?",
             answer:
-              "Nous livrons en Belgique et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni), avec notre propre service de coursier, 3DJools Courier. Si notre coursier ne peut pas couvrir le trajet, nous utilisons DHL ou DPD. La livraison est gratuite vers chacune de ces destinations.",
+              "Nous livrons aux Pays-Bas et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni), avec notre propre service de coursier, DnD3D Courier. Si notre coursier ne peut pas couvrir le trajet, nous utilisons DHL ou DPD. La livraison est gratuite vers chacune de ces destinations.",
           },
           {
             question: "Puis-je suivre ma commande ?",
@@ -288,7 +288,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Carte (Visa, Mastercard), Apple Pay, Link, Bancontact, virement SEPA, cryptomonnaie et paiement en plusieurs fois sans intérêt. La carte, Apple Pay, Link et Bancontact ouvrent une page Stripe sécurisée. Les détails figurent sur notre ",
+                "Carte (Visa, Mastercard), Apple Pay, Link, Bancontact, virement SEPA et paiement en plusieurs fois sans intérêt. La carte, Apple Pay, Link et Bancontact ouvrent une page Stripe sécurisée. Les détails figurent sur notre ",
               label: "page des moyens de paiement",
               after: ".",
             },
@@ -326,7 +326,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   it: {
     intro: "Risposte alle domande che ci vengono poste più spesso su ordini, spedizione, resi e pagamenti.",
-    description: "Risposte alle domande frequenti su ordini, spedizione, resi, garanzia e pagamenti su 3DJools.",
+    description: "Risposte alle domande frequenti su ordini, spedizione, resi, garanzia e pagamenti su DnD3D.",
     groups: [
       {
         heading: "Ordini e spedizione",
@@ -334,17 +334,17 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quanto tempo richiede la consegna e quanto costa?",
             answer:
-              "La spedizione standard richiede in totale 3–6 giorni lavorativi ed è completamente gratuita per ogni ordine, verso ogni destinazione che serviamo, senza importo minimo. La preparazione richiede 0–1 giorno lavorativo e il trasporto 3–5 giorni lavorativi. Gli ordini effettuati entro le 15:00 CET dal lunedì al venerdì entrano nella finestra di preparazione lo stesso giorno.",
+              "La spedizione standard richiede in totale 3–7 giorni lavorativi ed è completamente gratuita per ogni ordine, verso ogni destinazione che serviamo, senza importo minimo. La preparazione richiede 0–2 giorni lavorativi e il trasporto 3–5 giorni lavorativi. Gli ordini effettuati entro le 15:00 CET dal lunedì al venerdì entrano nella finestra di preparazione lo stesso giorno.",
           },
           {
             question: "Quali sono gli orari?",
             answer:
-              "Il nostro team è disponibile dal lunedì al venerdì, dalle 9:00 alle 18:00 CET, esclusi i giorni festivi belgi. Ordini e messaggi ricevuti fuori da questi orari vengono gestiti il giorno lavorativo successivo.",
+              "Il nostro team è disponibile dal lunedì al venerdì, dalle 9:00 alle 18:00 CET, esclusi i giorni festivi olandesi. Ordini e messaggi ricevuti fuori da questi orari vengono gestiti il giorno lavorativo successivo.",
           },
           {
             question: "In quali Paesi spedite?",
             answer:
-              "Consegniamo in Belgio e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito), con il nostro servizio di corriere, 3DJools Courier. Se il nostro corriere non può coprire il percorso, usiamo DHL o DPD. La spedizione è gratuita verso ciascuna di queste destinazioni.",
+              "Consegniamo nei Paesi Bassi e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito), con il nostro servizio di corriere, DnD3D Courier. Se il nostro corriere non può coprire il percorso, usiamo DHL o DPD. La spedizione è gratuita verso ciascuna di queste destinazioni.",
           },
           {
             question: "Posso tracciare il mio ordine?",
@@ -386,7 +386,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Carta (Visa, Mastercard), Apple Pay, Link, Bancontact, bonifico SEPA, criptovaluta e rate senza interessi. Carta, Apple Pay, Link e Bancontact aprono una pagina Stripe sicura. I dettagli sono sulla nostra ",
+                "Carta (Visa, Mastercard), Apple Pay, Link, Bancontact, bonifico SEPA e rate senza interessi. Carta, Apple Pay, Link e Bancontact aprono una pagina Stripe sicura. I dettagli sono sulla nostra ",
               label: "pagina dei metodi di pagamento",
               after: ".",
             },
@@ -424,7 +424,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   es: {
     intro: "Respuestas a las preguntas que más nos hacen sobre pedidos, envío, devoluciones y pagos.",
-    description: "Respuestas a preguntas frecuentes sobre pedidos, envío, devoluciones, garantía y pagos en 3DJools.",
+    description: "Respuestas a preguntas frecuentes sobre pedidos, envío, devoluciones, garantía y pagos en DnD3D.",
     groups: [
       {
         heading: "Pedidos y envío",
@@ -432,17 +432,17 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿Cuánto tarda la entrega y cuánto cuesta?",
             answer:
-              "El envío estándar tarda de 3 a 6 días laborables en total y es completamente gratuito en todos los pedidos y a todos los destinos a los que enviamos, sin pedido mínimo. La preparación tarda de 0 a 1 día laborable y el tránsito de 3 a 5 días laborables. Los pedidos realizados antes de las 15:00 CET de lunes a viernes entran en la ventana de preparación ese mismo día.",
+              "El envío estándar tarda de 3 a 7 días laborables en total y es completamente gratuito en todos los pedidos y a todos los destinos a los que enviamos, sin pedido mínimo. La preparación tarda de 0 a 2 días laborables y el tránsito de 3 a 5 días laborables. Los pedidos realizados antes de las 15:00 CET de lunes a viernes entran en la ventana de preparación ese mismo día.",
           },
           {
             question: "¿Cuál es vuestro horario?",
             answer:
-              "Nuestro equipo está disponible de lunes a viernes, de 9:00 a 18:00 CET, excepto festivos belgas. Los pedidos y mensajes recibidos fuera de este horario se atienden el siguiente día laborable.",
+              "Nuestro equipo está disponible de lunes a viernes, de 9:00 a 18:00 CET, excepto festivos neerlandeses. Los pedidos y mensajes recibidos fuera de este horario se atienden el siguiente día laborable.",
           },
           {
             question: "¿A qué países enviáis?",
             answer:
-              "Entregamos en Bélgica y en el resto de la Unión Europea, además de en algunos países vecinos (Suiza, Noruega y Reino Unido), con nuestro propio servicio de mensajería, 3DJools Courier. Si nuestro mensajero no puede cubrir la ruta, usamos DHL o DPD. El envío es gratuito a todos estos destinos.",
+              "Entregamos en los Países Bajos y en el resto de la Unión Europea, además de en algunos países vecinos (Suiza, Noruega y Reino Unido), con nuestro propio servicio de mensajería, DnD3D Courier. Si nuestro mensajero no puede cubrir la ruta, usamos DHL o DPD. El envío es gratuito a todos estos destinos.",
           },
           {
             question: "¿Puedo seguir mi pedido?",
@@ -484,7 +484,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Tarjeta (Visa, Mastercard), Apple Pay, Link, Bancontact, transferencia SEPA, criptomoneda y plazos sin intereses. La tarjeta, Apple Pay, Link y Bancontact abren una página segura de Stripe. Los detalles están en nuestra ",
+                "Tarjeta (Visa, Mastercard), Apple Pay, Link, Bancontact, transferencia SEPA y plazos sin intereses. La tarjeta, Apple Pay, Link y Bancontact abren una página segura de Stripe. Los detalles están en nuestra ",
               label: "página de métodos de pago",
               after: ".",
             },
@@ -522,7 +522,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   nl: {
     intro: "Antwoorden op de vragen die we het vaakst krijgen over bestellingen, verzending, retourneren en betaling.",
-    description: "Antwoorden op veelgestelde vragen over bestellingen, verzending, retourneren, garantie en betaling bij 3DJools.",
+    description: "Antwoorden op veelgestelde vragen over bestellingen, verzending, retourneren, garantie en betaling bij DnD3D.",
     groups: [
       {
         heading: "Bestellingen en verzending",
@@ -530,17 +530,17 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Hoe lang duurt de levering en wat kost die?",
             answer:
-              "De standaardverzending duurt in totaal 3–6 werkdagen en is volledig gratis bij elke bestelling, naar elke bestemming die we bedienen, zonder minimumbedrag. De verwerking duurt 0–1 werkdag en het transport 3–5 werkdagen. Bestellingen die maandag tot vrijdag vóór 15:00 CET worden geplaatst, vallen die dag nog binnen het verwerkingstijdvenster.",
+              "De standaardverzending duurt in totaal 3–7 werkdagen en is volledig gratis bij elke bestelling, naar elke bestemming die we bedienen, zonder minimumbedrag. De verwerking duurt 0–2 werkdagen en het transport 3–5 werkdagen. Bestellingen die maandag tot vrijdag vóór 15:00 CET worden geplaatst, vallen die dag nog binnen het verwerkingstijdvenster.",
           },
           {
             question: "Wat zijn jullie openingstijden?",
             answer:
-              "Ons team is bereikbaar van maandag tot vrijdag, van 9:00 tot 18:00 CET, met uitzondering van Belgische feestdagen. Bestellingen en berichten buiten deze uren worden de volgende werkdag behandeld.",
+              "Ons team is bereikbaar van maandag tot vrijdag, van 9:00 tot 18:00 CET, met uitzondering van Nederlandse feestdagen. Bestellingen en berichten buiten deze uren worden de volgende werkdag behandeld.",
           },
           {
             question: "Naar welke landen verzenden jullie?",
             answer:
-              "We leveren in België en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk), met onze eigen koeriersdienst, 3DJools Courier. Als onze koerier de route niet kan dekken, gebruiken we DHL of DPD. Verzending is gratis naar elk van deze bestemmingen.",
+              "We leveren in Nederland en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk), met onze eigen koeriersdienst, DnD3D Courier. Als onze koerier de route niet kan dekken, gebruiken we DHL of DPD. Verzending is gratis naar elk van deze bestemmingen.",
           },
           {
             question: "Kan ik mijn bestelling volgen?",
@@ -582,7 +582,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Kaart (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-overschrijving, cryptovaluta en renteloze termijnen. Kaart, Apple Pay, Link en Bancontact openen een beveiligde Stripe-pagina. De details staan op onze ",
+                "Kaart (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-overschrijving en renteloze termijnen. Kaart, Apple Pay, Link en Bancontact openen een beveiligde Stripe-pagina. De details staan op onze ",
               label: "pagina met betaalmethoden",
               after: ".",
             },

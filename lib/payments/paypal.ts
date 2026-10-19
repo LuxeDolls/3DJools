@@ -171,7 +171,7 @@ export async function createPaypalCheckout(input: {
     headers: {
       "Content-Type": "application/json",
       Prefer: "return=representation",
-      "PayPal-Request-Id": `3djools-${input.orderNumber}-${Date.now()}`,
+      "PayPal-Request-Id": `dnd3d-${input.orderNumber}-${Date.now()}`,
     },
     body: JSON.stringify({
       intent: "CAPTURE",
@@ -179,14 +179,14 @@ export async function createPaypalCheckout(input: {
         {
           custom_id: input.orderNumber,
           invoice_id: `${input.orderNumber}-${Date.now().toString(36)}`.slice(0, 127),
-          description: `3DJools ${input.orderNumber}`.slice(0, 127),
+          description: `DnD3D ${input.orderNumber}`.slice(0, 127),
           amount: { currency_code: "EUR", value: paypalAmount(input.amountCents) },
         },
       ],
       payment_source: {
         paypal: {
           experience_context: {
-            brand_name: "3DJools",
+            brand_name: "DnD3D",
             locale,
             shipping_preference: "NO_SHIPPING",
             user_action: "PAY_NOW",

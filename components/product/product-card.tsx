@@ -21,8 +21,8 @@ export function ProductCard({
   const href = localizedPath(locale, `/product/${product.slug}`)
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-all hover:border-primary/40 hover:shadow-md">
-      <Link href={href} className="relative aspect-square overflow-hidden bg-secondary/40">
+    <div className="group relative flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/60">
+      <Link href={href} className="relative aspect-square overflow-hidden bg-secondary/50">
         <Image
           src={product.images[0] || "/placeholder.svg"}
           alt={product.name}

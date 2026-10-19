@@ -43,8 +43,8 @@ export default async function CookiePolicyPage({
 
       <p className="mt-10 text-sm leading-relaxed text-muted-foreground">
         Questions about cookies or your privacy? Contact us at{" "}
-        <a href="mailto:info@3djools.com" className="underline underline-offset-2 hover:text-foreground">
-          info@3djools.com
+        <a href="mailto:info@dnd3d.com" className="underline underline-offset-2 hover:text-foreground">
+          info@dnd3d.com
         </a>.
       </p>
 

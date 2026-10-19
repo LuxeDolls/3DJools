@@ -109,11 +109,12 @@ export function ChatInbox({ initialConversations }: { initialConversations: Conv
                 )}
               >
                 <div className="flex items-center justify-between gap-2">
-                  <span className="truncate text-sm font-medium">Visitor {c.visitorId.slice(0, 8)}</span>
+                  <span className="truncate text-sm font-medium">{c.visitorName || `Visitor ${c.visitorId.slice(0, 8)}`}</span>
                   {c.unreadForAdmin ? (
                     <span className="size-2 shrink-0 rounded-full bg-primary" aria-label="Unread" />
                   ) : null}
                 </div>
+                <p className="truncate text-xs text-muted-foreground">{c.visitorEmail || "No email"}</p>
                 <p className="truncate text-xs text-muted-foreground">
                   {c.lastMessage?.content ?? "No messages yet"}
                 </p>
@@ -144,8 +145,10 @@ export function ChatInbox({ initialConversations }: { initialConversations: Conv
                 Chats
               </Button>
               <div className="min-w-0">
-                <p className="truncate text-sm font-medium">Visitor {active.visitorId.slice(0, 8)}</p>
-                <p className="text-xs text-muted-foreground">Locale: {active.locale.toUpperCase()}</p>
+                <p className="truncate text-sm font-medium">{active.visitorName || `Visitor ${active.visitorId.slice(0, 8)}`}</p>
+                <p className="text-xs text-muted-foreground">
+                  {active.visitorEmail || "No email"} · {active.locale.toUpperCase()}
+                </p>
               </div>
               {active.mode === "human" ? (
                 <Button variant="ghost" size="sm" className="min-h-11" disabled={busy} onClick={returnToAi}>

@@ -1,25 +1,5 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <style>
-    @media (prefers-color-scheme: light) {
-      .background { fill: black; }
-      .foreground { fill: white; }
-    }
-    @media (prefers-color-scheme: dark) {
-      .background { fill: white; }
-      .foreground { fill: black; }
-    }
-  </style>
-  <g clip-path="url(#clip0_7960_43945)">
-    <rect class="background" width="180" height="180" rx="37" />
-    <g style="transform: scale(95%); transform-origin: center">
-      <path class="foreground" d="M56 38H124L100 116H80L56 38Z" />
-      <path class="foreground"
-        d="M90 122C90 122 68 149 68 160C68 170.493 78.059 179 90 179C101.941 179 112 170.493 112 160C112 149 90 122 90 122Z" />
-    </g>
-  </g>
-  <defs>
-    <clipPath id="clip0_7960_43945">
-      <rect width="180" height="180" fill="white" />
-    </clipPath>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <rect width="32" height="32" rx="8" fill="#1C1917"/>
+  <path d="M8.5 7.5h8.4c4.4 0 7.6 3.2 7.6 8.5s-3.2 8.5-7.6 8.5H8.5V7.5Z" stroke="#F6F3EE" stroke-width="2.4"/>
+  <path d="M8.5 12.2h9.4M8.5 16h7.2M8.5 19.8h9.4" stroke="#D86A32" stroke-width="1.7" stroke-linecap="round"/>
 </svg>

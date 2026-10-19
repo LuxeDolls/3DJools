@@ -16,7 +16,7 @@ function addStoreBranding(html: string): string {
   const header = `<div style="padding:0 0 20px;text-align:center;font-family:Arial,Helvetica,sans-serif">
     <div style="display:inline-flex;align-items:center;gap:8px;font-size:24px;font-weight:700;letter-spacing:-0.5px;color:#111">
       <span style="display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:7px;background:#f97316;color:#fff;font-size:13px;font-weight:800;letter-spacing:-1px">3D</span>
-      <span><span style="color:#f97316">3D</span>Jools</span>
+      <span>DnD<span style="color:#f97316">3D</span></span>
     </div>
   </div>`
 
@@ -27,7 +27,9 @@ function addStoreBranding(html: string): string {
   return `${header}${html}`
 }
 
-const smtpUser = process.env.ZOHO_SMTP_USER ?? "info@3djools.com"
+const mailbox = "info@dnd3d.com"
+const configuredUser = process.env.ZOHO_SMTP_USER?.trim()
+const smtpUser = configuredUser?.toLowerCase().endsWith("@dnd3d.com") ? configuredUser : mailbox
 const smtpHost = process.env.ZOHO_SMTP_HOST ?? "smtp.zoho.eu"
 const smtpPort = Number(process.env.ZOHO_SMTP_PORT ?? "465")
 const smtpPassword = process.env.ZOHO_SMTP_PASSWORD
@@ -52,7 +54,7 @@ export async function sendEmail({ to, subject, html, text, replyTo }: SendEmailI
 
   try {
     await transporter.sendMail({
-      from: `3DJools <${smtpUser}>`,
+      from: `DnD3D <${smtpUser}>`,
       to,
       replyTo,
       subject,

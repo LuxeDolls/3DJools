@@ -1,6 +1,6 @@
 import "server-only"
 
-import { and, desc, eq, like } from "drizzle-orm"
+import { and, desc, eq, isNull, like } from "drizzle-orm"
 import { after } from "next/server"
 import { db } from "@/lib/db"
 import {
@@ -28,7 +28,7 @@ function generateOrderNumber(): string {
     now.getDate(),
   ).padStart(2, "0")}`
   const rand = Math.random().toString(36).slice(2, 7).toUpperCase()
-  return `V3-${ymd}-${rand}`
+  return `DND-${ymd}-${rand}`
 }
 
 export type CreateOrderInput = {
@@ -143,7 +143,7 @@ export async function getOrderByOrderNumber(orderNumber: string): Promise<OrderW
 /* -------------------------- admin reads/writes -------------------------- */
 
 export async function getAllOrders(): Promise<OrderWithItems[]> {
-  const rows = await db.select().from(orders).orderBy(desc(orders.createdAt))
+  const rows = await db.select().from(orders).where(isNull(orders.archivedAt)).orderBy(desc(orders.createdAt))
   return attachItems(rows)
 }
 

@@ -1,3 +1,6 @@
+// Off for new orders. Existing crypto orders still use the addresses below.
+export const CRYPTO_CHECKOUT_ENABLED = false
+
 export type CryptoCoinId = "usdt_trc20" | "usdt_erc20" | "usdc_erc20" | "eth" | "btc"
 
 export type CryptoCoinOption = {

@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Logo } from "./logo"
+import { MaintenanceBanner } from "./maintenance-banner"
 import { SearchBar } from "./search-bar"
 import { LocaleSwitcher } from "./locale-switcher"
 import { ThemeToggle } from "./theme-toggle"
@@ -24,7 +25,8 @@ export function Header() {
   const navItems = getNavItems(dict)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+      <MaintenanceBanner label={dict.maintenance.label} text={dict.maintenance.text} />
       {/* Announcement strip */}
       <div className="border-b border-border bg-secondary text-secondary-foreground">
         <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-4 px-4 text-xs">
@@ -113,7 +115,7 @@ export function Header() {
             <Link
               key={item.href}
               href={lp(item.href)}
-              className="relative px-3 py-2.5 text-sm font-medium text-foreground/80 transition-colors hover:text-primary data-[deal=true]:text-primary"
+              className="relative px-3 py-2.5 text-sm font-semibold tracking-tight text-foreground/75 transition-colors hover:text-foreground after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100 data-[deal=true]:text-primary"
               data-deal={item.href === "/deals"}
             >
               {item.label}

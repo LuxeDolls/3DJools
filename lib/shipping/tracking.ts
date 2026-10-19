@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/i18n/config"
 import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
 
-export const OWN_CARRIER = "3DJools Courier"
+export const OWN_CARRIER = "DnD3D Courier"
 export const PARTNER_CARRIERS = ["DHL", "DPD"] as const
 export const CARRIERS = [OWN_CARRIER, ...PARTNER_CARRIERS] as const
 export type CarrierName = (typeof CARRIERS)[number]
@@ -259,7 +259,7 @@ const PAGE_COPY: Record<
     history: "Delivery history",
     noUpdates: "No delivery updates yet. They appear here once the order ships.",
     latest: "Latest update",
-    note: "3DJools Courier delivers the parcel. If our courier cannot cover the route, we hand it to DHL or DPD. Tracking stays on this page.",
+    note: "DnD3D Courier delivers the parcel. If our courier cannot cover the route, we hand it to DHL or DPD. Tracking stays on this page.",
     lookupHint: "Have a tracking number? Follow the parcel here.",
   },
   de: {
@@ -275,7 +275,7 @@ const PAGE_COPY: Record<
     history: "Sendungsverlauf",
     noUpdates: "Noch keine Sendungsupdates. Sie erscheinen hier, sobald die Bestellung versandt wurde.",
     latest: "Letztes Update",
-    note: "3DJools Courier stellt das Paket zu. Wenn unser Kurier die Strecke nicht abdecken kann, übergeben wir es an DHL oder DPD. Die Verfolgung bleibt auf dieser Seite.",
+    note: "DnD3D Courier stellt das Paket zu. Wenn unser Kurier die Strecke nicht abdecken kann, übergeben wir es an DHL oder DPD. Die Verfolgung bleibt auf dieser Seite.",
     lookupHint: "Sie haben eine Sendungsnummer? Verfolgen Sie das Paket hier.",
   },
   fr: {
@@ -291,7 +291,7 @@ const PAGE_COPY: Record<
     history: "Historique de livraison",
     noUpdates: "Pas encore de suivi. Il apparaîtra ici dès l'expédition.",
     latest: "Dernière mise à jour",
-    note: "3DJools Courier livre le colis. Si notre coursier ne peut pas couvrir le trajet, nous le remettons à DHL ou DPD. Le suivi reste sur cette page.",
+    note: "DnD3D Courier livre le colis. Si notre coursier ne peut pas couvrir le trajet, nous le remettons à DHL ou DPD. Le suivi reste sur cette page.",
     lookupHint: "Vous avez un numéro de suivi ? Suivez le colis ici.",
   },
   it: {
@@ -307,7 +307,7 @@ const PAGE_COPY: Record<
     history: "Cronologia di consegna",
     noUpdates: "Nessun aggiornamento. Comparirà qui appena l'ordine viene spedito.",
     latest: "Ultimo aggiornamento",
-    note: "3DJools Courier consegna il pacco. Se il nostro corriere non può coprire il percorso, lo affidiamo a DHL o DPD. Il tracciamento resta su questa pagina.",
+    note: "DnD3D Courier consegna il pacco. Se il nostro corriere non può coprire il percorso, lo affidiamo a DHL o DPD. Il tracciamento resta su questa pagina.",
     lookupHint: "Hai un numero di tracciamento? Segui il pacco qui.",
   },
   es: {
@@ -323,7 +323,7 @@ const PAGE_COPY: Record<
     history: "Historial de entrega",
     noUpdates: "Aún no hay actualizaciones. Aparecerán aquí cuando el pedido se envíe.",
     latest: "Última actualización",
-    note: "3DJools Courier entrega el paquete. Si nuestro mensajero no puede cubrir la ruta, lo entregamos a DHL o DPD. El seguimiento sigue en esta página.",
+    note: "DnD3D Courier entrega el paquete. Si nuestro mensajero no puede cubrir la ruta, lo entregamos a DHL o DPD. El seguimiento sigue en esta página.",
     lookupHint: "¿Tienes un número de seguimiento? Sigue el paquete aquí.",
   },
   nl: {
@@ -339,7 +339,7 @@ const PAGE_COPY: Record<
     history: "Bezorggeschiedenis",
     noUpdates: "Nog geen updates. Die verschijnen hier zodra de bestelling is verzonden.",
     latest: "Laatste update",
-    note: "3DJools Courier bezorgt het pakket. Als onze koerier de route niet kan dekken, geven we het door aan DHL of DPD. De tracking blijft op deze pagina.",
+    note: "DnD3D Courier bezorgt het pakket. Als onze koerier de route niet kan dekken, geven we het door aan DHL of DPD. De tracking blijft op deze pagina.",
     lookupHint: "Hebt u een trackingnummer? Volg het pakket hier.",
   },
 }

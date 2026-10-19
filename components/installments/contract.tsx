@@ -11,7 +11,7 @@ import type { ScheduleEntry } from "@/lib/db/schema"
 export const CREDITOR = {
   name: COMPANY.legalName,
   address: companyStreetLine,
-  registration: `Company No. ${COMPANY.companyNumber}`,
+  registration: `KvK ${COMPANY.companyNumber}`,
   vat: COMPANY.vat,
   email: COMPANY.email,
 }
@@ -60,7 +60,7 @@ const CLAUSES: Record<Locale, ClauseSet> = {
       "The goods are shipped after the down payment is received and the plan is active.",
       "Personal data and identity documents are processed solely for identity verification and credit assessment in accordance with the GDPR and the Privacy Policy.",
     ],
-    law: "6. Governing law — This agreement is governed by the laws of Belgium and applicable EU consumer-protection law.",
+    law: "6. Governing law — This agreement is governed by the laws of the Netherlands and applicable EU consumer-protection law.",
   },
   de: {
     draftNotice: "ENTWURF — zur Prüfung. Endgültige Bedingungen vorbehaltlich rechtlicher Prüfung und Genehmigung, bevor die Bestellung verbindlich ist.",
@@ -86,7 +86,7 @@ const CLAUSES: Record<Locale, ClauseSet> = {
       "Die Ware wird versandt, nachdem die Anzahlung eingegangen und der Plan aktiv ist.",
       "Personenbezogene Daten und Ausweisdokumente werden ausschließlich zur Identitäts- und Bonitätsprüfung gemäß DSGVO und Datenschutzerklärung verarbeitet.",
     ],
-    law: "6. Anwendbares Recht — Dieser Vertrag unterliegt belgischem Recht und dem geltenden EU-Verbraucherschutzrecht.",
+    law: "6. Anwendbares Recht — Dieser Vertrag unterliegt niederländischem Recht und dem geltenden EU-Verbraucherschutzrecht.",
   },
   fr: {
     draftNotice: "PROJET — pour révision. Conditions définitives sous réserve d'examen juridique et d'approbation avant que la commande soit ferme.",
@@ -112,7 +112,7 @@ const CLAUSES: Record<Locale, ClauseSet> = {
       "Les biens sont expédiés après réception de l'acompte et activation du plan.",
       "Les données personnelles et pièces d'identité sont traitées uniquement pour la vérification d'identité et l'évaluation de solvabilité conformément au RGPD.",
     ],
-    law: "6. Droit applicable — Le présent contrat est régi par le droit belge et le droit européen de la consommation applicable.",
+    law: "6. Droit applicable — Le présent contrat est régi par le droit néerlandais et le droit européen de la consommation applicable.",
   },
   it: {
     draftNotice: "BOZZA — da revisionare. Condizioni definitive soggette a revisione legale e approvazione prima che l'ordine sia vincolante.",
@@ -138,7 +138,7 @@ const CLAUSES: Record<Locale, ClauseSet> = {
       "I beni vengono spediti dopo il ricevimento dell'acconto e l'attivazione del piano.",
       "I dati personali e i documenti d'identità sono trattati esclusivamente per la verifica dell'identità e la valutazione del credito ai sensi del GDPR.",
     ],
-    law: "6. Legge applicabile — Il presente contratto è regolato dalla legge belga e dal diritto UE applicabile in materia di consumatori.",
+    law: "6. Legge applicabile — Il presente contratto è regolato dalla legge olandese e dal diritto UE applicabile in materia di consumatori.",
   },
   nl: {
     draftNotice: "CONCEPT — ter beoordeling. Definitieve voorwaarden onder voorbehoud van juridische beoordeling en goedkeuring voordat de bestelling bindend is.",
@@ -164,7 +164,7 @@ const CLAUSES: Record<Locale, ClauseSet> = {
       "De goederen worden verzonden nadat de aanbetaling is ontvangen en het plan actief is.",
       "Persoonsgegevens en identiteitsdocumenten worden uitsluitend verwerkt voor identiteitsverificatie en kredietbeoordeling conform de AVG.",
     ],
-    law: "6. Toepasselijk recht — Deze overeenkomst valt onder Belgisch recht en het toepasselijke EU-consumentenrecht.",
+    law: "6. Toepasselijk recht — Deze overeenkomst valt onder Nederlands recht en het toepasselijke EU-consumentenrecht.",
   },
   es: {
     draftNotice: "BORRADOR — para revisión. Condiciones finales sujetas a revisión legal y aprobación antes de que el pedido sea vinculante.",
@@ -190,7 +190,7 @@ const CLAUSES: Record<Locale, ClauseSet> = {
       "Los bienes se envían tras recibir el pago inicial y activarse el plan.",
       "Los datos personales y documentos de identidad se tratan únicamente para verificación de identidad y evaluación de crédito conforme al RGPD.",
     ],
-    law: "6. Ley aplicable — Este contrato se rige por la ley belga y la normativa de consumo aplicable de la UE.",
+    law: "6. Ley aplicable — Este contrato se rige por la ley neerlandesa y la normativa de consumo aplicable de la UE.",
   },
 }
 

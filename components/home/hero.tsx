@@ -14,7 +14,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
     <section className="relative overflow-hidden border-b border-border bg-card">
       <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 lg:grid-cols-2 lg:gap-6 lg:py-20">
         <div className="relative z-10">
-          <p className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
+          <p className="inline-flex items-center gap-1.5 rounded-md border border-primary/30 bg-primary/10 px-2.5 py-1 text-xs font-semibold tracking-tight text-foreground">
             <Truck className="size-3.5 text-primary" />
             {dict.home.heroEyebrow}
           </p>
@@ -48,9 +48,9 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
         </div>
 
         <div className="relative">
-          <div className="relative aspect-square overflow-hidden rounded-xl border border-border bg-secondary/40 shadow-sm">
+          <div className="relative aspect-square overflow-hidden rounded-lg border border-border bg-secondary/40">
             <Image
-              src="/products/bambu-x1c-2.jpg"
+              src="/brand/hero-printer.png"
               alt={dict.home.featuredPrinters}
               fill
               priority

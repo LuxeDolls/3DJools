@@ -32,7 +32,7 @@ export function isSquareSourceId(value: string): boolean {
   return /^[A-Za-z0-9:_-]{10,255}$/.test(value)
 }
 
-const ORDER_NUMBER = /^V3-\d{8}-[A-Z0-9]{4,10}$/
+const ORDER_NUMBER = /^(?:V3|DND)-\d{8}-[A-Z0-9]{4,10}$/
 
 export function isSquareCheckoutUrl(value: string): boolean {
   try {
@@ -69,14 +69,14 @@ export async function createSquareCheckout(input: {
     },
     body: JSON.stringify({
       idempotency_key: createHash("sha256").update(`link:${input.orderNumber}:${input.amountCents}`).digest("hex").slice(0, 45),
-      description: `3DJools ${input.orderNumber}`,
+      description: `DnD3D ${input.orderNumber}`,
       payment_note: input.orderNumber,
       order: {
         location_id: SQUARE_LOCATION_ID,
         reference_id: input.orderNumber,
         line_items: [
           {
-            name: `3DJools ${input.orderNumber}`,
+            name: `DnD3D ${input.orderNumber}`,
             quantity: "1",
             base_price_money: { amount: input.amountCents, currency: SQUARE_CHARGE_CURRENCY },
           },
@@ -163,7 +163,7 @@ export async function createSquarePayment(input: {
       location_id: SQUARE_LOCATION_ID,
       autocomplete: true,
       reference_id: input.orderNumber.slice(0, 40),
-      note: `3DJools ${input.orderNumber}`.slice(0, 500),
+      note: `DnD3D ${input.orderNumber}`.slice(0, 500),
       buyer_email_address: input.email.slice(0, 255),
       ...(input.verificationToken ? { verification_token: input.verificationToken } : {}),
       ...(input.address || input.city || input.postalCode || input.countryCode
@@ -230,7 +230,13 @@ function signatureMatches(body: string, signature: string, url: string, key: str
 export function verifySquareWebhook(body: string, signature: string): boolean {
   const key = process.env.key_2?.trim()
   if (!key || !signature) return false
-  const urls = [squareWebhookUrl(), "https://3djools.com/api/payments/square/webhook"]
+  const urls = [
+    squareWebhookUrl(),
+    "https://dnd3d.com/api/payments/square/webhook",
+    "https://www.dnd3d.com/api/payments/square/webhook",
+    "https://3djools.com/api/payments/square/webhook",
+    "https://www.3djools.com/api/payments/square/webhook",
+  ]
   return urls.some((url) => signatureMatches(body, signature, url, key))
 }
 

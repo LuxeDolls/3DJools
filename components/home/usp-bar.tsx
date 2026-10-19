@@ -14,7 +14,7 @@ export function UspBar({ dict }: { dict: Dictionary }) {
       <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-6 px-4 py-8 lg:grid-cols-4">
         {items.map((item) => (
           <div key={item.title} className="flex gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary">
               <item.icon className="size-5" />
             </div>
             <div>

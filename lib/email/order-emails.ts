@@ -1,5 +1,6 @@
 import "server-only"
 
+import { COMPANY } from "@/lib/company"
 import { sendEmail, type SendResult } from "@/lib/email/send"
 import {
   localeForCountry,
@@ -30,11 +31,7 @@ function paypalReminderText(totalCents: number): string {
 }
 
 function siteUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "") ??
-    ""
-  )
+  return COMPANY.url
 }
 
 const PAYMENT_LABELS: Record<string, string> = {
@@ -84,7 +81,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     order.shippingCountry,
   ].filter((line) => line && line.trim())
 
-  const subject = `Your 3DJools order confirmation — ${order.orderNumber}`
+  const subject = `Your DnD3D order confirmation — ${order.orderNumber}`
 
   const itemsText = order.items
     .map((i) => `- ${i.productName} × ${i.quantity} — ${euros(i.lineTotalCents)}`)
@@ -208,7 +205,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     ${addressHtml}
     ${orderLink ? `<p style="margin:0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools · This is your order receipt</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D · This is your order receipt</p>
 </div>
 </body></html>`
 
@@ -238,7 +235,7 @@ export async function sendOrderStatusUpdateEmail(
   const orderLink = base ? `${base}/en/order/${order.orderNumber}` : ""
   const previousLabel = ORDER_STATUS_LABELS[previousStatus] ?? previousStatus
   const statusLabel = ORDER_STATUS_LABELS[order.status] ?? order.status
-  const subject = `Your 3DJools order ${order.orderNumber} is now ${statusLabel}`
+  const subject = `Your DnD3D order ${order.orderNumber} is now ${statusLabel}`
   const text = [
     `Your order ${order.orderNumber} has been updated.`,
     `Status: ${previousLabel} → ${statusLabel}`,
@@ -258,7 +255,7 @@ export async function sendOrderStatusUpdateEmail(
 ${order.trackingNumber ? `<p style="margin:16px 0 0;color:#111;font-size:14px">Tracking number: ${order.trackingNumber}</p>` : ""}
 ${order.trackingUrl ? `<p style="margin:12px 0 0"><a href="${order.trackingUrl}" style="color:#111">Track your parcel</a></p>` : ""}
 ${orderLink ? `<p style="margin:20px 0 0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
-</div><p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p></div>
+</div><p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p></div>
 </body></html>`
 
   return sendEmail({ to: order.email, subject, html, text })
@@ -271,7 +268,7 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
   const trackingNumber = order.trackingNumber?.trim()
   const trackingUrl = order.trackingUrl?.trim()
 
-  const subject = `Your 3DJools order ${order.orderNumber} has shipped`
+  const subject = `Your DnD3D order ${order.orderNumber} has shipped`
 
   const itemsText = order.items
     .map((i) => `- ${i.productName} × ${i.quantity} — ${euros(i.lineTotalCents)}`)
@@ -323,7 +320,7 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
     </table>
     ${orderLink ? `<p style="margin:24px 0 0"><a href="${orderLink}" style="color:#111;font-size:14px">View your order details</a></p>` : ""}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p>
 </div>
 </body></html>`
 
@@ -374,7 +371,7 @@ ${carrier ? `<p style="margin:0 0 4px;font-size:14px;color:#111"><strong>${escap
 ${trackingNumber ? `<p style="margin:0 0 12px;font-size:14px;color:#111"><strong>${escapeHtml(copy.tracking)}:</strong> ${escapeHtml(trackingNumber)}</p>` : ""}
 ${trackingUrl ? `<a href="${escapeHtml(trackingUrl)}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">${escapeHtml(copy.button)}</a>` : ""}
 </div>
-</div><p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p></div>
+</div><p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p></div>
 </body></html>`
 
   return sendEmail({ to: order.email, subject, html, text })
@@ -406,7 +403,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
   const text = [
     `Hi ${firstName || "there"},`,
     "",
-    `Welcome to 3DJools, and thank you for your order — we're delighted to have you with us!`,
+    `Welcome to DnD3D, and thank you for your order — we're delighted to have you with us!`,
     `We noticed your order ${order.orderNumber} is still marked as awaiting payment, so we wanted to check in and make sure everything is on track.`,
     "",
     "Your order:",
@@ -471,7 +468,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
   const html = `<!doctype html><html><body style="margin:0;background:#f5f5f5;font-family:Arial,Helvetica,sans-serif">
 <div style="max-width:560px;margin:0 auto;padding:24px">
   <div style="background:#fff;border-radius:12px;padding:32px">
-    <h1 style="margin:0 0 8px;font-size:20px;color:#111">Welcome to 3DJools${firstName ? `, ${firstName}` : ""}!</h1>
+    <h1 style="margin:0 0 8px;font-size:20px;color:#111">Welcome to DnD3D${firstName ? `, ${firstName}` : ""}!</h1>
     <p style="margin:0 0 20px;color:#555;font-size:14px;line-height:1.6">Thank you for your order — we're delighted to have you with us. We noticed order <strong>${order.orderNumber}</strong> is still marked as <strong>awaiting payment</strong>, so we wanted to check in and make sure everything is on track.</p>
     ${sepaHtml}
     ${cryptoHtml}
@@ -484,7 +481,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     <p style="margin:0 0 20px;color:#111;font-size:14px;line-height:1.6">If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've run into any trouble or changed your mind, simply reply to this email; we're happy to help.</p>
     ${orderLink ? `<p style="margin:0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools · We're looking forward to getting your order on its way</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D · We're looking forward to getting your order on its way</p>
 </div>
 </body></html>`
 
@@ -517,7 +514,7 @@ export async function sendPaymentUnderReviewEmail(order: OrderWithItems): Promis
     <p style="margin:16px 0 0;color:#111;font-size:14px;line-height:1.6">Thanks — we've received your confirmation and our team is checking your payment. We'll update your order status shortly.</p>
     ${orderLink ? `<p style="margin:20px 0 0"><a href="${orderLink}" style="display:inline-block;background:#111;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600">View your order</a></p>` : ""}
   </div>
-  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">3DJools</p>
+  <p style="text-align:center;color:#999;font-size:12px;margin-top:16px">DnD3D</p>
 </div>
 </body></html>`
 

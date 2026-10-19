@@ -17,7 +17,7 @@ import { notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
-import { isCryptoCoinId } from "@/lib/payments/crypto"
+import { CRYPTO_CHECKOUT_ENABLED, isCryptoCoinId } from "@/lib/payments/crypto"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
@@ -31,7 +31,7 @@ import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schem
 
 // Prices are authoritative here, never taken from the client — the cart only
 // supplies slugs + quantities. Shipping cost is recomputed from lib/shipping
-// (single EU/UK shipping method, 3–6 working days) using the destination
+// (single EU/UK shipping method, 3–7 working days) using the destination
 // country submitted at checkout; it becomes free automatically once the
 // subtotal reaches the threshold.
 const MAX_QTY = 20
@@ -152,6 +152,9 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   // Member discount depends on a verified server-side session, not the client.
   const session = await auth.api.getSession({ headers: await headers() })
   const userId = session?.user?.id ?? null
+  if (input.payment === "crypto" && !CRYPTO_CHECKOUT_ENABLED) {
+    return { ok: false, error: "order_failed" }
+  }
   if (
     input.payment === "sepa" &&
     !isBankTransferCheckoutEnabled(input.email) &&
@@ -161,7 +164,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   }
   const discountCents = userId ? memberDiscountCents(subtotalCents) : 0
 
-  // Shipping is recomputed too: Belgium gets the domestic rate, every other
+  // Shipping is recomputed too: the Netherlands gets the domestic rate, every other
   // destination pays the international rate, and both are waived above the
   // free-shipping threshold.
   const shippingCents = computeShippingCents(subtotalCents, input.country)

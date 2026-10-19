@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { CreditCard, Landmark, Bitcoin, CalendarClock, Clock, Mail, Phone } from "lucide-react"
+import { CreditCard, Landmark, CalendarClock, Clock, Mail, Phone } from "lucide-react"
 import { COMPANY, companyStreetLine } from "@/lib/company"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
@@ -11,7 +11,6 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Logo } from "./logo"
-import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 
 export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const lp = (p: string) => localizedPath(locale, p)
@@ -63,7 +62,6 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       : []),
     ...(ALPPAY_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.payAlppay }] : []),
     ...(BANK_TRANSFER_CHECKOUT_ENABLED ? [{ icon: Landmark, label: dict.checkout.paySepa }] : []),
-    { icon: Bitcoin, label: dict.checkout.payCrypto },
     ...(isPaypalCheckoutEnabled()
       ? [{ icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" }]
       : []),
@@ -96,10 +94,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
             <span>{dict.footer.hoursNote}</span>
           </div>
-          <div className="mt-5">
-            <ScamAdviserTrust dict={dict} compact />
-          </div>
-          <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+          <p className="mt-5 text-xs leading-relaxed text-muted-foreground">
             {dict.footer.operatedBy}
             <br />
             {companyStreetLine}
@@ -130,7 +125,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-between gap-4 px-4 py-6 sm:flex-row">
           <p className="text-xs text-muted-foreground">
-            &copy; {new Date().getFullYear()} {COMPANY.tradingName} — {COMPANY.legalName}. {dict.footer.rights}
+            &copy; {new Date().getFullYear()} {COMPANY.tradingName} — {COMPANY.legalName} {dict.footer.rights}
           </p>
           <ul className="flex flex-wrap items-center gap-3">
             {payments.map((p) => (

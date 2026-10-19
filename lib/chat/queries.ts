@@ -1,7 +1,7 @@
 import "server-only"
 
-import { and, asc, desc, eq } from "drizzle-orm"
-import { db } from "@/lib/db"
+import { and, asc, desc, eq, isNull } from "drizzle-orm"
+import { db, pool } from "@/lib/db"
 import {
   chatConversations,
   chatMessages,
@@ -11,33 +11,70 @@ import {
   type ChatRole,
 } from "@/lib/db/schema"
 
+let identityColumnsReady: Promise<void> | null = null
+
+function ensureIdentityColumns(): Promise<void> {
+  if (!identityColumnsReady) {
+    identityColumnsReady = pool
+      .query(
+        `ALTER TABLE chat_conversations
+           ADD COLUMN IF NOT EXISTS visitor_name text,
+           ADD COLUMN IF NOT EXISTS visitor_email text`,
+      )
+      .then(() => undefined)
+      .catch((error) => {
+        identityColumnsReady = null
+        throw error
+      })
+  }
+  return identityColumnsReady
+}
+
 /** Find an existing conversation for this visitor, or create a fresh one. */
 export async function findConversation(visitorId: string): Promise<ChatConversationRow | null> {
+  await ensureIdentityColumns()
   const existing = await db
     .select()
     .from(chatConversations)
-    .where(eq(chatConversations.visitorId, visitorId))
+    .where(and(eq(chatConversations.visitorId, visitorId), isNull(chatConversations.archivedAt)))
     .orderBy(desc(chatConversations.createdAt))
     .limit(1)
 
   return existing[0] ?? null
 }
 
-export async function getOrCreateConversation(visitorId: string, locale: string): Promise<ChatConversationRow> {
+export async function getOrCreateConversation(
+  visitorId: string,
+  locale: string,
+  identity?: { name: string; email: string },
+): Promise<ChatConversationRow> {
+  await ensureIdentityColumns()
   const existing = await db
     .select()
     .from(chatConversations)
-    .where(eq(chatConversations.visitorId, visitorId))
+    .where(and(eq(chatConversations.visitorId, visitorId), isNull(chatConversations.archivedAt)))
     .orderBy(desc(chatConversations.createdAt))
     .limit(1)
 
-  if (existing[0]) return existing[0]
+  if (existing[0]) {
+    if (identity && (!existing[0].visitorName || !existing[0].visitorEmail)) {
+      const [updated] = await db
+        .update(chatConversations)
+        .set({ visitorName: identity.name, visitorEmail: identity.email })
+        .where(eq(chatConversations.id, existing[0].id))
+        .returning()
+      return updated
+    }
+    return existing[0]
+  }
 
   const [created] = await db
     .insert(chatConversations)
     .values({
       id: crypto.randomUUID(),
       visitorId,
+      visitorName: identity?.name,
+      visitorEmail: identity?.email,
       locale,
     })
     .returning()
@@ -46,6 +83,7 @@ export async function getOrCreateConversation(visitorId: string, locale: string)
 }
 
 export async function getConversationById(id: string): Promise<ChatConversationRow | null> {
+  await ensureIdentityColumns()
   const rows = await db.select().from(chatConversations).where(eq(chatConversations.id, id)).limit(1)
   return rows[0] ?? null
 }
@@ -79,7 +117,12 @@ export async function touchConversation(
 /* -------------------------------- admin --------------------------------- */
 
 export async function listConversationsForAdmin() {
-  const conversations = await db.select().from(chatConversations).orderBy(desc(chatConversations.lastMessageAt))
+  await ensureIdentityColumns()
+  const conversations = await db
+    .select()
+    .from(chatConversations)
+    .where(isNull(chatConversations.archivedAt))
+    .orderBy(desc(chatConversations.lastMessageAt))
 
   const withLastMessage = await Promise.all(
     conversations.map(async (c) => {
@@ -111,7 +154,7 @@ export async function getUnreadConversationCount(): Promise<number> {
     .select({ conversationId: chatConversations.id })
     .from(chatConversations)
     .innerJoin(chatMessages, eq(chatMessages.conversationId, chatConversations.id))
-    .where(eq(chatConversations.unreadForAdmin, true))
+    .where(and(eq(chatConversations.unreadForAdmin, true), isNull(chatConversations.archivedAt)))
 
   return new Set(rows.map((row) => row.conversationId)).size
 }

@@ -32,7 +32,7 @@ export async function GET() {
   return new NextResponse(archiveStream, {
     headers: {
       "Content-Type": "application/zip",
-      "Content-Disposition": `attachment; filename="3djools-storage-${new Date().toISOString().slice(0, 10)}.zip"`,
+      "Content-Disposition": `attachment; filename="dnd3d-storage-${new Date().toISOString().slice(0, 10)}.zip"`,
       "Cache-Control": "no-store",
     },
   })
