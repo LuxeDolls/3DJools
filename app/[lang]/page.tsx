@@ -32,7 +32,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <SaleBanner locale={locale} dict={dict} />
       <Hero locale={locale} dict={dict} />
       <UspBar dict={dict} />
-      <ScamAdviserTrust dict={dict} />
       <MemberPromo />
       <CategoryTiles locale={locale} dict={dict} />
 
@@ -56,6 +55,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </div>
       </section>
 
+      <ScamAdviserTrust dict={dict} />
       <HelpStrip locale={locale} dict={dict} />
       <Newsletter />
     </>
