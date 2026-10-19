@@ -1,23 +1,16 @@
 "use client"
 
-import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { authClient } from "@/lib/auth-client"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 
 export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
-  const router = useRouter()
   const { dict, locale } = useI18n()
   const lp = useLocalizedPath()
   const t = dict.auth
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
 
@@ -39,25 +32,6 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
     if (error) setError(t.genericError)
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    setError(null)
-    setLoading(true)
-
-    const { error } = await authClient.signIn.email({ email, password })
-
-    setLoading(false)
-
-    if (error) {
-      // Show a generic message; don't reveal whether an email is registered.
-      setError(t.genericError)
-      return
-    }
-
-    router.push(lp("/account"))
-    router.refresh()
-  }
-
   return (
     <div className="w-full max-w-sm rounded-xl border border-border bg-card p-6 shadow-sm">
       <div className="mb-6">
@@ -67,7 +41,7 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
         <p className="mt-1 text-sm text-muted-foreground">{isSignUp ? t.signUpSubtitle : t.signInSubtitle}</p>
       </div>
 
-      <div className="mb-4 flex flex-col gap-2">
+      <div className="flex flex-col gap-2">
         {(
           [
             ["google", social.google, "/icons/google.svg"],
@@ -89,46 +63,8 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
         ))}
       </div>
 
-      {!isSignUp && (
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="email">{t.email}</Label>
-          <Input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="email"
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label htmlFor="password">{t.password}</Label>
-          <Input
-            id="password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength={8}
-            autoComplete="current-password"
-          />
-        </div>
-
-        {error && (
-          <p className="text-sm text-destructive" role="alert">
-            {error}
-          </p>
-        )}
-
-        <Button type="submit" disabled={loading} className="w-full">
-          {loading ? t.pleaseWait : t.signInCta}
-        </Button>
-      </form>
-      )}
-
-      {isSignUp && error && (
-        <p className="text-sm text-destructive" role="alert">
+      {error && (
+        <p className="mt-4 text-sm text-destructive" role="alert">
           {error}
         </p>
       )}
