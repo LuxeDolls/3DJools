@@ -108,7 +108,7 @@ export const it: Dictionary = {
     newsletterText: "Novità, riassortimenti e offerte riservate. Niente spam.",
     newsletterPlaceholder: "Il tuo indirizzo e-mail",
     newsletterCta: "Iscriviti",
-    saleBannerTitle: "Saldi d'autunno: 10% di sconto su stampanti, scanner e incisori laser",
+    saleBannerTitle: "Sconto d'autunno: i prezzi di stampanti, scanner e incisori laser includono già l'8% di sconto",
     saleBannerEndsPrefix: "Termina il",
     saleBannerCta: "Vai ai saldi",
     scamAdviserRating: "Molto probabilmente sicuro",

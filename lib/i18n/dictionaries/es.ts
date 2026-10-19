@@ -108,7 +108,7 @@ export const es: Dictionary = {
     newsletterText: "Novedades, reposiciones y ofertas exclusivas. Sin spam.",
     newsletterPlaceholder: "Tu dirección de correo",
     newsletterCta: "Suscribirse",
-    saleBannerTitle: "Rebajas de otoño: 10% de descuento en impresoras, escáneres y grabadoras láser",
+    saleBannerTitle: "Descuento de otoño: los precios de impresoras, escáneres y grabadoras láser ya incluyen un 8% de descuento",
     saleBannerEndsPrefix: "Termina el",
     saleBannerCta: "Ver las rebajas",
     scamAdviserRating: "Muy probablemente seguro",
