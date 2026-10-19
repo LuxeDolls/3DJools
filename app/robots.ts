@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next"
 import { headers } from "next/headers"
-import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
+import { SITEMAP_INDEX } from "@/lib/seo/sitemap"
 
 const disallow = [
   "/api/",
@@ -58,6 +58,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
         disallow,
       },
     ],
-    sitemap: `${SITE_ORIGIN}/sitemap.xml`,
+    sitemap: SITEMAP_INDEX,
   }
 }
