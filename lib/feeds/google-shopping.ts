@@ -29,6 +29,19 @@ const GOOGLE_CATEGORY = {
 const PCB_PRINTER_SLUG = "voltera-voltera-v1-pcb-printer"
 const PCB_CATEGORY = "3889"
 
+const FEED_DESCRIPTION: Record<Locale, string> = {
+  en: "3D printers, 3D scanners, laser engravers and accessories",
+  de: "3D-Drucker, 3D-Scanner, Lasergravierer und Zubehör",
+  fr: "Imprimantes 3D, scanners 3D, graveurs laser et accessoires",
+  es: "Impresoras 3D, escáneres 3D, grabadores láser y accesorios",
+  it: "Stampanti 3D, scanner 3D, incisori laser e accessori",
+  nl: "3D-printers, 3D-scanners, lasergravers en accessoires",
+}
+
+// Imported accessory names start with a category label. That label is not the product.
+const TITLE_PREFIX = /^(?:3d print(?:ing)?|3d printer|3d-druck|3d-drucker|impression 3d|imprimante 3d|impresión 3d|impresora 3d|stampa 3d|stampante 3d|3d-printen|3d-printer|3d-print)\s*,\s*/i
+const PROMOTION = /\b(?:\d+\s*%|autumn sale|herbst(?:aktion|sale|-sale)|promotion d'automne|descuento de otoño|sconto d'autunno|herfstkorting|rabatt|soldes|korting)\b/i
+
 const PRODUCT_TYPE: Record<Locale, Record<string, string>> = {
   en: { printers: "3D printers", scanners: "3D scanners", "laser-engravers": "Laser engravers", accessories: "Accessories", pcb: "PCB printers" },
   de: { printers: "3D-Drucker", scanners: "3D-Scanner", "laser-engravers": "Lasergravierer", accessories: "Zubehör", pcb: "Leiterplatten-Drucker" },
@@ -167,9 +180,24 @@ function specLabel(label: string, locale: Locale): string | undefined {
   return SPEC_LABELS[label]?.[locale]
 }
 
+function feedTitle(product: Product): string {
+  const brand = product.brandName ?? product.brandSlug
+  const stripped = product.name.replace(TITLE_PREFIX, "").trim()
+  let title = stripped || product.name.trim()
+  if (brand && !title.toLowerCase().includes(brand.toLowerCase())) title = `${brand} ${title}`
+  return title.replace(/\s+/g, " ").trim().slice(0, 150)
+}
+
+function withoutPromotion(value: string): string {
+  return value
+    .split(/(?<=[.!?])\s+/)
+    .filter((sentence) => !PROMOTION.test(sentence))
+    .join(" ")
+}
+
 function feedDescription(product: Product, locale: Locale): string {
   const highlights = product.highlights.filter(Boolean).join(" ")
-  const base = [product.description, highlights].filter(Boolean).join(" ")
+  const base = withoutPromotion([product.description, highlights].filter(Boolean).join(" "))
   if (wordCount(base) >= 100) return clip(base)
 
   const specs = product.specs
@@ -226,6 +254,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
   const products = (await getAllProducts(locale)).filter(
     (product) =>
       FEED_CATEGORIES.has(product.category) &&
+      product.priceCents > 0 &&
       enoughImages(product) &&
       !product.slug.startsWith("test-") &&
       !productContainsRussian(product),
@@ -244,7 +273,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
     return `
     <item>
       <g:id>${escapeXml(googleProductId(product))}</g:id>
-      <g:title>${escapeXml(product.name)}</g:title>
+      <g:title>${escapeXml(feedTitle(product))}</g:title>
       <g:description>${escapeXml(feedDescription(product, locale))}</g:description>
       <g:link>${escapeXml(productUrl)}</g:link>
       ${imageLink ? `<g:image_link>${escapeXml(imageLink)}</g:image_link>` : ""}
@@ -266,7 +295,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
   <channel>
     <title>${STORE_NAME} (${locale})</title>
     <link>${BASE_URL}/${locale}</link>
-    <description>Product feed for ${STORE_NAME} in ${locale}</description>${items}
+    <description>${escapeXml(FEED_DESCRIPTION[locale])}</description>${items}
   </channel>
 </rss>`
 
