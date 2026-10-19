@@ -16,7 +16,6 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
   const lp = useLocalizedPath()
   const t = dict.auth
 
-  const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState<string | null>(null)
@@ -45,9 +44,7 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
     setError(null)
     setLoading(true)
 
-    const { error } = isSignUp
-      ? await authClient.signUp.email({ email, password, name })
-      : await authClient.signIn.email({ email, password })
+    const { error } = await authClient.signIn.email({ email, password })
 
     setLoading(false)
 
@@ -92,13 +89,8 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
         ))}
       </div>
 
+      {!isSignUp && (
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        {isSignUp && (
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="name">{t.name}</Label>
-            <Input id="name" value={name} onChange={(e) => setName(e.target.value)} required autoComplete="name" />
-          </div>
-        )}
         <div className="flex flex-col gap-2">
           <Label htmlFor="email">{t.email}</Label>
           <Input
@@ -119,9 +111,8 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
             onChange={(e) => setPassword(e.target.value)}
             required
             minLength={8}
-            autoComplete={isSignUp ? "new-password" : "current-password"}
+            autoComplete="current-password"
           />
-          {isSignUp && <p className="text-xs text-muted-foreground">{t.passwordHint}</p>}
         </div>
 
         {error && (
@@ -131,9 +122,16 @@ export function AuthForm({ mode }: { mode: "sign-in" | "sign-up" }) {
         )}
 
         <Button type="submit" disabled={loading} className="w-full">
-          {loading ? t.pleaseWait : isSignUp ? t.signUpCta : t.signInCta}
+          {loading ? t.pleaseWait : t.signInCta}
         </Button>
       </form>
+      )}
+
+      {isSignUp && error && (
+        <p className="text-sm text-destructive" role="alert">
+          {error}
+        </p>
+      )}
 
       <p className="mt-6 text-center text-sm text-muted-foreground">
         {isSignUp ? t.haveAccount : t.noAccount}{" "}
