@@ -13,11 +13,13 @@ export function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; 
         className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-xs transition-colors hover:border-primary/50 hover:bg-muted"
         aria-label={dict.footer.scamAdviserLink}
       >
-        <img
-          src="https://www.scamadviser.com/images/static/logo/logo.svg"
-          alt="ScamAdviser"
-          className="h-4 w-auto"
-        />
+        <span className="flex h-5 items-center rounded-sm bg-white px-1">
+          <img
+            src="https://www.scamadviser.com/images/static/logo/logo.svg"
+            alt=""
+            className="h-3.5 w-auto"
+          />
+        </span>
         <span className="font-semibold text-foreground">100/100</span>
         <span className="text-muted-foreground">{dict.footer.scamAdviserBadge}</span>
       </a>
@@ -34,10 +36,10 @@ export function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; 
         aria-label={`ScamAdviser Trust Score 100/100. ${dict.home.scamAdviserCta}`}
       >
         <div className="flex items-center gap-4">
-          <div className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-border bg-background p-2.5 shadow-sm">
+          <div className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-border bg-white p-2.5 shadow-sm">
             <img
               src="https://www.scamadviser.com/images/static/logo/logo.svg"
-              alt="ScamAdviser"
+              alt=""
               className="h-auto w-full"
             />
           </div>
