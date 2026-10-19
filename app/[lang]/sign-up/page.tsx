@@ -5,6 +5,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
 import { AuthForm } from "@/components/auth/auth-form"
+import { issueContactCaptcha } from "@/lib/contact/captcha"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -22,7 +23,7 @@ export default async function SignUpPage({ params }: { params: Promise<{ lang: s
 
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 py-12">
-      <AuthForm mode="sign-up" />
+      <AuthForm mode="sign-up" captcha={issueContactCaptcha()} />
     </div>
   )
 }
