@@ -17,10 +17,15 @@ export default async function DealsPage({ params }: { params: Promise<{ lang: st
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
 
-  // Deals = products with a compare-at price, plus bestsellers as a fallback highlight.
+  // Autumn prices are already reduced, so these categories are the current deal
+  // even though they no longer carry a crossed-out compare-at price.
   const products = await getAllProducts(locale)
-  const onSale = products.filter((p) => p.compareAtCents && p.compareAtCents > p.priceCents)
-  const highlighted = onSale.length ? onSale : products.filter((p) => p.bestseller)
+  const autumnCategories = new Set(["printers", "scanners", "laser-engravers"])
+  const highlighted = products.filter(
+    (p) =>
+      autumnCategories.has(p.category) ||
+      (p.compareAtCents != null && p.compareAtCents > p.priceCents),
+  )
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">

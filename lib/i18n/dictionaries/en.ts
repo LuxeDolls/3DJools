@@ -106,7 +106,7 @@ export const en = {
     newsletterText: "New drops, restocks and members-only offers. No spam.",
     newsletterPlaceholder: "Your email address",
     newsletterCta: "Subscribe",
-    saleBannerTitle: "Autumn sale: 10% off printers, scanners & laser engravers",
+    saleBannerTitle: "Autumn discount: printer, scanner and laser engraver prices already include 8% off",
     saleBannerEndsPrefix: "Ends",
     saleBannerCta: "Shop the sale",
     scamAdviserRating: "Very likely safe",

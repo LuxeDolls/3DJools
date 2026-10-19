@@ -108,7 +108,7 @@ export const nl: Dictionary = {
     newsletterText: "Nieuwe releases, herbevoorrading en exclusieve aanbiedingen. Geen spam.",
     newsletterPlaceholder: "Je e-mailadres",
     newsletterCta: "Aanmelden",
-    saleBannerTitle: "Herfstuitverkoop: 10% korting op printers, scanners & lasergraveermachines",
+    saleBannerTitle: "Herfstkorting: de prijzen van printers, scanners en lasergraveermachines zijn al 8% lager",
     saleBannerEndsPrefix: "Eindigt op",
     saleBannerCta: "Naar de uitverkoop",
     scamAdviserRating: "Zeer waarschijnlijk veilig",

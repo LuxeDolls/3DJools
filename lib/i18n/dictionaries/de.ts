@@ -108,7 +108,7 @@ export const de: Dictionary = {
     newsletterText: "Neuheiten, Nachschub und exklusive Angebote. Kein Spam.",
     newsletterPlaceholder: "Deine E-Mail-Adresse",
     newsletterCta: "Abonnieren",
-    saleBannerTitle: "Herbst-Sale: 10% Rabatt auf Drucker, Scanner & Lasergravierer",
+    saleBannerTitle: "Herbstaktion: Die Preise für Drucker, Scanner und Lasergravierer enthalten bereits 8% Rabatt",
     saleBannerEndsPrefix: "Endet am",
     saleBannerCta: "Zum Sale",
     scamAdviserRating: "Sehr wahrscheinlich sicher",

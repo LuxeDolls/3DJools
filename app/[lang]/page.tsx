@@ -13,8 +13,8 @@ import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 import { SectionHeading } from "@/components/section-heading"
 import { ProductGrid } from "@/components/product/product-grid"
 
-// The sale end date comes from the database. Without this, the homepage stays
-// frozen at build time and a date change never reaches the live site.
+// Product prices come from the database. Without this, the homepage stays
+// frozen at build time and a price change never reaches the live site.
 export const revalidate = 300
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
@@ -29,10 +29,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <>
-      <SaleBanner locale={locale} dict={dict} />
       <Hero locale={locale} dict={dict} />
       <UspBar dict={dict} />
       <MemberPromo />
+      <SaleBanner locale={locale} dict={dict} />
       <CategoryTiles locale={locale} dict={dict} />
 
       <section className="mx-auto max-w-7xl px-4 py-12">
