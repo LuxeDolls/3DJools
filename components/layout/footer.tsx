@@ -11,6 +11,7 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Logo } from "./logo"
+import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 
 export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const lp = (p: string) => localizedPath(locale, p)
@@ -101,6 +102,9 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <br />
             {dict.footer.companyNumber} {COMPANY.companyNumber} · {dict.footer.vatId} {COMPANY.vat}
           </p>
+          <div className="mt-5">
+            <ScamAdviserTrust dict={dict} compact />
+          </div>
         </div>
 
         {columns.map((col) => (
