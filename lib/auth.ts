@@ -15,12 +15,13 @@ export const auth = betterAuth({
         ? `https://${process.env.VERCEL_URL}`
         : process.env.V0_RUNTIME_URL),
   emailAndPassword: {
-    enabled: false,
+    enabled: true,
+    minPasswordLength: 8,
   },
   account: {
     accountLinking: {
       enabled: true,
-      trustedProviders: ["google", "facebook", "linkedin"],
+      trustedProviders: ["google", "facebook"],
       // Checkout accounts were created before email verification existed.
       // A verified provider email is enough to connect that existing account.
       requireLocalEmailVerified: false,
@@ -43,14 +44,6 @@ export const auth = betterAuth({
           facebook: {
             clientId: process.env.FACEBOOK_CLIENT_ID,
             clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-          },
-        }
-      : {}),
-    ...(process.env.LINKEDIN_CLIENT_ID && process.env.LINKEDIN_CLIENT_SECRET
-      ? {
-          linkedin: {
-            clientId: process.env.LINKEDIN_CLIENT_ID,
-            clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
           },
         }
       : {}),
