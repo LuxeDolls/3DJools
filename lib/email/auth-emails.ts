@@ -24,7 +24,7 @@ function escapeHtml(value: string): string {
 function brandHeader(): string {
   return `<div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
     <span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:8px;background:#e86f2a;color:#fff;font-weight:700;font-size:12px;letter-spacing:-0.5px">3D</span>
-    <span style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px;color:#171717"><span style="color:#e86f2a">3D</span>Jools</span>
+    <span style="font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:700;letter-spacing:-0.5px;color:#171717">DnD<span style="color:#e86f2a">3D</span></span>
   </div>`
 }
 
