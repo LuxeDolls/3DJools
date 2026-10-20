@@ -1,15 +1,13 @@
 const LEGACY_CONSENT_KEY = "voltika-cookie-consent"
-export const CONSENT_KEY = "dnd3d-cookie-consent"
+const PREVIOUS_CONSENT_KEY = "dnd3d-cookie-consent"
+export const CONSENT_KEY = "dnd3d-cookie-consent-2"
 export const CONSENT_EVENT = "dnd3d:cookie-consent"
 
 function storedConsent(): string | null {
   const current = localStorage.getItem(CONSENT_KEY)
-  if (current) return current
-  const legacy = localStorage.getItem(LEGACY_CONSENT_KEY)
-  if (!legacy) return null
-  localStorage.setItem(CONSENT_KEY, legacy)
+  localStorage.removeItem(PREVIOUS_CONSENT_KEY)
   localStorage.removeItem(LEGACY_CONSENT_KEY)
-  return legacy
+  return current
 }
 
 export function hasStoredConsent(): boolean {
