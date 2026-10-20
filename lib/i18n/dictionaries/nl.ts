@@ -223,7 +223,7 @@ export const nl: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen worden in euro afgeschreven op een beveiligde betaalpagina. Apple Pay, Link en Bancontact zijn beschikbaar bij betaling met kaart. PayPal is beschikbaar. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
+      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen worden in euro afgeschreven op een beveiligde betaalpagina. Apple Pay, Link en Bancontact zijn beschikbaar bij betaling met kaart. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",
