@@ -223,7 +223,7 @@ export const it: Dictionary = {
     payBancontact: "Bancontact",
     payStripeMethodDesc: "Disponibile sulla pagina Stripe sicura quando paghi con carta.",
     payMethodsNote:
-      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con carta vengono addebitati in euro su una pagina di pagamento sicura. Apple Pay, Link e Bancontact sono disponibili quando paghi con carta. PayPal è disponibile. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
+      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con carta vengono addebitati in euro su una pagina di pagamento sicura. Apple Pay, Link e Bancontact sono disponibili quando paghi con carta. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
     payPaypal: "PayPal",
     payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
     payPaypalUnavailable: "PayPal non è al momento disponibile",
