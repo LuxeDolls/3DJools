@@ -1,8 +1,13 @@
 import { OptionalAnalytics } from '@/components/legal/optional-analytics'
 import { OrganizationJsonLd } from '@/components/legal/organization-jsonld'
+import { GoogleTagRoute } from '@/components/legal/google-tag'
 import type { Metadata, Viewport } from 'next'
 import { Outfit, Plus_Jakarta_Sans } from 'next/font/google'
+import Script from 'next/script'
+import { Suspense } from 'react'
 import './globals.css'
+
+const GA_ID = 'G-CMCRK9MQT9'
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -55,8 +60,32 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
+        <Script id="google-tag" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            var analytics = 'denied';
+            try {
+              var saved = JSON.parse(localStorage.getItem('dnd3d-cookie-consent-2') || 'null');
+              if (saved && saved.value === 'all') analytics = 'granted';
+            } catch (e) {}
+            gtag('consent', 'default', {
+              analytics_storage: analytics,
+              ad_storage: 'denied',
+              ad_user_data: 'denied',
+              ad_personalization: 'denied'
+            });
+            gtag('js', new Date());
+            gtag('config', '${GA_ID}');
+          `}
+        </Script>
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <OrganizationJsonLd />
         {children}
+        <Suspense fallback={null}>
+          <GoogleTagRoute />
+        </Suspense>
         <OptionalAnalytics />
       </body>
     </html>

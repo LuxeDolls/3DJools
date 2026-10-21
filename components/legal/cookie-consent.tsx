@@ -51,6 +51,11 @@ export function CookieConsent() {
       // Ignore storage errors (e.g. private mode); banner still dismisses for this session.
     }
     applyAnalyticsConsent(value)
+    if (value === "all" && typeof window.gtag === "function") {
+      window.gtag("event", "page_view", {
+        page_path: `${window.location.pathname}${window.location.search}`,
+      })
+    }
     setVisible(false)
   }
 
