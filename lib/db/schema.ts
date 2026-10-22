@@ -369,6 +369,13 @@ export const alppayAttempts = pgTable("alppay_attempts", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 })
 
+/** Server-only signing secrets. Never select this table from a page or API response. */
+export const paymentSecrets = pgTable("payment_secrets", {
+  name: text("name").primaryKey(),
+  value: text("value").notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+})
+
 /** Pauses an email for 24 hours after three unsuccessful AlpPay attempts. */
 export const alppayHolds = pgTable("alppay_holds", {
   email: text("email").primaryKey(),
