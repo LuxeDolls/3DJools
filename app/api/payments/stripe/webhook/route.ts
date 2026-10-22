@@ -9,15 +9,23 @@ const HANDLED = new Set(["checkout.session.completed", "checkout.session.async_p
 
 /** Confirms a card payment after Stripe signs the event. The success page is not fulfillment. */
 export async function POST(request: NextRequest) {
-  const secret = process.env.STRIPE_WEBHOOK_SECRET?.trim()
+  const secrets = [process.env.STRIPE_WEBHOOK_SECRET_3, process.env.STRIPE_WEBHOOK_SECRET]
+    .map((value) => value?.trim())
+    .filter((value): value is string => Boolean(value))
   const signature = request.headers.get("stripe-signature")
-  if (!secret || !signature) return NextResponse.json({ ok: false }, { status: 400 })
+  if (!secrets.length || !signature) return NextResponse.json({ ok: false }, { status: 400 })
 
   const rawBody = await request.text()
-  let event: Stripe.Event
-  try {
-    event = getStripe().webhooks.constructEvent(rawBody, signature, secret)
-  } catch (err) {
+  let event: Stripe.Event | undefined
+  for (const secret of secrets) {
+    try {
+      event = getStripe().webhooks.constructEvent(rawBody, signature, secret)
+      break
+    } catch {
+      event = undefined
+    }
+  }
+  if (!event) {
     console.error("[v0] Stripe webhook signature failed:", err instanceof Error ? err.message : "invalid")
     return NextResponse.json({ ok: false }, { status: 400 })
   }
