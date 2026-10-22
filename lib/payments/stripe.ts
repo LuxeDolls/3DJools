@@ -8,16 +8,15 @@ import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 let client: Stripe | null = null
 
 function stripeSecretKey(): string {
-  return (
-    process.env.STRIPE_ACCESS_TOKEN?.trim() ||
-    process.env.STRIPE_ACCESS_TOKEN_2?.trim() ||
-    process.env.STRIPE_SECRET_KEY?.trim() ||
-    ""
-  )
+  return process.env.STRIPE_ACCESS_TOKEN_3?.trim() || ""
+}
+
+export function stripePublishableKey(): string {
+  return process.env.key_3?.trim() || ""
 }
 
 export function stripeConfigured(): boolean {
-  return STRIPE_CHECKOUT_ENABLED && Boolean(stripeSecretKey())
+  return STRIPE_CHECKOUT_ENABLED && Boolean(stripeSecretKey()) && Boolean(stripePublishableKey())
 }
 
 export function getStripe(): Stripe {
