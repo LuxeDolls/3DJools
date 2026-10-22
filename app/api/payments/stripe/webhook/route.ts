@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server"
 import type Stripe from "stripe"
 import { getStripe } from "@/lib/payments/stripe"
 import { settleStripeSession } from "@/lib/payments/stripe-order"
+import { stripeWebhookSecrets } from "@/lib/payments/stripe-webhook-secret"
 
 export const dynamic = "force-dynamic"
 
@@ -9,24 +10,24 @@ const HANDLED = new Set(["checkout.session.completed", "checkout.session.async_p
 
 /** Confirms a card payment after Stripe signs the event. The success page is not fulfillment. */
 export async function POST(request: NextRequest) {
-  const secrets = [process.env.STRIPE_WEBHOOK_SECRET_3, process.env.STRIPE_WEBHOOK_SECRET]
-    .map((value) => value?.trim())
-    .filter((value): value is string => Boolean(value))
+  const secrets = await stripeWebhookSecrets()
   const signature = request.headers.get("stripe-signature")
   if (!secrets.length || !signature) return NextResponse.json({ ok: false }, { status: 400 })
 
   const rawBody = await request.text()
   let event: Stripe.Event | undefined
+  let signatureError = "invalid"
   for (const secret of secrets) {
     try {
       event = getStripe().webhooks.constructEvent(rawBody, signature, secret)
       break
     } catch (error) {
       event = undefined
-      console.error("[v0] Stripe webhook signature failed:", error instanceof Error ? error.message : "invalid")
+      signatureError = error instanceof Error ? error.message : "invalid"
     }
   }
   if (!event) {
+    console.error("[v0] Stripe webhook signature failed:", signatureError)
     return NextResponse.json({ ok: false }, { status: 400 })
   }
 
