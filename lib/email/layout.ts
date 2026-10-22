@@ -50,6 +50,8 @@ export function renderEmail({ preheader, body }: { preheader: string; body: stri
               ${companyStreetLine}<br>
               <a href="tel:${COMPANY.phoneTel}" style="color:#d4d4d4;text-decoration:none;">${COMPANY.phoneDisplay}</a>
               ·
+              <a href="${COMPANY.whatsappUrl}" style="color:#d4d4d4;text-decoration:none;">WhatsApp ${COMPANY.whatsappDisplay}</a>
+              ·
               <a href="mailto:${COMPANY.email}" style="color:#d4d4d4;text-decoration:none;">${COMPANY.email}</a>
             </td>
           </tr>

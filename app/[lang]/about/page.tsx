@@ -181,6 +181,11 @@ export default async function AboutPage({ params }: { params: Promise<{ lang: st
           <br />
           {t.phoneLabel}: <a href={`tel:${COMPANY.phoneTel}`} className="underline underline-offset-2 hover:text-foreground">{COMPANY.phoneDisplay}</a>
           <br />
+          WhatsApp:{" "}
+          <a href={COMPANY.whatsappUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
+            {COMPANY.whatsappDisplay}
+          </a>
+          <br />
           {t.hoursLabel}: Monday–Friday, 9:00–18:00 CET
         </p>
         <p>{t.h4Dispatch}</p>
