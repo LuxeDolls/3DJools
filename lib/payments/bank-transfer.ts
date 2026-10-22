@@ -12,8 +12,8 @@ export function isBankTransferCheckoutEnabled(email?: string | null) {
 // SEPA receiving account (Finom), shown at checkout and on order confirmation for the
 // "sepa" / bank_transfer payment method.
 export const BANK_TRANSFER_ACCOUNT = {
-  accountName: "VORTIK L",
-  iban: "NL42 FNOM 0839 7083 05",
+  accountName: "BWB Group",
+  iban: "NL89 FNOM 0816 2512 10",
   bic: "FNOMNL22XXX",
   bankAddress: "Finom Payments BV, Jachthavenweg 109H, 1081 KM Amsterdam, Netherlands",
 } as const
