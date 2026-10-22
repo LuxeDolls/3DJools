@@ -177,8 +177,8 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
       <div className="lg:grid lg:grid-cols-[16rem_1fr] lg:gap-8">
         {/* Desktop sidebar */}
       <aside className="hidden lg:block">
-        <div className="sticky top-40">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="sticky top-40 flex max-h-[calc(100dvh-11rem)] flex-col">
+          <div className="mb-4 flex shrink-0 items-center justify-between">
             <h2 className="font-heading text-sm font-semibold uppercase tracking-wide text-foreground">
               {dict.common.filters}
             </h2>
@@ -188,7 +188,9 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
               </button>
             )}
           </div>
-          {filterPanel}
+          <div className="min-h-0 overflow-y-auto overscroll-contain pb-4 pr-1 [scrollbar-width:thin]">
+            {filterPanel}
+          </div>
         </div>
       </aside>
 
