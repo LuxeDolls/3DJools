@@ -11,6 +11,7 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Logo } from "./logo"
+import { WhatsAppMark } from "@/components/contact/whatsapp-mark"
 import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 
 export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
@@ -90,6 +91,15 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           >
             <Phone className="size-4 text-primary" aria-hidden="true" />
             {COMPANY.phoneDisplay}
+          </a>
+          <a
+            href={COMPANY.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
+          >
+            <WhatsAppMark className="size-4" />
+            WhatsApp {COMPANY.whatsappDisplay}
           </a>
           <div className="mt-5 flex items-start gap-2 text-sm text-muted-foreground">
             <Clock className="mt-0.5 size-4 shrink-0 text-primary" />

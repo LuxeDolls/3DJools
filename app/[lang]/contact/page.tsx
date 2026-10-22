@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Mail, Phone, Clock, MapPin } from "lucide-react"
+import { WhatsAppMark } from "@/components/contact/whatsapp-mark"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -24,6 +25,13 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   const details = [
     { icon: Mail, label: dict.contact.email_label, value: COMPANY.email, href: `mailto:${COMPANY.email}` },
     { icon: Phone, label: dict.contact.phone_label, value: COMPANY.phoneDisplay, href: `tel:${COMPANY.phoneTel}` },
+    {
+      icon: WhatsAppMark,
+      label: "WhatsApp",
+      value: COMPANY.whatsappDisplay,
+      href: COMPANY.whatsappUrl,
+      external: true,
+    },
     { icon: Clock, label: dict.contact.hours_label, value: dict.contact.hours },
     {
       icon: MapPin,
@@ -66,6 +74,7 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
                   {"href" in d ? (
                     <a
                       href={d.href}
+                      {...("external" in d && d.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
                       className="text-sm font-medium text-foreground underline underline-offset-2 hover:text-primary"
                     >
                       {d.value}

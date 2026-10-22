@@ -4,6 +4,8 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Breadcrumb } from "@/components/breadcrumb"
+import { WhatsAppMark } from "@/components/contact/whatsapp-mark"
+import { COMPANY } from "@/lib/company"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -33,6 +35,21 @@ export default async function SupportPage({ params }: { params: Promise<{ lang: 
       <p className="mt-2 text-pretty text-muted-foreground">{dict.contact.subtitle}</p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
+        <a
+          href={COMPANY.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex items-center gap-3 rounded-lg border border-border bg-card p-5 transition-all hover:border-primary/40 hover:shadow-md"
+        >
+          <span className="flex size-10 items-center justify-center rounded-md bg-primary/10">
+            <WhatsAppMark className="size-5" />
+          </span>
+          <span className="min-w-0 flex-1">
+            <span className="block font-medium text-foreground group-hover:text-primary">WhatsApp</span>
+            <span className="block text-sm text-muted-foreground">{COMPANY.whatsappDisplay}</span>
+          </span>
+          <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
+        </a>
         {links.map((link) => (
           <Link
             key={link.href}
