@@ -20,3 +20,6 @@ node_modules
 # Internal order reports contain customer data and must not be committed
 /reports/
 /public/reports/
+
+# Agent memory can contain private notes and must not be committed
+/v0_memories/
