@@ -1,5 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="8" fill="#1C1917"/>
-  <path d="M8.5 7.5h8.4c4.4 0 7.6 3.2 7.6 8.5s-3.2 8.5-7.6 8.5H8.5V7.5Z" stroke="#F6F3EE" stroke-width="2.4"/>
-  <path d="M8.5 12.2h9.4M8.5 16h7.2M8.5 19.8h9.4" stroke="#D86A32" stroke-width="1.7" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .tile { fill: #140b06; }
+    .mark { stroke: #fbfaf7; }
+    .bars { stroke: #d04400; }
+    @media (prefers-color-scheme: dark) {
+      .tile { fill: #fbf8f4; }
+      .mark { stroke: #0a0705; }
+      .bars { stroke: #fb7b28; }
+    }
+  </style>
+  <rect class="tile" width="32" height="32" rx="6.4" />
+  <g transform="translate(4 4) scale(0.75)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path class="mark" d="M7 6.5h9.2c4.8 0 8.3 3.4 8.3 9.5S21 25.5 16.2 25.5H7V6.5Z" stroke-width="2.6" />
+    <path class="bars" d="M7 11.6h10.2M7 16h7.6M7 20.4h10.2" stroke-width="1.8" />
+  </g>
 </svg>
