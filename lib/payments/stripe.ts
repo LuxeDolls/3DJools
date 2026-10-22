@@ -56,12 +56,10 @@ export async function createStripeCheckout(input: {
       automatic_tax: { enabled: false },
       allow_promotion_codes: false,
       submit_type: "auto",
+      tax_id_collection: { enabled: true, required: "never" },
       name_collection: {
         individual: { enabled: true, optional: true },
-        business: { enabled: true, optional: true },
       },
-      saved_payment_method_options: { payment_method_save: "enabled" },
-      customer_creation: "always",
       integration_identifier: "hosted_web_0001",
       origin_context: "web",
       customer_email: input.email,
