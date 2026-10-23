@@ -7,19 +7,19 @@ import { SectionHeading } from "@/components/section-heading"
 
 export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const tiles = [
-    { key: dict.categories.printers, href: "/catalog/printers", image: "/brand/tile-printers.png" },
-    { key: dict.categories.resins, href: "/catalog/resins", image: "/brand/tile-resins.png" },
-    { key: dict.categories.filaments, href: "/catalog/filaments", image: "/brand/tile-filaments.png" },
-    { key: dict.categories.accessories, href: "/catalog/accessories", image: "/brand/tile-accessories.png" },
+    { key: dict.categories.printers, href: "/catalog/printers", image: "/brand/tile-printers.png?v=2" },
+    { key: dict.categories.resins, href: "/catalog/resins", image: "/brand/tile-resins.png?v=2" },
+    { key: dict.categories.filaments, href: "/catalog/filaments", image: "/brand/tile-filaments.png?v=2" },
+    { key: dict.categories.accessories, href: "/catalog/accessories", image: "/brand/tile-accessories.png?v=2" },
     {
       key: dict.categories.laserEngravers,
       href: "/catalog/laser-engravers",
-      image: "/brand/tile-laser.png",
+      image: "/brand/tile-laser.png?v=2",
     },
     {
       key: dict.categories.scanners,
       href: "/catalog/scanners",
-      image: "/brand/tile-scanners.png",
+      image: "/brand/tile-scanners.png?v=2",
     },
   ]
 
