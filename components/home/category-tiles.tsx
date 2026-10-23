@@ -8,7 +8,7 @@ import { SectionHeading } from "@/components/section-heading"
 export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const tiles = [
     { key: dict.categories.printers, href: "/catalog/printers", image: "/brand/tile-printers.jpg?v=4" },
-    { key: dict.categories.resins, href: "/catalog/resins", image: "/brand/tile-resins.jpg?v=7" },
+    { key: dict.categories.resins, href: "/catalog/resins", image: "/brand/tile-resins.jpg?v=8" },
     { key: dict.categories.filaments, href: "/catalog/filaments", image: "/brand/tile-filaments.jpg?v=4" },
     { key: dict.categories.accessories, href: "/catalog/accessories", image: "/brand/tile-accessories.jpg?v=7" },
     {
@@ -19,7 +19,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
     {
       key: dict.categories.scanners,
       href: "/catalog/scanners",
-      image: "/brand/tile-scanners.jpg?v=7",
+      image: "/brand/tile-scanners.jpg?v=8",
     },
   ]
 
