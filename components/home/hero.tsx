@@ -50,7 +50,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
         <div className="relative">
           <div className="relative aspect-square overflow-hidden rounded-lg border border-border bg-secondary/40">
             <Image
-              src="/brand/hero-printer.png"
+              src="/brand/hero-printer.png?v=3"
               alt={dict.home.featuredPrinters}
               fill
               priority
