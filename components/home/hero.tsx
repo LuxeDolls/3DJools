@@ -5,11 +5,10 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Button } from "@/components/ui/button"
-import { getProductsByBrand } from "@/lib/catalog"
+import { getAllBrands } from "@/lib/catalog"
 
 export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
-  const bambuProducts = await getProductsByBrand("bambu-lab")
-  const bambuModelCount = bambuProducts.filter((p) => p.category === "printers").length
+  const brands = await getAllBrands()
   return (
     <section className="relative overflow-hidden border-b border-border bg-card">
       <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 lg:grid-cols-2 lg:gap-6 lg:py-20">
@@ -50,7 +49,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
         <div className="relative">
           <div className="relative aspect-square overflow-hidden rounded-lg border border-border bg-secondary/40">
             <Image
-              src="/brand/hero-printer.png"
+              src="/brand/hero-printer.png?v=3"
               alt={dict.home.featuredPrinters}
               fill
               priority
@@ -59,7 +58,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
             />
           </div>
           <div className="absolute -bottom-4 -left-4 hidden rounded-lg border border-border bg-background p-4 shadow-md sm:block">
-            <p className="font-heading text-2xl font-bold text-primary">{bambuModelCount}</p>
+            <p className="font-heading text-2xl font-bold text-primary">{brands.length}</p>
             <p className="text-xs text-muted-foreground">{dict.home.shopByBrand}</p>
           </div>
         </div>

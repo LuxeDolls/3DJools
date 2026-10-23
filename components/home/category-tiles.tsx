@@ -7,19 +7,19 @@ import { SectionHeading } from "@/components/section-heading"
 
 export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const tiles = [
-    { key: dict.categories.printers, href: "/catalog/printers", image: "/brand/tile-printers.png" },
-    { key: dict.categories.resins, href: "/catalog/resins", image: "/brand/tile-resins.png" },
-    { key: dict.categories.filaments, href: "/catalog/filaments", image: "/brand/tile-filaments.png" },
-    { key: dict.categories.accessories, href: "/catalog/accessories", image: "/brand/tile-accessories.png" },
+    { key: dict.categories.printers, href: "/catalog/printers", image: "/brand/tile-printers.jpg?v=4" },
+    { key: dict.categories.resins, href: "/catalog/resins", image: "/brand/tile-resins.jpg?v=8" },
+    { key: dict.categories.filaments, href: "/catalog/filaments", image: "/brand/tile-filaments.jpg?v=4" },
+    { key: dict.categories.accessories, href: "/catalog/accessories", image: "/brand/tile-accessories.jpg?v=7" },
     {
       key: dict.categories.laserEngravers,
       href: "/catalog/laser-engravers",
-      image: "/brand/tile-laser.png",
+      image: "/brand/tile-laser.jpg?v=5",
     },
     {
       key: dict.categories.scanners,
       href: "/catalog/scanners",
-      image: "/brand/tile-scanners.png",
+      image: "/brand/tile-scanners.jpg?v=8",
     },
   ]
 
@@ -33,13 +33,13 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
             href={localizedPath(locale, tile.href)}
             className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/60"
           >
-            <div className="relative aspect-square overflow-hidden bg-secondary/40">
+            <div className="relative aspect-square overflow-hidden bg-white">
               <Image
                 src={tile.image || "/placeholder.svg"}
                 alt={tile.key}
                 fill
                 sizes="(max-width: 1024px) 50vw, 25vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                className="object-contain"
               />
             </div>
             <h3 className="border-t border-border px-4 py-3 font-heading text-base font-bold text-balance text-card-foreground md:text-lg">
