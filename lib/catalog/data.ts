@@ -405,7 +405,7 @@ export const products: Product[] = [
   {
     id: "p-prusa-mk4s",
     slug: "prusa-mk4s",
-    name: "Prusa MK4S",
+    name: "Prusa MK4S Kit",
     brandSlug: "prusa",
     category: "printers",
     technology: "fdm",
@@ -415,9 +415,9 @@ export const products: Product[] = [
     condition: "new",
     mpn: "MK4S",
     gtin: "8594213040011",
-    shortDescription: "EU-made open-source workhorse with a new high-flow nozzle system.",
+    shortDescription: "EU-made open-source kit with a new high-flow nozzle system.",
     description:
-      "The MK4S is Prusa's refined flagship bed-slinger, engineered and manufactured in Prague. The upgraded Nextruder combines a load cell for tap-free first-layer calibration with a built-in filament sensor that detects clogs, tangles and runouts mid-print. A colour LCD touchscreen, input-shaping accelerometer and rock-solid reliability make it a long-term investment for serious makers running everything from PLA to nylon and polycarbonate.",
+      "The MK4S kit is Prusa's refined flagship bed-slinger, engineered and manufactured in Prague. The upgraded Nextruder combines a load cell for tap-free first-layer calibration with a built-in filament sensor that detects clogs, tangles and runouts mid-print. A colour LCD touchscreen, input-shaping accelerometer and rock-solid reliability make it a long-term investment for serious makers running everything from PLA to nylon and polycarbonate.",
     highlights: [
       "Made in EU",
       "Load-cell first layer",
@@ -454,7 +454,7 @@ export const products: Product[] = [
   {
     id: "p-prusa-core-one",
     slug: "prusa-core-one",
-    name: "Prusa CORE One",
+    name: "Prusa CORE One+",
     brandSlug: "prusa",
     category: "printers",
     technology: "fdm",
@@ -464,9 +464,9 @@ export const products: Product[] = [
     condition: "new",
     mpn: "CORE-ONE",
     gtin: "8594213040028",
-    shortDescription: "Prusa's fully enclosed CoreXY, made in the EU for engineering materials.",
+    shortDescription: "Prusa's fully enclosed CORE One+, made in the EU for engineering materials.",
     description:
-      "The CORE One is Prusa's first native enclosed CoreXY — an actively heated chamber, EU manufacturing and the open ecosystem Prusa is known for. The Nextruder's load-cell levelling and integrated filament sensor keep long unattended jobs reliable, while HEPA and activated-carbon filtration clear fumes and particulates when printing ABS, ASA, PC and other demanding functional parts.",
+      "The CORE One+ is Prusa's first native enclosed CoreXY — an actively heated chamber, EU manufacturing and the open ecosystem Prusa is known for. The Nextruder's load-cell levelling and integrated filament sensor keep long unattended jobs reliable, while HEPA and activated-carbon filtration clear fumes and particulates when printing ABS, ASA, PC and other demanding functional parts.",
     highlights: [
       "Enclosed CoreXY",
       "Active chamber heating",
