@@ -27,12 +27,12 @@ const COPY: Record<Locale, ReturnsCopy> = {
     cancelHeading: "Order cancellation",
     cancel:
       "You can cancel an order free of charge within 2 hours of placing it, as long as it has not yet been dispatched, by contacting us with your order reference. Once an order has shipped, it can no longer be cancelled and instead falls under our right-of-withdrawal and returns process below.",
-    returnPolicyHeading: "14-day return policy",
+    returnPolicyHeading: "30-day return policy",
     returnPolicy:
-      "As a consumer in the EU you have a statutory right to withdraw from your purchase within 14 days of receiving your goods, without giving any reason, in line with EU consumer protection law. We accept returns for both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. To exercise this right, contact us with your order reference and we'll guide you through the return.",
+      "As a consumer in the EU you have a statutory right to withdraw from your purchase within 14 days of receiving your goods, without giving any reason, in line with EU consumer protection law. We voluntarily extend this window: you can return items within 30 days of receiving your goods. We accept returns for both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. To exercise this right, contact us with your order reference and we'll guide you through the return.",
     howToHeading: "How to return an item",
     howTo:
-      "Items must be returned in their original condition and packaging to: {legalName} (DnD3D returns), {street}, {postalCode} {city}, Netherlands. Once we receive and inspect the return, we'll issue a refund to your original payment method within 14 days. For instalment and bank-transfer orders, refunds are made to the account used for payment.",
+      "Items must be returned in their original condition and packaging to: {legalName} (DnD3D returns), {street}, {postalCode} {city}, Netherlands. Once we receive and inspect the return, we'll issue a refund to your original payment method within 7 working days. For instalment and bank-transfer orders, refunds are made to the account used for payment.",
     whoPaysHeading: "Who pays for return shipping",
     whoPays:
       "Return shipping is free for accepted returns, including returns of non-defective and defective products. We provide a return label to download and print. There are no restocking fees. See \u201cDamaged or faulty on arrival\u201d below for items that arrive damaged or faulty.",
@@ -51,12 +51,12 @@ const COPY: Record<Locale, ReturnsCopy> = {
     cancelHeading: "Stornierung der Bestellung",
     cancel:
       "Sie können eine Bestellung innerhalb von 2 Stunden nach Aufgabe kostenlos stornieren, solange sie noch nicht versandt wurde, indem Sie uns mit Ihrer Bestellnummer kontaktieren. Sobald eine Bestellung versandt wurde, kann sie nicht mehr storniert werden und unterliegt stattdessen unserem unten beschriebenen Widerrufs- und Rückgabeverfahren.",
-    returnPolicyHeading: "14-tägige Rückgaberegelung",
+    returnPolicyHeading: "30-tägige Rückgaberegelung",
     returnPolicy:
-      "Als Verbraucher in der EU haben Sie gemäß dem EU-Verbraucherschutzrecht ein gesetzliches Widerrufsrecht, mit dem Sie Ihren Kauf innerhalb von 14 Tagen nach Erhalt der Ware ohne Angabe von Gründen widerrufen können. Wir akzeptieren Rückgaben sowohl für mangelfreie als auch für mangelhafte Produkte. Die Artikel müssen neu sowie im Originalzustand und in der Originalverpackung sein. Umtausch ist nicht möglich. Um dieses Recht auszuüben, kontaktieren Sie uns mit Ihrer Bestellnummer, und wir führen Sie durch die Rückgabe.",
+      "Als Verbraucher in der EU haben Sie gemäß dem EU-Verbraucherschutzrecht ein gesetzliches Widerrufsrecht, mit dem Sie Ihren Kauf innerhalb von 14 Tagen nach Erhalt der Ware ohne Angabe von Gründen widerrufen können. Wir verlängern diese Frist freiwillig: Sie können Artikel innerhalb von 30 Tagen nach Erhalt der Ware zurückgeben. Wir akzeptieren Rückgaben sowohl für mangelfreie als auch für mangelhafte Produkte. Die Artikel müssen neu sowie im Originalzustand und in der Originalverpackung sein. Umtausch ist nicht möglich. Um dieses Recht auszuüben, kontaktieren Sie uns mit Ihrer Bestellnummer, und wir führen Sie durch die Rückgabe.",
     howToHeading: "So geben Sie einen Artikel zurück",
     howTo:
-      "Artikel müssen im Originalzustand und in der Originalverpackung zurückgesendet werden an: {legalName} (DnD3D Retouren), {street}, {postalCode} {city}, Niederlande. Sobald wir die Rücksendung erhalten und geprüft haben, erstatten wir den Betrag innerhalb von 14 Tagen auf Ihre ursprüngliche Zahlungsmethode. Bei Raten- und Überweisungsbestellungen erfolgt die Erstattung auf das für die Zahlung verwendete Konto.",
+      "Artikel müssen im Originalzustand und in der Originalverpackung zurückgesendet werden an: {legalName} (DnD3D Retouren), {street}, {postalCode} {city}, Niederlande. Sobald wir die Rücksendung erhalten und geprüft haben, erstatten wir den Betrag innerhalb von 7 Werktagen auf Ihre ursprüngliche Zahlungsmethode. Bei Raten- und Überweisungsbestellungen erfolgt die Erstattung auf das für die Zahlung verwendete Konto.",
     whoPaysHeading: "Wer trägt die Rücksendekosten",
     whoPays:
       "Die Rücksendung ist für akzeptierte Rückgaben kostenlos, sowohl für mangelfreie als auch für mangelhafte Produkte. Wir stellen ein Rücksendeetikett zum Herunterladen und Ausdrucken bereit. Es fallen keine Wiedereinlagerungsgebühren an. Für bei Ankunft beschädigte oder fehlerhafte Artikel siehe \u201cBeschädigt oder fehlerhaft bei Ankunft\u201d unten.",
@@ -75,12 +75,12 @@ const COPY: Record<Locale, ReturnsCopy> = {
     cancelHeading: "Annulation de commande",
     cancel:
       "Vous pouvez annuler une commande gratuitement dans les 2 heures suivant sa passation, tant qu'elle n'a pas encore été expédiée, en nous contactant avec votre référence de commande. Une fois la commande expédiée, elle ne peut plus être annulée et relève alors de notre procédure de rétractation et de retour décrite ci-dessous.",
-    returnPolicyHeading: "Politique de retour de 14 jours",
+    returnPolicyHeading: "Politique de retour de 30 jours",
     returnPolicy:
-      "En tant que consommateur au sein de l'UE, vous disposez d'un droit légal de rétractation vous permettant d'annuler votre achat dans les 14 jours suivant la réception de vos marchandises, sans avoir à justifier de motif, conformément au droit européen de protection des consommateurs. Nous acceptons les retours de produits non défectueux comme de produits défectueux. Les articles doivent être neufs, dans leur état et emballage d'origine. Les échanges ne sont pas acceptés. Pour exercer ce droit, contactez-nous avec votre référence de commande et nous vous guiderons dans la procédure de retour.",
+      "En tant que consommateur au sein de l'UE, vous disposez d'un droit légal de rétractation vous permettant d'annuler votre achat dans les 14 jours suivant la réception de vos marchandises, sans avoir à justifier de motif, conformément au droit européen de protection des consommateurs. Nous prolongeons volontairement ce délai : vous pouvez retourner les articles dans les 30 jours suivant la réception. Nous acceptons les retours de produits non défectueux comme de produits défectueux. Les articles doivent être neufs, dans leur état et emballage d'origine. Les échanges ne sont pas acceptés. Pour exercer ce droit, contactez-nous avec votre référence de commande et nous vous guiderons dans la procédure de retour.",
     howToHeading: "Comment retourner un article",
     howTo:
-      "Les articles doivent être retournés dans leur état et emballage d'origine à l'adresse suivante : {legalName} (retours DnD3D), {street}, {postalCode} {city}, Pays-Bas. Une fois le retour reçu et vérifié, nous procéderons au remboursement sur votre moyen de paiement d'origine dans un délai de 14 jours. Pour les commandes payées en plusieurs fois ou par virement bancaire, le remboursement est effectué sur le compte utilisé pour le paiement.",
+      "Les articles doivent être retournés dans leur état et emballage d'origine à l'adresse suivante : {legalName} (retours DnD3D), {street}, {postalCode} {city}, Pays-Bas. Une fois le retour reçu et vérifié, nous procéderons au remboursement sur votre moyen de paiement d'origine sous 7 jours ouvrés. Pour les commandes payées en plusieurs fois ou par virement bancaire, le remboursement est effectué sur le compte utilisé pour le paiement.",
     whoPaysHeading: "Qui paie les frais de retour",
     whoPays:
       "Les frais de retour sont gratuits pour les retours acceptés, qu'il s'agisse de produits non défectueux ou défectueux. Nous fournissons une étiquette de retour à télécharger et à imprimer. Aucun frais de restockage ne s'applique. Pour les articles endommagés ou défectueux à l'arrivée, voir \u201cArticle endommagé ou défectueux ���� l'arrivée\u201d ci-dessous.",
@@ -99,12 +99,12 @@ const COPY: Record<Locale, ReturnsCopy> = {
     cancelHeading: "Annullamento dell'ordine",
     cancel:
       "Puoi annullare un ordine gratuitamente entro 2 ore dalla sua effettuazione, purché non sia ancora stato spedito, contattandoci con il tuo numero d'ordine. Una volta spedito, l'ordine non può più essere annullato e rientra invece nella nostra procedura di recesso e restituzione descritta di seguito.",
-    returnPolicyHeading: "Politica di restituzione di 14 giorni",
+    returnPolicyHeading: "Politica di restituzione di 30 giorni",
     returnPolicy:
-      "In qualità di consumatore nell'UE, hai il diritto legale di recedere dal tuo acquisto entro 14 giorni dalla ricezione della merce, senza fornire alcuna motivazione, in conformità con il diritto UE a tutela dei consumatori. Accettiamo resi sia di prodotti non difettosi sia di prodotti difettosi. Gli articoli devono essere nuovi e nelle condizioni e nella confezione originali. Non accettiamo cambi. Per esercitare questo diritto, contattaci con il tuo numero d'ordine e ti guideremo nella procedura di restituzione.",
+      "In qualità di consumatore nell'UE, hai il diritto legale di recedere dal tuo acquisto entro 14 giorni dalla ricezione della merce, senza fornire alcuna motivazione, in conformità con il diritto UE a tutela dei consumatori. Estendiamo volontariamente questo termine: puoi restituire gli articoli entro 30 giorni dalla ricezione. Accettiamo resi sia di prodotti non difettosi sia di prodotti difettosi. Gli articoli devono essere nuovi e nelle condizioni e nella confezione originali. Non accettiamo cambi. Per esercitare questo diritto, contattaci con il tuo numero d'ordine e ti guideremo nella procedura di restituzione.",
     howToHeading: "Come restituire un articolo",
     howTo:
-      "Gli articoli devono essere restituiti nelle condizioni e nella confezione originali all'indirizzo: {legalName} (resi DnD3D), {street}, {postalCode} {city}, Paesi Bassi. Una volta ricevuto e ispezionato il reso, emetteremo un rimborso sul metodo di pagamento originale entro 14 giorni. Per gli ordini a rate o con bonifico bancario, il rimborso viene effettuato sul conto utilizzato per il pagamento.",
+      "Gli articoli devono essere restituiti nelle condizioni e nella confezione originali all'indirizzo: {legalName} (resi DnD3D), {street}, {postalCode} {city}, Paesi Bassi. Una volta ricevuto e ispezionato il reso, emetteremo un rimborso sul metodo di pagamento originale entro 7 giorni lavorativi. Per gli ordini a rate o con bonifico bancario, il rimborso viene effettuato sul conto utilizzato per il pagamento.",
     whoPaysHeading: "Chi paga la spedizione di ritorno",
     whoPays:
       "La spedizione di ritorno è gratuita per i resi accettati, sia per i prodotti non difettosi sia per quelli difettosi. Forniamo un'etichetta di reso da scaricare e stampare. Non sono applicate commissioni di reintegro. Per gli articoli arrivati danneggiati o difettosi, consulta \u201cDanneggiato o difettoso all'arrivo\u201d di seguito.",
@@ -123,12 +123,12 @@ const COPY: Record<Locale, ReturnsCopy> = {
     cancelHeading: "Cancelación del pedido",
     cancel:
       "Puede cancelar un pedido de forma gratuita dentro de las 2 horas posteriores a su realización, siempre que no haya sido enviado, contactándonos con su número de pedido. Una vez enviado el pedido, ya no podrá cancelarse y quedará sujeto a nuestro procedimiento de desistimiento y devoluciones descrito a continuación.",
-    returnPolicyHeading: "Política de devolución de 14 días",
+    returnPolicyHeading: "Política de devolución de 30 días",
     returnPolicy:
-      "Como consumidor en la UE, tiene el derecho legal de desistir de su compra dentro de los 14 días posteriores a la recepción de los bienes, sin necesidad de justificar el motivo, de acuerdo con la legislación europea de protección al consumidor. Aceptamos devoluciones tanto de productos no defectuosos como defectuosos. Los artículos deben ser nuevos y estar en su estado y embalaje originales. No se aceptan cambios. Para ejercer este derecho, contáctenos con su número de pedido y le guiaremos en el proceso de devolución.",
+      "Como consumidor en la UE, tiene el derecho legal de desistir de su compra dentro de los 14 días posteriores a la recepción de los bienes, sin necesidad de justificar el motivo, de acuerdo con la legislación europea de protección al consumidor. Ampliamos voluntariamente este plazo: puede devolver los artículos dentro de los 30 días posteriores a la recepción. Aceptamos devoluciones tanto de productos no defectuosos como defectuosos. Los artículos deben ser nuevos y estar en su estado y embalaje originales. No se aceptan cambios. Para ejercer este derecho, contáctenos con su número de pedido y le guiaremos en el proceso de devolución.",
     howToHeading: "Cómo devolver un artículo",
     howTo:
-      "Los artículos deben devolverse en su estado y embalaje originales a: {legalName} (devoluciones DnD3D), {street}, {postalCode} {city}, Países Bajos. Una vez recibida e inspeccionada la devolución, emitiremos un reembolso a su método de pago original dentro de 14 días. Para pedidos con pago a plazos o transferencia bancaria, el reembolso se realiza a la cuenta utilizada para el pago.",
+      "Los artículos deben devolverse en su estado y embalaje originales a: {legalName} (devoluciones DnD3D), {street}, {postalCode} {city}, Países Bajos. Una vez recibida e inspeccionada la devolución, emitiremos un reembolso a su método de pago original en un plazo de 7 días laborables. Para pedidos con pago a plazos o transferencia bancaria, el reembolso se realiza a la cuenta utilizada para el pago.",
     whoPaysHeading: "Quién paga el envío de devolución",
     whoPays:
       "El envío de devolución es gratuito para las devoluciones aceptadas, tanto de productos no defectuosos como defectuosos. Proporcionamos una etiqueta de devolución para descargar e imprimir. No se aplican gastos de reposición. Para los artículos dañados o defectuosos a la llegada, consulte \u201cDañado o defectuoso a la llegada\u201d más abajo.",
@@ -147,12 +147,12 @@ const COPY: Record<Locale, ReturnsCopy> = {
     cancelHeading: "Bestelling annuleren",
     cancel:
       "U kunt een bestelling gratis annuleren binnen 2 uur na plaatsing, zolang deze nog niet is verzonden, door contact met ons op te nemen met uw bestelnummer. Zodra een bestelling is verzonden, kan deze niet meer worden geannuleerd en valt in plaats daarvan onder onze onderstaande herroepings- en retourprocedure.",
-    returnPolicyHeading: "Retourbeleid van 14 dagen",
+    returnPolicyHeading: "Retourbeleid van 30 dagen",
     returnPolicy:
-      "Als consument in de EU heeft u het wettelijke recht om binnen 14 dagen na ontvangst van uw goederen uw aankoop te herroepen, zonder opgave van reden, in overeenstemming met het EU-consumentenrecht. Wij accepteren retouren van zowel niet-defecte als defecte producten. Artikelen moeten nieuw zijn en zich in de originele staat en verpakking bevinden. Ruilingen worden niet geaccepteerd. Om dit recht uit te oefenen, neemt u contact met ons op met uw bestelnummer en begeleiden wij u door de retourprocedure.",
+      "Als consument in de EU heeft u het wettelijke recht om binnen 14 dagen na ontvangst van uw goederen uw aankoop te herroepen, zonder opgave van reden, in overeenstemming met het EU-consumentenrecht. Wij verlengen deze termijn vrijwillig: u kunt artikelen binnen 30 dagen na ontvangst retourneren. Wij accepteren retouren van zowel niet-defecte als defecte producten. Artikelen moeten nieuw zijn en zich in de originele staat en verpakking bevinden. Ruilingen worden niet geaccepteerd. Om dit recht uit te oefenen, neemt u contact met ons op met uw bestelnummer en begeleiden wij u door de retourprocedure.",
     howToHeading: "Hoe u een artikel retourneert",
     howTo:
-      "Artikelen moeten in de originele staat en verpakking worden geretourneerd naar: {legalName} (DnD3D retouren), {street}, {postalCode} {city}, Nederland. Zodra wij de retourzending hebben ontvangen en gecontroleerd, betalen wij binnen 14 dagen terug op uw oorspronkelijke betaalmethode. Bij bestellingen met gespreide betaling of overschrijving wordt terugbetaald op de rekening die voor de betaling is gebruikt.",
+      "Artikelen moeten in de originele staat en verpakking worden geretourneerd naar: {legalName} (DnD3D retouren), {street}, {postalCode} {city}, Nederland. Zodra wij de retourzending hebben ontvangen en gecontroleerd, betalen wij binnen 7 werkdagen terug op uw oorspronkelijke betaalmethode. Bij bestellingen met gespreide betaling of overschrijving wordt terugbetaald op de rekening die voor de betaling is gebruikt.",
     whoPaysHeading: "Wie betaalt de retourverzending",
     whoPays:
       "De retourzending is gratis voor geaccepteerde retouren, zowel voor niet-defecte als defecte producten. Wij verstrekken een retourlabel dat u kunt downloaden en afdrukken. Er worden geen herbevoorradingskosten aangerekend. Voor artikelen die beschadigd of defect aankomen, zie \u201cBeschadigd of defect bij aankomst\u201d hieronder.",
