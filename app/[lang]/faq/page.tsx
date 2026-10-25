@@ -70,7 +70,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "What is your return policy?",
             answer:
-              "As a consumer in the EU you can withdraw within 14 days of receiving the goods, without giving a reason. We accept returns of both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. Once we receive and inspect the return, we refund your original payment method within 14 days.",
+              "As a consumer in the EU you have a statutory right to withdraw within 14 days of receiving the goods, without giving a reason. We voluntarily extend this to 30 days. We accept returns of both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. Once we receive and inspect the return, we refund your original payment method within 7 working days.",
           },
           {
             question: "Who pays for return shipping?",
@@ -168,7 +168,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wie lauten Ihre Rückgabebedingungen?",
             answer:
-              "Als Verbraucher in der EU können Sie den Kauf innerhalb von 14 Tagen nach Erhalt der Ware ohne Angabe von Gründen widerrufen. Wir nehmen sowohl mangelfreie als auch mangelhafte Produkte zurück. Die Artikel müssen neu sein und im ursprünglichen Zustand sowie in der Originalverpackung zurückgesendet werden. Ein Umtausch ist nicht möglich. Nach Erhalt und Prüfung erstatten wir den Betrag innerhalb von 14 Tagen auf Ihre ursprüngliche Zahlungsmethode.",
+              "Als Verbraucher in der EU haben Sie das gesetzliche Recht, den Kauf innerhalb von 14 Tagen nach Erhalt der Ware ohne Angabe von Gründen zu widerrufen. Wir verlängern diese Frist freiwillig auf 30 Tage. Wir nehmen sowohl mangelfreie als auch mangelhafte Produkte zurück. Die Artikel müssen neu sein und im ursprünglichen Zustand sowie in der Originalverpackung zurückgesendet werden. Ein Umtausch ist nicht möglich. Nach Erhalt und Prüfung erstatten wir den Betrag innerhalb von 7 Werktagen auf Ihre ursprüngliche Zahlungsmethode.",
           },
           {
             question: "Wer trägt die Kosten der Rücksendung?",
@@ -266,7 +266,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quelle est votre politique de retour ?",
             answer:
-              "En tant que consommateur dans l'UE, vous pouvez vous rétracter dans les 14 jours suivant la réception des marchandises, sans avoir à justifier de motif. Nous acceptons les retours de produits non défectueux et défectueux. Les articles doivent être neufs et renvoyés dans leur état et leur emballage d'origine. Les échanges ne sont pas acceptés. Dès réception et contrôle du retour, nous remboursons votre moyen de paiement d'origine sous 14 jours.",
+              "En tant que consommateur dans l'UE, vous disposez d'un droit légal de rétractation de 14 jours après la réception des marchandises, sans avoir à justifier de motif. Nous prolongeons volontairement ce délai à 30 jours. Nous acceptons les retours de produits non défectueux et défectueux. Les articles doivent être neufs et renvoyés dans leur état et leur emballage d'origine. Les échanges ne sont pas acceptés. Dès réception et contrôle du retour, nous remboursons votre moyen de paiement d'origine sous 7 jours ouvrés.",
           },
           {
             question: "Qui paie les frais de retour ?",
@@ -364,7 +364,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Qual è la vostra politica di reso?",
             answer:
-              "Come consumatore nell'UE puoi recedere entro 14 giorni dalla ricezione della merce, senza fornire alcuna motivazione. Accettiamo resi sia di prodotti non difettosi sia di prodotti difettosi. Gli articoli devono essere nuovi e restituiti nelle condizioni e nella confezione originali. I cambi non sono accettati. Dopo aver ricevuto e controllato il reso, rimborsiamo il metodo di pagamento originale entro 14 giorni.",
+              "Come consumatore nell'UE hai il diritto legale di recedere entro 14 giorni dalla ricezione della merce, senza fornire alcuna motivazione. Estendiamo volontariamente questo termine a 30 giorni. Accettiamo resi sia di prodotti non difettosi sia di prodotti difettosi. Gli articoli devono essere nuovi e restituiti nelle condizioni e nella confezione originali. I cambi non sono accettati. Dopo aver ricevuto e controllato il reso, rimborsiamo il metodo di pagamento originale entro 7 giorni lavorativi.",
           },
           {
             question: "Chi paga la spedizione di reso?",
@@ -462,7 +462,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿Cuál es vuestra política de devoluciones?",
             answer:
-              "Como consumidor en la UE puede desistir en los 14 días siguientes a la recepción de los bienes, sin necesidad de justificar el motivo. Aceptamos devoluciones de productos no defectuosos y defectuosos. Los artículos deben ser nuevos y devolverse en su estado y embalaje originales. No aceptamos cambios. Una vez recibida y revisada la devolución, reembolsamos su método de pago original en un plazo de 14 días.",
+              "Como consumidor en la UE tiene el derecho legal de desistir en los 14 días siguientes a la recepción de los bienes, sin necesidad de justificar el motivo. Ampliamos voluntariamente este plazo a 30 días. Aceptamos devoluciones de productos no defectuosos y defectuosos. Los artículos deben ser nuevos y devolverse en su estado y embalaje originales. No aceptamos cambios. Una vez recibida y revisada la devolución, reembolsamos su método de pago original en un plazo de 7 días laborables.",
           },
           {
             question: "¿Quién paga el envío de la devolución?",
@@ -560,7 +560,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wat is jullie retourbeleid?",
             answer:
-              "Als consument in de EU kunt u binnen 14 dagen na ontvangst van de goederen herroepen, zonder opgave van reden. We aanvaarden retouren van zowel niet-defecte als defecte producten. Artikelen moeten nieuw zijn en in de oorspronkelijke staat en verpakking worden teruggestuurd. Ruilen is niet mogelijk. Zodra we de retour hebben ontvangen en gecontroleerd, betalen we binnen 14 dagen terug op uw oorspronkelijke betaalmethode.",
+              "Als consument in de EU heeft u het wettelijke recht om binnen 14 dagen na ontvangst van de goederen te herroepen, zonder opgave van reden. Wij verlengen deze termijn vrijwillig tot 30 dagen. We aanvaarden retouren van zowel niet-defecte als defecte producten. Artikelen moeten nieuw zijn en in de oorspronkelijke staat en verpakking worden teruggestuurd. Ruilen is niet mogelijk. Zodra we de retour hebben ontvangen en gecontroleerd, betalen we binnen 7 werkdagen terug op uw oorspronkelijke betaalmethode.",
           },
           {
             question: "Wie betaalt de retourzending?",

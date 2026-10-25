@@ -1,9 +1,9 @@
 import type { Product } from "@/lib/catalog/types"
 import { ALL_SHIPPING_COUNTRIES, DELIVERY_MAX_DAYS, DELIVERY_MIN_DAYS, HANDLING_MAX_DAYS, HANDLING_MIN_DAYS } from "@/lib/shipping/rates"
 
-// Kept in sync with the returns policy page (app/[lang]/returns/page.tsx): EU
-// statutory 14-day withdrawal right, free return shipping, returns by mail.
-const RETURN_WINDOW_DAYS = 14
+// Kept in sync with the returns policy page (app/[lang]/returns/page.tsx):
+// voluntary 30-day return window, free return shipping, returns by mail.
+const RETURN_WINDOW_DAYS = 30
 const SHIPPING_COUNTRY_CODES = ALL_SHIPPING_COUNTRIES.map((country) => country.code)
 
 /**
