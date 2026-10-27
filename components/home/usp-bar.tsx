@@ -1,12 +1,18 @@
 import { Truck, Headphones, ShieldCheck, CreditCard } from "lucide-react"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
+import type { Locale } from "@/lib/i18n/config"
+import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_USP } from "@/lib/payments/stripe-availability"
 
-export function UspBar({ dict }: { dict: Dictionary }) {
+export function UspBar({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const items = [
     { icon: Truck, title: dict.home.uspShippingTitle, text: dict.home.uspShippingText },
     { icon: Headphones, title: dict.home.uspSupportTitle, text: dict.home.uspSupportText },
     { icon: ShieldCheck, title: dict.home.uspWarrantyTitle, text: dict.home.uspWarrantyText },
-    { icon: CreditCard, title: dict.home.uspPaymentTitle, text: dict.home.uspPaymentText },
+    {
+      icon: CreditCard,
+      title: dict.home.uspPaymentTitle,
+      text: STRIPE_CHECKOUT_ENABLED ? dict.home.uspPaymentText : STRIPE_OFF_USP[locale],
+    },
   ]
 
   return (

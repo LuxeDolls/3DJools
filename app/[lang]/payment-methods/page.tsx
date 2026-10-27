@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
-import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
+import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_METHODS_NOTE } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import Link from "next/link"
@@ -85,7 +85,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
       </div>
 
       <div className="mt-8 rounded-lg border border-border bg-secondary/40 p-5 text-sm leading-relaxed text-muted-foreground">
-        <p>{dict.checkout.payMethodsNote}</p>
+        <p>{STRIPE_CHECKOUT_ENABLED ? dict.checkout.payMethodsNote : STRIPE_OFF_METHODS_NOTE[locale]}</p>
       </div>
 
       <p className="mt-10 border-t border-border pt-6 text-sm text-muted-foreground">

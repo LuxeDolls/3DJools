@@ -39,6 +39,7 @@ export async function createStripeCheckout(input: {
   locale: string
   email: string
 }): Promise<{ sessionId: string; url: string }> {
+  if (!STRIPE_CHECKOUT_ENABLED) throw new Error("card_unavailable")
   if (!Number.isInteger(input.amountCents) || input.amountCents < 50) {
     throw new Error("Invalid card amount")
   }

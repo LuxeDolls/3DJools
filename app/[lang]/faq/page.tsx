@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -27,6 +28,30 @@ type FaqCopy = {
 function answerText(item: FaqItem) {
   if (!item.link) return item.answer ?? ""
   return `${item.link.before}${item.link.label}${item.link.after}`
+}
+
+const CARD_OFF_FAQ: Record<Locale, string> = {
+  en: "SEPA bank transfer and interest-free instalments. Card payment is temporarily unavailable. Details are on our ",
+  de: "SEPA-Überweisung und zinsfreie Ratenzahlung. Kartenzahlung ist vorübergehend nicht verfügbar. Einzelheiten stehen auf unserer Seite ",
+  fr: "Virement SEPA et paiement en plusieurs fois sans intérêt. Le paiement par carte est temporairement indisponible. Les détails figurent sur notre ",
+  it: "Bonifico SEPA e rate senza interessi. Il pagamento con carta è temporaneamente non disponibile. I dettagli sono sulla nostra ",
+  es: "Transferencia SEPA y plazos sin intereses. El pago con tarjeta no está disponible temporalmente. Los detalles están en nuestra ",
+  nl: "SEPA-overschrijving en renteloze termijnen. Betalen met kaart is tijdelijk niet beschikbaar. De details staan op onze ",
+}
+
+function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {
+  if (STRIPE_CHECKOUT_ENABLED) return copy
+  return {
+    ...copy,
+    groups: copy.groups.map((group) => ({
+      ...group,
+      items: group.items.map((item) =>
+        item.link?.href === "/payment-methods"
+          ? { ...item, link: { ...item.link, before: CARD_OFF_FAQ[locale] } }
+          : item,
+      ),
+    })),
+  }
 }
 
 const COPY: Record<Locale, FaqCopy> = {
@@ -626,7 +651,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const dict = await getDictionary(locale)
   return {
     title: dict.footer.faq,
-    description: COPY[locale].description,
+    description: withoutCard(locale, COPY[locale]).description,
   }
 }
 
@@ -634,7 +659,7 @@ export default async function FaqPage({ params }: { params: Promise<{ lang: stri
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
-  const copy = COPY[locale]
+  const copy = withoutCard(locale, COPY[locale])
 
   const jsonLd = {
     "@context": "https://schema.org",
