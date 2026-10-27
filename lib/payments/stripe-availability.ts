@@ -1,9 +1,8 @@
 import type { Locale } from "@/lib/i18n/config"
 
 // Live Checkout uses key_3 and STRIPE_ACCESS_TOKEN_3. Do not fall back to the old keys.
-// Temporarily off. Buyers cannot select card, and no new Stripe session can be opened.
-// Existing returns and webhooks still settle. Set this back to true to restore card checkout.
-export const STRIPE_CHECKOUT_ENABLED = false
+// Set this to false to hide card checkout and block new Stripe sessions.
+export const STRIPE_CHECKOUT_ENABLED = true
 
 export const STRIPE_OFF_USP: Record<Locale, string> = {
   en: "SEPA bank transfer or 4× instalments. Card payment is temporarily unavailable.",
