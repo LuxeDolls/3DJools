@@ -3,6 +3,7 @@ import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_METHODS_NOTE } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
+import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import Link from "next/link"
 import { CreditCard, Landmark, CalendarClock } from "lucide-react"
@@ -24,6 +25,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
+    ...(SUMUP_CHECKOUT_ENABLED
+      ? [{ icon: CreditCard, title: dict.checkout.paySumup, desc: dict.checkout.paySumupDesc }]
+      : []),
     ...(SQUARE_CHECKOUT_ENABLED
       ? [{ icon: CreditCard, title: dict.checkout.paySquare, desc: dict.checkout.paySquareDesc }]
       : []),
