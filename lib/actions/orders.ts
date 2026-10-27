@@ -18,6 +18,7 @@ import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { CRYPTO_CHECKOUT_ENABLED, isCryptoCoinId } from "@/lib/payments/crypto"
+import { toE164Phone } from "@/lib/payments/phone-country"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
@@ -115,6 +116,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     if (!input.dateOfBirth || !isAdultDateOfBirth(input.dateOfBirth)) return { ok: false, error: "dob_invalid" }
   }
   if (input.payment === "card" && !stripeConfigured()) return { ok: false, error: "card_unavailable" }
+  const cardPhone = input.payment === "card" ? toE164Phone(input.phone, input.country.trim()) : null
+  if (input.payment === "card" && !cardPhone) return { ok: false, error: "phone_required" }
   if (input.payment === "alppay" && (!ALPPAY_CHECKOUT_ENABLED || !alppayConfigured())) {
     return { ok: false, error: "alppay_unavailable" }
   }
@@ -207,7 +210,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
           : undefined,
       cardholder_name: isCardPayment(input.payment) ? noteSafeName(input.cardholderName ?? "") : undefined,
       date_of_birth: isCardPayment(input.payment) ? toIsoDate(input.dateOfBirth ?? "") ?? undefined : undefined,
-      phone: input.payment === "alppay" ? noteSafeName(input.phone ?? "") : undefined,
+      phone: input.payment === "card" ? cardPhone ?? undefined : input.payment === "alppay" ? noteSafeName(input.phone ?? "") : undefined,
       billing_state: input.payment === "alppay" ? noteSafeName(input.region ?? "") : undefined,
     }),
     items,
@@ -223,6 +226,12 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         amountCents: totalCents,
         locale,
         email: input.email.trim(),
+        phone: cardPhone ?? undefined,
+        name: `${input.firstName.trim()} ${input.lastName.trim()}`.trim(),
+        address: input.address.trim(),
+        city: input.city.trim(),
+        postalCode: input.postalCode.trim(),
+        country: input.country.trim(),
       })
       await mergeOrderNotes(order.id, { stripe_session_ids: checkout.sessionId })
       paymentUrl = checkout.url
@@ -348,6 +357,12 @@ export async function startCardPayment(orderNumber: string, locale: string): Pro
       amountCents: order.totalCents,
       locale: safeLocale,
       email: order.email,
+      phone: toE164Phone(notes.phone, order.shippingCountry ?? "") ?? undefined,
+      name: order.shippingName ?? undefined,
+      address: order.shippingAddress1 ?? undefined,
+      city: order.shippingCity ?? undefined,
+      postalCode: order.shippingPostalCode ?? undefined,
+      country: order.shippingCountry ?? undefined,
     })
     await mergeOrderNotes(order.id, {
       stripe_session_ids: appendStripeSessionId(notes.stripe_session_ids, checkout.sessionId),

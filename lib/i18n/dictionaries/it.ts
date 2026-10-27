@@ -172,6 +172,7 @@ export const it: Dictionary = {
     postalCode: "CAP",
     country: "Paese",
     phone: "Telefono",
+    phoneCountryHint: "Inserisci il numero senza prefisso. Nella pagina di pagamento, controlla il prefisso accanto al telefono. Se vedi +1, cambialo con quello del tuo paese prima di pagare.",
     shippingMethod: "Metodo di spedizione",
     paymentMethod: "Metodo di pagamento",
     placeOrder: "Effettua l'ordine",

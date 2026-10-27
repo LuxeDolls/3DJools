@@ -172,6 +172,7 @@ export const es: Dictionary = {
     postalCode: "Código postal",
     country: "País",
     phone: "Teléfono",
+    phoneCountryHint: "Escribe el número sin prefijo. En la página de pago, comprueba el prefijo junto al teléfono. Si pone +1, cámbialo por el de tu país antes de pagar.",
     shippingMethod: "Método de envío",
     paymentMethod: "Método de pago",
     placeOrder: "Realizar pedido",

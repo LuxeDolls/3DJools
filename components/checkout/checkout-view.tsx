@@ -20,6 +20,7 @@ import { getInstallmentDict } from "@/lib/i18n/installments"
 import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
 import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName } from "@/lib/payments/cardholder"
+import { callingCode, toE164Phone } from "@/lib/payments/phone-country"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_CHECKOUT_ENABLED, CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT, BANK_TRANSFER_CHECKOUT_ENABLED, isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
@@ -169,6 +170,10 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     }
     const fd = new FormData(e.currentTarget)
     const str = (k: string) => String(fd.get(k) ?? "").trim()
+    if (payment === "card" && !toE164Phone(str("phone"), country)) {
+      setOrderError(dict.checkout.payCardholderPhoneRequired)
+      return
+    }
     if (payment === "alppay" && !str("phone")) {
       setOrderError(dict.checkout.payCardholderPhoneRequired)
       return
@@ -244,9 +249,24 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 sm:col-span-2">
               <Label htmlFor="phone">{dict.checkout.phone}</Label>
-              <Input id="phone" name="phone" type="tel" autoComplete="tel" required={payment === "alppay"} />
+              <div className="flex gap-2">
+                <span className="flex h-8 shrink-0 items-center rounded-lg border border-input bg-secondary px-2.5 text-sm font-medium text-foreground">
+                  +{callingCode(country)}
+                </span>
+                <Input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  inputMode="tel"
+                  autoComplete="tel-national"
+                  required={payment === "card" || payment === "alppay"}
+                />
+              </div>
+              {payment === "card" ? (
+                <p className="text-sm leading-relaxed text-muted-foreground">{dict.checkout.phoneCountryHint}</p>
+              ) : null}
             </div>
           </div>
         </section>

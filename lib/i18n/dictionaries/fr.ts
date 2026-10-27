@@ -172,6 +172,7 @@ export const fr: Dictionary = {
     postalCode: "Code postal",
     country: "Pays",
     phone: "Téléphone",
+    phoneCountryHint: "Indiquez le numéro sans l'indicatif. Sur la page de paiement, vérifiez l'indicatif à côté du téléphone. S'il affiche +1, changez-le pour votre pays avant de payer.",
     shippingMethod: "Mode de livraison",
     paymentMethod: "Mode de paiement",
     placeOrder: "Commander",
