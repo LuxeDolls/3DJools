@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -259,6 +260,15 @@ const COPY: Record<Locale, TermsCopy> = {
   },
 }
 
+const CARD_OFF_TERMS: Record<Locale, string> = {
+  en: "All prices are in euro (EUR) and include statutory VAT where applicable. Card payment is temporarily unavailable. We accept SEPA bank transfer and interest-free instalments as described on our payment methods page.",
+  de: "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Kartenzahlung ist vorübergehend nicht verfügbar. Wir akzeptieren SEPA-Überweisung und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben.",
+  fr: "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Le paiement par carte est temporairement indisponible. Nous acceptons le virement SEPA et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement.",
+  it: "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Il pagamento con carta è temporaneamente non disponibile. Accettiamo bonifico SEPA e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento.",
+  es: "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. El pago con tarjeta no está disponible temporalmente. Aceptamos transferencia SEPA y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago.",
+  nl: "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Betalen met kaart is tijdelijk niet beschikbaar. Wij aanvaarden SEPA-overschrijving en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden.",
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
@@ -270,7 +280,11 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
-  const t = fillCompany(COPY[locale])
+  const source = COPY[locale]
+  const t = fillCompany({
+    ...source,
+    s4: STRIPE_CHECKOUT_ENABLED ? source.s4 : CARD_OFF_TERMS[locale],
+  })
 
   return (
     <ProsePage

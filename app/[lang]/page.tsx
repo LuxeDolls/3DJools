@@ -30,7 +30,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <Hero locale={locale} dict={dict} />
-      <UspBar dict={dict} />
+      <UspBar dict={dict} locale={locale} />
       <MemberPromo />
       <SaleBanner locale={locale} dict={dict} />
       <CategoryTiles locale={locale} dict={dict} />
