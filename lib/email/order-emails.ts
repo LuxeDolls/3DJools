@@ -43,6 +43,7 @@ const PAYMENT_LABELS: Record<string, string> = {
   crypto: "Cryptocurrency",
   installments: "Installments",
   square: "Card (USD)",
+  sumup: "SumUp",
 }
 
 // The member discount is persisted on the order as `member_discount_cents=NNN`
@@ -69,6 +70,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const isCrypto = order.paymentMethod === "crypto"
   const isCard = order.paymentMethod === "card" || order.paymentMethod === "alppay"
   const isSquare = order.paymentMethod === "square"
+  const isSumup = order.paymentMethod === "sumup"
   const isPaypal = order.paymentMethod === "paypal"
   // Same coin/network the customer actually selected at checkout (see lib/payments/crypto.ts),
   // persisted on the order as `crypto_coin=<id>` in the notes field.
@@ -183,6 +185,13 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     </div>`
       : ""
 
+  const sumupHtml =
+    awaitingPayment && isSumup
+      ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
+      <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> via SumUp is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.</p>
+    </div>`
+      : ""
+
   const addressHtml = addressLines.length
     ? `<div style="margin-bottom:20px">
       <p style="margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.04em;color:#888">Shipping to</p>
@@ -199,6 +208,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     ${cryptoHtml}
     ${cardHtml}
     ${squareHtml}
+    ${sumupHtml}
     ${paypalHtml}
     <table style="width:100%;border-collapse:collapse;font-size:14px;border-top:1px solid #eee;margin-bottom:8px">${itemsHtml}</table>
     <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px">${totalsHtml}</table>
@@ -382,6 +392,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
   const isCrypto = order.paymentMethod === "crypto"
   const isPaypal = order.paymentMethod === "paypal"
   const isSquare = order.paymentMethod === "square"
+  const isSumup = order.paymentMethod === "sumup"
   const cryptoCoin = getCryptoCoinOption(parseOrderNotes(order.notes).crypto_coin)
   const firstName = order.shippingName?.trim().split(/\s+/)[0] ?? ""
 
@@ -411,6 +422,9 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     isPaypal ? paypalReminderText(order.totalCents) : null,
     isSquare
       ? `Card payment of ${euros(order.totalCents)} is still open. Open your order page to pay by Visa or Mastercard. The charge is in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA. If you have already paid, wait for the status to update and do not pay twice.`
+      : null,
+    isSumup
+      ? `Card payment of ${euros(order.totalCents)} via SumUp is still open. Open your order page to complete it. If you have already paid, wait for the status to update and do not pay twice.`
       : null,
     "",
     "If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've changed your mind or run into any trouble, simply reply to this email; we're happy to help.",
@@ -443,6 +457,12 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     </div>`
     : ""
 
+  const sumupHtml = isSumup
+    ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
+      <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> via SumUp is still open. Open your order page to complete it.</p>
+    </div>`
+    : ""
+
   const paypalHtml = isPaypal
     ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0;font-size:14px;color:#7a4b00">${paypalReminderText(order.totalCents)}</p>
@@ -463,6 +483,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     ${sepaHtml}
     ${cryptoHtml}
     ${squareHtml}
+    ${sumupHtml}
     ${paypalHtml}
     <table style="width:100%;border-collapse:collapse;font-size:14px;border-top:1px solid #eee;margin-bottom:8px">${itemsHtml}</table>
     <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px">

@@ -133,7 +133,17 @@ export async function getOrderNumberBySquareOrderId(squareOrderId: string): Prom
   return row?.orderNumber ?? null
 }
 
-export async function getOrderByOrderNumber(orderNumber: string): Promise<OrderWithItems | null> {
+  export async function getOrderNumberBySumupCheckoutId(checkoutId: string): Promise<string | null> {
+  if (!/^[A-Za-z0-9-]{8,80}$/.test(checkoutId)) return null
+  const [row] = await db
+  .select({ orderNumber: orders.orderNumber })
+  .from(orders)
+  .where(like(orders.notes, `%sumup_checkout_ids=%${checkoutId}%`))
+  .limit(1)
+  return row?.orderNumber ?? null
+  }
+
+  export async function getOrderByOrderNumber(orderNumber: string): Promise<OrderWithItems | null> {
   const [order] = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1)
   if (!order) return null
   const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id))

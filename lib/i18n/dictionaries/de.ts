@@ -202,6 +202,13 @@ export const de: Dictionary = {
     paySquarePaying: "Zahlung wird verarbeitet…",
     paySquareFx:
       "Bestellsumme {eur}. Die Karte wird mit {usd} belastet, zum Kurs der Europäischen Zentralbank von {rate} am {date}. Auf dem Kontoauszug steht HIRA.",
+    paySumup: "Karte (SumUp)",
+    paySumupDesc: "Kartenzahlung über die sichere Seite von SumUp",
+    paySumupNote:
+      "Nach der Bestellung werden Sie zur sicheren Zahlungsseite von SumUp weitergeleitet. Wir sehen Ihre Kartennummer nie. Falls Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
+    paySumupUnavailable: "Kartenzahlung über SumUp ist vorübergehend nicht verfügbar.",
+    paySumupFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
+    paySumupPending: "Die Zahlung wird noch verarbeitet. Warten Sie auf die Statusänderung und zahlen Sie nicht zweimal.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Sichere Kartenzahlung",
     payAlppayUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",

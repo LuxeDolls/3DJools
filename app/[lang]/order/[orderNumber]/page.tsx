@@ -22,6 +22,7 @@ import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { ensureSquareQuote } from "@/lib/payments/square-order"
+import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
 import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -38,10 +39,10 @@ export default async function OrderConfirmationPage({
   searchParams,
 }: {
   params: Promise<{ lang: string; orderNumber: string }>
-  searchParams: Promise<{ paypal?: string; stripe?: string; alppay?: string }>
+  searchParams: Promise<{ paypal?: string; stripe?: string; alppay?: string; sumup?: string }>
 }) {
   const { lang, orderNumber } = await params
-  const { paypal, stripe, alppay } = await searchParams
+  const { paypal, stripe, alppay, sumup } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const order = await getOrderByOrderNumber(decodeURIComponent(orderNumber))
@@ -75,6 +76,7 @@ export default async function OrderConfirmationPage({
     alppay: dict.checkout.payAlppay,
     paypal: dict.checkout.payPaypal,
     square: dict.checkout.paySquare,
+    sumup: dict.checkout.paySumup,
     bank_transfer: dict.checkout.paySepa,
     crypto: dict.checkout.payCrypto,
     installments: dict.checkout.payInstallments,
@@ -336,6 +338,24 @@ export default async function OrderConfirmationPage({
             ) : (
               <p className="mt-2">{dict.checkout.paySquareUnavailable}</p>
             )}
+          </div>
+        )}
+
+        {order.paymentMethod === "sumup" && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            {SUMUP_CHECKOUT_ENABLED ? <p>{dict.checkout.paySumupNote}</p> : <p>{dict.checkout.paySumupUnavailable}</p>}
+            {sumup === "failed" || notes.sumup_last_status === "FAILED" || notes.sumup_last_status === "EXPIRED" ? (
+              <p className="mt-2 text-destructive">{dict.checkout.paySumupFailed}</p>
+            ) : null}
+            {SUMUP_CHECKOUT_ENABLED ? (
+              <CardPayButton
+                orderNumber={order.orderNumber}
+                locale={locale}
+                method="sumup"
+                label={dict.checkout.paySumup}
+                errorLabel={dict.checkout.paySumupUnavailable}
+              />
+            ) : null}
           </div>
         )}
 

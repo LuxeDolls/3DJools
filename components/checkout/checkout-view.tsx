@@ -28,8 +28,9 @@ import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
+import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
 
-type PaymentId = "card" | "alppay" | "square" | "paypal" | "sepa" | "crypto" | "installments"
+type PaymentId = "card" | "alppay" | "square" | "sumup" | "paypal" | "sepa" | "crypto" | "installments"
 
 function checkoutErrorText(checkout: {
   payCardholderRequired: string
@@ -41,6 +42,7 @@ function checkoutErrorText(checkout: {
   payAlppayHold: string
   payPaypalUnavailable: string
   paySquareUnavailable: string
+  paySumupUnavailable: string
   orderError: string
 }, code: string): string {
   if (code === "cardholder_required") return checkout.payCardholderRequired
@@ -52,6 +54,7 @@ function checkoutErrorText(checkout: {
   if (code === "alppay_unavailable" || code === "alppay_start_failed" || code === "ip_required") return checkout.payAlppayUnavailable
   if (code === "paypal_unavailable" || code === "paypal_start_failed") return checkout.payPaypalUnavailable
   if (code === "square_unavailable" || code === "square_start_failed") return checkout.paySquareUnavailable
+  if (code === "sumup_unavailable" || code === "sumup_start_failed") return checkout.paySumupUnavailable
   return checkout.orderError
 }
 
@@ -111,6 +114,9 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     ...(STRIPE_CHECKOUT_ENABLED
       ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
       : []),
+    ...(SUMUP_CHECKOUT_ENABLED
+      ? [{ id: "sumup" as const, icon: CreditCard, title: dict.checkout.paySumup, desc: dict.checkout.paySumupDesc }]
+      : []),
     ...(ALPPAY_CHECKOUT_ENABLED
       ? [{ id: "alppay" as const, icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc }]
       : []),
@@ -146,6 +152,10 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     }
     if (payment === "square" && !SQUARE_CHECKOUT_ENABLED) {
       setOrderError(dict.checkout.paySquareUnavailable)
+      return
+    }
+    if (payment === "sumup" && !SUMUP_CHECKOUT_ENABLED) {
+      setOrderError(dict.checkout.paySumupUnavailable)
       return
     }
     if (payment === "alppay" && !ALPPAY_CHECKOUT_ENABLED) {
@@ -365,6 +375,11 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
           {payment === "card" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.payCardNote}</p>
+            </div>
+          )}
+          {payment === "sumup" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{dict.checkout.paySumupNote}</p>
             </div>
           )}
           {payment === "alppay" && (

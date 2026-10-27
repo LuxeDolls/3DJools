@@ -202,6 +202,13 @@ export const nl: Dictionary = {
     paySquarePaying: "Betaling wordt verwerkt…",
     paySquareFx:
       "Besteltotaal {eur}. De kaart wordt belast met {usd} tegen de koers van de Europese Centrale Bank van {rate} op {date}. De naam op het afschrift is HIRA.",
+    paySumup: "Kaart (SumUp)",
+    paySumupDesc: "Betaal met kaart via de beveiligde pagina van SumUp",
+    paySumupNote:
+      "Na het plaatsen van de bestelling word je doorgestuurd naar de beveiligde betaalpagina van SumUp. We zien je kaartnummer nooit. Als je al hebt betaald, wacht dan op de statusupdate en betaal niet twee keer.",
+    paySumupUnavailable: "Betalen met kaart via SumUp is tijdelijk niet beschikbaar.",
+    paySumupFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
+    paySumupPending: "De betaling wordt nog verwerkt. Wacht op de statusupdate en betaal niet twee keer.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Veilige kaartbetaling",
     payAlppayUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
