@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { startAlppayPayment, startCardPayment, startSquarePayment } from "@/lib/actions/orders"
+import { startAlppayPayment, startCardPayment, startSquarePayment, startSumupPayment } from "@/lib/actions/orders"
 
 export function CardPayButton({
   orderNumber,
@@ -19,7 +19,7 @@ export function CardPayButton({
   label: string
   errorLabel: string
   holdLabel?: string
-  method?: "card" | "alppay" | "square"
+  method?: "card" | "alppay" | "square" | "sumup"
   needsPhone?: boolean
   phoneLabel?: string
 }) {
@@ -40,7 +40,9 @@ export function CardPayButton({
         ? await startAlppayPayment(orderNumber, locale, phone)
         : method === "square"
           ? await startSquarePayment(orderNumber, locale)
-          : await startCardPayment(orderNumber, locale)
+          : method === "sumup"
+            ? await startSumupPayment(orderNumber, locale)
+            : await startCardPayment(orderNumber, locale)
       if (!result.ok) {
         setError(result.error === "alppay_hold" && holdLabel ? holdLabel : errorLabel)
         setPending(false)

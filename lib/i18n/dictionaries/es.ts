@@ -202,6 +202,13 @@ export const es: Dictionary = {
     paySquarePaying: "Procesando el pago…",
     paySquareFx:
       "Total del pedido {eur}. La tarjeta se carga con {usd} al tipo del Banco Central Europeo de {rate} el {date}. El nombre en el extracto es HIRA.",
+    paySumup: "Tarjeta (SumUp)",
+    paySumupDesc: "Pago con tarjeta a través de la página segura de SumUp",
+    paySumupNote:
+      "Después de realizar el pedido, serás redirigido a la página de pago segura de SumUp. Nunca vemos el número de tu tarjeta. Si ya has pagado, espera a que se actualice el estado y no pagues dos veces.",
+    paySumupUnavailable: "El pago con tarjeta a través de SumUp no está disponible temporalmente.",
+    paySumupFailed: "El pago con tarjeta no se completó. Puedes intentarlo de nuevo.",
+    paySumupPending: "El pago aún se está procesando. Espera a que cambie el estado y no pagues dos veces.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Pago seguro con tarjeta",
     payAlppayUnavailable: "El pago con tarjeta no está disponible temporalmente",

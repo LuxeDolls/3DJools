@@ -147,7 +147,8 @@ export async function notifyOrderStatusChange(
     (order.paymentMethod === "card" ||
       order.paymentMethod === "alppay" ||
       order.paymentMethod === "paypal" ||
-      order.paymentMethod === "square")
+      order.paymentMethod === "square" ||
+      order.paymentMethod === "sumup")
   const title =
     order.paymentMethod === "paypal"
       ? "PayPal payment received"

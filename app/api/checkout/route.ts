@@ -71,7 +71,7 @@ export async function POST(request: Request) {
   if (items.length < 1) return fail(locale, "empty_cart")
 
   const payment = str("payment")
-  if (!["card", "alppay", "paypal", "square", "sepa", "installments"].includes(payment)) {
+  if (!["card", "alppay", "paypal", "square", "sumup", "sepa", "installments"].includes(payment)) {
     return fail(locale, "order_failed")
   }
 

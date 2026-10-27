@@ -25,6 +25,8 @@ import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { squareConfigured } from "@/lib/payments/square"
 import { openSquareCheckout } from "@/lib/payments/square-order"
+import { sumupConfigured } from "@/lib/payments/sumup"
+import { appendSumupCheckoutIds, openSumupCheckout } from "@/lib/payments/sumup-order"
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
 import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
@@ -38,7 +40,7 @@ import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schem
 const MAX_QTY = 20
 
 type CheckoutShipping = "standard"
-type CheckoutPayment = "card" | "alppay" | "paypal" | "square" | "sepa" | "crypto" | "installments"
+type CheckoutPayment = "card" | "alppay" | "paypal" | "square" | "sumup" | "sepa" | "crypto" | "installments"
 
 // Maps the checkout selector id onto the persisted PaymentMethod enum.
 const PAYMENT_METHOD: Record<CheckoutPayment, PaymentMethod> = {
@@ -46,6 +48,7 @@ const PAYMENT_METHOD: Record<CheckoutPayment, PaymentMethod> = {
   alppay: "alppay",
   paypal: "paypal",
   square: "square",
+  sumup: "sumup",
   sepa: "bank_transfer",
   crypto: "crypto",
   installments: "installments",
@@ -129,6 +132,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (input.payment === "alppay" && (await alppayHoldUntil(input.email))) return { ok: false, error: "alppay_hold" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
   if (input.payment === "square" && !squareConfigured()) return { ok: false, error: "square_unavailable" }
+  if (input.payment === "sumup" && !sumupConfigured()) return { ok: false, error: "sumup_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
   const items: Array<Omit<NewOrderItemRow, "id" | "orderId">> = []
@@ -182,7 +186,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     paymentMethod === "card" ||
     paymentMethod === "alppay" ||
     paymentMethod === "paypal" ||
-    paymentMethod === "square"
+    paymentMethod === "square" ||
+    paymentMethod === "sumup"
       ? "awaiting_payment"
       : "paid"
 
@@ -290,6 +295,24 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     }
   }
 
+  if (paymentMethod === "sumup") {
+    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
+    await mergeOrderNotes(order.id, { checkout_locale: locale })
+    try {
+      const checkout = await openSumupCheckout({
+        orderNumber: order.orderNumber,
+        amountCents: totalCents,
+        locale,
+      })
+      await mergeOrderNotes(order.id, { sumup_checkout_ids: checkout.checkoutId })
+      paymentUrl = checkout.url
+    } catch (err) {
+      console.error("[v0] SumUp payment could not start:", err)
+      await abandonUnpaidOrder(order.id)
+      return { ok: false, error: "sumup_start_failed" }
+    }
+  }
+
   if (paymentMethod === "paypal") {
     const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
     await mergeOrderNotes(order.id, { checkout_locale: locale })
@@ -336,6 +359,34 @@ export async function startSquarePayment(orderNumber: string, locale: string): P
   } catch (err) {
     console.error("[v0] Square payment retry failed:", err)
     return { ok: false, error: "square_start_failed" }
+  }
+}
+
+export type StartSumupPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
+
+/** Opens a new SumUp Hosted Checkout page for an order that is still awaiting payment. */
+export async function startSumupPayment(orderNumber: string, locale: string): Promise<StartSumupPaymentResult> {
+  if (!sumupConfigured()) return { ok: false, error: "sumup_unavailable" }
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order || order.paymentMethod !== "sumup") return { ok: false, error: "not_found" }
+  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
+
+  const notes = parseOrderNotes(order.notes)
+  const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
+  try {
+    const checkout = await openSumupCheckout({
+      orderNumber: order.orderNumber,
+      amountCents: order.totalCents,
+      locale: safeLocale,
+    })
+    await mergeOrderNotes(order.id, {
+      sumup_checkout_ids: appendSumupCheckoutIds(notes.sumup_checkout_ids, checkout.checkoutId),
+      checkout_locale: safeLocale,
+    })
+    return { ok: true, paymentUrl: checkout.url }
+  } catch (err) {
+    console.error("[v0] SumUp payment retry failed:", err)
+    return { ok: false, error: "sumup_start_failed" }
   }
 }
 

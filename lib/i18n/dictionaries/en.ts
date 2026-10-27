@@ -200,6 +200,13 @@ export const en = {
     paySquarePaying: "Processing payment…",
     paySquareFx:
       "Order total {eur}. The card is charged {usd} at the European Central Bank rate of {rate} on {date}. The name on your statement is HIRA.",
+    paySumup: "Card (SumUp)",
+    paySumupDesc: "Pay by card via SumUp's secure page",
+    paySumupNote:
+      "After you place the order, you are taken to SumUp's secure payment page. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
+    paySumupUnavailable: "Card payment via SumUp is temporarily unavailable.",
+    paySumupFailed: "The card payment was not completed. You can try again.",
+    paySumupPending: "The payment is still processing. Wait for the status to update and do not pay twice.",
     payAlppay: "Visa / Mastercard",
     payAlppayDesc: "Secure card payment",
     payAlppayUnavailable: "Card payment is temporarily unavailable",
