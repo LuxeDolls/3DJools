@@ -172,6 +172,7 @@ export const nl: Dictionary = {
     postalCode: "Postcode",
     country: "Land",
     phone: "Telefoon",
+    phoneCountryHint: "Vul het nummer in zonder landcode. Controleer op de betaalpagina de code naast het telefoonnummer. Staat er +1, wijzig die naar je eigen land voordat je betaalt.",
     shippingMethod: "Verzendmethode",
     paymentMethod: "Betaalmethode",
     placeOrder: "Bestelling plaatsen",

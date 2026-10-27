@@ -172,6 +172,7 @@ export const de: Dictionary = {
     postalCode: "Postleitzahl",
     country: "Land",
     phone: "Telefon",
+    phoneCountryHint: "Geben Sie die Nummer ohne Landesvorwahl ein. Prüfen Sie auf der Zahlungsseite die Vorwahl neben der Telefonnummer. Steht dort +1, ändern Sie sie vor der Zahlung in Ihr Land.",
     shippingMethod: "Versandart",
     paymentMethod: "Zahlungsart",
     placeOrder: "Bestellung aufgeben",

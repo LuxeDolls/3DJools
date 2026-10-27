@@ -170,6 +170,7 @@ export const en = {
     postalCode: "Postal code",
     country: "Country",
     phone: "Phone",
+    phoneCountryHint: "Enter the number without the country code. On the payment page, check the code beside the phone. If it shows +1, change it to your own country before you pay.",
     shippingMethod: "Shipping method",
     paymentMethod: "Payment method",
     placeOrder: "Place order",
