@@ -105,43 +105,56 @@ export async function createStripeCheckout(input: {
       console.error("[v0] Stripe customer phone prefill failed:", err)
     }
   }
-  const session = await getStripe().checkout.sessions.create(
-    {
-      ui_mode: "hosted_page",
-      mode: "payment",
-      locale: checkoutLocale(locale),
-      billing_address_collection: "auto",
-      phone_number_collection: { enabled: true },
-      automatic_tax: { enabled: false },
-      allow_promotion_codes: false,
-      submit_type: "auto",
-      tax_id_collection: { enabled: true, required: "never" },
-      name_collection: {
-        individual: { enabled: true, optional: true },
-      },
-      integration_identifier: "hosted_web_0001",
-      origin_context: "web",
-      ...(customerId ? { customer: customerId } : { customer_email: input.email }),
-      client_reference_id: input.orderNumber,
-      metadata: { order_number: input.orderNumber },
-      custom_text: {
-        submit: { message: PHONE_WARNINGS[checkoutLocale(locale)] },
-      },
-      success_url: `${origin}/api/payments/stripe/return?order=${encodeURIComponent(input.orderNumber)}&session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${orderPath}?stripe=cancelled`,
-      line_items: [
-        {
-          quantity: 1,
-          price_data: {
-            currency: "eur",
-            unit_amount: input.amountCents,
-            product_data: { name: `DnD3D ${input.orderNumber}`.slice(0, 250) },
-          },
-        },
-      ],
+  const sessionBase = {
+    ui_mode: "hosted_page" as const,
+    mode: "payment" as const,
+    locale: checkoutLocale(locale),
+    billing_address_collection: "auto" as const,
+    phone_number_collection: { enabled: true },
+    automatic_tax: { enabled: false },
+    allow_promotion_codes: false,
+    submit_type: "auto" as const,
+    tax_id_collection: { enabled: true, required: "never" as const },
+    name_collection: {
+      individual: { enabled: true, optional: true },
     },
-    { idempotencyKey: `card-${input.orderNumber}-${input.amountCents}-${Date.now()}` },
-  )
+    integration_identifier: "hosted_web_0001" as const,
+    origin_context: "web" as const,
+    client_reference_id: input.orderNumber,
+    metadata: { order_number: input.orderNumber },
+    custom_text: {
+      submit: { message: PHONE_WARNINGS[checkoutLocale(locale)] },
+    },
+    success_url: `${origin}/api/payments/stripe/return?order=${encodeURIComponent(input.orderNumber)}&session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${orderPath}?stripe=cancelled`,
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: input.amountCents,
+          product_data: { name: `DnD3D ${input.orderNumber}`.slice(0, 250) },
+        },
+      },
+    ],
+  }
+  const stamp = Date.now()
+  let session
+  try {
+    session = await getStripe().checkout.sessions.create(
+      customerId
+        ? { ...sessionBase, customer: customerId, customer_update: { name: "auto", address: "auto" } }
+        : { ...sessionBase, customer_email: input.email },
+      { idempotencyKey: `card-${input.orderNumber}-${input.amountCents}-${stamp}` },
+    )
+  } catch (err) {
+    if (!customerId) throw err
+    console.error("[v0] Stripe checkout with prefilled phone failed, opening without it:", err)
+    session = await getStripe().checkout.sessions.create(
+      { ...sessionBase, customer_email: input.email },
+      { idempotencyKey: `card-${input.orderNumber}-${input.amountCents}-email-${stamp}` },
+    )
+  }
 
   if (!session.url) throw new Error("Stripe Checkout did not return a URL")
   return { sessionId: session.id, url: session.url }
