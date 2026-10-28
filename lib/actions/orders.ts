@@ -10,10 +10,11 @@ import {
   createOrder,
   getOrderByOrderNumber,
   mergeOrderNotes,
+  updateOrderPaymentMethod,
   updateOrderStatus,
 } from "@/lib/orders/queries"
 import { sendOrderConfirmationEmail } from "@/lib/email/order-emails"
-import { notifyPaymentSubmitted } from "@/lib/notifications/admin"
+import { notifyPaymentMethodChanged, notifyPaymentSubmitted } from "@/lib/notifications/admin"
 import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
@@ -510,6 +511,59 @@ export async function startPaypalPayment(orderNumber: string, locale: string): P
     console.error("[v0] PayPal payment retry failed:", err)
     return { ok: false, error: "paypal_start_failed" }
   }
+}
+
+export type SwitchPaymentMethodResult = { ok: true } | { ok: false; error: string }
+
+// Methods a customer can self-serve switch to from the order page, e.g. after a
+// card decline. Crypto and instalments are excluded: crypto is disabled and
+// instalments need a separate credit application, not a one-click switch.
+const SWITCHABLE_METHODS: Record<PaymentMethod, boolean> = {
+  card: true,
+  alppay: true,
+  paypal: true,
+  square: true,
+  sumup: true,
+  bank_transfer: true,
+  crypto: false,
+  installments: false,
+}
+
+function isMethodAvailable(method: PaymentMethod, email: string): boolean {
+  if (method === "card") return stripeConfigured()
+  if (method === "alppay") return ALPPAY_CHECKOUT_ENABLED && alppayConfigured()
+  if (method === "paypal") return paypalConfigured()
+  if (method === "square") return squareConfigured()
+  if (method === "sumup") return sumupConfigured()
+  if (method === "bank_transfer") return isBankTransferCheckoutEnabled(email)
+  return false
+}
+
+/**
+ * Lets a customer switch an unpaid order to a different payment method, e.g.
+ * after a card decline. Only allowed while the order is still unpaid, and only
+ * onto a method that is actually available right now.
+ */
+export async function switchOrderPaymentMethod(orderNumber: string, method: PaymentMethod): Promise<SwitchPaymentMethodResult> {
+  if (!SWITCHABLE_METHODS[method]) return { ok: false, error: "invalid_method" }
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order) return { ok: false, error: "not_found" }
+  if (order.status !== "awaiting_payment" && order.status !== "reviewing_payment") {
+    return { ok: false, error: "invalid_status" }
+  }
+  if (method === order.paymentMethod) return { ok: true }
+  if (!isMethodAvailable(method, order.email)) return { ok: false, error: "method_unavailable" }
+
+  const previousMethod = order.paymentMethod
+  const updated = await updateOrderPaymentMethod(order.id, method)
+  if (updated) {
+    after(() =>
+      notifyPaymentMethodChanged(updated, previousMethod).catch((error) => {
+        console.error("[v0] Payment-method-change admin notification failed:", error)
+      }),
+    )
+  }
+  return { ok: true }
 }
 
 export type TrackOrderInput = { orderNumber: string; email: string }
