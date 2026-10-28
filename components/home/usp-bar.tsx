@@ -2,8 +2,15 @@ import { Truck, Headphones, ShieldCheck, CreditCard } from "lucide-react"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import type { Locale } from "@/lib/i18n/config"
 import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_USP } from "@/lib/payments/stripe-availability"
+import { BANK_TRANSFER_CHECKOUT_ENABLED, BANK_TRANSFER_OFF_USP } from "@/lib/payments/bank-transfer"
 
 export function UspBar({ dict, locale }: { dict: Dictionary; locale: Locale }) {
+  const paymentText = !BANK_TRANSFER_CHECKOUT_ENABLED
+    ? BANK_TRANSFER_OFF_USP[locale]
+    : !STRIPE_CHECKOUT_ENABLED
+      ? STRIPE_OFF_USP[locale]
+      : dict.home.uspPaymentText
+
   const items = [
     { icon: Truck, title: dict.home.uspShippingTitle, text: dict.home.uspShippingText },
     { icon: Headphones, title: dict.home.uspSupportTitle, text: dict.home.uspSupportText },
@@ -11,7 +18,7 @@ export function UspBar({ dict, locale }: { dict: Dictionary; locale: Locale }) {
     {
       icon: CreditCard,
       title: dict.home.uspPaymentTitle,
-      text: STRIPE_CHECKOUT_ENABLED ? dict.home.uspPaymentText : STRIPE_OFF_USP[locale],
+      text: paymentText,
     },
   ]
 

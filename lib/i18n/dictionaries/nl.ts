@@ -241,6 +241,7 @@ export const nl: Dictionary = {
       "U wordt doorgestuurd naar PayPal om de betaling te bevestigen. Wij zien uw PayPal-login niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
     paySepa: "Bankoverschrijving (SEPA)",
     paySepaDesc: "Betaal via IBAN-overschrijving op onze rekening",
+    paySepaUnavailable: "Bankoverschrijving (SEPA) is tijdelijk niet beschikbaar.",
     payCrypto: "Cryptovaluta",
     payCryptoDesc: "Bitcoin, Ethereum, USDT en meer",
     payCryptoNoteTitle: "Walletadres",

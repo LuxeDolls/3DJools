@@ -4,7 +4,7 @@ import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_METHODS_NOTE } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
-import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
+import { BANK_TRANSFER_CHECKOUT_ENABLED, BANK_TRANSFER_OFF_METHODS_NOTE } from "@/lib/payments/bank-transfer"
 import Link from "next/link"
 import { CreditCard, Landmark, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
@@ -89,7 +89,13 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
       </div>
 
       <div className="mt-8 rounded-lg border border-border bg-secondary/40 p-5 text-sm leading-relaxed text-muted-foreground">
-        <p>{STRIPE_CHECKOUT_ENABLED ? dict.checkout.payMethodsNote : STRIPE_OFF_METHODS_NOTE[locale]}</p>
+        <p>
+          {!BANK_TRANSFER_CHECKOUT_ENABLED
+            ? BANK_TRANSFER_OFF_METHODS_NOTE[locale]
+            : !STRIPE_CHECKOUT_ENABLED
+              ? STRIPE_OFF_METHODS_NOTE[locale]
+              : dict.checkout.payMethodsNote}
+        </p>
       </div>
 
       <p className="mt-10 border-t border-border pt-6 text-sm text-muted-foreground">
