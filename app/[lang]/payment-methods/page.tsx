@@ -25,12 +25,6 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
-    ...(SUMUP_CHECKOUT_ENABLED
-      ? [{ icon: CreditCard, title: dict.checkout.paySumup, desc: dict.checkout.paySumupDesc }]
-      : []),
-    ...(SQUARE_CHECKOUT_ENABLED
-      ? [{ icon: CreditCard, title: dict.checkout.paySquare, desc: dict.checkout.paySquareDesc }]
-      : []),
     ...(STRIPE_CHECKOUT_ENABLED
       ? [
           { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
@@ -38,6 +32,12 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
           { icon: CreditCard, word: dict.checkout.payLink, title: dict.checkout.payLink, desc: dict.checkout.payStripeMethodDesc },
           { icon: CreditCard, word: dict.checkout.payBancontact, title: dict.checkout.payBancontact, desc: dict.checkout.payStripeMethodDesc },
         ]
+      : []),
+    ...(SQUARE_CHECKOUT_ENABLED
+      ? [{ icon: CreditCard, title: dict.checkout.paySquare, desc: dict.checkout.paySquareDesc }]
+      : []),
+    ...(SUMUP_CHECKOUT_ENABLED
+      ? [{ icon: CreditCard, title: dict.checkout.paySumup, desc: dict.checkout.paySumupDesc }]
       : []),
     ...(ALPPAY_CHECKOUT_ENABLED
       ? [{ icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc }]
