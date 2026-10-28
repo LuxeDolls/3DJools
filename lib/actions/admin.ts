@@ -13,6 +13,7 @@ import {
 import { createAdminSession, destroyAdminSession, isAdmin, verifyPassword } from "@/lib/admin-auth"
 import { updateMessageStatus } from "@/lib/contact/queries"
 import { getOrderById, updateOrderStatus, updateOrderTracking } from "@/lib/orders/queries"
+import { runOrderAutomation } from "@/lib/orders/automation"
 import {
   sendInstallmentApplicationApprovedEmail,
   sendInstallmentApplicationRejectedEmail,
@@ -369,6 +370,27 @@ export async function setOrderStatus(orderId: string, status: OrderStatus): Prom
   revalidatePath("/admin/orders")
   revalidatePath(`/admin/orders/${orderId}`)
   return { ok: true }
+}
+
+/**
+ * Manually runs the same paid→processing→shipped automation the hourly cron
+ * job runs, for testing or to catch up immediately instead of waiting for
+ * the next scheduled run.
+ */
+export async function runOrderAutomationNow(): Promise<{
+  ok: boolean
+  movedToProcessing: number
+  movedToShipped: number
+}> {
+  await assertAdmin()
+  const result = await runOrderAutomation()
+  revalidatePath("/admin/orders")
+  revalidatePath("/admin/shipments")
+  return {
+    ok: true,
+    movedToProcessing: result.movedToProcessing.length,
+    movedToShipped: result.movedToShipped.length,
+  }
 }
 
 export async function setOrderTracking(
