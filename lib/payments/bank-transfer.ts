@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/i18n/config"
 
-// Set to false to hide bank transfer (SEPA) checkout.
-export const BANK_TRANSFER_CHECKOUT_ENABLED = false
+// Set to true to show bank transfer (SEPA) checkout.
+export const BANK_TRANSFER_CHECKOUT_ENABLED = true
 
 const BANK_TRANSFER_ALLOWED_EMAILS = new Set<string>([])
 
@@ -32,8 +32,8 @@ export const BANK_TRANSFER_OFF_METHODS_NOTE: Record<Locale, string> = {
 // SEPA receiving account (Finom), shown at checkout and on order confirmation for the
 // "sepa" / bank_transfer payment method.
 export const BANK_TRANSFER_ACCOUNT = {
-  accountName: "BWB Group",
-  iban: "NL89 FNOM 0816 2512 10",
-  bic: "FNOMNL22XXX",
+  accountName: "Sia Vsm Garage",
+  iban: "NL67 FNOM 0562 8099 09",
+  bic: "FNOMNL22",
   bankAddress: "Finom Payments BV, Jachthavenweg 109H, 1081 KM Amsterdam, Netherlands",
 } as const
