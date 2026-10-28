@@ -4,7 +4,7 @@ import { Fragment, useMemo, useState } from "react"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { ChevronDown, Search, X } from "lucide-react"
-import { setOrderStatus, setOrderTracking } from "@/lib/actions/admin"
+import { blockCustomerForOrder, setOrderStatus, setOrderTracking } from "@/lib/actions/admin"
 import { Input } from "@/components/ui/input"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -106,6 +106,75 @@ function TrackingForm({ order }: { order: OrderWithItems }) {
       >
         {saving ? "Saving…" : order.trackingNumber ? "Update tracking" : "Assign tracking & notify"}
       </button>
+    </div>
+  )
+}
+
+function BlockCustomerControl({ order }: { order: OrderWithItems }) {
+  const router = useRouter()
+  const blockedNote = parseOrderNotes(order.notes).blocked_reason
+  const [open, setOpen] = useState(false)
+  const [reason, setReason] = useState("")
+  const [saving, setSaving] = useState(false)
+
+  if (blockedNote) {
+    return (
+      <div>
+        <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-destructive">Customer blocked</h3>
+        <p className="text-xs text-muted-foreground">{blockedNote}</p>
+      </div>
+    )
+  }
+
+  async function block() {
+    setSaving(true)
+    await blockCustomerForOrder(order.id, reason)
+    setSaving(false)
+    setOpen(false)
+    router.refresh()
+  }
+
+  return (
+    <div>
+      <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Fraud / abuse</h3>
+      {open ? (
+        <div className="space-y-2">
+          <input
+            type="text"
+            value={reason}
+            onChange={(e) => setReason(e.target.value)}
+            placeholder="Reason (e.g. suspicious card testing)"
+            className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-sm placeholder:text-muted-foreground/60"
+            autoFocus
+          />
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={block}
+              disabled={saving}
+              className="flex-1 rounded-md bg-destructive px-3 py-1.5 text-sm font-medium text-destructive-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
+            >
+              {saving ? "Blocking…" : "Cancel order & block"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              disabled={saving}
+              className="rounded-md border border-border px-3 py-1.5 text-sm"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="rounded-md border border-destructive/50 px-3 py-1.5 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10"
+        >
+          Block customer & cancel order
+        </button>
+      )}
     </div>
   )
 }
@@ -236,6 +305,7 @@ function OrderDetails({ order }: { order: OrderWithItems }) {
             <p className="break-words text-sm text-muted-foreground">{order.notes}</p>
           </div>
         ) : null}
+        <BlockCustomerControl order={order} />
       </div>
     </div>
   )

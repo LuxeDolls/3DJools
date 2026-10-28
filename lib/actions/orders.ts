@@ -30,6 +30,7 @@ import { appendSumupCheckoutIds, openSumupCheckout } from "@/lib/payments/sumup-
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
 import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
+import { isCustomerBlocked } from "@/lib/security/blocked-customers"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 // Prices are authoritative here, never taken from the client — the cart only
@@ -112,6 +113,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     if (!value || !value.trim()) return { ok: false, error: "missing_fields" }
   }
   if (!isValidEmail(input.email)) return { ok: false, error: "invalid_email" }
+  if (await isCustomerBlocked(input.email)) return { ok: false, error: "account_blocked" }
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
   if (isCardPayment(input.payment)) {
