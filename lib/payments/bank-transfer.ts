@@ -29,11 +29,11 @@ export const BANK_TRANSFER_OFF_METHODS_NOTE: Record<Locale, string> = {
   nl: "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen verlopen via een beveiligde betaalpagina. Apple Pay, Link en Bancontact zijn beschikbaar bij kaartbetaling. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bankoverschrijving (SEPA) is tijdelijk niet beschikbaar.",
 }
 
-// SEPA receiving account (Finom), shown at checkout and on order confirmation for the
-// "sepa" / bank_transfer payment method.
+// SEPA receiving account (ABN AMRO), shown at checkout and on order confirmation for
+// the "sepa" / bank_transfer payment method.
 export const BANK_TRANSFER_ACCOUNT = {
-  accountName: "Sia Vsm Garage",
-  iban: "NL67 FNOM 0562 8099 09",
-  bic: "FNOMNL22",
-  bankAddress: "Finom Payments BV, Jachthavenweg 109H, 1081 KM Amsterdam, Netherlands",
+  accountName: "VORTIK L",
+  iban: "NL74 ABNA 0158 6801 70",
+  bic: "ABNANL2A",
+  bankAddress: "ABN AMRO Bank N.V., Gustav Mahlerlaan 10, 1082 PP Amsterdam, Netherlands",
 } as const
