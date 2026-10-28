@@ -12,8 +12,9 @@ import {
 } from "@/lib/db/schema"
 import { createAdminSession, destroyAdminSession, isAdmin, verifyPassword } from "@/lib/admin-auth"
 import { updateMessageStatus } from "@/lib/contact/queries"
-import { getOrderById, updateOrderStatus, updateOrderTracking } from "@/lib/orders/queries"
+import { getAllOrders, getOrderById, updateOrderStatus, updateOrderTracking } from "@/lib/orders/queries"
 import { runOrderAutomation } from "@/lib/orders/automation"
+import { sendPaymentReminderEmail } from "@/lib/email/order-emails"
 import {
   sendInstallmentApplicationApprovedEmail,
   sendInstallmentApplicationRejectedEmail,
@@ -391,6 +392,49 @@ export async function runOrderAutomationNow(): Promise<{
     movedToProcessing: result.movedToProcessing.length,
     movedToShipped: result.movedToShipped.length,
   }
+}
+
+const UNPAID_STATUSES: OrderStatus[] = ["pending", "awaiting_payment", "reviewing_payment"]
+
+/**
+ * Sends the "have you completed payment?" check-in email to one order,
+ * regardless of its current status — used for a specific order the admin
+ * wants to follow up on even if it isn't in an unpaid state.
+ */
+export async function sendPaymentReminderToOrder(orderId: string): Promise<{ ok: boolean; skipped: boolean }> {
+  await assertAdmin()
+  const order = await getOrderById(orderId)
+  if (!order) throw new Error("Order not found")
+  const result = await sendPaymentReminderEmail(order)
+  return { ok: result.sent, skipped: Boolean(result.skipped) }
+}
+
+/**
+ * Sends the payment check-in email to every order still unpaid
+ * (pending / awaiting_payment / reviewing_payment), across all payment
+ * methods. Returns per-order results so the admin can see who was emailed.
+ */
+export async function sendPaymentRemindersToUnpaidOrders(): Promise<{
+  sent: { orderNumber: string; email: string }[]
+  skipped: { orderNumber: string; email: string }[]
+}> {
+  await assertAdmin()
+  const allOrders = await getAllOrders()
+  const unpaid = allOrders.filter((o) => UNPAID_STATUSES.includes(o.status) && !o.archivedAt)
+
+  const sent: { orderNumber: string; email: string }[] = []
+  const skipped: { orderNumber: string; email: string }[] = []
+
+  for (const order of unpaid) {
+    const result = await sendPaymentReminderEmail(order)
+    if (result.sent) {
+      sent.push({ orderNumber: order.orderNumber, email: order.email })
+    } else {
+      skipped.push({ orderNumber: order.orderNumber, email: order.email })
+    }
+  }
+
+  return { sent, skipped }
 }
 
 export async function setOrderTracking(
