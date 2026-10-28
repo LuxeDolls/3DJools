@@ -2,8 +2,7 @@ import type { Locale } from "@/lib/i18n/config"
 
 // Live Checkout uses key_3 and STRIPE_ACCESS_TOKEN_3. Do not fall back to the old keys.
 // Set this to false to hide card checkout and block new Stripe sessions.
-// Temporarily disabled — card payment is still available via SumUp (see sumup-availability.ts).
-export const STRIPE_CHECKOUT_ENABLED = false
+export const STRIPE_CHECKOUT_ENABLED = true
 
 export const STRIPE_OFF_USP: Record<Locale, string> = {
   en: "Card payment via SumUp, SEPA bank transfer, or 4× instalments. Apple Pay, Google Pay, Link, and Bancontact are temporarily unavailable.",

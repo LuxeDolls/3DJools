@@ -108,14 +108,14 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
+    ...(STRIPE_CHECKOUT_ENABLED
+      ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
+      : []),
     ...(SQUARE_CHECKOUT_ENABLED
       ? [{ id: "square" as const, icon: CreditCard, title: dict.checkout.paySquare, desc: dict.checkout.paySquareDesc }]
       : []),
     ...(SUMUP_CHECKOUT_ENABLED
       ? [{ id: "sumup" as const, icon: CreditCard, title: dict.checkout.paySumup, desc: dict.checkout.paySumupDesc }]
-      : []),
-    ...(STRIPE_CHECKOUT_ENABLED
-      ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
       : []),
     ...(ALPPAY_CHECKOUT_ENABLED
       ? [{ id: "alppay" as const, icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc }]
