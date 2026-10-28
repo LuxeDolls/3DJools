@@ -239,6 +239,7 @@ export const en = {
       "You will be redirected to PayPal to approve the payment. We never see your PayPal login. If you have already paid, wait for the status to update and do not pay twice.",
     paySepa: "Bank transfer (SEPA)",
     paySepaDesc: "Pay by IBAN transfer to our account",
+    paySepaUnavailable: "Bank transfer (SEPA) is temporarily unavailable.",
     payCrypto: "Cryptocurrency",
     payCryptoDesc: "Bitcoin, Ethereum, USDT and more",
     payCryptoNoteTitle: "Wallet address",

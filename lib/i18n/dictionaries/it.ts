@@ -241,6 +241,7 @@ export const it: Dictionary = {
       "Verrai reindirizzato su PayPal per approvare il pagamento. Non vediamo mai il tuo accesso PayPal. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     paySepa: "Bonifico bancario (SEPA)",
     paySepaDesc: "Paga con bonifico IBAN sul nostro conto",
+    paySepaUnavailable: "Il bonifico bancario (SEPA) è temporaneamente non disponibile.",
     payCrypto: "Criptovaluta",
     payCryptoDesc: "Bitcoin, Ethereum, USDT e altro",
     payCryptoNoteTitle: "Indirizzo del wallet",

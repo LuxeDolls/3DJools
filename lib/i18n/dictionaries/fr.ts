@@ -241,6 +241,7 @@ export const fr: Dictionary = {
       "Vous serez redirigé vers PayPal pour approuver le paiement. Nous ne voyons jamais votre identifiant PayPal. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     paySepa: "Virement bancaire (SEPA)",
     paySepaDesc: "Paiement par virement IBAN sur notre compte",
+    paySepaUnavailable: "Le virement bancaire (SEPA) est temporairement indisponible.",
     payCrypto: "Cryptomonnaie",
     payCryptoDesc: "Bitcoin, Ethereum, USDT et plus",
     payCryptoNoteTitle: "Adresse du portefeuille",

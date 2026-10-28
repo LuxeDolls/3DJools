@@ -241,6 +241,7 @@ export const de: Dictionary = {
       "Sie werden zu PayPal weitergeleitet, um die Zahlung zu bestätigen. Wir sehen Ihre PayPal-Anmeldung nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     paySepa: "Banküberweisung (SEPA)",
     paySepaDesc: "Zahlung per IBAN-Überweisung auf unser Konto",
+    paySepaUnavailable: "Banküberweisung (SEPA) ist vorübergehend nicht verfügbar.",
     payCrypto: "Kryptowährung",
     payCryptoDesc: "Bitcoin, Ethereum, USDT und mehr",
     payCryptoNoteTitle: "Wallet-Adresse",

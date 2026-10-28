@@ -241,6 +241,7 @@ export const es: Dictionary = {
       "Se le redirigirá a PayPal para aprobar el pago. Nunca vemos su acceso a PayPal. Si ya ha pagado, espere a que se actualice el estado y no pague dos veces.",
     paySepa: "Transferencia bancaria (SEPA)",
     paySepaDesc: "Paga por transferencia IBAN a nuestra cuenta",
+    paySepaUnavailable: "La transferencia bancaria (SEPA) no está disponible temporalmente.",
     payCrypto: "Criptomoneda",
     payCryptoDesc: "Bitcoin, Ethereum, USDT y más",
     payCryptoNoteTitle: "Dirección de la wallet",

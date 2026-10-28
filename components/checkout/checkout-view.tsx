@@ -69,19 +69,16 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
 
   const [payment, setPayment] = useState<PaymentId>(
-    SQUARE_CHECKOUT_ENABLED
-      ? "square"
-      : STRIPE_CHECKOUT_ENABLED
-        ? "card"
-        : ALPPAY_CHECKOUT_ENABLED
-          ? "alppay"
-          : "sepa",
+    STRIPE_CHECKOUT_ENABLED
+      ? "card"
+      : SQUARE_CHECKOUT_ENABLED
+        ? "square"
+        : SUMUP_CHECKOUT_ENABLED
+          ? "sumup"
+          : ALPPAY_CHECKOUT_ENABLED
+            ? "alppay"
+            : "card",
   )
-  useEffect(() => {
-    if (bankTransferEnabled && !BANK_TRANSFER_CHECKOUT_ENABLED) {
-      setPayment((current) => (current === "alppay" ? "sepa" : current))
-    }
-  }, [bankTransferEnabled])
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Netherlands")
   const [submitting, setSubmitting] = useState(false)
@@ -167,7 +164,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
       return
     }
     if (payment === "sepa" && !bankTransferEnabled) {
-      setOrderError(dict.checkout.orderError)
+      setOrderError(dict.checkout.paySepaUnavailable)
       return
     }
     if (isCardPayment(payment) && !splitFullName(cardholderName)) {
