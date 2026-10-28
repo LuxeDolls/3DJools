@@ -185,6 +185,29 @@ export async function notifyPaymentSubmitted(order: OrderWithItems): Promise<voi
   })
 }
 
+export async function notifyCardDeclined(order: OrderWithItems, reason: string): Promise<void> {
+  const lines = [`A card payment was declined by Stripe: ${reason}`, "", ...orderLines(order)]
+  await notifyAdmin({
+    subject: `Card declined for order ${order.orderNumber}`,
+    title: "Card payment declined",
+    text: lines.join("\n"),
+    html: linesToHtml(lines),
+  })
+}
+
+export async function notifyPaymentMethodChanged(
+  order: OrderWithItems,
+  previousMethod: string,
+): Promise<void> {
+  const lines = [`The customer switched payment method: ${previousMethod} → ${order.paymentMethod}`, "", ...orderLines(order)]
+  await notifyAdmin({
+    subject: `Order ${order.orderNumber}: payment method changed to ${order.paymentMethod}`,
+    title: "Payment method changed",
+    text: lines.join("\n"),
+    html: linesToHtml(lines),
+  })
+}
+
 export async function notifyInstallmentApplication(application: {
   applicationRef: string
   firstName: string

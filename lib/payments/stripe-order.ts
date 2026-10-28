@@ -1,5 +1,6 @@
 import { parseOrderNotes } from "@/lib/orders/notes"
 import { getOrderByOrderNumber, mergeOrderNotes, updateOrderStatus } from "@/lib/orders/queries"
+import type { OrderWithItems } from "@/lib/orders/queries"
 import { getStripe } from "@/lib/payments/stripe"
 
 const PAID_STATUSES = new Set(["paid", "processing", "shipped", "delivered", "partially_paid"])
@@ -39,4 +40,23 @@ export async function settleStripeSession(
   })
   await updateOrderStatus(order.id, "paid")
   return { ok: true, already: false, locale }
+}
+
+/**
+ * Records a Stripe PaymentIntent decline against the order (e.g. card declined,
+ * insufficient funds, expired card) so the order page can show it and admins can
+ * be notified immediately, without waiting for the customer to return from Stripe.
+ */
+export async function recordStripeDecline(
+  orderNumber: string,
+  reason: string,
+): Promise<OrderWithItems | null> {
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order || order.paymentMethod !== "card" || !PAYABLE_STATUSES.has(order.status)) return null
+
+  await mergeOrderNotes(order.id, {
+    stripe_last_status: "declined",
+    stripe_decline_reason: reason.slice(0, 300),
+  })
+  return getOrderByOrderNumber(orderNumber)
 }

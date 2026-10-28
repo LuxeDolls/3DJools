@@ -10,6 +10,7 @@ import {
   type OrderItemRow,
   type OrderRow,
   type OrderStatus,
+  type PaymentMethod,
 } from "@/lib/db/schema"
 import { notifyNewOrder, notifyOrderStatusChange } from "@/lib/notifications/admin"
 import { sendOrderShippedEmail, sendOrderStatusUpdateEmail } from "@/lib/email/order-emails"
@@ -169,6 +170,25 @@ export async function mergeOrderNotes(orderId: string, fields: Record<string, st
   if (!current) return
   const notes = buildOrderNotes({ ...parseOrderNotes(current.notes), ...fields })
   await db.update(orders).set({ notes: notes ?? null, updatedAt: new Date() }).where(eq(orders.id, orderId))
+}
+
+/**
+ * Switches an unpaid order to a different payment method, e.g. after a card decline.
+ * Clears provider-specific decline notes so a stale error from the old method does
+ * not keep showing once the customer tries the new one.
+ */
+export async function updateOrderPaymentMethod(orderId: string, method: PaymentMethod): Promise<OrderWithItems | null> {
+  await db.update(orders).set({ paymentMethod: method, updatedAt: new Date() }).where(eq(orders.id, orderId))
+  await mergeOrderNotes(orderId, {
+    stripe_last_status: undefined,
+    stripe_decline_reason: undefined,
+    aviagram_last_status: undefined,
+    aviagram_declined_reason: undefined,
+    paypal_last_status: undefined,
+    square_last_status: undefined,
+    sumup_last_status: undefined,
+  })
+  return getOrderById(orderId)
 }
 
 /** Drops an unpaid order without emailing the customer. Used when card checkout cannot start. */

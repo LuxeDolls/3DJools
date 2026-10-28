@@ -122,6 +122,9 @@ export async function createStripeCheckout(input: {
     origin_context: "web" as const,
     client_reference_id: input.orderNumber,
     metadata: { order_number: input.orderNumber },
+    // Session metadata is not copied to the PaymentIntent automatically, and the
+    // decline webhook (payment_intent.payment_failed) only has the PaymentIntent.
+    payment_intent_data: { metadata: { order_number: input.orderNumber } },
     custom_text: {
       submit: { message: PHONE_WARNINGS[checkoutLocale(locale)] },
     },

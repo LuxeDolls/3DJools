@@ -16,6 +16,7 @@ import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import { OrderPaymentInstructions } from "@/components/checkout/order-payment-instructions"
 import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
+import { ChangePaymentMethod } from "@/components/checkout/change-payment-method"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
@@ -23,6 +24,7 @@ import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { ensureSquareQuote } from "@/lib/payments/square-order"
 import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
+import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -95,6 +97,24 @@ export default async function OrderConfirmationPage({
   const awaitingOfflinePayment =
     (order.paymentMethod === "bank_transfer" || order.paymentMethod === "crypto") && status === "awaiting_payment"
   const cryptoCoin = parseOrderNotes(order.notes).crypto_coin
+
+  // Lets the customer pick a different way to pay (e.g. after a card decline)
+  // without having to place a new order. Only offered while still unpaid, and
+  // only for methods that are actually configured right now.
+  const canSwitchPayment = status === "awaiting_payment" || status === "reviewing_payment"
+  const switchOptions = canSwitchPayment
+    ? ([
+        STRIPE_CHECKOUT_ENABLED && { method: "card" as const, label: dict.checkout.payCard },
+        ALPPAY_CHECKOUT_ENABLED && { method: "alppay" as const, label: dict.checkout.payAlppay },
+        isPaypalCheckoutEnabled() && { method: "paypal" as const, label: dict.checkout.payPaypal },
+        SQUARE_CHECKOUT_ENABLED && { method: "square" as const, label: dict.checkout.paySquare },
+        SUMUP_CHECKOUT_ENABLED && { method: "sumup" as const, label: dict.checkout.paySumup },
+        isBankTransferCheckoutEnabled(order.email) && { method: "bank_transfer" as const, label: dict.checkout.paySepa },
+      ].filter(
+        (option): option is { method: PaymentMethod; label: string } =>
+          Boolean(option) && (option as { method: PaymentMethod }).method !== order.paymentMethod,
+      ))
+    : []
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -364,13 +384,14 @@ export default async function OrderConfirmationPage({
             {STRIPE_CHECKOUT_ENABLED ? <p>{dict.checkout.payCardNote}</p> : <p>{dict.checkout.payCardUnavailable}</p>}
             {stripe === "cancelled" ||
             stripe === "failed" ||
+            notes.stripe_last_status === "declined" ||
             notes.aviagram_last_status === "canceled" ||
             notes.aviagram_last_status === "cancelled" ||
             notes.aviagram_last_status === "timeout" ? (
               <p className="mt-2 text-destructive">{dict.checkout.payCardFailed}</p>
             ) : null}
-            {notes.aviagram_declined_reason ? (
-              <p className="mt-1 text-muted-foreground">{notes.aviagram_declined_reason}</p>
+            {notes.stripe_decline_reason || notes.aviagram_declined_reason ? (
+              <p className="mt-1 text-muted-foreground">{notes.stripe_decline_reason || notes.aviagram_declined_reason}</p>
             ) : null}
             {STRIPE_CHECKOUT_ENABLED ? (
               <CardPayButton
@@ -416,6 +437,16 @@ export default async function OrderConfirmationPage({
               <p className="mt-1 text-muted-foreground">{dict.orderConfirmation.reviewingPaymentText}</p>
             </div>
           </div>
+        )}
+
+        {switchOptions.length > 0 && (
+          <ChangePaymentMethod
+            orderNumber={order.orderNumber}
+            options={switchOptions}
+            title={dict.checkout.changePaymentMethodTitle}
+            hint={dict.checkout.changePaymentMethodHint}
+            errorLabel={dict.checkout.changePaymentMethodError}
+          />
         )}
       </div>
 
