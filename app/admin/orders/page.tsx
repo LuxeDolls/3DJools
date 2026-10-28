@@ -2,6 +2,7 @@ import { isAdmin } from "@/lib/admin-auth"
 import { getAllOrders } from "@/lib/orders/queries"
 import { OrdersTable } from "@/components/admin/orders-table"
 import { RunAutomationButton } from "@/components/admin/run-automation-button"
+import { SendPaymentRemindersButton } from "@/components/admin/send-payment-reminders-button"
 import { AUTO_SHIP_AFTER_DAYS } from "@/lib/orders/automation"
 
 export const dynamic = "force-dynamic"
@@ -23,7 +24,10 @@ export default async function AdminOrdersPage() {
             Automation: Paid → Processing runs hourly, Processing → Shipped after {AUTO_SHIP_AFTER_DAYS} days.
           </p>
         </div>
-        <RunAutomationButton />
+        <div className="flex flex-wrap items-center gap-3">
+          <SendPaymentRemindersButton />
+          <RunAutomationButton />
+        </div>
       </div>
       <OrdersTable orders={orders} />
     </div>
