@@ -12,9 +12,10 @@ import {
 } from "@/lib/db/schema"
 import { createAdminSession, destroyAdminSession, isAdmin, verifyPassword } from "@/lib/admin-auth"
 import { updateMessageStatus } from "@/lib/contact/queries"
-import { getAllOrders, getOrderById, updateOrderStatus, updateOrderTracking } from "@/lib/orders/queries"
+import { getAllOrders, getOrderById, mergeOrderNotes, updateOrderStatus, updateOrderTracking } from "@/lib/orders/queries"
 import { runOrderAutomation } from "@/lib/orders/automation"
 import { sendPaymentReminderEmail } from "@/lib/email/order-emails"
+import { blockCustomer, unblockCustomer } from "@/lib/security/blocked-customers"
 import {
   sendInstallmentApplicationApprovedEmail,
   sendInstallmentApplicationRejectedEmail,
@@ -392,6 +393,32 @@ export async function runOrderAutomationNow(): Promise<{
     movedToProcessing: result.movedToProcessing.length,
     movedToShipped: result.movedToShipped.length,
   }
+}
+
+/**
+ * Cancels a suspicious order and blocks the buyer's email from placing any
+ * further orders. Checkout (placeOrder) rejects new orders from a blocked
+ * email with "account_blocked" until an admin unblocks them.
+ */
+export async function blockCustomerForOrder(orderId: string, reason: string): Promise<{ ok: boolean }> {
+  await assertAdmin()
+  const order = await getOrderById(orderId)
+  if (!order) throw new Error("Order not found")
+
+  await blockCustomer(order.email, { reason, orderNumber: order.orderNumber })
+  await updateOrderStatus(orderId, "cancelled")
+  await mergeOrderNotes(orderId, { blocked_reason: reason || "Blocked by admin" })
+
+  revalidatePath("/admin/orders")
+  revalidatePath(`/admin/orders/${orderId}`)
+  return { ok: true }
+}
+
+export async function unblockCustomerEmail(email: string): Promise<{ ok: boolean }> {
+  await assertAdmin()
+  await unblockCustomer(email)
+  revalidatePath("/admin/orders")
+  return { ok: true }
 }
 
 const UNPAID_STATUSES: OrderStatus[] = ["pending", "awaiting_payment", "reviewing_payment"]
