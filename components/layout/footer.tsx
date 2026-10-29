@@ -60,6 +60,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           { icon: CreditCard, label: dict.checkout.payApplePay, word: dict.checkout.payApplePay },
           { icon: CreditCard, label: dict.checkout.payLink, word: dict.checkout.payLink },
           { icon: CreditCard, label: dict.checkout.payBancontact, word: dict.checkout.payBancontact },
+          { icon: CreditCard, label: dict.checkout.payKlarna, word: dict.checkout.payKlarna },
         ]
       : []),
     ...(ALPPAY_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.payAlppay }] : []),
