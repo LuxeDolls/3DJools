@@ -13,3 +13,9 @@ export function memberDiscountCents(subtotalCents: number): number {
 export function applyMemberDiscount(subtotalCents: number): number {
   return subtotalCents - memberDiscountCents(subtotalCents)
 }
+
+// Black Friday promo: unlike the member discount, this is baked directly into
+// every product's listed price_cents (catalog-wide), not applied as a separate
+// checkout line item. Kept here only as the documented rate so the catalog
+// migration and marketing copy agree on the number.
+export const BLACK_FRIDAY_DISCOUNT_PERCENT = 10

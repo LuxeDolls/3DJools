@@ -100,8 +100,8 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     )
   }
 
-  const shippingCents = computeShippingCents(subtotalCents, country)
-  const totalCents = subtotalCents - discountCents + shippingCents
+ const shippingCents = computeShippingCents(subtotalCents, country)
+ const totalCents = subtotalCents - discountCents + shippingCents
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [

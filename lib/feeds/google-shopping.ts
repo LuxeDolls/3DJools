@@ -7,6 +7,10 @@ import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNAT
 const BASE_URL = SITE_ORIGIN
 const STORE_NAME = "DnD3D"
 
+// The Black Friday discount is baked directly into every product's price_cents
+// (see the catalog migration), so the feed just reports that single price —
+// it already matches what every customer pays on the site.
+
 function absoluteUrl(value: string | undefined): string {
   if (!value) return ""
   if (value.startsWith("https://") || value.startsWith("http://")) return value

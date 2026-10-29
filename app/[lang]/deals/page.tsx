@@ -17,15 +17,9 @@ export default async function DealsPage({ params }: { params: Promise<{ lang: st
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
 
-  // Autumn prices are already reduced, so these categories are the current deal
-  // even though they no longer carry a crossed-out compare-at price.
-  const products = await getAllProducts(locale)
-  const autumnCategories = new Set(["printers", "scanners", "laser-engravers"])
-  const highlighted = products.filter(
-    (p) =>
-      autumnCategories.has(p.category) ||
-      (p.compareAtCents != null && p.compareAtCents > p.priceCents),
-  )
+  // The Black Friday promo code is auto-applied at checkout for every order, so
+  // every product storefront-wide qualifies for the current deal.
+  const highlighted = await getAllProducts(locale)
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-8">
