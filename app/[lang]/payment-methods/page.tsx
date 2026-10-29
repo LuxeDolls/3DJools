@@ -31,6 +31,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
           { icon: CreditCard, word: dict.checkout.payApplePay, title: dict.checkout.payApplePay, desc: dict.checkout.payStripeMethodDesc },
           { icon: CreditCard, word: dict.checkout.payLink, title: dict.checkout.payLink, desc: dict.checkout.payStripeMethodDesc },
           { icon: CreditCard, word: dict.checkout.payBancontact, title: dict.checkout.payBancontact, desc: dict.checkout.payStripeMethodDesc },
+          { icon: CreditCard, word: dict.checkout.payKlarna, title: dict.checkout.payKlarna, desc: dict.checkout.payStripeMethodDesc },
         ]
       : []),
     ...(SQUARE_CHECKOUT_ENABLED
