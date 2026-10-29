@@ -8,7 +8,7 @@ import { useCart } from "./cart-provider"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { formatPrice } from "@/lib/format"
-import { memberDiscountCents } from "@/lib/discount"
+import { blackFridayDiscountCents, memberDiscountCents } from "@/lib/discount"
 import { useSession } from "@/lib/auth-client"
 import type { Locale } from "@/lib/i18n/config"
 
@@ -19,7 +19,8 @@ export function CartPageView({ locale }: { locale: Locale }) {
   const { data: session } = useSession()
   const isMember = Boolean(session?.user)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
-  const totalCents = subtotalCents - discountCents
+  const blackFridayCents = blackFridayDiscountCents(subtotalCents)
+  const totalCents = subtotalCents - discountCents - blackFridayCents
 
   if (lines.length === 0) {
     return (
@@ -96,6 +97,12 @@ export function CartPageView({ locale }: { locale: Locale }) {
             <dt className="text-muted-foreground">{dict.common.subtotal}</dt>
             <dd className="font-medium tabular-nums text-foreground">{formatPrice(subtotalCents, locale)}</dd>
           </div>
+          {blackFridayCents > 0 && (
+            <div className="flex justify-between text-primary">
+              <dt>{dict.cart.blackFridayDiscount}</dt>
+              <dd className="font-medium tabular-nums">-{formatPrice(blackFridayCents, locale)}</dd>
+            </div>
+          )}
           {isMember && discountCents > 0 && (
             <div className="flex justify-between text-primary">
               <dt>{dict.cart.memberDiscount}</dt>

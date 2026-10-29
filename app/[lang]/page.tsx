@@ -2,7 +2,6 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { getFeaturedProducts, getBestsellers } from "@/lib/catalog"
 import { localizedPath } from "@/lib/i18n/paths"
-import { SaleBanner } from "@/components/home/sale-banner"
 import { Hero } from "@/components/home/hero"
 import { UspBar } from "@/components/home/usp-bar"
 import { CategoryTiles } from "@/components/home/category-tiles"
@@ -32,7 +31,6 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <Hero locale={locale} dict={dict} />
       <UspBar dict={dict} locale={locale} />
       <MemberPromo />
-      <SaleBanner locale={locale} dict={dict} />
       <CategoryTiles locale={locale} dict={dict} />
 
       <section className="mx-auto max-w-7xl px-4 py-12">

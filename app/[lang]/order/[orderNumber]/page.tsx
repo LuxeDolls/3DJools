@@ -71,7 +71,9 @@ export default async function OrderConfirmationPage({
   const alppayHeld = order.paymentMethod === "alppay" ? Boolean(await alppayHoldUntil(order.email)) : false
   const memberFromNotes = Number(notes.member_discount_cents || 0)
   const personalDiscountCents = Number(notes.personal_discount_cents || 0)
-  const discountGap = order.subtotalCents + order.shippingCents - order.totalCents
+  const blackFridayDiscountCents = Number(notes.black_friday_discount_cents || 0)
+  const discountGap =
+    order.subtotalCents + order.shippingCents - order.totalCents - memberFromNotes - blackFridayDiscountCents
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
   const paymentLabels: Record<PaymentMethod, string> = {
     card: dict.checkout.payCard,
@@ -178,6 +180,12 @@ export default async function OrderConfirmationPage({
             <dt className="text-muted-foreground">{dict.common.subtotal}</dt>
             <dd className="font-medium tabular-nums text-foreground">{formatPrice(order.subtotalCents, locale)}</dd>
           </div>
+          {blackFridayDiscountCents > 0 && (
+            <div className="flex justify-between text-primary">
+              <dt>{dict.cart.blackFridayDiscount}</dt>
+              <dd className="font-medium tabular-nums">-{formatPrice(blackFridayDiscountCents, locale)}</dd>
+            </div>
+          )}
           {memberDiscountCents > 0 && (
             <div className="flex justify-between text-primary">
               <dt>{dict.cart.memberDiscount}</dt>
