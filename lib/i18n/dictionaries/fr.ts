@@ -108,8 +108,7 @@ export const fr: Dictionary = {
     newsletterText: "Nouveautés, réassorts et offres réservées aux membres. Pas de spam.",
     newsletterPlaceholder: "Votre adresse e-mail",
     newsletterCta: "S'abonner",
-  saleBannerTitle: "Black Friday : 10 % de réduction sur toute votre commande",
-  saleBannerAutoApplied: "Appliqué automatiquement lors du paiement",
+  saleBannerTitle: "Black Friday : tous les prix incluent déjà 10 % de réduction",
   saleBannerEndsPrefix: "Se termine le",
   saleBannerCta: "Voir les soldes",
     scamAdviserRating: "Très probablement sûr",
@@ -159,8 +158,6 @@ export const fr: Dictionary = {
     vatIncluded: "TVA incluse le cas échéant",
     memberDiscount: "Remise membre (7%)",
     personalDiscount: "Remise personnelle (5%)",
-    blackFridayDiscount: "Code Black Friday BLACKFRIDAY10 (-10 %)",
-    blackFridayApplied: "Appliqué",
     signInToSave: "Connectez-vous pour économiser 7% sur cette commande",
   },
   checkout: {

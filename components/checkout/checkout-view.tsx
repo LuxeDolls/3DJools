@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { formatPrice } from "@/lib/format"
-import { blackFridayDiscountCents, memberDiscountCents } from "@/lib/discount"
+import { memberDiscountCents } from "@/lib/discount"
 import { useSession } from "@/lib/auth-client"
 import type { Locale } from "@/lib/i18n/config"
 import { getInstallmentDict } from "@/lib/i18n/installments"
@@ -67,7 +67,6 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const isMember = Boolean(session?.user)
   const bankTransferEnabled = isBankTransferCheckoutEnabled(session?.user?.email)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
-  const blackFridayCents = blackFridayDiscountCents(subtotalCents)
 
   const [payment, setPayment] = useState<PaymentId>(
     STRIPE_CHECKOUT_ENABLED
@@ -102,7 +101,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   }
 
  const shippingCents = computeShippingCents(subtotalCents, country)
- const totalCents = subtotalCents - discountCents - blackFridayCents + shippingCents
+ const totalCents = subtotalCents - discountCents + shippingCents
   const installmentsEligible = qualifiesForInstallments(totalCents)
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
@@ -484,17 +483,6 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
             <dt className="text-muted-foreground">{dict.common.subtotal}</dt>
             <dd className="font-medium tabular-nums text-foreground">{formatPrice(subtotalCents, locale)}</dd>
           </div>
-          {blackFridayCents > 0 && (
-            <div className="flex justify-between text-primary">
-              <dt className="flex items-center gap-1.5">
-                {dict.cart.blackFridayDiscount}
-                <span className="rounded-full bg-primary/10 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide">
-                  {dict.cart.blackFridayApplied}
-                </span>
-              </dt>
-              <dd className="font-medium tabular-nums">-{formatPrice(blackFridayCents, locale)}</dd>
-            </div>
-          )}
           {isMember && discountCents > 0 && (
             <div className="flex justify-between text-primary">
               <dt>{dict.cart.memberDiscount}</dt>

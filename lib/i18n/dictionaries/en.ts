@@ -106,8 +106,7 @@ export const en = {
     newsletterText: "New drops, restocks and members-only offers. No spam.",
     newsletterPlaceholder: "Your email address",
     newsletterCta: "Subscribe",
-  saleBannerTitle: "Black Friday: 10% off your entire order",
-  saleBannerAutoApplied: "Applied automatically at checkout",
+  saleBannerTitle: "Black Friday: every price already includes 10% off",
   saleBannerEndsPrefix: "Ends",
   saleBannerCta: "Shop the sale",
     scamAdviserRating: "Very likely safe",
@@ -157,8 +156,6 @@ export const en = {
     vatIncluded: "VAT included where applicable",
     memberDiscount: "Member discount (7%)",
     personalDiscount: "Personal discount (5%)",
-    blackFridayDiscount: "Black Friday code BLACKFRIDAY10 (-10%)",
-    blackFridayApplied: "Applied",
     signInToSave: "Sign in to save 7% on this order",
   },
   checkout: {

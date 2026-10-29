@@ -3,20 +3,13 @@ import { getAllProducts } from "@/lib/catalog"
 import type { Product } from "@/lib/catalog/types"
 import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
 import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNATIONAL_RATE_CENTS } from "@/lib/shipping/rates"
-import { BLACK_FRIDAY_DISCOUNT_RATE } from "@/lib/discount"
 
 const BASE_URL = SITE_ORIGIN
 const STORE_NAME = "DnD3D"
 
-// The Black Friday promo code is auto-applied for every customer at checkout (see
-// lib/discount.ts), so the feed must show the same discounted price Google requires
-// for "price must match the landing page" — via g:price (regular) + g:sale_price
-// (what every customer actually pays) rather than silently lowering g:price alone.
-const BLACK_FRIDAY_SALE_WINDOW = "2026-11-01T00:00:00+01:00/2026-12-01T23:59:00+01:00"
-
-function salePriceCents(priceCents: number): number {
-  return Math.round(priceCents * (1 - BLACK_FRIDAY_DISCOUNT_RATE))
-}
+// The Black Friday discount is baked directly into every product's price_cents
+// (see the catalog migration), so the feed just reports that single price —
+// it already matches what every customer pays on the site.
 
 function absoluteUrl(value: string | undefined): string {
   if (!value) return ""
@@ -278,7 +271,7 @@ export async function createGoogleShoppingFeed(locale: Locale): Promise<string> 
     const imageLink = absoluteUrl(product.images[0])
     const extraImages = product.images.slice(1, 11).map((image) => absoluteUrl(image)).filter(Boolean)
     const productUrl = `${BASE_URL}/${locale}/product/${encodeURIComponent(product.slug)}`
-    const priceBlock = `\n      <g:price>${formatPrice(product.priceCents)}</g:price>\n      <g:sale_price>${formatPrice(salePriceCents(product.priceCents))}</g:sale_price>\n      <g:sale_price_effective_date>${BLACK_FRIDAY_SALE_WINDOW}</g:sale_price_effective_date>`
+    const priceBlock = `\n      <g:price>${formatPrice(product.priceCents)}</g:price>`
     const category = googleCategory(product)
 
     return `

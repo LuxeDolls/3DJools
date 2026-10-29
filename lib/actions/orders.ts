@@ -15,7 +15,7 @@ import {
 } from "@/lib/orders/queries"
 import { sendOrderConfirmationEmail } from "@/lib/email/order-emails"
 import { notifyPaymentMethodChanged, notifyPaymentSubmitted } from "@/lib/notifications/admin"
-import { blackFridayDiscountCents, memberDiscountCents } from "@/lib/discount"
+import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { CRYPTO_CHECKOUT_ENABLED, isCryptoCoinId } from "@/lib/payments/crypto"
@@ -173,15 +173,13 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     return { ok: false, error: "order_failed" }
   }
   const discountCents = userId ? memberDiscountCents(subtotalCents) : 0
-  // Black Friday promo applies automatically to every order, member or not.
-  const blackFridayCents = blackFridayDiscountCents(subtotalCents)
 
   // Shipping is recomputed too: the Netherlands gets the domestic rate, every other
   // destination pays the international rate, and both are waived above the
   // free-shipping threshold.
   const shippingCents = computeShippingCents(subtotalCents, input.country)
 
-  const totalCents = subtotalCents - discountCents - blackFridayCents + shippingCents
+  const totalCents = subtotalCents - discountCents + shippingCents
 
   const paymentMethod = PAYMENT_METHOD[input.payment] ?? "card"
   // Card, bank transfer and crypto stay unpaid until funds are confirmed.
@@ -214,7 +212,6 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     },
     notes: buildOrderNotes({
       member_discount_cents: discountCents > 0 ? String(discountCents) : undefined,
-      black_friday_discount_cents: blackFridayCents > 0 ? String(blackFridayCents) : undefined,
       crypto_coin:
         paymentMethod === "crypto" && input.cryptoCoin && isCryptoCoinId(input.cryptoCoin)
           ? input.cryptoCoin

@@ -14,15 +14,8 @@ export function applyMemberDiscount(subtotalCents: number): number {
   return subtotalCents - memberDiscountCents(subtotalCents)
 }
 
-// Site-wide Black Friday promo. Unlike the member discount, this applies to
-// every customer (signed in or not) and is auto-applied at checkout, no code
-// entry required. The code string is still shown in the banner and at
-// checkout so the discount is visibly tied to the promotion.
-export const BLACK_FRIDAY_PROMO_CODE = "BLACKFRIDAY10"
+// Black Friday promo: unlike the member discount, this is baked directly into
+// every product's listed price_cents (catalog-wide), not applied as a separate
+// checkout line item. Kept here only as the documented rate so the catalog
+// migration and marketing copy agree on the number.
 export const BLACK_FRIDAY_DISCOUNT_PERCENT = 10
-export const BLACK_FRIDAY_DISCOUNT_RATE = BLACK_FRIDAY_DISCOUNT_PERCENT / 100
-
-export function blackFridayDiscountCents(subtotalCents: number): number {
-  if (subtotalCents <= 0) return 0
-  return Math.round(subtotalCents * BLACK_FRIDAY_DISCOUNT_RATE)
-}
