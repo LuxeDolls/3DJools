@@ -191,7 +191,7 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
             type="button"
             onClick={() => setSelectedBrands([])}
             className={cn(
-              "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors sm:px-4 sm:py-2 sm:text-sm sm:font-medium",
+              "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 sm:px-4 sm:py-2 sm:text-sm sm:font-medium",
               selectedBrands.length === 0
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-background text-foreground hover:border-primary/50",
@@ -205,7 +205,7 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
               type="button"
               onClick={() => selectBrandChip(b.slug)}
               className={cn(
-                "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors sm:px-4 sm:py-2 sm:text-sm sm:font-medium",
+                "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 sm:px-4 sm:py-2 sm:text-sm sm:font-medium",
                 selectedBrands.includes(b.slug)
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-background text-foreground hover:border-primary/50",
@@ -220,7 +220,7 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
       <div className="lg:grid lg:grid-cols-[16rem_1fr] lg:gap-8">
         {/* Desktop sidebar */}
         <aside className="hidden lg:block">
-          <div className="sticky top-40 flex max-h-[calc(100dvh-11rem)] flex-col rounded-xl border border-border bg-card p-4">
+          <div className="sticky top-40 flex max-h-[calc(100dvh-11rem)] flex-col rounded-xl border border-border bg-card p-4 shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)]">
             <div className="mb-4 flex shrink-0 items-center justify-between border-b border-border pb-3">
               <h2 className="font-heading text-sm font-semibold uppercase tracking-wide text-foreground">
                 {dict.common.filters}
@@ -239,7 +239,7 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
 
         <div>
           {/* Modernized Toolbar */}
-          <div className="mb-5 flex flex-col gap-2.5 rounded-xl border border-border bg-card p-2.5 sm:mb-6 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-3">
+          <div className="mb-5 flex flex-col gap-2.5 rounded-xl border border-border bg-card p-2.5 shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:mb-6 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-3">
             <div className="flex flex-1 items-center gap-2">
               <div className="relative min-w-0 flex-1 sm:max-w-xs">
                 <Search className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-muted-foreground" />
@@ -257,7 +257,7 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
                 type="button"
                 onClick={() => setInStockOnly((v) => !v)}
                 className={cn(
-                  "hidden h-8 shrink-0 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition-colors sm:inline-flex",
+                  "hidden h-8 shrink-0 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 sm:inline-flex",
                   inStockOnly
                     ? "border-primary bg-primary/15 text-primary"
                     : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground",

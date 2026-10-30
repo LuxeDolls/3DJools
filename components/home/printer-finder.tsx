@@ -301,7 +301,7 @@ export function PrinterFinder({
   }, [products, activeMode])
 
   return (
-    <section className="border-y border-border bg-card/60">
+    <section className="relative z-10 border-y border-border bg-card/60 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12">
         <div className="flex items-end justify-between gap-3">
           <div>
@@ -336,9 +336,9 @@ export function PrinterFinder({
                 type="button"
                 onClick={() => setActiveMode(m.id)}
                 className={cn(
-                  "flex w-56 shrink-0 flex-col items-start gap-2 rounded-xl border p-3.5 text-left transition-all sm:w-auto sm:p-4",
+                  "flex w-56 shrink-0 flex-col items-start gap-2 rounded-xl border p-3.5 text-left shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 sm:w-auto sm:p-4",
                   active
-                    ? "border-primary bg-primary/10 shadow-xs ring-1 ring-primary/40"
+                    ? "border-primary bg-primary/10 ring-1 ring-primary/40"
                     : "border-border bg-background hover:border-primary/40 hover:bg-secondary/40",
                 )}
               >

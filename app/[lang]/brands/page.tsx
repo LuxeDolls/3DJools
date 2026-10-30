@@ -39,7 +39,7 @@ export default async function BrandsPage({ params }: { params: Promise<{ lang: s
             <Link
               key={brand.slug}
               href={localizedPath(locale, `/brands/${brand.slug}`)}
-              className="group flex flex-col rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-md sm:p-6"
+              className="group flex flex-col rounded-xl border border-border bg-card p-4 shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_8px_20px_rgba(0,0,0,0.25),0_28px_60px_-12px_rgba(0,0,0,0.65)] sm:p-6"
             >
               <div className="flex items-center justify-between">
                 <span className="font-heading text-lg font-bold text-foreground group-hover:text-primary sm:text-xl">

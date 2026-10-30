@@ -43,7 +43,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
       <div
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className="group relative aspect-square min-w-0 overflow-hidden rounded-2xl border border-border bg-white shadow-xs"
+        className="group relative aspect-square min-w-0 overflow-hidden rounded-2xl border border-border bg-white shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)]"
       >
         <Image
           src={gallery[active] || "/placeholder.svg"}
@@ -56,7 +56,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
 
         {/* Counter badge */}
         {gallery.length > 1 && (
-          <span className="pointer-events-none absolute top-2.5 left-2.5 rounded-full border border-neutral-200 bg-white/95 px-2.5 py-0.5 text-[11px] font-semibold tabular-nums text-neutral-700 shadow-2xs sm:top-3 sm:left-3 sm:py-1 sm:text-xs">
+          <span className="pointer-events-none absolute top-2.5 left-2.5 rounded-full border border-neutral-200 bg-white/95 px-2.5 py-0.5 text-[11px] font-semibold tabular-nums text-neutral-700 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] sm:top-3 sm:left-3 sm:py-1 sm:text-xs">
             {active + 1} / {gallery.length}
           </span>
         )}
@@ -68,7 +68,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
               <button
                 type="button"
                 aria-label="Zoom image"
-                className="absolute top-2.5 right-2.5 flex size-8 items-center justify-center rounded-full border border-neutral-200 bg-white/95 text-neutral-700 shadow-xs transition-transform hover:scale-105 hover:text-neutral-950 sm:top-3 sm:right-3 sm:size-9"
+                className="absolute top-2.5 right-2.5 flex size-8 items-center justify-center rounded-full border border-neutral-200 bg-white/95 text-neutral-700 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 hover:text-neutral-950 sm:top-3 sm:right-3 sm:size-9"
               >
                 <ZoomIn className="size-4" />
               </button>
@@ -95,7 +95,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
               type="button"
               onClick={prev}
               aria-label="Previous image"
-              className="absolute top-1/2 left-2.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white/90 text-neutral-800 shadow-sm transition-all hover:bg-white sm:left-3 sm:size-9 sm:opacity-0 sm:group-hover:opacity-100"
+              className="absolute top-1/2 left-2.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white/90 text-neutral-800 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all hover:bg-white sm:left-3 sm:size-9 sm:opacity-0 sm:group-hover:opacity-100"
             >
               <ChevronLeft className="size-4" />
             </button>
@@ -103,7 +103,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
               type="button"
               onClick={next}
               aria-label="Next image"
-              className="absolute top-1/2 right-2.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white/90 text-neutral-800 shadow-sm transition-all hover:bg-white sm:right-3 sm:size-9 sm:opacity-0 sm:group-hover:opacity-100"
+              className="absolute top-1/2 right-2.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-full border border-neutral-200 bg-white/90 text-neutral-800 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all hover:bg-white sm:right-3 sm:size-9 sm:opacity-0 sm:group-hover:opacity-100"
             >
               <ChevronRight className="size-4" />
             </button>
@@ -119,7 +119,7 @@ export function ProductGallery({ images, alt }: { images: string[]; alt: string 
               type="button"
               onClick={() => setActive(i)}
               className={cn(
-                "relative size-15 shrink-0 overflow-hidden rounded-xl border-2 bg-white transition-all sm:size-20",
+                "relative size-15 shrink-0 overflow-hidden rounded-xl border-2 bg-white shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 sm:size-20",
                 i === active
                   ? "border-primary ring-2 ring-primary/20"
                   : "border-border opacity-80 hover:border-muted-foreground hover:opacity-100",

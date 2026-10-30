@@ -91,9 +91,9 @@ export function FeaturedShowcase({
                 setExpanded(false)
               }}
               className={cn(
-                "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all sm:gap-2 sm:px-4 sm:py-2 sm:text-sm",
+                "inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 sm:gap-2 sm:px-4 sm:py-2 sm:text-sm",
                 isActive
-                  ? "border-primary bg-primary text-primary-foreground shadow-xs"
+                  ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-card text-foreground hover:border-primary/50 hover:bg-secondary/60",
               )}
             >

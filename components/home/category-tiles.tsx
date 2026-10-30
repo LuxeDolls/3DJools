@@ -58,7 +58,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
           <Link
             key={tile.href}
             href={localizedPath(locale, tile.href)}
-            className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md"
+            className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_8px_20px_rgba(0,0,0,0.25),0_28px_60px_-12px_rgba(0,0,0,0.65)]"
           >
             <div className="relative aspect-4/3 overflow-hidden bg-white">
               <Image
@@ -68,7 +68,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
                 sizes="(max-width: 1024px) 50vw, 33vw"
                 className="object-contain p-3 transition-transform duration-300 group-hover:scale-105 sm:p-4"
               />
-              <span className="absolute top-2 left-2 rounded-md border border-neutral-200 bg-white/95 px-1.5 py-0.5 text-[9px] font-bold tracking-wide text-neutral-700 uppercase sm:top-2.5 sm:left-2.5 sm:px-2 sm:text-[10px]">
+              <span className="absolute top-2 left-2 rounded-md border border-neutral-200 bg-white/95 px-1.5 py-0.5 text-[9px] font-bold tracking-wide text-neutral-700 uppercase shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 group-hover:-translate-y-0.5 sm:top-2.5 sm:left-2.5 sm:px-2 sm:text-[10px]">
                 {tile.tag}
               </span>
             </div>
@@ -76,7 +76,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
               <h3 className="font-heading text-sm font-bold leading-tight text-balance text-card-foreground transition-colors group-hover:text-primary sm:text-base md:text-lg">
                 {tile.key}
               </h3>
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground sm:size-7">
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:bg-primary group-hover:text-primary-foreground sm:size-7">
                 <ArrowUpRight className="size-3.5 sm:size-4" />
               </span>
             </div>

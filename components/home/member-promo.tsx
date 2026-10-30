@@ -13,7 +13,7 @@ export function MemberPromo() {
 
   return (
     <section aria-labelledby="member-promo-title" className="mx-auto max-w-7xl px-4 py-4 sm:py-6">
-      <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-primary/10 px-4 py-5 sm:px-10 sm:py-9">
+      <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-primary/10 px-4 py-5 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:px-10 sm:py-9">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-8 -top-10 hidden select-none font-heading text-[9rem] font-black leading-none text-primary/10 sm:block"
@@ -23,7 +23,7 @@ export function MemberPromo() {
 
         {isMember ? (
           <div className="relative flex flex-col gap-2">
-            <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
+            <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5">
               <Check className="size-3.5" />
               {dict.promo.memberBadge}
             </span>
@@ -37,7 +37,7 @@ export function MemberPromo() {
         ) : (
           <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex flex-col gap-1.5 sm:gap-2">
-              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary sm:px-3 sm:py-1 sm:text-xs">
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:px-3 sm:py-1 sm:text-xs">
                 <BadgePercent className="size-3.5" />
                 {dict.promo.memberEyebrow}
               </span>
@@ -51,7 +51,7 @@ export function MemberPromo() {
             <div className="flex shrink-0 flex-col gap-2 sm:items-end">
               <Link
                 href={lp("/sign-up")}
-                className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
+                className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90"
                 aria-disabled={isPending}
               >
                 {dict.promo.memberCtaGuest}

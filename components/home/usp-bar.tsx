@@ -28,10 +28,10 @@ export function UspBar({ dict, locale }: { dict: Dictionary; locale: Locale }) {
         {items.map((item) => (
           <div
             key={item.title}
-            className="flex flex-col gap-2 rounded-xl border border-border/60 bg-card/50 p-3 sm:flex-row sm:items-start sm:gap-3 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0"
+            className="flex flex-col gap-2 rounded-xl border border-border/60 bg-card/50 p-3 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:flex-row sm:items-start sm:gap-3 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:shadow-none"
           >
             <div className="flex items-center gap-2 sm:block">
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary sm:size-10">
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] sm:size-10">
                 <item.icon className="size-4 sm:size-5" />
               </div>
               <h3 className="text-xs font-semibold leading-tight text-foreground sm:hidden">{item.title}</h3>

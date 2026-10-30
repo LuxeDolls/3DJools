@@ -26,7 +26,7 @@ export function Header() {
   const navItems = getNavItems(dict)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] backdrop-blur">
       {/* Announcement strip */}
       <div className="border-b border-border bg-secondary text-secondary-foreground">
         <div className="mx-auto flex h-8 max-w-7xl items-center justify-between gap-2 px-3 text-[11px] sm:h-9 sm:gap-4 sm:px-4 sm:text-xs">
@@ -153,7 +153,7 @@ export function MobileCategoryStrip() {
               key={item.href}
               href={target}
               className={cn(
-                "shrink-0 rounded-full border px-3 py-1 text-xs font-semibold transition-colors",
+                "shrink-0 rounded-full border px-3 py-1 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5",
                 isActive
                   ? "border-primary bg-primary text-primary-foreground"
                   : isDeals

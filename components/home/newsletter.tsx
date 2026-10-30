@@ -21,9 +21,9 @@ export function Newsletter() {
   }
 
   return (
-    <section className="border-y border-border bg-secondary">
+    <section className="relative z-10 border-y border-border bg-secondary shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-14 text-center">
-        <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+        <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)]">
           <Mail className="size-6" />
         </div>
         <div>

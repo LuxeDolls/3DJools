@@ -37,7 +37,7 @@ export function ProductCard({
       : null
 
   return (
-    <div className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md">
+    <div className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_8px_20px_rgba(0,0,0,0.25),0_28px_60px_-12px_rgba(0,0,0,0.65)]">
       <div className="relative aspect-square overflow-hidden border-b border-border/60 bg-white">
         <Link href={href} className="relative block size-full" aria-label={product.name}>
           <Image
@@ -87,8 +87,8 @@ export function ProductCard({
 
         {/* Bottom-left tech / key spec pill */}
         {techBadge && (
-          <div className="pointer-events-none absolute bottom-1.5 left-2 max-w-[calc(100%-1rem)] sm:bottom-2 sm:left-2.5">
-            <span className="inline-flex max-w-full items-center truncate rounded-md border border-neutral-200 bg-white/95 px-1.5 py-0.5 text-[9px] font-semibold tracking-tight text-neutral-800 shadow-2xs sm:px-2 sm:text-[10px]">
+          <div className="absolute bottom-1.5 left-2 z-10 max-w-[calc(100%-1rem)] sm:bottom-2 sm:left-2.5">
+            <span className="inline-flex max-w-full items-center truncate rounded-md border border-neutral-200 bg-white/95 px-1.5 py-0.5 text-[9px] font-semibold tracking-tight text-neutral-800 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:px-2 sm:text-[10px]">
               {techBadge}
             </span>
           </div>

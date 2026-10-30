@@ -20,19 +20,19 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
   const brands = await getAllBrands()
 
   return (
-    <section className="relative overflow-hidden border-b border-border bg-card">
+    <section className="relative z-10 overflow-hidden border-b border-border bg-card shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
       <div className="mx-auto grid max-w-7xl items-center gap-6 px-4 py-6 sm:gap-8 sm:py-10 lg:grid-cols-12 lg:gap-10 lg:py-16">
         <div className="relative z-10 min-w-0 lg:col-span-7">
           <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-            <span className="hidden items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold tracking-tight text-foreground sm:inline-flex">
+            <span className="hidden items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-semibold tracking-tight text-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:inline-flex">
               <Truck className="size-3.5 text-primary" />
               {dict.home.heroEyebrow}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-foreground sm:border-border sm:bg-background/80 sm:px-3 sm:py-1 sm:text-xs sm:font-medium sm:text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-[11px] font-semibold text-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:border-border sm:bg-background/80 sm:px-3 sm:py-1 sm:text-xs sm:font-medium sm:text-muted-foreground">
               <ShieldCheck className="size-3.5 text-primary" />
               {dict.home.uspWarrantyTitle}
             </span>
-            <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/80 px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground sm:hidden">
+            <span className="inline-flex items-center gap-1 rounded-full border border-border bg-background/80 px-2.5 py-0.5 text-[11px] font-medium text-muted-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:hidden">
               <RotateCcw className="size-3 text-primary" />
               {dict.footer.returns}
             </span>
@@ -49,7 +49,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
           <div className="mt-5 grid grid-cols-2 gap-2.5 sm:mt-7 sm:flex sm:flex-wrap sm:items-center sm:gap-3">
             <Button
               size="lg"
-              className="h-11 px-4 text-xs font-semibold shadow-sm sm:px-6 sm:text-sm"
+              className="h-11 px-4 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] sm:px-6 sm:text-sm"
               render={
                 <Link href={localizedPath(locale, "/catalog/printers")}>
                   {dict.home.heroCtaPrimary}
@@ -66,7 +66,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
             <Button
               size="lg"
               variant="ghost"
-              className="col-span-2 h-9 border border-border/60 bg-background/40 px-4 text-xs font-semibold sm:col-span-1 sm:h-11 sm:border-0 sm:bg-transparent sm:text-sm"
+              className="col-span-2 h-9 border border-border/60 bg-background/40 px-4 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] sm:col-span-1 sm:h-11 sm:border-0 sm:bg-transparent sm:text-sm sm:shadow-none"
               render={<Link href={localizedPath(locale, "/catalog")}>{dict.home.heroCtaCatalog}</Link>}
             />
           </div>
@@ -81,7 +81,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
                 <Link
                   key={b.slug}
                   href={localizedPath(locale, `/brands/${b.slug}`)}
-                  className="inline-flex shrink-0 items-center rounded-full border border-border bg-background px-3 py-1 text-xs font-semibold text-foreground transition-colors hover:border-primary hover:bg-primary/10 hover:text-primary"
+                  className="inline-flex shrink-0 items-center rounded-full border border-border bg-background px-3 py-1 text-xs font-semibold text-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-primary/10 hover:text-primary"
                 >
                   {b.name}
                 </Link>
@@ -97,7 +97,7 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
         </div>
 
         <div className="relative lg:col-span-5">
-          <div className="relative aspect-16/11 overflow-hidden rounded-2xl border border-border bg-secondary/40 shadow-lg sm:aspect-square">
+          <div className="relative aspect-16/11 overflow-hidden rounded-2xl border border-border bg-secondary/40 shadow-[0_4px_12px_rgba(0,0,0,0.2),0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:aspect-square">
             <Image
               src="/brand/hero-printer.png?v=3"
               alt={dict.home.featuredPrinters}
@@ -107,20 +107,20 @@ export async function Hero({ locale, dict }: { locale: Locale; dict: Dictionary 
               className="object-cover"
             />
             <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 via-black/35 to-transparent sm:h-28" />
-            <div className="absolute right-2.5 bottom-2.5 left-2.5 flex items-center justify-between gap-2 rounded-xl border border-white/15 bg-black/75 px-3 py-2 text-white backdrop-blur-md sm:right-3 sm:bottom-3 sm:left-3 sm:px-3.5 sm:py-2.5">
+            <div className="absolute right-2.5 bottom-2.5 left-2.5 flex items-center justify-between gap-2 rounded-xl border border-white/15 bg-black/75 px-3 py-2 text-white shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] backdrop-blur-md transition-transform duration-200 hover:-translate-y-0.5 sm:right-3 sm:bottom-3 sm:left-3 sm:px-3.5 sm:py-2.5">
               <div className="flex min-w-0 items-center gap-2">
                 <CalendarClock className="size-4 shrink-0 text-primary" />
                 <span className="truncate text-xs font-medium">
                   {dict.checkout.payInstallments}
                 </span>
               </div>
-              <span className="shrink-0 whitespace-nowrap rounded-md bg-primary px-2 py-0.5 text-[11px] font-bold text-primary-foreground">
+              <span className="shrink-0 whitespace-nowrap rounded-md bg-primary px-2 py-0.5 text-[11px] font-bold text-primary-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)]">
                 0% APR
               </span>
             </div>
           </div>
 
-          <div className="-top-3 -left-3 hidden items-center gap-3 rounded-xl border border-border bg-background/95 px-4 py-3 shadow-md backdrop-blur-xs sm:absolute sm:flex">
+          <div className="-top-3 -left-3 hidden items-center gap-3 rounded-xl border border-border bg-background/95 px-4 py-3 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] backdrop-blur-xs transition-transform duration-200 hover:-translate-y-0.5 sm:absolute sm:flex">
             <div className="flex size-10 items-center justify-center rounded-lg bg-primary/15 font-heading text-lg font-bold text-primary">
               {brands.length}
             </div>
