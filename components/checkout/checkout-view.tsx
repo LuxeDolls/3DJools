@@ -75,9 +75,11 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
         ? "square"
         : SUMUP_CHECKOUT_ENABLED
           ? "sumup"
-          : ALPPAY_CHECKOUT_ENABLED
-            ? "alppay"
-            : "card",
+        : ALPPAY_CHECKOUT_ENABLED
+          ? "alppay"
+          : BANK_TRANSFER_CHECKOUT_ENABLED
+            ? "sepa"
+            : "installments",
   )
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Netherlands")
