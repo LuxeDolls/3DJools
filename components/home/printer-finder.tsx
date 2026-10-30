@@ -301,30 +301,32 @@ export function PrinterFinder({
   }, [products, activeMode])
 
   return (
-    <section className="border-y border-border bg-card/60">
-      <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+    <section className="relative z-10 border-y border-border bg-card/60 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12">
+        <div className="flex items-end justify-between gap-3">
           <div>
-            <p className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-primary">
+            <p className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-primary sm:text-xs">
               <Sparkles className="size-3.5" />
               {copy.eyebrow}
             </p>
-            <h2 className="mt-1.5 text-balance font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+            <h2 className="mt-1 text-balance font-heading text-xl font-bold tracking-tight text-foreground sm:mt-1.5 sm:text-3xl">
               {copy.title}
             </h2>
-            <p className="mt-1.5 max-w-2xl text-pretty text-sm text-muted-foreground">{copy.subtitle}</p>
+            <p className="mt-1 max-w-2xl text-pretty text-xs text-muted-foreground sm:mt-1.5 sm:text-sm">
+              {copy.subtitle}
+            </p>
           </div>
           <Link
             href={localizedPath(locale, currentModeObj.href)}
-            className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-primary hover:underline"
+            className="group inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-primary hover:underline sm:gap-1.5 sm:text-sm"
           >
             {dict.home.viewAll}
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5 sm:size-4" />
           </Link>
         </div>
 
-        {/* Workflow Selector Cards */}
-        <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-5">
+        {/* Workflow Selector Cards — horizontal swipe on mobile, grid on sm+ */}
+        <div className="mt-4 -mx-4 flex gap-2.5 overflow-x-auto px-4 pb-1.5 [scrollbar-width:none] sm:mx-0 sm:mt-6 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-5">
           {copy.modes.map((m) => {
             const Icon = MODE_ICONS[m.id]
             const active = m.id === activeMode
@@ -334,28 +336,30 @@ export function PrinterFinder({
                 type="button"
                 onClick={() => setActiveMode(m.id)}
                 className={cn(
-                  "flex flex-col items-start gap-2 rounded-xl border p-4 text-left transition-all",
+                  "flex w-56 shrink-0 flex-col items-start gap-2 rounded-xl border p-3.5 text-left shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 sm:w-auto sm:p-4",
                   active
-                    ? "border-primary bg-primary/10 shadow-xs ring-1 ring-primary/40"
+                    ? "border-primary bg-primary/10 ring-1 ring-primary/40"
                     : "border-border bg-background hover:border-primary/40 hover:bg-secondary/40",
                 )}
               >
                 <div className="flex w-full items-center justify-between">
                   <span
                     className={cn(
-                      "flex size-8 items-center justify-center rounded-lg transition-colors",
+                      "flex size-7 items-center justify-center rounded-lg transition-colors sm:size-8",
                       active ? "bg-primary text-primary-foreground" : "bg-secondary text-foreground",
                     )}
                   >
-                    <Icon className="size-4" />
+                    <Icon className="size-3.5 sm:size-4" />
                   </span>
                   {active && (
                     <span className="size-2 rounded-full bg-primary" aria-hidden="true" />
                   )}
                 </div>
                 <div>
-                  <p className="font-heading text-sm font-bold leading-snug text-foreground">{m.label}</p>
-                  <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">{m.tagline}</p>
+                  <p className="font-heading text-xs font-bold leading-snug text-foreground sm:text-sm">{m.label}</p>
+                  <p className="mt-1 line-clamp-2 text-[11px] leading-relaxed text-muted-foreground sm:text-xs">
+                    {m.tagline}
+                  </p>
                 </div>
               </button>
             )
@@ -363,7 +367,7 @@ export function PrinterFinder({
         </div>
 
         {/* Matching 4 Products */}
-        <div className="mt-6">
+        <div className="mt-4 sm:mt-6">
           <ProductGrid products={recommendations} locale={locale} dict={dict} />
         </div>
       </div>

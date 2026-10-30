@@ -16,14 +16,16 @@ export default async function CatalogPage({ params }: { params: Promise<{ lang: 
   }))
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
       <Breadcrumb
         locale={locale}
         items={[{ label: dict.common.home, href: "/" }, { label: dict.nav.all }]}
       />
-      <h1 className="mt-4 font-heading text-3xl font-bold tracking-tight text-foreground">{dict.nav.all}</h1>
-      <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{dict.footer.companyBlurb}</p>
-      <div className="mt-10">
+      <h1 className="mt-3 font-heading text-2xl font-bold tracking-tight text-foreground sm:mt-4 sm:text-3xl">
+        {dict.nav.all}
+      </h1>
+      <p className="mt-1.5 max-w-2xl text-xs text-muted-foreground sm:mt-2 sm:text-sm">{dict.footer.companyBlurb}</p>
+      <div className="mt-6 sm:mt-10">
         <CatalogSections locale={locale} dict={dict} sections={sections} />
       </div>
     </div>

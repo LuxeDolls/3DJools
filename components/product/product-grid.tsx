@@ -13,7 +13,7 @@ export function ProductGrid({
   dict: Dictionary
 }) {
   return (
-    <div className="grid grid-cols-2 gap-3.5 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2.5 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
       {products.map((product) => (
         <ProductCard key={product.id} product={product} locale={locale} dict={dict} />
       ))}

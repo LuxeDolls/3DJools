@@ -18,30 +18,30 @@ interface CatalogSectionsProps {
 
 export function CatalogSections({ locale, dict, sections }: CatalogSectionsProps) {
   return (
-    <div className="flex flex-col gap-14">
+    <div className="flex flex-col gap-9 sm:gap-14">
       {sections.map(({ category, products }) => {
         if (products.length === 0) return null
         const href = localizedPath(locale, `/catalog/${category}`)
         return (
           <section key={category} aria-labelledby={`section-${category}`}>
-            <div className="mb-5 flex items-end justify-between gap-4 border-b border-border pb-4">
+            <div className="mb-4 flex items-end justify-between gap-3 border-b border-border pb-3 sm:mb-5 sm:gap-4 sm:pb-4">
               <div>
                 <h2
                   id={`section-${category}`}
-                  className="font-heading text-2xl font-bold tracking-tight text-foreground"
+                  className="font-heading text-xl font-bold tracking-tight text-foreground sm:text-2xl"
                 >
                   {categoryLabel(category, dict)}
                 </h2>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <p className="mt-0.5 text-xs text-muted-foreground sm:mt-1 sm:text-sm">
                   {products.length} {dict.common.results}
                 </p>
               </div>
               <Link
                 href={href}
-                className="inline-flex shrink-0 items-center gap-1 text-sm font-medium text-primary transition-colors hover:text-primary/80"
+                className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-primary transition-colors hover:text-primary/80 sm:text-sm sm:font-medium"
               >
                 {dict.home.viewAll}
-                <ArrowRight className="size-4" />
+                <ArrowRight className="size-3.5 sm:size-4" />
               </Link>
             </div>
             <ProductGrid products={products.slice(0, PREVIEW_COUNT)} locale={locale} dict={dict} />

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ShoppingCart, User, Truck, PackageSearch } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useCart } from "@/components/cart/cart-provider"
@@ -16,6 +17,7 @@ import { LocaleSwitcher } from "./locale-switcher"
 import { ThemeToggle } from "./theme-toggle"
 import { MobileNav } from "./mobile-nav"
 import { getNavItems } from "./nav-items"
+import { cn } from "@/lib/utils"
 
 export function Header() {
   const { dict } = useI18n()
@@ -24,15 +26,15 @@ export function Header() {
   const navItems = getNavItems(dict)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-border bg-background/95 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] backdrop-blur">
       {/* Announcement strip */}
       <div className="border-b border-border bg-secondary text-secondary-foreground">
-        <div className="mx-auto flex h-9 max-w-7xl items-center justify-between gap-4 px-4 text-xs">
-          <p className="flex items-center gap-1.5 font-medium">
-            <Truck className="size-3.5 text-primary" />
-            {dict.home.heroEyebrow}
+        <div className="mx-auto flex h-8 max-w-7xl items-center justify-between gap-2 px-3 text-[11px] sm:h-9 sm:gap-4 sm:px-4 sm:text-xs">
+          <p className="flex min-w-0 items-center gap-1.5 truncate font-medium">
+            <Truck className="size-3.5 shrink-0 text-primary" />
+            <span className="truncate">{dict.home.heroEyebrow}</span>
           </p>
-          <div className="hidden items-center gap-4 sm:flex">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-4">
             <nav aria-label="Utility" className="hidden items-center gap-4 md:flex">
               <Link href={lp("/about")} className="whitespace-nowrap transition-colors hover:text-primary">
                 {dict.footer.about}
@@ -44,17 +46,22 @@ export function Header() {
                 {dict.footer.faq}
               </Link>
             </nav>
-            <div className="flex items-center gap-1">
-              <LocaleSwitcher />
-              <ThemeToggle />
+            <div className="flex items-center gap-0.5 sm:gap-1">
+              <div className="sm:hidden">
+                <LocaleSwitcher compact />
+              </div>
+              <div className="hidden sm:flex sm:items-center sm:gap-1">
+                <LocaleSwitcher />
+                <ThemeToggle />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main bar */}
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4">
-        <div className="flex items-center gap-2 lg:hidden">
+      <div className="mx-auto flex h-13 max-w-7xl items-center gap-2.5 px-3 sm:h-16 sm:gap-4 sm:px-4">
+        <div className="flex items-center gap-1.5 lg:hidden">
           <MobileNav navItems={navItems} />
         </div>
 
@@ -69,7 +76,7 @@ export function Header() {
         <div className="ml-auto flex items-center gap-1">
           <DropdownMenu>
             <DropdownMenuTrigger
-              className="hidden size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:flex"
+              className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               aria-label={dict.common.account}
             >
               <User className="size-5" />
@@ -102,7 +109,7 @@ export function Header() {
       </div>
 
       {/* Search on mobile */}
-      <div className="border-t border-border px-4 py-2 md:hidden">
+      <div className="border-t border-border px-3 py-1.5 md:hidden">
         <SearchBar />
       </div>
 
@@ -122,5 +129,43 @@ export function Header() {
         </div>
       </nav>
     </header>
+  )
+}
+
+export function MobileCategoryStrip() {
+  const { dict } = useI18n()
+  const lp = useLocalizedPath()
+  const pathname = usePathname()
+  const navItems = getNavItems(dict)
+
+  return (
+    <nav
+      aria-label="Categories"
+      className="border-b border-border bg-card/80 lg:hidden"
+    >
+      <div className="mx-auto flex max-w-7xl items-center gap-1.5 overflow-x-auto px-3 py-2 [scrollbar-width:none] sm:px-4">
+        {navItems.map((item) => {
+          const target = lp(item.href)
+          const isActive = pathname === target
+          const isDeals = item.href === "/deals"
+          return (
+            <Link
+              key={item.href}
+              href={target}
+              className={cn(
+                "shrink-0 rounded-full border px-3 py-1 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5",
+                isActive
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : isDeals
+                    ? "border-primary/40 bg-primary/10 text-primary hover:bg-primary/15"
+                    : "border-border bg-background text-foreground/85 hover:border-primary/40 hover:text-foreground",
+              )}
+            >
+              {item.label}
+            </Link>
+          )
+        })}
+      </div>
+    </nav>
   )
 }

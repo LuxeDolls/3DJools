@@ -38,11 +38,20 @@ export function ProductInfo({ product }: { product: Product }) {
       const el = actionBoxRef.current
       if (!el) return
       const rect = el.getBoundingClientRect()
-      setShowStickyBar(rect.bottom < 80)
+      const next = rect.bottom < 80
+      setShowStickyBar(next)
+      if (next) {
+        document.body.setAttribute("data-sticky-cta", "true")
+      } else {
+        document.body.removeAttribute("data-sticky-cta")
+      }
     }
     checkPosition()
     window.addEventListener("scroll", checkPosition, { passive: true })
-    return () => window.removeEventListener("scroll", checkPosition)
+    return () => {
+      window.removeEventListener("scroll", checkPosition)
+      document.body.removeAttribute("data-sticky-cta")
+    }
   }, [])
 
   const availabilityBadge = {
@@ -60,7 +69,7 @@ export function ProductInfo({ product }: { product: Product }) {
       <div className="flex flex-wrap items-center gap-2">
         <Link
           href={lp(`/brands/${product.brandSlug}`)}
-          className="inline-flex items-center rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold tracking-wider text-foreground uppercase transition-colors hover:border-primary hover:text-primary"
+          className="inline-flex items-center rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold tracking-wider text-foreground uppercase shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:text-primary"
         >
           {brand}
         </Link>
@@ -75,11 +84,11 @@ export function ProductInfo({ product }: { product: Product }) {
         </span>
       </div>
 
-      <h1 className="mt-3 text-balance font-heading text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+      <h1 className="mt-2.5 text-balance font-heading text-2xl font-bold tracking-tight text-foreground sm:mt-3 sm:text-4xl">
         {product.name}
       </h1>
 
-      <div className="mt-2.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground sm:mt-2.5">
         <span>
           {dict.product.mpn}: <strong className="font-mono font-medium text-foreground">{product.mpn}</strong>
         </span>
@@ -91,9 +100,9 @@ export function ProductInfo({ product }: { product: Product }) {
       </div>
 
       {/* Price & Instalments Box */}
-      <div className="mt-5 rounded-xl border border-border bg-card p-4 shadow-2xs">
+      <div className="mt-4 rounded-xl border border-border bg-card p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:mt-5 sm:p-4">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <div className="flex items-baseline gap-2.5">
+          <div className="flex items-baseline gap-2">
             <Price cents={product.priceCents} locale={locale} size="lg" />
             <Badge variant="secondary" className="text-[11px] font-semibold">
               -10% Black Friday
@@ -103,42 +112,45 @@ export function ProductInfo({ product }: { product: Product }) {
         </div>
 
         {installmentsEligible && (
-          <div className="mt-3 flex items-center justify-between gap-2 rounded-lg border border-primary/25 bg-primary/10 px-3 py-2 text-xs">
-            <span className="flex items-center gap-2 text-foreground">
+          <div className="mt-3 flex items-center justify-between gap-2 rounded-lg border border-primary/25 bg-primary/10 px-3 py-2 text-xs shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5">
+            <span className="flex min-w-0 items-center gap-2 text-foreground">
               <CalendarClock className="size-4 shrink-0 text-primary" />
-              <span>
+              <span className="truncate">
                 {dict.checkout.payInstallments}:{" "}
                 <strong className="font-bold text-primary">
                   4 × {formatPrice(installmentCents, locale)}
                 </strong>
               </span>
             </span>
-            <span className="rounded bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground">
+            <span className="shrink-0 whitespace-nowrap rounded bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)]">
               0%
             </span>
           </div>
         )}
 
         <div className="mt-3 flex items-center justify-between gap-2 border-t border-border/70 pt-2.5 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1.5">
-            <BadgePercent className="size-3.5 text-primary" />
-            <span>{dict.promo.memberTitle}</span>
+          <span className="inline-flex min-w-0 items-center gap-1.5">
+            <BadgePercent className="size-3.5 shrink-0 text-primary" />
+            <span className="truncate">{dict.promo.memberTitle}</span>
           </span>
-          <Link href={lp("/sign-up")} className="font-semibold text-primary hover:underline">
+          <Link href={lp("/sign-up")} className="shrink-0 whitespace-nowrap font-semibold text-primary hover:underline">
             {dict.promo.memberBadge}
           </Link>
         </div>
       </div>
 
-      <p className="mt-5 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
+      <p className="mt-4 text-pretty text-sm leading-relaxed text-muted-foreground sm:mt-5 sm:text-base">
         {product.shortDescription}
       </p>
 
       {/* Top 3 Quick Specs Preview */}
       {product.specs.length > 0 && (
-        <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:mt-5 sm:grid-cols-3">
           {product.specs.slice(0, 3).map((s) => (
-            <div key={s.label} className="rounded-lg border border-border/80 bg-secondary/30 px-3 py-2">
+            <div
+              key={s.label}
+              className="rounded-lg border border-border/80 bg-secondary/30 px-3 py-2 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 last:col-span-2 sm:last:col-span-1"
+            >
               <p className="truncate text-[11px] text-muted-foreground">{s.label}</p>
               <p className="mt-0.5 truncate text-xs font-semibold text-foreground">{s.value}</p>
             </div>
@@ -146,9 +158,9 @@ export function ProductInfo({ product }: { product: Product }) {
         </div>
       )}
 
-      {/* Quantity + add to cart */}
-      <div ref={actionBoxRef} className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <div className="flex w-fit items-center rounded-lg border border-border bg-card">
+      {/* Quantity + add to cart — side-by-side on mobile & desktop */}
+      <div ref={actionBoxRef} className="mt-5 flex items-center gap-2.5 sm:mt-6 sm:gap-3">
+        <div className="flex shrink-0 items-center rounded-lg border border-border bg-card shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)]">
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -157,7 +169,7 @@ export function ProductInfo({ product }: { product: Product }) {
           >
             <Minus className="size-4" />
           </button>
-          <span className="w-10 text-center font-medium tabular-nums">{quantity}</span>
+          <span className="w-8 text-center text-sm font-medium tabular-nums sm:w-10">{quantity}</span>
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.min(20, q + 1))}
@@ -167,11 +179,11 @@ export function ProductInfo({ product }: { product: Product }) {
             <Plus className="size-4" />
           </button>
         </div>
-        <AddToCartButton product={product} quantity={quantity} size="lg" className="w-full sm:flex-1" />
+        <AddToCartButton product={product} quantity={quantity} size="lg" className="min-w-0 flex-1" />
       </div>
 
       {/* Trust badges */}
-      <ul className="mt-6 grid grid-cols-1 gap-3 rounded-xl border border-border bg-card p-4 sm:grid-cols-2">
+      <ul className="mt-5 grid grid-cols-1 gap-2.5 rounded-xl border border-border bg-card p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:mt-6 sm:grid-cols-2 sm:gap-3 sm:p-4">
         <li className="flex items-start gap-2.5 text-sm text-foreground">
           <Truck className="mt-0.5 size-4 shrink-0 text-primary" />
           <span>
@@ -202,10 +214,10 @@ export function ProductInfo({ product }: { product: Product }) {
 
       {/* Sticky Bottom Conversion Bar when scrolled down */}
       {showStickyBar && (
-        <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-background/95 py-3 pr-20 pl-4 shadow-lg backdrop-blur-md sm:pr-24">
-          <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
-            <div className="flex min-w-0 items-center gap-3">
-              <div className="relative hidden size-11 shrink-0 overflow-hidden rounded-lg border border-border bg-white sm:block">
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-background/95 px-3.5 py-2.5 shadow-lg backdrop-blur-md sm:px-6 sm:py-3">
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+              <div className="relative size-10 shrink-0 overflow-hidden rounded-lg border border-border bg-white sm:size-11">
                 <Image
                   src={product.images[0] || "/placeholder.svg"}
                   alt=""
@@ -215,7 +227,7 @@ export function ProductInfo({ product }: { product: Product }) {
                 />
               </div>
               <div className="min-w-0">
-                <p className="truncate font-heading text-sm font-bold text-foreground">{product.name}</p>
+                <p className="truncate font-heading text-xs font-bold text-foreground sm:text-sm">{product.name}</p>
                 <div className="flex items-center gap-2">
                   <Price cents={product.priceCents} locale={locale} size="sm" />
                   {installmentsEligible && (

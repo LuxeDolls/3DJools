@@ -39,8 +39,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
       <FeaturedShowcase products={featured} locale={locale} dict={dict} />
 
-      <section className="border-t border-border bg-card">
-        <div className="mx-auto max-w-7xl px-4 py-12">
+      <section className="relative z-10 border-t border-border bg-card shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12">
           <SectionHeading
             title={dict.home.bestsellers}
             viewAllHref={localizedPath(locale, "/catalog")}

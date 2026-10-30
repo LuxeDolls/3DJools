@@ -13,16 +13,16 @@ export function HelpStrip({ locale, dict }: { locale: Locale; dict: Dictionary }
   ]
 
   return (
-    <section className="border-y border-border bg-card">
+    <section className="relative z-10 border-y border-border bg-card shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
       <div className="mx-auto grid max-w-7xl grid-cols-2 sm:grid-cols-4">
         {links.map((link) => (
           <Link
             key={link.href}
             href={localizedPath(locale, link.href)}
-            className="flex items-center justify-center gap-2 border-border px-3 py-3.5 text-sm font-semibold tracking-tight text-foreground transition-colors hover:bg-primary/10 hover:text-primary [&:nth-child(odd)]:border-r sm:border-r sm:last:border-r-0"
+            className="flex items-center justify-center gap-1.5 border-border px-2.5 py-3 text-center text-xs font-semibold tracking-tight text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/10 hover:text-primary [&:nth-child(-n+2)]:border-b [&:nth-child(odd)]:border-r sm:gap-2 sm:border-r sm:px-3 sm:py-3.5 sm:text-sm sm:[&:nth-child(-n+2)]:border-b-0 sm:last:border-r-0"
           >
-            <link.icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
-            {link.label}
+            <link.icon className="size-3.5 shrink-0 text-primary sm:size-4" aria-hidden="true" />
+            <span className="truncate">{link.label}</span>
           </Link>
         ))}
       </div>

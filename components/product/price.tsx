@@ -13,7 +13,8 @@ export function Price({
   locale: Locale
   size?: "sm" | "md" | "lg"
 }) {
-  const priceClass = size === "lg" ? "text-2xl" : size === "sm" ? "text-sm" : "text-lg"
+  const priceClass =
+    size === "lg" ? "text-xl sm:text-2xl" : size === "sm" ? "text-xs sm:text-sm" : "text-sm sm:text-lg"
   return (
     <span className={cn("font-heading font-bold tabular-nums text-foreground", priceClass)}>
       {formatPrice(cents, locale)}
