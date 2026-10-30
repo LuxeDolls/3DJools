@@ -5,6 +5,8 @@ import { localizedPath } from "@/lib/i18n/paths"
 import { Hero } from "@/components/home/hero"
 import { UspBar } from "@/components/home/usp-bar"
 import { CategoryTiles } from "@/components/home/category-tiles"
+import { FeaturedShowcase } from "@/components/home/featured-showcase"
+import { PrinterFinder } from "@/components/home/printer-finder"
 import { HelpStrip } from "@/components/home/help-strip"
 import { MemberPromo } from "@/components/home/member-promo"
 import { Newsletter } from "@/components/home/newsletter"
@@ -33,23 +35,18 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <MemberPromo />
       <CategoryTiles locale={locale} dict={dict} />
 
-      <section className="mx-auto max-w-7xl px-4 py-12">
-        <SectionHeading
-          title={dict.home.featuredPrinters}
-          viewAllHref={localizedPath(locale, "/catalog/printers")}
-          viewAllLabel={dict.home.viewAll}
-        />
-        <ProductGrid products={featured} locale={locale} dict={dict} />
-      </section>
+      <PrinterFinder products={[...featured, ...bestsellers]} locale={locale} dict={dict} />
 
-      <section className="bg-card">
+      <FeaturedShowcase products={featured} locale={locale} dict={dict} />
+
+      <section className="border-t border-border bg-card">
         <div className="mx-auto max-w-7xl px-4 py-12">
           <SectionHeading
             title={dict.home.bestsellers}
             viewAllHref={localizedPath(locale, "/catalog")}
             viewAllLabel={dict.home.viewAll}
           />
-          <ProductGrid products={bestsellers} locale={locale} dict={dict} />
+          <ProductGrid products={bestsellers.slice(0, 8)} locale={locale} dict={dict} />
         </div>
       </section>
 
