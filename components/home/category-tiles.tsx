@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -7,44 +8,78 @@ import { SectionHeading } from "@/components/section-heading"
 
 export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const tiles = [
-    { key: dict.categories.printers, href: "/catalog/printers", image: "/brand/tile-printers.jpg?v=4" },
-    { key: dict.categories.resins, href: "/catalog/resins", image: "/brand/tile-resins.jpg?v=8" },
-    { key: dict.categories.filaments, href: "/catalog/filaments", image: "/brand/tile-filaments.jpg?v=4" },
-    { key: dict.categories.accessories, href: "/catalog/accessories", image: "/brand/tile-accessories.jpg?v=7" },
+    {
+      key: dict.categories.printers,
+      href: "/catalog/printers",
+      image: "/brand/tile-printers.jpg?v=4",
+      tag: "FDM & SLA",
+    },
+    {
+      key: dict.categories.resins,
+      href: "/catalog/resins",
+      image: "/brand/tile-resins.jpg?v=8",
+      tag: "8K / 12K / Tough",
+    },
+    {
+      key: dict.categories.filaments,
+      href: "/catalog/filaments",
+      image: "/brand/tile-filaments.jpg?v=4",
+      tag: "PLA · PETG · ABS · CF",
+    },
+    {
+      key: dict.categories.accessories,
+      href: "/catalog/accessories",
+      image: "/brand/tile-accessories.jpg?v=7",
+      tag: "AMS · Dryers · Plates",
+    },
     {
       key: dict.categories.laserEngravers,
       href: "/catalog/laser-engravers",
       image: "/brand/tile-laser.jpg?v=5",
+      tag: "Diode & CO2",
     },
     {
       key: dict.categories.scanners,
       href: "/catalog/scanners",
       image: "/brand/tile-scanners.jpg?v=8",
+      tag: "Blue Laser & NIR",
     },
   ]
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12">
-      <SectionHeading title={dict.home.shopByCategory} />
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4">
-        {tiles.map((tile, i) => (
+      <SectionHeading
+        title={dict.home.shopByCategory}
+        viewAllHref={localizedPath(locale, "/catalog")}
+        viewAllLabel={dict.home.viewAll}
+      />
+      <div className="grid grid-cols-2 gap-3.5 md:grid-cols-3 md:gap-5">
+        {tiles.map((tile) => (
           <Link
             key={tile.href}
             href={localizedPath(locale, tile.href)}
-            className="group flex flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors hover:border-primary/60"
+            className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-md"
           >
-            <div className="relative aspect-square overflow-hidden bg-white">
+            <div className="relative aspect-4/3 overflow-hidden bg-white">
               <Image
                 src={tile.image || "/placeholder.svg"}
                 alt={tile.key}
                 fill
-                sizes="(max-width: 1024px) 50vw, 25vw"
-                className="object-contain"
+                sizes="(max-width: 1024px) 50vw, 33vw"
+                className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
               />
+              <span className="absolute top-2.5 left-2.5 rounded-md border border-neutral-200 bg-white/95 px-2 py-0.5 text-[10px] font-bold tracking-wide text-neutral-700 uppercase">
+                {tile.tag}
+              </span>
             </div>
-            <h3 className="border-t border-border px-4 py-3 font-heading text-base font-bold text-balance text-card-foreground md:text-lg">
-              {tile.key}
-            </h3>
+            <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
+              <h3 className="font-heading text-base font-bold text-balance text-card-foreground transition-colors group-hover:text-primary md:text-lg">
+                {tile.key}
+              </h3>
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <ArrowUpRight className="size-4" />
+              </span>
+            </div>
           </Link>
         ))}
       </div>

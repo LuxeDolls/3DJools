@@ -79,29 +79,31 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
           <p className="mt-4 max-w-sm text-pretty text-sm leading-relaxed text-muted-foreground">
             {dict.footer.companyBlurb}
           </p>
-          <a
-            href={`mailto:${COMPANY.email}`}
-            className="mt-3 inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
-          >
-            <Mail className="size-4 text-primary" aria-hidden="true" />
-            {COMPANY.email}
-          </a>
-          <a
-            href={`tel:${COMPANY.phoneTel}`}
-            className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
-          >
-            <Phone className="size-4 text-primary" aria-hidden="true" />
-            {COMPANY.phoneDisplay}
-          </a>
-          <a
-            href={COMPANY.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-2 inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
-          >
-            <WhatsAppMark className="size-4" />
-            WhatsApp {COMPANY.whatsappDisplay}
-          </a>
+          <div className="mt-4 flex flex-col items-start gap-2">
+            <a
+              href={`mailto:${COMPANY.email}`}
+              className="inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
+            >
+              <Mail className="size-4 shrink-0 text-primary" aria-hidden="true" />
+              {COMPANY.email}
+            </a>
+            <a
+              href={`tel:${COMPANY.phoneTel}`}
+              className="inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
+            >
+              <Phone className="size-4 shrink-0 text-primary" aria-hidden="true" />
+              {COMPANY.phoneDisplay}
+            </a>
+            <a
+              href={COMPANY.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary"
+            >
+              <WhatsAppMark className="size-4 shrink-0" />
+              WhatsApp {COMPANY.whatsappDisplay}
+            </a>
+          </div>
           <div className="mt-5 flex items-start gap-2 text-sm text-muted-foreground">
             <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
             <span>{dict.footer.hoursNote}</span>
