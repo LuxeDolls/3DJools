@@ -24,7 +24,7 @@ export default async function CheckoutPage({
   const initialError = Array.isArray(error) ? error[0] : error
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="mx-auto max-w-6xl px-4 py-5 sm:py-8">
       <Breadcrumb
         locale={locale}
         items={[
@@ -33,8 +33,10 @@ export default async function CheckoutPage({
           { label: dict.checkout.title },
         ]}
       />
-      <h1 className="mt-4 font-heading text-3xl font-bold tracking-tight text-foreground">{dict.checkout.title}</h1>
-      <div className="mt-8">
+      <h1 className="mt-3 font-heading text-2xl font-bold tracking-tight text-foreground sm:mt-4 sm:text-3xl">
+        {dict.checkout.title}
+      </h1>
+      <div className="mt-5 sm:mt-8">
         <CheckoutView locale={locale} initialError={initialError} />
       </div>
     </div>

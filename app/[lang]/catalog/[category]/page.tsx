@@ -42,7 +42,7 @@ export default async function CategoryPage({
   const [products, brands] = await Promise.all([getProductsByCategory(category, locale), getAllBrands()])
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
       <Breadcrumb
         locale={locale}
         items={[
@@ -51,8 +51,10 @@ export default async function CategoryPage({
           { label },
         ]}
       />
-      <h1 className="mt-4 font-heading text-3xl font-bold tracking-tight text-foreground">{label}</h1>
-      <div className="mt-8">
+      <h1 className="mt-3 font-heading text-2xl font-bold tracking-tight text-foreground sm:mt-4 sm:text-3xl">
+        {label}
+      </h1>
+      <div className="mt-5 sm:mt-8">
         <CatalogView locale={locale} lockedCategory={category} products={products} brands={brands} />
       </div>
     </div>

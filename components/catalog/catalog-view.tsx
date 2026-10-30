@@ -5,7 +5,7 @@ import { Search, SlidersHorizontal, X, CheckCircle2 } from "lucide-react"
 import { useI18n } from "@/components/i18n-provider"
 import { ProductGrid } from "@/components/product/product-grid"
 import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import {
   Select,
   SelectContent,
@@ -186,12 +186,12 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
   return (
     <div>
       {categoryBrands.length > 1 && (
-        <div className="mb-8 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0">
+        <div className="mb-5 -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:mb-8 sm:flex-wrap sm:overflow-visible sm:px-0">
           <button
             type="button"
             onClick={() => setSelectedBrands([])}
             className={cn(
-              "shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+              "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors sm:px-4 sm:py-2 sm:text-sm sm:font-medium",
               selectedBrands.length === 0
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-background text-foreground hover:border-primary/50",
@@ -205,7 +205,7 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
               type="button"
               onClick={() => selectBrandChip(b.slug)}
               className={cn(
-                "shrink-0 rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                "shrink-0 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-colors sm:px-4 sm:py-2 sm:text-sm sm:font-medium",
                 selectedBrands.includes(b.slug)
                   ? "border-primary bg-primary text-primary-foreground"
                   : "border-border bg-background text-foreground hover:border-primary/50",
@@ -239,9 +239,9 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
 
         <div>
           {/* Modernized Toolbar */}
-          <div className="mb-6 flex flex-col gap-3 rounded-xl border border-border bg-card p-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-1 flex-wrap items-center gap-2.5">
-              <div className="relative min-w-44 flex-1 sm:max-w-xs">
+          <div className="mb-5 flex flex-col gap-2.5 rounded-xl border border-border bg-card p-2.5 sm:mb-6 sm:flex-row sm:items-center sm:justify-between sm:gap-3 sm:p-3">
+            <div className="flex flex-1 items-center gap-2">
+              <div className="relative min-w-0 flex-1 sm:max-w-xs">
                 <Search className="pointer-events-none absolute top-1/2 left-3 size-3.5 -translate-y-1/2 text-muted-foreground" />
                 <input
                   type="search"
@@ -249,7 +249,7 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
                   onChange={(e) => setQuickQuery(e.target.value)}
                   placeholder={dict.common.searchPlaceholder}
                   aria-label={dict.common.search}
-                  className="h-8 w-full rounded-lg border border-input bg-background pr-3 pl-8 text-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
+                  className="h-9 w-full rounded-lg border border-input bg-background pr-3 pl-8 text-xs outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 sm:h-8"
                 />
               </div>
 
@@ -257,7 +257,7 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
                 type="button"
                 onClick={() => setInStockOnly((v) => !v)}
                 className={cn(
-                  "inline-flex h-8 shrink-0 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition-colors",
+                  "hidden h-8 shrink-0 items-center gap-1.5 rounded-lg border px-3 text-xs font-semibold transition-colors sm:inline-flex",
                   inStockOnly
                     ? "border-primary bg-primary/15 text-primary"
                     : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground",
@@ -267,44 +267,71 @@ export function CatalogView({ locale, products, brands: allBrands, lockedCategor
                 {dict.common.inStock}
               </button>
 
-              <p className="ml-1 text-xs text-muted-foreground">
-                <span className="font-bold tabular-nums text-foreground">{results.length}</span> {dict.common.results}
+              <p className="shrink-0 px-1 text-xs text-muted-foreground">
+                <span className="font-bold tabular-nums text-foreground">{results.length}</span>{" "}
+                <span className="hidden xs:inline sm:inline">{dict.common.results}</span>
               </p>
             </div>
 
-            <div className="flex items-center justify-between gap-2 sm:justify-end">
+            <div className="flex items-center gap-2">
               {/* Mobile filter trigger */}
               <Sheet>
                 <SheetTrigger
                   render={
-                    <Button variant="outline" size="sm" className="lg:hidden">
+                    <Button variant="outline" size="sm" className="h-9 shrink-0 px-2.5 text-xs lg:hidden">
                       <SlidersHorizontal data-icon="inline-start" />
                       {dict.common.filters}
                       {activeCount > 0 && (
-                        <span className="ml-1 flex size-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+                        <span className="ml-1 flex size-4.5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
                           {activeCount}
                         </span>
                       )}
                     </Button>
                   }
                 />
-                <SheetContent side="left" className="w-80 max-w-[85vw] overflow-y-auto p-5">
-                  <SheetHeader>
-                    <SheetTitle>{dict.common.filters}</SheetTitle>
+                <SheetContent side="left" className="flex w-80 max-w-[85vw] flex-col gap-0 p-0">
+                  <SheetHeader className="border-b border-border px-5 py-4">
+                    <div className="flex items-center justify-between pr-6">
+                      <SheetTitle>{dict.common.filters}</SheetTitle>
+                      {activeCount > 0 && (
+                        <button onClick={clearAll} className="text-xs font-semibold text-primary hover:underline">
+                          {dict.common.clearAll}
+                        </button>
+                      )}
+                    </div>
                   </SheetHeader>
-                  <div className="mt-4">
-                    {activeCount > 0 && (
-                      <button onClick={clearAll} className="mb-4 text-xs font-medium text-primary hover:underline">
-                        {dict.common.clearAll}
-                      </button>
-                    )}
+                  <div className="flex-1 overflow-y-auto p-5">
                     {filterPanel}
                   </div>
+                  <SheetFooter className="border-t border-border p-4">
+                    <SheetClose
+                      render={
+                        <Button className="w-full font-semibold">
+                          {dict.common.results} ({results.length})
+                        </Button>
+                      }
+                    />
+                  </SheetFooter>
                 </SheetContent>
               </Sheet>
 
+              {/* Mobile In-stock chip */}
+              <button
+                type="button"
+                onClick={() => setInStockOnly((v) => !v)}
+                className={cn(
+                  "inline-flex h-9 shrink-0 items-center gap-1 rounded-lg border px-2.5 text-xs font-semibold transition-colors sm:hidden",
+                  inStockOnly
+                    ? "border-primary bg-primary/15 text-primary"
+                    : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground",
+                )}
+              >
+                <CheckCircle2 className="size-3.5" />
+                {dict.common.inStock}
+              </button>
+
               <Select value={sort} onValueChange={(v) => setSort(v as SortKey)}>
-                <SelectTrigger className="w-48 bg-background" size="sm" aria-label={dict.common.sortBy}>
+                <SelectTrigger className="h-9 min-w-0 flex-1 bg-background text-xs sm:h-8 sm:w-44 sm:flex-none" size="sm" aria-label={dict.common.sortBy}>
                   <SelectValue placeholder={dict.common.sortBy}>{sortLabels[sort]}</SelectValue>
                 </SelectTrigger>
                 <SelectContent>
@@ -425,7 +452,7 @@ function FilterCheck({
   onChange: () => void
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-2.5 text-sm text-foreground">
+    <label className="flex cursor-pointer items-center gap-2.5 py-0.5 text-sm text-foreground">
       <span
         className={cn(
           "flex size-4 shrink-0 items-center justify-center rounded border transition-colors",

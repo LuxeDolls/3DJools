@@ -25,28 +25,32 @@ export default async function BrandsPage({ params }: { params: Promise<{ lang: s
   }, {})
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
       <Breadcrumb locale={locale} items={[{ label: dict.common.home, href: "/" }, { label: dict.nav.brands }]} />
-      <h1 className="mt-4 font-heading text-3xl font-bold tracking-tight text-foreground">{dict.nav.brands}</h1>
-      <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{dict.home.shopByBrand}</p>
+      <h1 className="mt-3 font-heading text-2xl font-bold tracking-tight text-foreground sm:mt-4 sm:text-3xl">
+        {dict.nav.brands}
+      </h1>
+      <p className="mt-1.5 max-w-2xl text-xs text-muted-foreground sm:mt-2 sm:text-sm">{dict.home.shopByBrand}</p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-5 grid gap-3 sm:mt-8 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {brands.map((brand) => {
           const count = countByBrand[brand.slug] ?? 0
           return (
             <Link
               key={brand.slug}
               href={localizedPath(locale, `/brands/${brand.slug}`)}
-              className="group flex flex-col rounded-lg border border-border bg-card p-6 transition-all hover:border-primary/40 hover:shadow-md"
+              className="group flex flex-col rounded-xl border border-border bg-card p-4 transition-all hover:border-primary/40 hover:shadow-md sm:p-6"
             >
               <div className="flex items-center justify-between">
-                <span className="font-heading text-xl font-bold text-foreground group-hover:text-primary">
+                <span className="font-heading text-lg font-bold text-foreground group-hover:text-primary sm:text-xl">
                   {brand.name}
                 </span>
                 <ArrowRight className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
               </div>
-              <p className="mt-2 flex-1 text-pretty text-sm leading-relaxed text-muted-foreground">{brand.blurb}</p>
-              <p className="mt-4 text-xs font-medium uppercase tracking-wide text-muted-foreground">
+              <p className="mt-1.5 flex-1 text-pretty text-xs leading-relaxed text-muted-foreground sm:mt-2 sm:text-sm">
+                {brand.blurb}
+              </p>
+              <p className="mt-3 text-[11px] font-medium uppercase tracking-wide text-muted-foreground sm:mt-4 sm:text-xs">
                 {count} {dict.common.results}
               </p>
             </Link>

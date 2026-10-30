@@ -10,22 +10,25 @@ export interface Crumb {
 
 export function Breadcrumb({ items, locale }: { items: Crumb[]; locale: Locale }) {
   return (
-    <nav aria-label="Breadcrumb" className="text-sm">
-      <ol className="flex flex-wrap items-center gap-1.5 text-muted-foreground">
+    <nav aria-label="Breadcrumb" className="text-xs sm:text-sm">
+      <ol className="flex flex-wrap items-center gap-1 text-muted-foreground sm:gap-1.5">
         {items.map((item, i) => {
           const isLast = i === items.length - 1
           return (
-            <li key={i} className="flex items-center gap-1.5">
+            <li key={i} className="flex min-w-0 items-center gap-1 sm:gap-1.5">
               {item.href && !isLast ? (
-                <Link href={localizedPath(locale, item.href)} className="transition-colors hover:text-primary">
+                <Link href={localizedPath(locale, item.href)} className="shrink-0 transition-colors hover:text-primary">
                   {item.label}
                 </Link>
               ) : (
-                <span className={isLast ? "font-medium text-foreground" : undefined} aria-current={isLast ? "page" : undefined}>
+                <span
+                  className={isLast ? "max-w-[200px] truncate font-medium text-foreground sm:max-w-none" : undefined}
+                  aria-current={isLast ? "page" : undefined}
+                >
                   {item.label}
                 </span>
               )}
-              {!isLast && <ChevronRight className="size-3.5" />}
+              {!isLast && <ChevronRight className="size-3 shrink-0 sm:size-3.5" />}
             </li>
           )
         })}

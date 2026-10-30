@@ -27,16 +27,16 @@ export function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; 
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-5" aria-labelledby="scamadviser-trust-title">
+    <section className="mx-auto max-w-7xl px-4 py-4 sm:py-5" aria-labelledby="scamadviser-trust-title">
       <a
         href={scamAdviserUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex flex-col gap-4 rounded-2xl border border-border bg-card px-5 py-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md sm:flex-row sm:items-center sm:justify-between sm:px-7"
+        className="group flex flex-col gap-3.5 rounded-2xl border border-border bg-card p-4 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-md sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-7 sm:py-5"
         aria-label={`ScamAdviser Trust Score 100/100. ${dict.home.scamAdviserCta}`}
       >
-        <div className="flex items-center gap-4">
-          <div className="flex size-14 shrink-0 items-center justify-center rounded-xl border border-border bg-white p-2.5 shadow-sm">
+        <div className="flex items-start gap-3.5 sm:items-center sm:gap-4">
+          <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-border bg-white p-2 shadow-sm sm:size-14 sm:p-2.5">
             <img
               src="https://www.scamadviser.com/images/static/logo/logo.svg"
               alt=""
@@ -44,16 +44,18 @@ export function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; 
             />
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">ScamAdviser</p>
-            <h2 id="scamadviser-trust-title" className="mt-1 text-balance font-heading text-xl font-semibold text-foreground">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:text-xs">
+              ScamAdviser
+            </p>
+            <h2 id="scamadviser-trust-title" className="mt-0.5 text-balance font-heading text-lg font-semibold text-foreground sm:mt-1 sm:text-xl">
               Trust Score <span className="text-primary">100/100</span>
             </h2>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{dict.home.scamAdviserText}</p>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">{dict.home.scamAdviserText}</p>
           </div>
         </div>
-        <span className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors group-hover:bg-primary/90">
+        <span className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground transition-colors group-hover:bg-primary/90 sm:text-sm">
           {dict.home.scamAdviserCta}
-          <ExternalLink className="size-4" aria-hidden="true" />
+          <ExternalLink className="size-3.5 sm:size-4" aria-hidden="true" />
         </span>
       </a>
     </section>

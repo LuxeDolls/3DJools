@@ -101,23 +101,40 @@ export function ChatWidget() {
     setSending(false)
   }
 
+  const [stickyBarActive, setStickyBarActive] = useState(false)
+
+  useEffect(() => {
+    const syncStickyState = () => {
+      setStickyBarActive(document.body.getAttribute("data-sticky-cta") === "true")
+    }
+    syncStickyState()
+    const observer = new MutationObserver(syncStickyState)
+    observer.observe(document.body, { attributes: true, attributeFilter: ["data-sticky-cta"] })
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-5 z-50 flex size-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        className={cn(
+          "fixed right-3.5 z-40 flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:right-5 sm:size-13",
+          stickyBarActive ? "bottom-19 sm:bottom-22" : "bottom-3.5 sm:bottom-5",
+        )}
         aria-label={dict.chat.open}
       >
-        {open ? <X className="size-6" /> : <MessageCircle className="size-6" />}
+        {open ? <X className="size-5 sm:size-6" /> : <MessageCircle className="size-5 sm:size-6" />}
       </button>
 
       <div
         className={cn(
-          "fixed bottom-24 right-5 z-50 flex w-[min(92vw,22rem)] flex-col overflow-hidden rounded-xl border border-border bg-card shadow-2xl transition-all duration-200",
-          open ? "pointer-events-auto translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
+          "fixed inset-x-3 z-50 flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-2xl transition-all duration-200 sm:left-auto sm:right-5 sm:w-88",
+          stickyBarActive ? "bottom-32 sm:bottom-38" : "bottom-16 sm:bottom-21",
+          open
+            ? "pointer-events-auto h-[min(26rem,calc(100dvh-6rem))] translate-y-0 opacity-100"
+            : "pointer-events-none h-0 translate-y-4 opacity-0",
         )}
-        style={{ height: open ? "28rem" : 0 }}
         role="dialog"
         aria-label={dict.chat.title}
         aria-hidden={!open}

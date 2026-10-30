@@ -59,7 +59,7 @@ export default async function ProductPage({
   const url = `https://www.dnd3d.com${localizedPath(locale, `/product/${product.slug}`)}`
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
       {isCardPaymentTest(product.slug) ? null : <ProductJsonLd product={product} url={url} />}
 
       <Breadcrumb
@@ -71,22 +71,26 @@ export default async function ProductPage({
         ]}
       />
 
-      <div className="mt-6 grid min-w-0 gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="mt-4 grid min-w-0 gap-6 sm:mt-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
         <ProductGallery images={product.images} alt={product.name} />
         <ProductInfo product={product} />
       </div>
 
       {/* Details: highlights + description + specs */}
-      <div className="mt-14 grid gap-10 lg:grid-cols-3">
+      <div className="mt-10 grid gap-8 sm:mt-14 sm:gap-10 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <h2 className="font-heading text-xl font-bold text-foreground">{dict.product.description}</h2>
-          <p className="mt-4 text-pretty leading-relaxed text-muted-foreground">{product.description}</p>
+          <h2 className="font-heading text-lg font-bold text-foreground sm:text-xl">{dict.product.description}</h2>
+          <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
+            {product.description}
+          </p>
 
-          <h3 className="mt-8 font-heading text-lg font-bold text-foreground">{dict.product.highlights}</h3>
-          <ul className="mt-4 grid gap-2.5 sm:grid-cols-2">
+          <h3 className="mt-6 font-heading text-base font-bold text-foreground sm:mt-8 sm:text-lg">
+            {dict.product.highlights}
+          </h3>
+          <ul className="mt-3 grid gap-2 sm:mt-4 sm:grid-cols-2 sm:gap-2.5">
             {product.highlights.map((h) => (
-              <li key={h} className="flex items-start gap-2 text-sm text-foreground">
-                <span className="mt-1 size-1.5 shrink-0 rounded-full bg-primary" />
+              <li key={h} className="flex items-start gap-2 text-xs text-foreground sm:text-sm">
+                <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-primary" />
                 {h}
               </li>
             ))}
@@ -94,10 +98,13 @@ export default async function ProductPage({
         </div>
 
         <div>
-          <h2 className="font-heading text-xl font-bold text-foreground">{dict.product.specifications}</h2>
-          <dl className="mt-4 divide-y divide-border rounded-lg border border-border">
+          <h2 className="font-heading text-lg font-bold text-foreground sm:text-xl">{dict.product.specifications}</h2>
+          <dl className="mt-3 divide-y divide-border rounded-xl border border-border bg-card/40 sm:mt-4">
             {product.specs.map((spec) => (
-              <div key={spec.label} className="flex justify-between gap-4 px-4 py-3 text-sm">
+              <div
+                key={spec.label}
+                className="grid grid-cols-[2fr_3fr] items-baseline gap-3 px-3.5 py-2.5 text-xs sm:px-4 sm:py-3 sm:text-sm"
+              >
                 <dt className="text-muted-foreground">{spec.label}</dt>
                 <dd className="text-right font-medium text-foreground">{spec.value}</dd>
               </div>
@@ -107,7 +114,7 @@ export default async function ProductPage({
       </div>
 
       {related.length > 0 && (
-        <div className="mt-16">
+        <div className="mt-12 sm:mt-16">
           <SectionHeading title={dict.product.relatedProducts} />
           <ProductGrid products={related} locale={locale} dict={dict} />
         </div>

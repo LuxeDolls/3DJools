@@ -12,8 +12,8 @@ export function MemberPromo() {
   const isMember = Boolean(session?.user)
 
   return (
-    <section aria-labelledby="member-promo-title" className="mx-auto max-w-7xl px-4 py-6">
-      <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-primary/10 px-6 py-8 sm:px-10 sm:py-9">
+    <section aria-labelledby="member-promo-title" className="mx-auto max-w-7xl px-4 py-4 sm:py-6">
+      <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-primary/10 px-4 py-5 sm:px-10 sm:py-9">
         <div
           aria-hidden
           className="pointer-events-none absolute -right-8 -top-10 hidden select-none font-heading text-[9rem] font-black leading-none text-primary/10 sm:block"
@@ -27,24 +27,24 @@ export function MemberPromo() {
               <Check className="size-3.5" />
               {dict.promo.memberBadge}
             </span>
-            <h2 id="member-promo-title" className="font-heading text-2xl font-bold text-balance text-foreground">
+            <h2 id="member-promo-title" className="font-heading text-xl font-bold text-balance text-foreground sm:text-2xl">
               {dict.promo.memberActiveTitle}
             </h2>
-            <p className="max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
+            <p className="max-w-2xl text-pretty text-xs leading-relaxed text-muted-foreground sm:text-sm">
               {dict.promo.memberActiveText}
             </p>
           </div>
         ) : (
           <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-col gap-2">
-              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary">
+            <div className="flex flex-col gap-1.5 sm:gap-2">
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary sm:px-3 sm:py-1 sm:text-xs">
                 <BadgePercent className="size-3.5" />
                 {dict.promo.memberEyebrow}
               </span>
-              <h2 id="member-promo-title" className="font-heading text-2xl font-bold text-balance text-foreground sm:text-3xl">
+              <h2 id="member-promo-title" className="font-heading text-xl font-bold text-balance text-foreground sm:text-3xl">
                 {dict.promo.memberTitle}
               </h2>
-              <p className="max-w-2xl text-pretty text-sm leading-relaxed text-muted-foreground">
+              <p className="max-w-2xl text-pretty text-xs leading-relaxed text-muted-foreground sm:text-sm">
                 {dict.promo.memberText}
               </p>
             </div>

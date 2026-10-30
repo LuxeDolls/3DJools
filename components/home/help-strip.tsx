@@ -19,10 +19,10 @@ export function HelpStrip({ locale, dict }: { locale: Locale; dict: Dictionary }
           <Link
             key={link.href}
             href={localizedPath(locale, link.href)}
-            className="flex items-center justify-center gap-2 border-border px-3 py-3.5 text-sm font-semibold tracking-tight text-foreground transition-colors hover:bg-primary/10 hover:text-primary [&:nth-child(odd)]:border-r sm:border-r sm:last:border-r-0"
+            className="flex items-center justify-center gap-1.5 border-border px-2.5 py-3 text-center text-xs font-semibold tracking-tight text-foreground transition-colors hover:bg-primary/10 hover:text-primary [&:nth-child(-n+2)]:border-b [&:nth-child(odd)]:border-r sm:gap-2 sm:border-r sm:px-3 sm:py-3.5 sm:text-sm sm:[&:nth-child(-n+2)]:border-b-0 sm:last:border-r-0"
           >
-            <link.icon className="size-4 shrink-0 text-primary" aria-hidden="true" />
-            {link.label}
+            <link.icon className="size-3.5 shrink-0 text-primary sm:size-4" aria-hidden="true" />
+            <span className="truncate">{link.label}</span>
           </Link>
         ))}
       </div>

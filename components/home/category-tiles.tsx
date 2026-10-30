@@ -47,13 +47,13 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
   ]
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12">
+    <section className="mx-auto max-w-7xl px-4 py-8 sm:py-12">
       <SectionHeading
         title={dict.home.shopByCategory}
         viewAllHref={localizedPath(locale, "/catalog")}
         viewAllLabel={dict.home.viewAll}
       />
-      <div className="grid grid-cols-2 gap-3.5 md:grid-cols-3 md:gap-5">
+      <div className="grid grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-3 md:gap-5">
         {tiles.map((tile) => (
           <Link
             key={tile.href}
@@ -66,18 +66,18 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
                 alt={tile.key}
                 fill
                 sizes="(max-width: 1024px) 50vw, 33vw"
-                className="object-contain p-4 transition-transform duration-300 group-hover:scale-105"
+                className="object-contain p-3 transition-transform duration-300 group-hover:scale-105 sm:p-4"
               />
-              <span className="absolute top-2.5 left-2.5 rounded-md border border-neutral-200 bg-white/95 px-2 py-0.5 text-[10px] font-bold tracking-wide text-neutral-700 uppercase">
+              <span className="absolute top-2 left-2 rounded-md border border-neutral-200 bg-white/95 px-1.5 py-0.5 text-[9px] font-bold tracking-wide text-neutral-700 uppercase sm:top-2.5 sm:left-2.5 sm:px-2 sm:text-[10px]">
                 {tile.tag}
               </span>
             </div>
-            <div className="flex items-center justify-between border-t border-border px-4 py-3.5">
-              <h3 className="font-heading text-base font-bold text-balance text-card-foreground transition-colors group-hover:text-primary md:text-lg">
+            <div className="flex flex-1 items-center justify-between gap-1.5 border-t border-border px-3 py-2.5 sm:px-4 sm:py-3.5">
+              <h3 className="font-heading text-sm font-bold leading-tight text-balance text-card-foreground transition-colors group-hover:text-primary sm:text-base md:text-lg">
                 {tile.key}
               </h3>
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                <ArrowUpRight className="size-4" />
+              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground transition-colors group-hover:bg-primary group-hover:text-primary-foreground sm:size-7">
+                <ArrowUpRight className="size-3.5 sm:size-4" />
               </span>
             </div>
           </Link>

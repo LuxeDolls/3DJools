@@ -22,15 +22,15 @@ export default async function DealsPage({ params }: { params: Promise<{ lang: st
   const highlighted = await getAllProducts(locale)
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
       <Breadcrumb locale={locale} items={[{ label: dict.common.home, href: "/" }, { label: dict.nav.deals }]} />
-      <div className="mt-4 flex items-center gap-3">
-        <span className="flex size-10 items-center justify-center rounded-md bg-primary/10 text-primary">
-          <Tag className="size-5" />
+      <div className="mt-3 flex items-center gap-2.5 sm:mt-4 sm:gap-3">
+        <span className="flex size-8 items-center justify-center rounded-md bg-primary/10 text-primary sm:size-10">
+          <Tag className="size-4 sm:size-5" />
         </span>
-        <h1 className="font-heading text-3xl font-bold tracking-tight text-foreground">{dict.nav.deals}</h1>
+        <h1 className="font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{dict.nav.deals}</h1>
       </div>
-      <div className="mt-8">
+      <div className="mt-5 sm:mt-8">
         <ProductGrid products={highlighted} locale={locale} dict={dict} />
       </div>
     </div>

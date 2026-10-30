@@ -24,15 +24,23 @@ export function UspBar({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 
   return (
     <section className="border-b border-border bg-background">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-6 px-4 py-8 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-2.5 px-4 py-5 sm:gap-6 sm:py-8 lg:grid-cols-4">
         {items.map((item) => (
-          <div key={item.title} className="flex gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary">
-              <item.icon className="size-5" />
+          <div
+            key={item.title}
+            className="flex flex-col gap-2 rounded-xl border border-border/60 bg-card/50 p-3 sm:flex-row sm:items-start sm:gap-3 sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0"
+          >
+            <div className="flex items-center gap-2 sm:block">
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary/15 text-primary sm:size-10">
+                <item.icon className="size-4 sm:size-5" />
+              </div>
+              <h3 className="text-xs font-semibold leading-tight text-foreground sm:hidden">{item.title}</h3>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-foreground">{item.title}</h3>
-              <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">{item.text}</p>
+              <h3 className="hidden text-sm font-semibold text-foreground sm:block">{item.title}</h3>
+              <p className="text-[11px] leading-snug text-muted-foreground sm:mt-0.5 sm:text-xs sm:leading-relaxed">
+                {item.text}
+              </p>
             </div>
           </div>
         ))}

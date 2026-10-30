@@ -7,7 +7,7 @@ import { I18nProvider } from "@/components/i18n-provider"
 import { CartProvider } from "@/components/cart/cart-provider"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 import { ChatWidget } from "@/components/chat/chat-widget"
-import { Header } from "@/components/layout/header"
+import { Header, MobileCategoryStrip } from "@/components/layout/header"
 import { SaleBanner } from "@/components/home/sale-banner"
 import { Toaster } from "@/components/ui/sonner"
 import { CookieConsent } from "@/components/legal/cookie-consent"
@@ -27,6 +27,7 @@ export function StorefrontShell({
         <CartProvider>
           <SaleBanner locale={locale} dict={dict} />
           <Header />
+          <MobileCategoryStrip />
           <main className="min-h-[60vh]">{children}</main>
           <CartDrawer />
           <ChatWidget />

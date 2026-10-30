@@ -37,50 +37,54 @@ export function CartPageView({ locale }: { locale: Locale }) {
   }
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1fr_22rem]">
-      <ul className="divide-y divide-border rounded-lg border border-border">
+    <div className="grid gap-6 sm:gap-8 lg:grid-cols-[1fr_22rem]">
+      <ul className="divide-y divide-border rounded-xl border border-border bg-card/40">
         {lines.map((line) => (
-          <li key={line.id} className="flex gap-4 p-4">
+          <li key={line.id} className="flex gap-3 p-3 sm:gap-4 sm:p-4">
             <Link
               href={lp(`/product/${line.slug}`)}
-              className="relative size-24 shrink-0 overflow-hidden rounded-md border border-border bg-secondary/40"
+              className="relative size-20 shrink-0 overflow-hidden rounded-lg border border-border bg-white sm:size-24"
             >
-              <Image src={line.image || "/placeholder.svg"} alt={line.name} fill sizes="96px" className="object-cover" />
+              <Image src={line.image || "/placeholder.svg"} alt={line.name} fill sizes="96px" className="object-contain p-1.5" />
             </Link>
             <div className="flex min-w-0 flex-1 flex-col">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">{line.brand}</p>
+              <p className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground sm:text-xs">
+                {line.brand}
+              </p>
               <Link
                 href={lp(`/product/${line.slug}`)}
-                className="font-medium text-foreground hover:text-primary"
+                className="line-clamp-2 text-xs font-medium text-foreground hover:text-primary sm:text-sm"
               >
                 {line.name}
               </Link>
-              <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-3">
-                <div className="flex items-center rounded-md border border-border">
+              <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-2.5 sm:gap-3 sm:pt-3">
+                <div className="flex items-center rounded-md border border-border bg-background">
                   <button
                     onClick={() => updateQuantity(line.id, line.quantity - 1)}
-                    className="flex size-9 items-center justify-center text-muted-foreground hover:text-foreground"
+                    className="flex size-8 items-center justify-center text-muted-foreground hover:text-foreground sm:size-9"
                     aria-label={dict.common.remove}
                   >
-                    <Minus className="size-4" />
+                    <Minus className="size-3.5 sm:size-4" />
                   </button>
-                  <span className="w-10 text-center text-sm font-medium tabular-nums">{line.quantity}</span>
+                  <span className="w-8 text-center text-xs font-medium tabular-nums sm:w-10 sm:text-sm">
+                    {line.quantity}
+                  </span>
                   <button
                     onClick={() => updateQuantity(line.id, line.quantity + 1)}
-                    className="flex size-9 items-center justify-center text-muted-foreground hover:text-foreground"
+                    className="flex size-8 items-center justify-center text-muted-foreground hover:text-foreground sm:size-9"
                     aria-label={dict.common.addToCart}
                   >
-                    <Plus className="size-4" />
+                    <Plus className="size-3.5 sm:size-4" />
                   </button>
                 </div>
-                <span className="font-heading font-bold tabular-nums text-foreground">
+                <span className="font-heading text-sm font-bold tabular-nums text-foreground sm:text-base">
                   {formatPrice(line.priceCents * line.quantity, locale)}
                 </span>
               </div>
             </div>
             <button
               onClick={() => removeItem(line.id)}
-              className="self-start text-muted-foreground transition-colors hover:text-destructive"
+              className="self-start p-1 text-muted-foreground transition-colors hover:text-destructive"
               aria-label={dict.common.remove}
             >
               <Trash2 className="size-4" />
