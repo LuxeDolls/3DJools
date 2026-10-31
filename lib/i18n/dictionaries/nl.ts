@@ -187,6 +187,8 @@ export const nl: Dictionary = {
     payCard: "Credit-/debetkaart",
     payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact en Klarna",
     payCardUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
+    payCardGatewayNotice:
+      "Vanwege technische problemen met onze betaalgateway zijn kaartbetalingen tijdelijk uitgeschakeld. Gebruik een SEPA-bankoverschrijving of betaling in 4× rentevrije termijnen.",
     payCardFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payCardNote:
       "U wordt doorgestuurd naar een beveiligde Stripe-pagina. U kunt betalen met kaart, Apple Pay, Link, Bancontact of Klarna. Wij zien uw kaartnummer niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
