@@ -138,7 +138,7 @@ export function ProductCard({
 
         <div className="mt-auto flex items-end justify-between gap-1.5 pt-2.5 sm:gap-2 sm:pt-3.5">
           <div className="min-w-0">
-            <Price cents={product.priceCents} locale={locale} />
+            <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} />
             {installmentsEligible ? (
               <p className="mt-0.5 flex items-center gap-1 truncate text-[10px] font-medium text-muted-foreground sm:text-[11px]">
                 <CalendarClock className="size-2.5 shrink-0 text-primary sm:size-3" />

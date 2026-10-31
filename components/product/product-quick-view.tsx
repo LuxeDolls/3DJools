@@ -122,7 +122,7 @@ export function ProductQuickView({
 
               <div className="mt-4 flex flex-col gap-1.5 rounded-lg border border-border bg-secondary/40 p-3">
                 <div className="flex items-baseline justify-between gap-2">
-                  <Price cents={product.priceCents} locale={locale} size="lg" />
+                  <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} size="lg" />
                   <span className="text-[11px] font-medium text-muted-foreground">
                     {dict.cart.vatIncluded}
                   </span>

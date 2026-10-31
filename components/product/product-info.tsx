@@ -102,8 +102,8 @@ export function ProductInfo({ product }: { product: Product }) {
       {/* Price & Instalments Box */}
       <div className="mt-4 rounded-xl border border-border bg-card p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:mt-5 sm:p-4">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <div className="flex items-baseline gap-2">
-            <Price cents={product.priceCents} locale={locale} size="lg" />
+          <div className="flex flex-wrap items-baseline gap-2">
+            <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} size="lg" />
             <Badge variant="secondary" className="text-[11px] font-semibold">
               -10% Black Friday
             </Badge>
@@ -229,7 +229,7 @@ export function ProductInfo({ product }: { product: Product }) {
               <div className="min-w-0">
                 <p className="truncate font-heading text-xs font-bold text-foreground sm:text-sm">{product.name}</p>
                 <div className="flex items-center gap-2">
-                  <Price cents={product.priceCents} locale={locale} size="sm" />
+                  <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} size="sm" />
                   {installmentsEligible && (
                     <span className="hidden text-xs text-muted-foreground md:inline">
                       · 4 × {formatPrice(installmentCents, locale)}
