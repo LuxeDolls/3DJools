@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
-import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock } from "lucide-react"
+import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock, AlertTriangle } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useCart } from "@/components/cart/cart-provider"
 import { Button } from "@/components/ui/button"
@@ -297,6 +297,15 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
         {/* Payment method */}
         <section>
           <h2 className="font-heading text-lg font-bold text-foreground">{dict.checkout.paymentMethod}</h2>
+          {!STRIPE_CHECKOUT_ENABLED && !SQUARE_CHECKOUT_ENABLED && !SUMUP_CHECKOUT_ENABLED && !ALPPAY_CHECKOUT_ENABLED && (
+            <p
+              role="alert"
+              className="mt-2.5 flex items-start gap-2 rounded-lg border border-destructive/35 bg-destructive/10 px-3.5 py-2.5 text-sm font-medium leading-relaxed text-destructive"
+            >
+              <AlertTriangle className="mt-0.5 size-4 shrink-0 text-destructive" aria-hidden="true" />
+              <span>{dict.checkout.payCardGatewayNotice}</span>
+            </p>
+          )}
           <div className="mt-4 space-y-2.5">
             {paymentOptions.map((opt) => (
               <OptionCard

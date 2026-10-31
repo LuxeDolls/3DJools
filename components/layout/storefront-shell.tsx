@@ -8,6 +8,7 @@ import { CartProvider } from "@/components/cart/cart-provider"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 import { ChatWidget } from "@/components/chat/chat-widget"
 import { Header, MobileCategoryStrip } from "@/components/layout/header"
+import { GatewayNotice } from "@/components/layout/gateway-notice"
 import { SaleBanner } from "@/components/home/sale-banner"
 import { Toaster } from "@/components/ui/sonner"
 import { CookieConsent } from "@/components/legal/cookie-consent"
@@ -25,6 +26,7 @@ export function StorefrontShell({
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <I18nProvider locale={locale} dict={dict}>
         <CartProvider>
+          <GatewayNotice locale={locale} dict={dict} />
           <SaleBanner locale={locale} dict={dict} />
           <Header />
           <MobileCategoryStrip />

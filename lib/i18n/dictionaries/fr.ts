@@ -187,6 +187,8 @@ export const fr: Dictionary = {
     payCard: "Carte de crédit / débit",
     payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact et Klarna",
     payCardUnavailable: "Le paiement par carte est temporairement indisponible",
+    payCardGatewayNotice:
+      "En raison de problèmes techniques avec notre passerelle de paiement, le paiement par carte est temporairement désactivé. Veuillez utiliser le virement bancaire SEPA ou le paiement en 4× sans frais.",
     payCardFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
     payCardNote:
       "Vous serez redirigé vers une page Stripe sécurisée. Vous pouvez payer par carte, Apple Pay, Link, Bancontact ou Klarna. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",

@@ -185,6 +185,8 @@ export const en = {
     payCard: "Credit / debit card",
     payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact and Klarna",
     payCardUnavailable: "Card payment is temporarily unavailable",
+    payCardGatewayNotice:
+      "Due to technical issues with our payment gateway, card payments are temporarily disabled. Please use SEPA bank transfer or 4× interest-free instalments.",
     payCardFailed: "The card payment was not completed. You can try again.",
     payCardNote:
       "You will be redirected to a secure Stripe page. You can pay by card, Apple Pay, Link, Bancontact or Klarna. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",

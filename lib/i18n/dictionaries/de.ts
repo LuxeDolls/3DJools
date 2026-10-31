@@ -187,6 +187,8 @@ export const de: Dictionary = {
     payCard: "Kredit-/Debitkarte",
     payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact und Klarna",
     payCardUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",
+    payCardGatewayNotice:
+      "Aufgrund technischer Probleme mit unserem Zahlungsgateway ist die Kartenzahlung vorübergehend deaktiviert. Bitte nutzen Sie die SEPA-Banküberweisung oder die 4× zinsfreie Ratenzahlung.",
     payCardFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     payCardNote:
       "Sie werden zu einer sicheren Stripe-Seite weitergeleitet. Sie können mit Karte, Apple Pay, Link, Bancontact oder Klarna zahlen. Wir sehen Ihre Kartennummer nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
