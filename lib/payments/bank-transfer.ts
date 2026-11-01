@@ -29,11 +29,11 @@ export const BANK_TRANSFER_OFF_METHODS_NOTE: Record<Locale, string> = {
   nl: "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen verlopen via een beveiligde betaalpagina. Apple Pay, Link, Bancontact en Klarna zijn beschikbaar bij kaartbetaling. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bankoverschrijving (SEPA) is tijdelijk niet beschikbaar.",
 }
 
-// SEPA receiving account (ABN AMRO), shown at checkout and on order confirmation for
+// SEPA receiving account (Finom), shown at checkout and on order confirmation for
 // the "sepa" / bank_transfer payment method.
 export const BANK_TRANSFER_ACCOUNT = {
-  accountName: "VORTIK L",
-  iban: "NL74 ABNA 0158 6801 70",
-  bic: "ABNANL2A",
-  bankAddress: "ABN AMRO Bank N.V., Gustav Mahlerlaan 10, 1082 PP Amsterdam, Netherlands",
+  accountName: "Grand Media Production",
+  iban: "NL91 FNOM 0297 0833 12",
+  bic: "FNOMNL22XXX",
+  bankAddress: "Finom Payments BV, Jachthavenweg 109H, 1081 KM Amsterdam, Netherlands",
 } as const
