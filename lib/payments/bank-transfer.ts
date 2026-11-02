@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/i18n/config"
 
 // Set to true to show bank transfer (SEPA) checkout.
-export const BANK_TRANSFER_CHECKOUT_ENABLED = false
+export const BANK_TRANSFER_CHECKOUT_ENABLED = true
 
 const BANK_TRANSFER_ALLOWED_EMAILS = new Set<string>([])
 
@@ -32,8 +32,8 @@ export const BANK_TRANSFER_OFF_METHODS_NOTE: Record<Locale, string> = {
 // SEPA receiving account (Finom), shown at checkout and on order confirmation for
 // the "sepa" / bank_transfer payment method.
 export const BANK_TRANSFER_ACCOUNT = {
-  accountName: "Grand Media Production",
-  iban: "NL91 FNOM 0297 0833 12",
-  bic: "FNOMNL22XXX",
-  bankAddress: "Finom Payments BV, Jachthavenweg 109H, 1081 KM Amsterdam, Netherlands",
+  accountName: "Mutable Atoll-Unipessoal Lda",
+  iban: "NL10 FNOM 0823 8359 95",
+  bic: "FNOMNL22",
+  bankAddress: "FINOM PAYMENTS",
 } as const

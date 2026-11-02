@@ -13,7 +13,7 @@ export const INSTALLMENT_INTERVAL_DAYS = 14
 export const MIN_INSTALLMENT_TOTAL_CENTS = 100_000
 
 /** Set to true to allow 4x interest-free installment applications. */
-export const INSTALLMENTS_CHECKOUT_ENABLED = false
+export const INSTALLMENTS_CHECKOUT_ENABLED = true
 
 export function qualifiesForInstallments(totalCents: number): boolean {
   return INSTALLMENTS_CHECKOUT_ENABLED && totalCents >= MIN_INSTALLMENT_TOTAL_CENTS

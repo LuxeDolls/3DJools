@@ -188,7 +188,7 @@ export const es: Dictionary = {
     payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact y Klarna",
     payCardUnavailable: "El pago con tarjeta no está disponible temporalmente",
     payCardGatewayNotice:
-      "Debido a problemas técnicos con nuestra pasarela de pago, los pagos con tarjeta y los demás métodos de pago están temporalmente deshabilitados. Por el momento no se aceptan pagos.",
+      "Debido a problemas técnicos con nuestra pasarela de pago, los pagos con tarjeta están temporalmente deshabilitados. Utiliza la transferencia bancaria SEPA o el pago en 4× sin intereses.",
     payCardFailed: "El pago con tarjeta no se ha completado. Puedes intentarlo de nuevo.",
     payCardNote:
       "Se le redirigirá a una página segura de Stripe. Puede pagar con tarjeta, Apple Pay, Link, Bancontact o Klarna. Nunca vemos el número de su tarjeta. Si ya ha pagado, espere a que se actualice el estado y no pague dos veces.",
