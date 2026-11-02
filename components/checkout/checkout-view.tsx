@@ -17,7 +17,7 @@ import { memberDiscountCents } from "@/lib/discount"
 import { useSession } from "@/lib/auth-client"
 import type { Locale } from "@/lib/i18n/config"
 import { getInstallmentDict } from "@/lib/i18n/installments"
-import { computeInstallmentAmounts, qualifiesForInstallments } from "@/lib/installments"
+import { computeInstallmentAmounts, INSTALLMENTS_CHECKOUT_ENABLED, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
 import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName } from "@/lib/payments/cardholder"
 import { callingCode, toE164Phone } from "@/lib/payments/phone-country"
@@ -128,18 +128,26 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     ...(isPaypalCheckoutEnabled()
       ? [{ id: "paypal" as const, icon: Landmark, title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc, mark: "/payments/paypal.svg" }]
       : []),
-    {
-      id: "installments",
-      icon: CalendarClock,
-      title: dict.checkout.payInstallments,
-      desc: installmentsEligible ? dict.checkout.payInstallmentsDesc : dict.checkout.payInstallmentsMinNote,
-      disabled: !installmentsEligible,
-    },
+    ...(INSTALLMENTS_CHECKOUT_ENABLED
+      ? [
+          {
+            id: "installments" as const,
+            icon: CalendarClock,
+            title: dict.checkout.payInstallments,
+            desc: installmentsEligible ? dict.checkout.payInstallmentsDesc : dict.checkout.payInstallmentsMinNote,
+            disabled: !installmentsEligible,
+          },
+        ]
+      : []),
   ]
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
     if (submitting) return
+    if (paymentOptions.length === 0) {
+      setOrderError(dict.checkout.payCardGatewayNotice)
+      return
+    }
     if (payment === "installments") return
     if (!termsAccepted) {
       setOrderError(dict.checkout.termsConsentError)
@@ -569,7 +577,12 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
             {it.checkoutInstallmentCta}
           </Button>
         ) : (
-          <Button size="lg" className="mt-4 w-full" type="submit" disabled={submitting || !termsAccepted}>
+          <Button
+            size="lg"
+            className="mt-4 w-full"
+            type="submit"
+            disabled={submitting || !termsAccepted || paymentOptions.length === 0}
+          >
             <Lock className="size-4" />
             {submitting ? dict.checkout.processing : dict.checkout.placeOrder}
           </Button>
