@@ -34,6 +34,13 @@ export function ApplicationDetail({ app }: { app: InstallmentApplication & { ord
 
   const idUrl = `/api/admin/id-document?pathname=${encodeURIComponent(app.idDocumentPathname)}`
   const isPdf = app.idDocumentPathname.toLowerCase().endsWith(".pdf")
+  const idBackUrl = app.idDocumentBackPathname
+    ? `/api/admin/id-document?pathname=${encodeURIComponent(app.idDocumentBackPathname)}`
+    : null
+  const isBackPdf = Boolean(app.idDocumentBackPathname?.toLowerCase().endsWith(".pdf"))
+  const selfieUrl = app.selfiePathname
+    ? `/api/admin/id-document?pathname=${encodeURIComponent(app.selfiePathname)}`
+    : null
 
   async function decide(decision: "approved" | "rejected") {
     setPending(decision)
@@ -79,6 +86,7 @@ export function ApplicationDetail({ app }: { app: InstallmentApplication & { ord
             <Item label="Nationality" value={app.nationality} />
             <Item label="Employment" value={app.employmentStatus} />
             <Item label="Monthly income" value={formatPrice(app.monthlyIncomeCents, "en")} />
+            <Item label="VAT number" value={app.vatNumber || "—"} />
             <div className="sm:col-span-2">
               <Item
                 label="Address"
@@ -91,21 +99,60 @@ export function ApplicationDetail({ app }: { app: InstallmentApplication & { ord
         </Card>
 
         {/* ID document */}
-        <Card title="ID document">
-          <div className="overflow-hidden rounded-md border border-border bg-muted/30">
-            {isPdf ? (
-              <a
-                href={idUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-4 text-sm text-primary hover:underline"
-              >
-                <FileText className="h-5 w-5" />
-                Open PDF document
-              </a>
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={idUrl || "/placeholder.svg"} alt="Uploaded ID document" className="max-h-[420px] w-full object-contain" />
+        <Card title="KYC documents (ID & Selfie)">
+          <div className="space-y-4">
+            <div>
+              <p className="mb-1.5 text-xs font-medium text-muted-foreground">
+                {app.idDocumentType === "passport" ? "Passport" : "ID document — Front side"}
+              </p>
+              <div className="overflow-hidden rounded-md border border-border bg-muted/30">
+                {isPdf ? (
+                  <a
+                    href={idUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-4 text-sm text-primary hover:underline"
+                  >
+                    <FileText className="h-5 w-5" />
+                    Open PDF document
+                  </a>
+                ) : (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={idUrl || "/placeholder.svg"} alt="Uploaded ID document (front)" className="max-h-[420px] w-full object-contain" />
+                )}
+              </div>
+            </div>
+
+            {idBackUrl && (
+              <div>
+                <p className="mb-1.5 text-xs font-medium text-muted-foreground">ID document — Back side</p>
+                <div className="overflow-hidden rounded-md border border-border bg-muted/30">
+                  {isBackPdf ? (
+                    <a
+                      href={idBackUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 p-4 text-sm text-primary hover:underline"
+                    >
+                      <FileText className="h-5 w-5" />
+                      Open back-side PDF document
+                    </a>
+                  ) : (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={idBackUrl} alt="Uploaded ID document (back)" className="max-h-[420px] w-full object-contain" />
+                  )}
+                </div>
+              </div>
+            )}
+
+            {selfieUrl && (
+              <div>
+                <p className="mb-1.5 text-xs font-medium text-muted-foreground">Selfie photo</p>
+                <div className="overflow-hidden rounded-md border border-border bg-muted/30">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={selfieUrl} alt="Uploaded applicant selfie" className="max-h-[420px] w-full object-contain" />
+                </div>
+              </div>
             )}
           </div>
           <p className="mt-2 text-xs text-muted-foreground">

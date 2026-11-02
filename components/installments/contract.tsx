@@ -216,7 +216,7 @@ export function InstallmentContract({
   downPaymentCents: number
   remainingCents: number
   schedule: ScheduleEntry[]
-  borrower?: { name?: string; address?: string; email?: string }
+  borrower?: { name?: string; address?: string; email?: string; vatNumber?: string }
   goods: { name: string; quantity: number }[]
 }) {
   const c = CLAUSES[locale] ?? CLAUSES.en
@@ -241,6 +241,7 @@ export function InstallmentContract({
             {borrower?.name || "—"}
             {borrower?.address ? `, ${borrower.address}` : ""}
             {borrower?.email ? ` · ${borrower.email}` : ""}
+            {borrower?.vatNumber ? ` · VAT ${borrower.vatNumber}` : ""}
           </p>
         </section>
 

@@ -29,12 +29,18 @@ export type InstallmentDict = {
   country: string
   employmentStatus: string
   monthlyIncome: string
+  vatNumber: string
+  vatNumberPlaceholder: string
   employmentOptions: { employed: string; selfEmployed: string; student: string; retired: string; other: string }
   // identity
   idType: string
   idTypeOptions: { passport: string; national_id: string; drivers_license: string }
   idNumber: string
   idUpload: string
+  idUploadFront: string
+  idUploadBack: string
+  selfieUpload: string
+  selfieUploadHint: string
   idUploadHint: string
   idUploadCta: string
   idUploaded: string
@@ -113,6 +119,8 @@ const en: InstallmentDict = {
   country: "Country",
   employmentStatus: "Employment status",
   monthlyIncome: "Net monthly income (EUR)",
+  vatNumber: "VAT number",
+  vatNumberPlaceholder: "e.g. NL123456789B01",
   employmentOptions: {
     employed: "Employed",
     selfEmployed: "Self-employed",
@@ -124,6 +132,10 @@ const en: InstallmentDict = {
   idTypeOptions: { passport: "Passport", national_id: "National ID", drivers_license: "Driver's license" },
   idNumber: "Document number",
   idUpload: "ID document photo",
+  idUploadFront: "ID document — front side",
+  idUploadBack: "ID document — back side",
+  selfieUpload: "Selfie photo",
+  selfieUploadHint: "Upload a clear selfie of your face. Stored securely and encrypted. Max 8 MB (JPG, PNG, WebP, HEIC).",
   idUploadHint: "Upload a clear photo of your ID. Stored securely and encrypted. Max 8 MB (JPG, PNG, PDF).",
   idUploadCta: "Choose file",
   idUploaded: "Uploaded",
@@ -199,6 +211,8 @@ const de: InstallmentDict = {
   country: "Land",
   employmentStatus: "Beschäftigungsstatus",
   monthlyIncome: "Netto-Monatseinkommen (EUR)",
+  vatNumber: "USt-IdNr. (VAT-Nummer)",
+  vatNumberPlaceholder: "z. B. DE123456789",
   employmentOptions: {
     employed: "Angestellt",
     selfEmployed: "Selbstständig",
@@ -210,6 +224,10 @@ const de: InstallmentDict = {
   idTypeOptions: { passport: "Reisepass", national_id: "Personalausweis", drivers_license: "Führerschein" },
   idNumber: "Dokumentnummer",
   idUpload: "Foto des Ausweises",
+  idUploadFront: "Ausweis — Vorderseite",
+  idUploadBack: "Ausweis — Rückseite",
+  selfieUpload: "Selfie-Foto",
+  selfieUploadHint: "Laden Sie ein klares Selfie Ihres Gesichts hoch. Sicher und verschlüsselt gespeichert. Max. 8 MB (JPG, PNG, WebP, HEIC).",
   idUploadHint: "Laden Sie ein klares Foto Ihres Ausweises hoch. Sicher und verschlüsselt gespeichert. Max. 8 MB (JPG, PNG, PDF).",
   idUploadCta: "Datei auswählen",
   idUploaded: "Hochgeladen",
@@ -285,6 +303,8 @@ const fr: InstallmentDict = {
   country: "Pays",
   employmentStatus: "Situation professionnelle",
   monthlyIncome: "Revenu net mensuel (EUR)",
+  vatNumber: "Numéro de TVA (VAT)",
+  vatNumberPlaceholder: "ex. FR12345678901",
   employmentOptions: {
     employed: "Salarié",
     selfEmployed: "Indépendant",
@@ -296,6 +316,10 @@ const fr: InstallmentDict = {
   idTypeOptions: { passport: "Passeport", national_id: "Carte d'identité", drivers_license: "Permis de conduire" },
   idNumber: "Numéro du document",
   idUpload: "Photo de la pièce d'identité",
+  idUploadFront: "Pièce d'identité — recto",
+  idUploadBack: "Pièce d'identité — verso",
+  selfieUpload: "Photo selfie",
+  selfieUploadHint: "Téléchargez un selfie net de votre visage. Stocké en sécurité et chiffré. Max 8 Mo (JPG, PNG, WebP, HEIC).",
   idUploadHint: "Téléchargez une photo nette de votre pièce d'identité. Stockée en sécurité et chiffrée. Max 8 Mo (JPG, PNG, PDF).",
   idUploadCta: "Choisir un fichier",
   idUploaded: "Téléchargé",
@@ -371,6 +395,8 @@ const it: InstallmentDict = {
   country: "Paese",
   employmentStatus: "Stato occupazionale",
   monthlyIncome: "Reddito netto mensile (EUR)",
+  vatNumber: "Partita IVA (Numero VAT)",
+  vatNumberPlaceholder: "es. IT12345678901",
   employmentOptions: {
     employed: "Dipendente",
     selfEmployed: "Autonomo",
@@ -382,6 +408,10 @@ const it: InstallmentDict = {
   idTypeOptions: { passport: "Passaporto", national_id: "Carta d'identità", drivers_license: "Patente" },
   idNumber: "Numero del documento",
   idUpload: "Foto del documento",
+  idUploadFront: "Documento d'identità — fronte",
+  idUploadBack: "Documento d'identità — retro",
+  selfieUpload: "Foto selfie",
+  selfieUploadHint: "Carica un selfie nitido del tuo viso. Conservato in modo sicuro e crittografato. Max 8 MB (JPG, PNG, WebP, HEIC).",
   idUploadHint: "Carica una foto nitida del documento. Conservata in modo sicuro e crittografata. Max 8 MB (JPG, PNG, PDF).",
   idUploadCta: "Scegli file",
   idUploaded: "Caricato",
@@ -457,6 +487,8 @@ const nl: InstallmentDict = {
   country: "Land",
   employmentStatus: "Arbeidsstatus",
   monthlyIncome: "Netto maandinkomen (EUR)",
+  vatNumber: "Btw-nummer (VAT)",
+  vatNumberPlaceholder: "bijv. NL123456789B01",
   employmentOptions: {
     employed: "In loondienst",
     selfEmployed: "Zelfstandige",
@@ -468,6 +500,10 @@ const nl: InstallmentDict = {
   idTypeOptions: { passport: "Paspoort", national_id: "Identiteitskaart", drivers_license: "Rijbewijs" },
   idNumber: "Documentnummer",
   idUpload: "Foto van identiteitsbewijs",
+  idUploadFront: "Identiteitsbewijs — voorkant",
+  idUploadBack: "Identiteitsbewijs — achterkant",
+  selfieUpload: "Selfie-foto",
+  selfieUploadHint: "Upload een duidelijke selfie van je gezicht. Veilig en versleuteld opgeslagen. Max 8 MB (JPG, PNG, WebP, HEIC).",
   idUploadHint: "Upload een duidelijke foto van je ID. Veilig en versleuteld opgeslagen. Max 8 MB (JPG, PNG, PDF).",
   idUploadCta: "Bestand kiezen",
   idUploaded: "Geüpload",
@@ -543,6 +579,8 @@ const es: InstallmentDict = {
   country: "País",
   employmentStatus: "Situación laboral",
   monthlyIncome: "Ingreso neto mensual (EUR)",
+  vatNumber: "Número de IVA (VAT)",
+  vatNumberPlaceholder: "p. ej. ESB12345678",
   employmentOptions: {
     employed: "Empleado",
     selfEmployed: "Autónomo",
@@ -554,6 +592,10 @@ const es: InstallmentDict = {
   idTypeOptions: { passport: "Pasaporte", national_id: "DNI", drivers_license: "Carné de conducir" },
   idNumber: "Número de documento",
   idUpload: "Foto del documento",
+  idUploadFront: "Documento de identidad — anverso",
+  idUploadBack: "Documento de identidad — reverso",
+  selfieUpload: "Foto selfie",
+  selfieUploadHint: "Sube una foto selfie clara de tu rostro. Almacenada de forma segura y cifrada. Máx 8 MB (JPG, PNG, WebP, HEIC).",
   idUploadHint: "Sube una foto clara de tu documento. Almacenada de forma segura y cifrada. Máx 8 MB (JPG, PNG, PDF).",
   idUploadCta: "Elegir archivo",
   idUploaded: "Subido",

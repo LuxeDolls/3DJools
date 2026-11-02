@@ -35,6 +35,7 @@ type FormState = {
   country: string
   employmentStatus: string
   monthlyIncome: string
+  vatNumber: string
   idDocumentType: string
   idDocumentNumber: string
 }
@@ -53,6 +54,7 @@ const EMPTY: FormState = {
   country: "",
   employmentStatus: "",
   monthlyIncome: "",
+  vatNumber: "",
   idDocumentType: "",
   idDocumentNumber: "",
 }
@@ -67,12 +69,16 @@ export function ApplicationForm() {
   const [step, setStep] = useState(0)
   const [form, setForm] = useState<FormState>(EMPTY)
   const [idPathname, setIdPathname] = useState<string | null>(null)
-  const [uploading, setUploading] = useState(false)
+  const [idBackPathname, setIdBackPathname] = useState<string | null>(null)
+  const [selfiePathname, setSelfiePathname] = useState<string | null>(null)
+  const [uploadingSlot, setUploadingSlot] = useState<"front" | "back" | "selfie" | null>(null)
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [dataConsent, setDataConsent] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [successRef, setSuccessRef] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
+  const backFileRef = useRef<HTMLInputElement>(null)
+  const selfieFileRef = useRef<HTMLInputElement>(null)
 
   const totalCents = subtotalCents
   const { downPaymentCents, remainingCents } = useMemo(
@@ -87,38 +93,49 @@ export function ApplicationForm() {
 
   function personalValid() {
     return (
-      form.firstName &&
-      form.lastName &&
-      form.email &&
-      form.phone &&
+      form.firstName.trim() &&
+      form.lastName.trim() &&
+      form.email.trim() &&
+      form.phone.trim() &&
       form.dateOfBirth &&
-      form.nationality &&
-      form.addressLine1 &&
-      form.city &&
-      form.postalCode &&
-      form.country &&
-      form.employmentStatus
+      form.nationality.trim() &&
+      form.addressLine1.trim() &&
+      form.city.trim() &&
+      form.postalCode.trim() &&
+      form.country.trim() &&
+      form.employmentStatus &&
+      form.vatNumber.trim()
     )
   }
 
+  const requiresBackSide = form.idDocumentType !== "passport"
+
   function identityValid() {
-    return form.idDocumentType && form.idDocumentNumber && idPathname
+    return Boolean(
+      form.idDocumentType &&
+        form.idDocumentNumber.trim() &&
+        idPathname &&
+        (!requiresBackSide || idBackPathname) &&
+        selfiePathname,
+    )
   }
 
-  async function handleUpload(file: File) {
-    setUploading(true)
+  async function handleUpload(file: File, slot: "front" | "back" | "selfie") {
+    setUploadingSlot(slot)
     try {
       const fd = new FormData()
       fd.append("file", file)
       const res = await fetch("/api/installments/upload-id", { method: "POST", body: fd })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || "Upload failed")
-      setIdPathname(data.pathname)
+      if (slot === "front") setIdPathname(data.pathname)
+      else if (slot === "back") setIdBackPathname(data.pathname)
+      else setSelfiePathname(data.pathname)
       toast.success(t.idUploaded)
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Upload failed")
     } finally {
-      setUploading(false)
+      setUploadingSlot(null)
     }
   }
 
@@ -128,7 +145,8 @@ export function ApplicationForm() {
       return
     }
     if (step === 1 && !identityValid()) {
-      toast.error(idPathname ? t.errRequired : t.errUpload)
+      const allDocsReady = Boolean(idPathname && (!requiresBackSide || idBackPathname) && selfiePathname)
+      toast.error(allDocsReady ? t.errRequired : t.errUpload)
       return
     }
     setStep((s) => Math.min(STEPS - 1, s + 1))
@@ -157,7 +175,10 @@ export function ApplicationForm() {
         country: form.country,
         employmentStatus: form.employmentStatus,
         monthlyIncomeCents: Math.round((Number(form.monthlyIncome) || 0) * 100),
+        vatNumber: form.vatNumber,
         idDocumentPathname: idPathname!,
+        idDocumentBackPathname: requiresBackSide ? idBackPathname : null,
+        selfiePathname: selfiePathname!,
         locale,
         termsAccepted,
         dataConsent,
@@ -258,14 +279,18 @@ export function ApplicationForm() {
                 </SelectContent>
               </Select>
             </div>
-            <div className="sm:col-span-2">
-              <Field
-                label={t.monthlyIncome}
-                type="number"
-                value={form.monthlyIncome}
-                onChange={(v) => set("monthlyIncome", v)}
-              />
-            </div>
+            <Field
+              label={t.monthlyIncome}
+              type="number"
+              value={form.monthlyIncome}
+              onChange={(v) => set("monthlyIncome", v)}
+            />
+            <Field
+              label={t.vatNumber}
+              placeholder={t.vatNumberPlaceholder}
+              value={form.vatNumber}
+              onChange={(v) => set("vatNumber", v)}
+            />
           </div>
         )}
 
@@ -273,7 +298,7 @@ export function ApplicationForm() {
         {step === 1 && (
           <div className="grid gap-4">
             <div className="grid gap-1.5">
-              <Label htmlFor="id-doc-type">{t.idType}</Label>
+              <Label htmlFor="id-doc-type">{t.idType} *</Label>
               <Select value={form.idDocumentType} onValueChange={(v) => set("idDocumentType", v ?? "")}>
                 <SelectTrigger id="id-doc-type">
                   <SelectValue placeholder="—" />
@@ -288,7 +313,7 @@ export function ApplicationForm() {
             <Field label={t.idNumber} value={form.idDocumentNumber} onChange={(v) => set("idDocumentNumber", v)} />
 
             <div className="grid gap-1.5">
-              <Label>{t.idUpload}</Label>
+              <Label>{requiresBackSide ? `${t.idUploadFront} *` : `${t.idUpload} *`}</Label>
               <input
                 ref={fileRef}
                 type="file"
@@ -296,16 +321,16 @@ export function ApplicationForm() {
                 className="hidden"
                 onChange={(e) => {
                   const file = e.target.files?.[0]
-                  if (file) handleUpload(file)
+                  if (file) handleUpload(file, "front")
                 }}
               />
               <button
                 type="button"
                 onClick={() => fileRef.current?.click()}
-                disabled={uploading}
-                className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 px-4 py-8 text-sm text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground disabled:opacity-60"
+                disabled={uploadingSlot !== null}
+                className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 px-4 py-6 text-sm text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground disabled:opacity-60"
               >
-                {uploading ? (
+                {uploadingSlot === "front" ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" /> {t.uploading}
                   </>
@@ -322,6 +347,80 @@ export function ApplicationForm() {
               <p className="flex items-start gap-1.5 text-xs text-muted-foreground">
                 <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
                 {t.idUploadHint}
+              </p>
+            </div>
+
+            {requiresBackSide && (
+              <div className="grid gap-1.5">
+                <Label>{`${t.idUploadBack} *`}</Label>
+                <input
+                  ref={backFileRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/heic,application/pdf"
+                  className="hidden"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleUpload(file, "back")
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => backFileRef.current?.click()}
+                  disabled={uploadingSlot !== null}
+                  className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 px-4 py-6 text-sm text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground disabled:opacity-60"
+                >
+                  {uploadingSlot === "back" ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" /> {t.uploading}
+                    </>
+                  ) : idBackPathname ? (
+                    <>
+                      <Check className="h-4 w-4 text-primary" /> {t.idUploaded}
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="h-4 w-4" /> {t.idUploadCta}
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
+
+            <div className="grid gap-1.5">
+              <Label>{`${t.selfieUpload} *`}</Label>
+              <input
+                ref={selfieFileRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/heic"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0]
+                  if (file) handleUpload(file, "selfie")
+                }}
+              />
+              <button
+                type="button"
+                onClick={() => selfieFileRef.current?.click()}
+                disabled={uploadingSlot !== null}
+                className="flex items-center justify-center gap-2 rounded-md border border-dashed border-border bg-muted/30 px-4 py-6 text-sm text-muted-foreground transition-colors hover:border-primary/60 hover:text-foreground disabled:opacity-60"
+              >
+                {uploadingSlot === "selfie" ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" /> {t.uploading}
+                  </>
+                ) : selfiePathname ? (
+                  <>
+                    <Check className="h-4 w-4 text-primary" /> {t.idUploaded}
+                  </>
+                ) : (
+                  <>
+                    <Upload className="h-4 w-4" /> {t.idUploadCta}
+                  </>
+                )}
+              </button>
+              <p className="flex items-start gap-1.5 text-xs text-muted-foreground">
+                <ShieldCheck className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />
+                {t.selfieUploadHint}
               </p>
             </div>
           </div>
@@ -354,6 +453,7 @@ export function ApplicationForm() {
                 name: `${form.firstName} ${form.lastName}`.trim(),
                 address: `${form.addressLine1}, ${form.postalCode} ${form.city}, ${form.country}`,
                 email: form.email,
+                vatNumber: form.vatNumber.trim(),
               }}
               goods={lines.map((l) => ({ name: l.name, quantity: l.quantity }))}
             />
@@ -435,12 +535,14 @@ function Field({
   value,
   onChange,
   type = "text",
+  placeholder,
   optional,
 }: {
   label: string
   value: string
   onChange: (v: string) => void
   type?: string
+  placeholder?: string
   optional?: boolean
 }) {
   const id = useId()
@@ -450,7 +552,7 @@ function Field({
         {label}
         {optional ? "" : <span className="text-primary"> *</span>}
       </Label>
-      <Input id={id} type={type} value={value} onChange={(e) => onChange(e.target.value)} />
+      <Input id={id} type={type} placeholder={placeholder} value={value} onChange={(e) => onChange(e.target.value)} />
     </div>
   )
 }

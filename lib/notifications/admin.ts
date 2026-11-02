@@ -215,6 +215,7 @@ export async function notifyInstallmentApplication(application: {
   email: string
   phone: string
   country: string
+  vatNumber?: string
   totalAmountCents: number
   downPaymentCents: number
   createdAt: Date
@@ -226,6 +227,7 @@ export async function notifyInstallmentApplication(application: {
     `Email: ${application.email}`,
     `Phone: ${application.phone}`,
     `Country: ${application.country}`,
+    ...(application.vatNumber ? [`VAT number: ${application.vatNumber}`] : []),
     `Total: ${euros(application.totalAmountCents)}`,
     `Down payment: ${euros(application.downPaymentCents)}`,
     `Created: ${application.createdAt.toISOString()}`,
