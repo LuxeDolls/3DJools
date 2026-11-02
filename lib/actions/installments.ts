@@ -4,7 +4,7 @@ import { after } from "next/server"
 import { db } from "@/lib/db"
 import { installmentApplications, type ApplicationCartItem, type NewOrderItemRow, type ScheduleEntry } from "@/lib/db/schema"
 import { getProductBySlug } from "@/lib/catalog"
-import { buildSchedule, computeInstallmentAmounts, generateApplicationRef, qualifiesForInstallments } from "@/lib/installments"
+import { buildSchedule, computeInstallmentAmounts, generateApplicationRef, INSTALLMENTS_CHECKOUT_ENABLED, qualifiesForInstallments } from "@/lib/installments"
 import { createOrder, getOrderById, updateOrderStatus } from "@/lib/orders/queries"
 import {
   sendInstallmentApplicationReceivedEmail,
@@ -48,6 +48,9 @@ function isValidEmail(email: string): boolean {
  * The ID document must already be uploaded (private Blob pathname passed in).
  */
 export async function createInstallmentApplication(input: ApplicationInput): Promise<ApplicationResult> {
+  if (!INSTALLMENTS_CHECKOUT_ENABLED) {
+    return { ok: false, error: "Payments and instalment applications are temporarily unavailable due to payment gateway maintenance." }
+  }
   // Required-field + consent validation
   const required: [keyof ApplicationInput, string][] = [
     ["firstName", input.firstName],

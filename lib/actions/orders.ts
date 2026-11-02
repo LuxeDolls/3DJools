@@ -24,6 +24,7 @@ import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
+import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import { squareConfigured } from "@/lib/payments/square"
 import { openSquareCheckout } from "@/lib/payments/square-order"
 import { sumupConfigured } from "@/lib/payments/sumup"
@@ -163,6 +164,9 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   const session = await auth.api.getSession({ headers: await headers() })
   const userId = session?.user?.id ?? null
   if (input.payment === "crypto" && !CRYPTO_CHECKOUT_ENABLED) {
+    return { ok: false, error: "order_failed" }
+  }
+  if (input.payment === "installments" && !INSTALLMENTS_CHECKOUT_ENABLED) {
     return { ok: false, error: "order_failed" }
   }
   if (

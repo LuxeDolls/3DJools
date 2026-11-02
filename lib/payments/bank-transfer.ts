@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/i18n/config"
 
 // Set to true to show bank transfer (SEPA) checkout.
-export const BANK_TRANSFER_CHECKOUT_ENABLED = true
+export const BANK_TRANSFER_CHECKOUT_ENABLED = false
 
 const BANK_TRANSFER_ALLOWED_EMAILS = new Set<string>([])
 

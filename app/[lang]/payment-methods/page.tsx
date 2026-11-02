@@ -5,6 +5,7 @@ import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_METHODS_NOTE } from "@/lib/payments
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED, BANK_TRANSFER_OFF_METHODS_NOTE } from "@/lib/payments/bank-transfer"
+import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import Link from "next/link"
 import { CreditCard, Landmark, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
@@ -49,11 +50,15 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
     ...(isPaypalCheckoutEnabled()
       ? [{ icon: Landmark, mark: "/payments/paypal.svg", title: dict.checkout.payPaypal, desc: dict.checkout.payPaypalDesc }]
       : []),
-    {
-      icon: CalendarClock,
-      title: dict.checkout.payInstallments,
-      desc: `${dict.checkout.payInstallmentsDesc} — ${dict.checkout.payInstallmentsMinNote}`,
-    },
+    ...(INSTALLMENTS_CHECKOUT_ENABLED
+      ? [
+          {
+            icon: CalendarClock,
+            title: dict.checkout.payInstallments,
+            desc: `${dict.checkout.payInstallmentsDesc} — ${dict.checkout.payInstallmentsMinNote}`,
+          },
+        ]
+      : []),
   ]
 
   return (
@@ -89,13 +94,15 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
         ))}
       </div>
 
-      <div className="mt-8 rounded-lg border border-border bg-secondary/40 p-5 text-sm leading-relaxed text-muted-foreground">
+      <div className="mt-8 rounded-lg border border-destructive/35 bg-destructive/10 p-5 text-sm font-medium leading-relaxed text-destructive">
         <p>
-          {!BANK_TRANSFER_CHECKOUT_ENABLED
-            ? BANK_TRANSFER_OFF_METHODS_NOTE[locale]
-            : !STRIPE_CHECKOUT_ENABLED
-              ? STRIPE_OFF_METHODS_NOTE[locale]
-              : dict.checkout.payMethodsNote}
+          {methods.length === 0
+            ? dict.checkout.payCardGatewayNotice
+            : !BANK_TRANSFER_CHECKOUT_ENABLED
+              ? BANK_TRANSFER_OFF_METHODS_NOTE[locale]
+              : !STRIPE_CHECKOUT_ENABLED
+                ? STRIPE_OFF_METHODS_NOTE[locale]
+                : dict.checkout.payMethodsNote}
         </p>
       </div>
 
