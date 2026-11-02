@@ -29,7 +29,10 @@ export type ApplicationInput = {
   country: string
   employmentStatus: string
   monthlyIncomeCents: number
+  vatNumber: string
   idDocumentPathname: string
+  idDocumentBackPathname?: string | null
+  selfiePathname: string
   locale: string
   termsAccepted: boolean
   dataConsent: boolean
@@ -66,6 +69,7 @@ export async function createInstallmentApplication(input: ApplicationInput): Pro
     ["postalCode", input.postalCode],
     ["country", input.country],
     ["employmentStatus", input.employmentStatus],
+    ["vatNumber", input.vatNumber],
   ]
   for (const [field, value] of required) {
     if (!value || String(value).trim() === "") {
@@ -74,7 +78,13 @@ export async function createInstallmentApplication(input: ApplicationInput): Pro
   }
   if (!isValidEmail(input.email)) return { ok: false, error: "Invalid email" }
   if (!input.idDocumentPathname?.startsWith("id-documents/")) {
-    return { ok: false, error: "ID document is required" }
+    return { ok: false, error: "ID document (front) is required" }
+  }
+  if (input.idDocumentType !== "passport" && !input.idDocumentBackPathname?.startsWith("id-documents/")) {
+    return { ok: false, error: "Back side of ID document is required" }
+  }
+  if (!input.selfiePathname?.startsWith("id-documents/")) {
+    return { ok: false, error: "Selfie photo is required" }
   }
   if (!input.termsAccepted || !input.dataConsent) {
     return { ok: false, error: "You must accept the agreement and data-processing consent" }
@@ -160,7 +170,10 @@ export async function createInstallmentApplication(input: ApplicationInput): Pro
       country: input.country.trim(),
       employmentStatus: input.employmentStatus,
       monthlyIncomeCents: Math.max(0, Math.floor(input.monthlyIncomeCents || 0)),
+      vatNumber: input.vatNumber.trim(),
       idDocumentPathname: input.idDocumentPathname,
+      idDocumentBackPathname: input.idDocumentType === "passport" ? null : (input.idDocumentBackPathname ?? null),
+      selfiePathname: input.selfiePathname,
       currency: "EUR",
       cartItems,
       totalAmountCents: totalCents,

@@ -107,9 +107,12 @@ export const installmentApplications = pgTable("installment_applications", {
   country: text("country").notNull(),
   employmentStatus: text("employment_status").notNull(),
   monthlyIncomeCents: integer("monthly_income_cents").notNull().default(0),
+  vatNumber: text("vat_number").notNull().default(""),
 
-  // Private Blob pathname for the uploaded ID document (never a public URL)
+  // Private Blob pathnames for uploaded KYC documents (never public URLs)
   idDocumentPathname: text("id_document_pathname").notNull(),
+  idDocumentBackPathname: text("id_document_back_pathname"),
+  selfiePathname: text("selfie_pathname").notNull().default(""),
 
   // Order snapshot + finance breakdown
   currency: text("currency").notNull().default("EUR"),
