@@ -2,18 +2,21 @@ import { Truck, Headphones, ShieldCheck, CreditCard } from "lucide-react"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import type { Locale } from "@/lib/i18n/config"
 import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_USP } from "@/lib/payments/stripe-availability"
+import { SKRILL_ACTIVE_USP, SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED, BANK_TRANSFER_OFF_USP } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 
 export function UspBar({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const paymentText =
-    !BANK_TRANSFER_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED && !INSTALLMENTS_CHECKOUT_ENABLED
+    !BANK_TRANSFER_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED && !SKRILL_CHECKOUT_ENABLED && !INSTALLMENTS_CHECKOUT_ENABLED
       ? dict.checkout.payCardGatewayNotice
       : !BANK_TRANSFER_CHECKOUT_ENABLED
         ? BANK_TRANSFER_OFF_USP[locale]
-        : !STRIPE_CHECKOUT_ENABLED
-          ? STRIPE_OFF_USP[locale]
-          : dict.home.uspPaymentText
+        : SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED
+          ? SKRILL_ACTIVE_USP[locale]
+          : !STRIPE_CHECKOUT_ENABLED
+            ? STRIPE_OFF_USP[locale]
+            : dict.home.uspPaymentText
 
   const items = [
     { icon: Truck, title: dict.home.uspShippingTitle, text: dict.home.uspShippingText },

@@ -24,6 +24,12 @@ import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { ensureSquareQuote } from "@/lib/payments/square-order"
 import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
+import {
+  SKRILL_CARD_MAX_CENTS,
+  SKRILL_CHECKOUT_ENABLED,
+  isSkrillIdealCountry,
+  isSkrillPayment,
+} from "@/lib/payments/skrill-availability"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
@@ -41,10 +47,10 @@ export default async function OrderConfirmationPage({
   searchParams,
 }: {
   params: Promise<{ lang: string; orderNumber: string }>
-  searchParams: Promise<{ paypal?: string; stripe?: string; alppay?: string; sumup?: string }>
+  searchParams: Promise<{ paypal?: string; stripe?: string; alppay?: string; sumup?: string; skrill?: string }>
 }) {
   const { lang, orderNumber } = await params
-  const { paypal, stripe, alppay, sumup } = await searchParams
+  const { paypal, stripe, alppay, sumup, skrill } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const order = await getOrderByOrderNumber(decodeURIComponent(orderNumber))
@@ -76,6 +82,8 @@ export default async function OrderConfirmationPage({
   const paymentLabels: Record<PaymentMethod, string> = {
     card: dict.checkout.payCard,
     alppay: dict.checkout.payAlppay,
+    skrill_card: dict.checkout.paySkrillCard,
+    skrill_ideal: dict.checkout.paySkrillIdeal,
     paypal: dict.checkout.payPaypal,
     square: dict.checkout.paySquare,
     sumup: dict.checkout.paySumup,
@@ -102,23 +110,38 @@ export default async function OrderConfirmationPage({
   // without having to place a new order. Only offered while still unpaid, and
   // only for methods that are actually configured right now.
   const canSwitchPayment = status === "awaiting_payment" || status === "reviewing_payment"
+  const rawSwitchOptions: Array<{ method: PaymentMethod; label: string } | false> = [
+    SKRILL_CHECKOUT_ENABLED &&
+      order.totalCents <= SKRILL_CARD_MAX_CENTS && {
+        method: "skrill_card",
+        label: dict.checkout.paySkrillCard,
+      },
+    SKRILL_CHECKOUT_ENABLED &&
+      isSkrillIdealCountry(order.shippingCountry) && {
+        method: "skrill_ideal",
+        label: dict.checkout.paySkrillIdeal,
+      },
+    STRIPE_CHECKOUT_ENABLED && { method: "card", label: dict.checkout.payCard },
+    ALPPAY_CHECKOUT_ENABLED && { method: "alppay", label: dict.checkout.payAlppay },
+    isPaypalCheckoutEnabled() && { method: "paypal", label: dict.checkout.payPaypal },
+    SQUARE_CHECKOUT_ENABLED && { method: "square", label: dict.checkout.paySquare },
+    SUMUP_CHECKOUT_ENABLED && { method: "sumup", label: dict.checkout.paySumup },
+    isBankTransferCheckoutEnabled(order.email) && { method: "bank_transfer", label: dict.checkout.paySepa },
+  ]
   const switchOptions = canSwitchPayment
-    ? ([
-        STRIPE_CHECKOUT_ENABLED && { method: "card" as const, label: dict.checkout.payCard },
-        ALPPAY_CHECKOUT_ENABLED && { method: "alppay" as const, label: dict.checkout.payAlppay },
-        isPaypalCheckoutEnabled() && { method: "paypal" as const, label: dict.checkout.payPaypal },
-        SQUARE_CHECKOUT_ENABLED && { method: "square" as const, label: dict.checkout.paySquare },
-        SUMUP_CHECKOUT_ENABLED && { method: "sumup" as const, label: dict.checkout.paySumup },
-        isBankTransferCheckoutEnabled(order.email) && { method: "bank_transfer" as const, label: dict.checkout.paySepa },
-      ].filter(
+    ? rawSwitchOptions.filter(
         (option): option is { method: PaymentMethod; label: string } =>
-          Boolean(option) && (option as { method: PaymentMethod }).method !== order.paymentMethod,
-      ))
+          option !== false && option.method !== order.paymentMethod,
+      )
     : []
+
+  const shouldClearCart = isSkrillPayment(order.paymentMethod)
+    ? status === "paid" || status === "processing" || status === "shipped" || status === "delivered"
+    : true
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <ClearCart />
+      {shouldClearCart ? <ClearCart /> : null}
       <Breadcrumb
         locale={locale}
         items={[{ label: dict.common.home, href: "/" }, { label: dict.orderConfirmation.orderNumber }]}
@@ -358,6 +381,38 @@ export default async function OrderConfirmationPage({
             ) : (
               <p className="mt-2">{dict.checkout.paySquareUnavailable}</p>
             )}
+          </div>
+        )}
+
+        {isSkrillPayment(order.paymentMethod) && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            {SKRILL_CHECKOUT_ENABLED ? (
+              <p>
+                {order.paymentMethod === "skrill_ideal"
+                  ? dict.checkout.paySkrillIdealNote
+                  : dict.checkout.paySkrillCardNote}
+              </p>
+            ) : (
+              <p>{dict.checkout.paySkrillUnavailable}</p>
+            )}
+            {skrill === "cancelled" || notes.skrill_last_status === "CANCELLED" ? (
+              <p className="mt-2 text-destructive">{dict.checkout.paySkrillCancelled}</p>
+            ) : skrill === "failed" || notes.skrill_last_status === "FAILED" ? (
+              <p className="mt-2 text-destructive">{dict.checkout.paySkrillFailed}</p>
+            ) : null}
+            {SKRILL_CHECKOUT_ENABLED ? (
+              <CardPayButton
+                orderNumber={order.orderNumber}
+                locale={locale}
+                method={order.paymentMethod}
+                label={
+                  order.paymentMethod === "skrill_ideal"
+                    ? dict.checkout.paySkrillIdeal
+                    : dict.checkout.paySkrillCard
+                }
+                errorLabel={dict.checkout.paySkrillUnavailable}
+              />
+            ) : null}
           </div>
         )}
 

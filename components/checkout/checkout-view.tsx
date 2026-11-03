@@ -29,8 +29,25 @@ import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
+import {
+  SKRILL_CARD_MAX_CENTS,
+  SKRILL_CHECKOUT_ENABLED,
+  isSkrillIdealCountry,
+  isSkrillPayment,
+  skrillMethodError,
+} from "@/lib/payments/skrill-availability"
 
-type PaymentId = "card" | "alppay" | "square" | "sumup" | "paypal" | "sepa" | "crypto" | "installments"
+type PaymentId =
+  | "card"
+  | "alppay"
+  | "skrill_card"
+  | "skrill_ideal"
+  | "square"
+  | "sumup"
+  | "paypal"
+  | "sepa"
+  | "crypto"
+  | "installments"
 
 function checkoutErrorText(checkout: {
   payCardholderRequired: string
@@ -43,6 +60,9 @@ function checkoutErrorText(checkout: {
   payPaypalUnavailable: string
   paySquareUnavailable: string
   paySumupUnavailable: string
+  paySkrillUnavailable: string
+  paySkrillCardMaxNote: string
+  paySkrillIdealNlOnly: string
   orderError: string
 }, code: string): string {
   if (code === "cardholder_required") return checkout.payCardholderRequired
@@ -55,6 +75,9 @@ function checkoutErrorText(checkout: {
   if (code === "paypal_unavailable" || code === "paypal_start_failed") return checkout.payPaypalUnavailable
   if (code === "square_unavailable" || code === "square_start_failed") return checkout.paySquareUnavailable
   if (code === "sumup_unavailable" || code === "sumup_start_failed") return checkout.paySumupUnavailable
+  if (code === "skrill_card_limit") return checkout.paySkrillCardMaxNote
+  if (code === "skrill_ideal_nl_only") return checkout.paySkrillIdealNlOnly
+  if (code === "skrill_unavailable" || code === "skrill_start_failed") return checkout.paySkrillUnavailable
   return checkout.orderError
 }
 
@@ -69,17 +92,19 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
 
   const [payment, setPayment] = useState<PaymentId>(
-    STRIPE_CHECKOUT_ENABLED
-      ? "card"
-      : SQUARE_CHECKOUT_ENABLED
-        ? "square"
-        : SUMUP_CHECKOUT_ENABLED
-          ? "sumup"
-        : ALPPAY_CHECKOUT_ENABLED
-          ? "alppay"
-          : BANK_TRANSFER_CHECKOUT_ENABLED
-            ? "sepa"
-            : "installments",
+    SKRILL_CHECKOUT_ENABLED
+      ? "skrill_card"
+      : STRIPE_CHECKOUT_ENABLED
+        ? "card"
+        : SQUARE_CHECKOUT_ENABLED
+          ? "square"
+          : SUMUP_CHECKOUT_ENABLED
+            ? "sumup"
+            : ALPPAY_CHECKOUT_ENABLED
+              ? "alppay"
+              : BANK_TRANSFER_CHECKOUT_ENABLED
+                ? "sepa"
+                : "installments",
   )
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Netherlands")
@@ -93,6 +118,21 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   )
   const router = useRouter()
 
+  const shippingCents = computeShippingCents(subtotalCents, country)
+  const totalCents = subtotalCents - discountCents + shippingCents
+  const installmentsEligible = qualifiesForInstallments(totalCents)
+  const skrillCardEligible = totalCents > 0 && totalCents <= SKRILL_CARD_MAX_CENTS
+  const skrillIdealEligible = isSkrillIdealCountry(country)
+
+  useEffect(() => {
+    if (lines.length === 0) return
+    if (payment === "skrill_ideal" && !skrillIdealEligible) {
+      setPayment(skrillCardEligible ? "skrill_card" : bankTransferEnabled ? "sepa" : "installments")
+    } else if (payment === "skrill_card" && !skrillCardEligible) {
+      setPayment(skrillIdealEligible ? "skrill_ideal" : bankTransferEnabled ? "sepa" : "installments")
+    }
+  }, [lines.length, payment, skrillIdealEligible, skrillCardEligible, bankTransferEnabled])
+
   if (lines.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-4 rounded-lg border border-dashed border-border py-24 text-center">
@@ -102,11 +142,28 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     )
   }
 
- const shippingCents = computeShippingCents(subtotalCents, country)
- const totalCents = subtotalCents - discountCents + shippingCents
-  const installmentsEligible = qualifiesForInstallments(totalCents)
-
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
+    ...(SKRILL_CHECKOUT_ENABLED
+      ? [
+          {
+            id: "skrill_card" as const,
+            icon: CreditCard,
+            title: dict.checkout.paySkrillCard,
+            desc: skrillCardEligible ? dict.checkout.paySkrillCardDesc : dict.checkout.paySkrillCardMaxNote,
+            disabled: !skrillCardEligible,
+          },
+          ...(skrillIdealEligible
+            ? [
+                {
+                  id: "skrill_ideal" as const,
+                  icon: Landmark,
+                  title: dict.checkout.paySkrillIdeal,
+                  desc: dict.checkout.paySkrillIdealDesc,
+                },
+              ]
+            : []),
+        ]
+      : []),
     ...(STRIPE_CHECKOUT_ENABLED
       ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
       : []),
@@ -168,6 +225,17 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     if (payment === "alppay" && !ALPPAY_CHECKOUT_ENABLED) {
       setOrderError(dict.checkout.payAlppayUnavailable)
       return
+    }
+    if (isSkrillPayment(payment)) {
+      if (!SKRILL_CHECKOUT_ENABLED) {
+        setOrderError(dict.checkout.paySkrillUnavailable)
+        return
+      }
+      const skrillErr = skrillMethodError(payment, totalCents, country)
+      if (skrillErr) {
+        setOrderError(checkoutErrorText(dict.checkout, skrillErr))
+        return
+      }
     }
     if (payment === "paypal" && !isPaypalCheckoutEnabled()) {
       setOrderError(dict.checkout.payPaypalUnavailable)
@@ -305,7 +373,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
         {/* Payment method */}
         <section>
           <h2 className="font-heading text-lg font-bold text-foreground">{dict.checkout.paymentMethod}</h2>
-          {!STRIPE_CHECKOUT_ENABLED && !SQUARE_CHECKOUT_ENABLED && !SUMUP_CHECKOUT_ENABLED && !ALPPAY_CHECKOUT_ENABLED && (
+          {!SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED && !SQUARE_CHECKOUT_ENABLED && !SUMUP_CHECKOUT_ENABLED && !ALPPAY_CHECKOUT_ENABLED && (
             <p
               role="alert"
               className="mt-2.5 flex items-start gap-2 rounded-lg border border-destructive/35 bg-destructive/10 px-3.5 py-2.5 text-sm font-medium leading-relaxed text-destructive"
@@ -383,6 +451,16 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
           )}
 
           {/* Contextual panels per payment method */}
+          {payment === "skrill_card" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{dict.checkout.paySkrillCardNote}</p>
+            </div>
+          )}
+          {payment === "skrill_ideal" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{dict.checkout.paySkrillIdealNote}</p>
+            </div>
+          )}
           {payment === "square" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.paySquareNote}</p>

@@ -2,6 +2,7 @@ import Image from "next/image"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_METHODS_NOTE } from "@/lib/payments/stripe-availability"
+import { SKRILL_ACTIVE_METHODS_NOTE, SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED, BANK_TRANSFER_OFF_METHODS_NOTE } from "@/lib/payments/bank-transfer"
@@ -26,6 +27,17 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
+    ...(SKRILL_CHECKOUT_ENABLED
+      ? [
+          { icon: CreditCard, title: dict.checkout.paySkrillCard, desc: dict.checkout.paySkrillCardDesc },
+          {
+            icon: Landmark,
+            word: dict.checkout.paySkrillIdeal,
+            title: dict.checkout.paySkrillIdeal,
+            desc: dict.checkout.paySkrillIdealDesc,
+          },
+        ]
+      : []),
     ...(STRIPE_CHECKOUT_ENABLED
       ? [
           { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
@@ -94,15 +106,17 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
         ))}
       </div>
 
-      <div className="mt-8 rounded-lg border border-destructive/35 bg-destructive/10 p-5 text-sm font-medium leading-relaxed text-destructive">
+      <div className="mt-8 rounded-lg border border-border bg-secondary/40 p-5 text-sm leading-relaxed text-muted-foreground">
         <p>
           {methods.length === 0
             ? dict.checkout.payCardGatewayNotice
             : !BANK_TRANSFER_CHECKOUT_ENABLED
               ? BANK_TRANSFER_OFF_METHODS_NOTE[locale]
-              : !STRIPE_CHECKOUT_ENABLED
-                ? STRIPE_OFF_METHODS_NOTE[locale]
-                : dict.checkout.payMethodsNote}
+              : SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED
+                ? SKRILL_ACTIVE_METHODS_NOTE[locale]
+                : !STRIPE_CHECKOUT_ENABLED
+                  ? STRIPE_OFF_METHODS_NOTE[locale]
+                  : dict.checkout.payMethodsNote}
         </p>
       </div>
 

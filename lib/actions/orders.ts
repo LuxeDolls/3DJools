@@ -1,5 +1,6 @@
 "use server"
 
+import { randomUUID } from "node:crypto"
 import { headers } from "next/headers"
 import { after } from "next/server"
 import { auth } from "@/lib/auth"
@@ -23,6 +24,8 @@ import { toE164Phone } from "@/lib/payments/phone-country"
 import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
+import { isSkrillPayment, skrillMethodError } from "@/lib/payments/skrill-availability"
+import { appendSkrillTransactionId, createSkrillPayment, skrillConfigured } from "@/lib/payments/skrill"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import { squareConfigured } from "@/lib/payments/square"
@@ -43,12 +46,24 @@ import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schem
 const MAX_QTY = 20
 
 type CheckoutShipping = "standard"
-type CheckoutPayment = "card" | "alppay" | "paypal" | "square" | "sumup" | "sepa" | "crypto" | "installments"
+type CheckoutPayment =
+  | "card"
+  | "alppay"
+  | "skrill_card"
+  | "skrill_ideal"
+  | "paypal"
+  | "square"
+  | "sumup"
+  | "sepa"
+  | "crypto"
+  | "installments"
 
 // Maps the checkout selector id onto the persisted PaymentMethod enum.
 const PAYMENT_METHOD: Record<CheckoutPayment, PaymentMethod> = {
   card: "card",
   alppay: "alppay",
+  skrill_card: "skrill_card",
+  skrill_ideal: "skrill_ideal",
   paypal: "paypal",
   square: "square",
   sumup: "sumup",
@@ -137,6 +152,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
   if (input.payment === "square" && !squareConfigured()) return { ok: false, error: "square_unavailable" }
   if (input.payment === "sumup" && !sumupConfigured()) return { ok: false, error: "sumup_unavailable" }
+  if (isSkrillPayment(input.payment) && !skrillConfigured()) return { ok: false, error: "skrill_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
   const items: Array<Omit<NewOrderItemRow, "id" | "orderId">> = []
@@ -184,6 +200,10 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   const shippingCents = computeShippingCents(subtotalCents, input.country)
 
   const totalCents = subtotalCents - discountCents + shippingCents
+  if (isSkrillPayment(input.payment)) {
+    const skrillErr = skrillMethodError(input.payment, totalCents, input.country)
+    if (skrillErr) return { ok: false, error: skrillErr }
+  }
 
   const paymentMethod = PAYMENT_METHOD[input.payment] ?? "card"
   // Card, bank transfer and crypto stay unpaid until funds are confirmed.
@@ -192,6 +212,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     paymentMethod === "crypto" ||
     paymentMethod === "card" ||
     paymentMethod === "alppay" ||
+    paymentMethod === "skrill_card" ||
+    paymentMethod === "skrill_ideal" ||
     paymentMethod === "paypal" ||
     paymentMethod === "square" ||
     paymentMethod === "sumup"
@@ -335,6 +357,34 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       console.error("[v0] PayPal payment could not start:", err)
       await abandonUnpaidOrder(order.id)
       return { ok: false, error: "paypal_start_failed" }
+    }
+  }
+
+  if (isSkrillPayment(paymentMethod)) {
+    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
+    const transactionId = randomUUID()
+    await mergeOrderNotes(order.id, {
+      checkout_locale: locale,
+      skrill_transaction_id: transactionId,
+      skrill_transaction_ids: transactionId,
+    })
+    try {
+      const checkout = await createSkrillPayment({
+        method: paymentMethod,
+        orderNumber: order.orderNumber,
+        transactionId,
+        amountCents: totalCents,
+        locale,
+        email: input.email.trim(),
+        firstName: input.firstName.trim(),
+        lastName: input.lastName.trim(),
+        country: input.country.trim(),
+      })
+      paymentUrl = checkout.redirectUrl
+    } catch (err) {
+      console.error("[v0] Skrill payment could not start:", err)
+      await abandonUnpaidOrder(order.id)
+      return { ok: false, error: "skrill_start_failed" }
     }
   }
 
@@ -517,6 +567,57 @@ export async function startPaypalPayment(orderNumber: string, locale: string): P
   }
 }
 
+export type StartSkrillPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
+
+/** Opens a fresh Skrill Hosted Checkout session for an order that is still awaiting payment. */
+export async function startSkrillPayment(orderNumber: string, locale: string): Promise<StartSkrillPaymentResult> {
+  if (!skrillConfigured()) return { ok: false, error: "skrill_unavailable" }
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order || !isSkrillPayment(order.paymentMethod)) return { ok: false, error: "not_found" }
+  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
+
+  const methodErr = skrillMethodError(order.paymentMethod, order.totalCents, order.shippingCountry)
+  if (methodErr) return { ok: false, error: methodErr }
+
+  const notes = parseOrderNotes(order.notes)
+  const safeLocale = isLocale(locale)
+    ? locale
+    : notes.checkout_locale && isLocale(notes.checkout_locale)
+      ? notes.checkout_locale
+      : "en"
+  const holder = splitFullName(order.shippingName || "")
+  const firstName = holder?.firstName || order.shippingName?.trim() || "Customer"
+  const lastName = holder?.lastName || firstName
+  const transactionId = randomUUID()
+
+  try {
+    const checkout = await createSkrillPayment({
+      method: order.paymentMethod,
+      orderNumber: order.orderNumber,
+      transactionId,
+      amountCents: order.totalCents,
+      locale: safeLocale,
+      email: order.email,
+      firstName,
+      lastName,
+      country: order.shippingCountry ?? "Netherlands",
+    })
+    await mergeOrderNotes(order.id, {
+      skrill_transaction_id: transactionId,
+      skrill_transaction_ids: appendSkrillTransactionId(
+        notes.skrill_transaction_ids ?? notes.skrill_transaction_id,
+        transactionId,
+      ),
+      skrill_last_status: undefined,
+      checkout_locale: safeLocale,
+    })
+    return { ok: true, paymentUrl: checkout.redirectUrl }
+  } catch (err) {
+    console.error("[v0] Skrill payment retry failed:", err)
+    return { ok: false, error: "skrill_start_failed" }
+  }
+}
+
 export type SwitchPaymentMethodResult = { ok: true } | { ok: false; error: string }
 
 // Methods a customer can self-serve switch to from the order page, e.g. after a
@@ -525,6 +626,8 @@ export type SwitchPaymentMethodResult = { ok: true } | { ok: false; error: strin
 const SWITCHABLE_METHODS: Record<PaymentMethod, boolean> = {
   card: true,
   alppay: true,
+  skrill_card: true,
+  skrill_ideal: true,
   paypal: true,
   square: true,
   sumup: true,
@@ -533,9 +636,17 @@ const SWITCHABLE_METHODS: Record<PaymentMethod, boolean> = {
   installments: false,
 }
 
-function isMethodAvailable(method: PaymentMethod, email: string): boolean {
+function isMethodAvailable(
+  method: PaymentMethod,
+  email: string,
+  totalCents: number,
+  country: string | null | undefined,
+): boolean {
   if (method === "card") return stripeConfigured()
   if (method === "alppay") return ALPPAY_CHECKOUT_ENABLED && alppayConfigured()
+  if (method === "skrill_card" || method === "skrill_ideal") {
+    return skrillConfigured() && !skrillMethodError(method, totalCents, country)
+  }
   if (method === "paypal") return paypalConfigured()
   if (method === "square") return squareConfigured()
   if (method === "sumup") return sumupConfigured()
@@ -556,7 +667,9 @@ export async function switchOrderPaymentMethod(orderNumber: string, method: Paym
     return { ok: false, error: "invalid_status" }
   }
   if (method === order.paymentMethod) return { ok: true }
-  if (!isMethodAvailable(method, order.email)) return { ok: false, error: "method_unavailable" }
+  if (!isMethodAvailable(method, order.email, order.totalCents, order.shippingCountry)) {
+    return { ok: false, error: "method_unavailable" }
+  }
 
   const previousMethod = order.paymentMethod
   const updated = await updateOrderPaymentMethod(order.id, method)

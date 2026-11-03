@@ -146,15 +146,21 @@ export async function notifyOrderStatusChange(
     order.status === "paid" &&
     (order.paymentMethod === "card" ||
       order.paymentMethod === "alppay" ||
+      order.paymentMethod === "skrill_card" ||
+      order.paymentMethod === "skrill_ideal" ||
       order.paymentMethod === "paypal" ||
       order.paymentMethod === "square" ||
       order.paymentMethod === "sumup")
   const title =
     order.paymentMethod === "paypal"
       ? "PayPal payment received"
-      : order.paymentMethod === "alppay"
-        ? "Visa/Mastercard payment received"
-        : "Card payment received"
+      : order.paymentMethod === "skrill_ideal"
+        ? "iDEAL payment received (Skrill)"
+        : order.paymentMethod === "skrill_card"
+          ? "Visa/Mastercard payment received (Skrill)"
+          : order.paymentMethod === "alppay"
+            ? "Visa/Mastercard payment received"
+            : "Card payment received"
   const lines = [
     providerPaid
       ? `Payment confirmed: ${previousStatus} → ${order.status}`
