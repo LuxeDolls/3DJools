@@ -6,6 +6,19 @@ import { isSkrillTransactionId } from "@/lib/payments/skrill"
 
 const MAX_BODY_CHARS = 16_000
 const SUPPORTED_STATUSES = new Set(["2", "0", "-1", "-2", "-3"])
+const CRITICAL_FIELDS = new Set([
+  "merchant_id",
+  "transaction_id",
+  "mb_transaction_id",
+  "mb_amount",
+  "mb_currency",
+  "status",
+  "md5sig",
+  "pay_to_email",
+  "amount",
+  "currency",
+  "payment_type",
+])
 
 export type SkrillStatusValue = "2" | "0" | "-1" | "-2" | "-3"
 
@@ -29,10 +42,12 @@ export type ParseSkrillFormResult =
 
 export function parseEuroAmountCents(raw: string | undefined): number | null {
   const trimmed = raw?.trim() ?? ""
-  if (!/^\d+(?:\.\d{1,2})?$/.test(trimmed)) return null
+  if (!/^\d+(?:\.\d{1,4})?$/.test(trimmed)) return null
   const num = Number(trimmed)
   if (!Number.isFinite(num) || num <= 0) return null
-  const cents = Math.round(num * 100)
+  const exactCents = num * 100
+  const cents = Math.round(exactCents)
+  if (Math.abs(exactCents - cents) > 1e-6) return null
   return cents > 0 ? cents : null
 }
 
@@ -44,6 +59,7 @@ export function parseSkrillStatusForm(rawBody: string): ParseSkrillFormResult {
   const params = new URLSearchParams(rawBody)
   const seen = new Set<string>()
   for (const [key] of params.entries()) {
+    if (!CRITICAL_FIELDS.has(key)) continue
     if (seen.has(key)) {
       return { ok: false, httpStatus: 400, reason: "duplicate_fields" }
     }
@@ -66,7 +82,6 @@ export function parseSkrillStatusForm(rawBody: string): ParseSkrillFormResult {
   if (
     !merchant_id ||
     !transaction_id ||
-    !mb_transaction_id ||
     !mb_amount ||
     !mb_currency ||
     !status ||
@@ -78,6 +93,10 @@ export function parseSkrillStatusForm(rawBody: string): ParseSkrillFormResult {
 
   if (!SUPPORTED_STATUSES.has(status)) {
     return { ok: false, httpStatus: 400, reason: "unsupported_status" }
+  }
+
+  if (status === "2" && !mb_transaction_id) {
+    return { ok: false, httpStatus: 400, reason: "missing_mb_transaction_id" }
   }
 
   if (!isSkrillTransactionId(transaction_id)) {

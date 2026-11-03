@@ -8,6 +8,17 @@ export async function POST(request: NextRequest) {
   const contentType = request.headers.get("content-type")
   try {
     const result = await confirmSkrillNotification(rawBody, contentType)
+    if (!result.ok) {
+      const params = new URLSearchParams(rawBody)
+      console.warn("[skrill-webhook] rejected notification:", {
+        httpStatus: result.httpStatus,
+        reason: result.reason,
+        status: params.get("status"),
+        transaction_id: params.get("transaction_id"),
+        has_mb_transaction_id: Boolean(params.get("mb_transaction_id")?.trim()),
+        keys: Array.from(params.keys()),
+      })
+    }
     return new NextResponse(result.ok ? "OK" : (result.reason ?? "error"), {
       status: result.httpStatus,
       headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
