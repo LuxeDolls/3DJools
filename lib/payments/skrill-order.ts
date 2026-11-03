@@ -85,7 +85,11 @@ export async function confirmSkrillNotification(
     return { ok: false, httpStatus: 409, reason: "card_limit_exceeded" }
   }
 
-  if (notes.skrill_payment_id && notes.skrill_payment_id !== payload.mb_transaction_id) {
+  if (
+    notes.skrill_payment_id &&
+    payload.mb_transaction_id &&
+    notes.skrill_payment_id !== payload.mb_transaction_id
+  ) {
     return { ok: false, httpStatus: 409, reason: "payment_id_mismatch" }
   }
 
@@ -111,9 +115,20 @@ export async function confirmSkrillNotification(
     return { ok: true, httpStatus: 200 }
   }
 
+  if (payload.status === "0") {
+    if (order.status === "awaiting_payment") {
+      await mergeOrderNotes(order.id, {
+        ...(payload.mb_transaction_id ? { skrill_payment_id: payload.mb_transaction_id } : {}),
+        skrill_last_status: "PENDING",
+      })
+    }
+    return { ok: true, httpStatus: 200 }
+  }
+
   if (payload.status === "-1" || payload.status === "-2") {
     if (order.status === "awaiting_payment") {
       await mergeOrderNotes(order.id, {
+        ...(payload.mb_transaction_id ? { skrill_payment_id: payload.mb_transaction_id } : {}),
         skrill_last_status: payload.status === "-1" ? "CANCELLED" : "FAILED",
       })
     }
