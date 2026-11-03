@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
+import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -269,6 +270,15 @@ const CARD_OFF_TERMS: Record<Locale, string> = {
   nl: "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Betalen met kaart is tijdelijk niet beschikbaar. Wij aanvaarden SEPA-overschrijving en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden.",
 }
 
+const SKRILL_TERMS: Record<Locale, string> = {
+  en: "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard up to €5,000 per order), iDEAL (for orders shipped to the Netherlands), SEPA bank transfer and interest-free instalments as described on our payment methods page. Card and iDEAL payments open Skrill's secure payment page. We never see your card number or bank login.",
+  de: "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard bis 5.000 € pro Bestellung), iDEAL (für Bestellungen in die Niederlande), SEPA-Überweisung und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Karten- und iDEAL-Zahlungen werden auf der sicheren Zahlungsseite von Skrill abgewickelt. Wir sehen weder Ihre Kartennummer noch Ihre Bankzugangsdaten.",
+  fr: "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard jusqu'à 5 000 € par commande), iDEAL (pour les commandes aux Pays-Bas), le virement SEPA et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte et iDEAL s'ouvrent sur la page de paiement sécurisée de Skrill. Nous ne voyons jamais votre numéro de carte ni vos identifiants bancaires.",
+  it: "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard fino a 5.000 € per ordine), iDEAL (per gli ordini nei Paesi Bassi), bonifico SEPA e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta e iDEAL avvengono sulla pagina di pagamento sicura di Skrill. Non vediamo mai il numero della carta né le credenziali bancarie.",
+  es: "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard hasta 5.000 € por pedido), iDEAL (para pedidos en los Países Bajos), transferencia SEPA y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta e iDEAL se realizan en la página de pago segura de Skrill. Nunca vemos el número de tu tarjeta ni tus credenciales bancarias.",
+  nl: "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland), SEPA-overschrijving en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaart- en iDEAL-betalingen worden uitgevoerd op de beveiligde betaalpagina van Skrill. Wij zien uw kaartnummer of bankgegevens nooit.",
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
@@ -283,7 +293,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
   const source = COPY[locale]
   const t = fillCompany({
     ...source,
-    s4: STRIPE_CHECKOUT_ENABLED ? source.s4 : CARD_OFF_TERMS[locale],
+    s4: STRIPE_CHECKOUT_ENABLED ? source.s4 : SKRILL_CHECKOUT_ENABLED ? SKRILL_TERMS[locale] : CARD_OFF_TERMS[locale],
   })
 
   return (

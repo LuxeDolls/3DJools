@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
+import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -39,15 +40,25 @@ const CARD_OFF_FAQ: Record<Locale, string> = {
   nl: "SEPA-overschrijving en renteloze termijnen. Betalen met kaart is tijdelijk niet beschikbaar. De details staan op onze ",
 }
 
+const SKRILL_FAQ: Record<Locale, string> = {
+  en: "Visa, Mastercard (up to €5,000 per order), iDEAL (for orders shipped to the Netherlands), SEPA bank transfer and interest-free instalments. Card and iDEAL payments open Skrill's secure payment page. Details are on our ",
+  de: "Visa, Mastercard (bis 5.000 € pro Bestellung), iDEAL (für Bestellungen in die Niederlande), SEPA-Überweisung und zinsfreie Ratenzahlung. Karten- und iDEAL-Zahlungen öffnen die sichere Zahlungsseite von Skrill. Einzelheiten stehen auf unserer Seite ",
+  fr: "Visa, Mastercard (jusqu'à 5 000 € par commande), iDEAL (pour les commandes aux Pays-Bas), virement SEPA et paiement en plusieurs fois sans intérêt. Les paiements par carte et iDEAL ouvrent la page de paiement sécurisée de Skrill. Les détails figurent sur notre ",
+  it: "Visa, Mastercard (fino a 5.000 € per ordine), iDEAL (per gli ordini nei Paesi Bassi), bonifico SEPA e rate senza interessi. I pagamenti con carta e iDEAL aprono la pagina di pagamento sicura di Skrill. I dettagli sono sulla nostra ",
+  es: "Visa, Mastercard (hasta 5.000 € por pedido), iDEAL (para pedidos en los Países Bajos), transferencia SEPA y plazos sin intereses. Los pagos con tarjeta e iDEAL abren la página de pago segura de Skrill. Los detalles están en nuestra ",
+  nl: "Visa, Mastercard (tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland), SEPA-overschrijving en renteloze termijnen. Kaart- en iDEAL-betalingen openen de beveiligde betaalpagina van Skrill. De details staan op onze ",
+}
+
 function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {
   if (STRIPE_CHECKOUT_ENABLED) return copy
+  const replacement = SKRILL_CHECKOUT_ENABLED ? SKRILL_FAQ[locale] : CARD_OFF_FAQ[locale]
   return {
     ...copy,
     groups: copy.groups.map((group) => ({
       ...group,
       items: group.items.map((item) =>
         item.link?.href === "/payment-methods"
-          ? { ...item, link: { ...item.link, before: CARD_OFF_FAQ[locale] } }
+          ? { ...item, link: { ...item.link, before: replacement } }
           : item,
       ),
     })),

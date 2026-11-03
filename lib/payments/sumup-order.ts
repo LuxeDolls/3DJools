@@ -1,5 +1,6 @@
 import "server-only"
 
+import { isLocale } from "@/lib/i18n/config"
 import { localizedPath } from "@/lib/i18n/paths"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import { getOrderByOrderNumber, mergeOrderNotes, updateOrderStatus } from "@/lib/orders/queries"
@@ -49,7 +50,8 @@ export async function openSumupCheckout(input: {
   amountCents: number
   locale: string
 }): Promise<{ url: string; checkoutId: string }> {
-  const orderPath = localizedPath(input.locale, `/order/${input.orderNumber}`)
+  const locale = isLocale(input.locale) ? input.locale : "en"
+  const orderPath = localizedPath(locale, `/order/${input.orderNumber}`)
   const checkout = await createSumupCheckout({
     orderNumber: input.orderNumber,
     amountCents: input.amountCents,

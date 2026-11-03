@@ -6,6 +6,7 @@ import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
+import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import type { Locale } from "@/lib/i18n/config"
@@ -54,6 +55,12 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   const payments = [
+    ...(SKRILL_CHECKOUT_ENABLED
+      ? [
+          { icon: CreditCard, label: dict.checkout.paySkrillCard },
+          { icon: Landmark, label: dict.checkout.paySkrillIdeal, word: dict.checkout.paySkrillIdeal },
+        ]
+      : []),
     ...(SQUARE_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.paySquare }] : []),
     ...(STRIPE_CHECKOUT_ENABLED
       ? [

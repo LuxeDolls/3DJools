@@ -38,6 +38,8 @@ function siteUrl(): string {
 const PAYMENT_LABELS: Record<string, string> = {
   card: "Card",
   alppay: "Visa / Mastercard",
+  skrill_card: "Visa / Mastercard (Skrill)",
+  skrill_ideal: "iDEAL (Skrill)",
   paypal: "PayPal",
   bank_transfer: "Bank transfer (SEPA)",
   crypto: "Cryptocurrency",
@@ -68,7 +70,8 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const awaitingPayment = order.status === "awaiting_payment"
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
-  const isCard = order.paymentMethod === "card" || order.paymentMethod === "alppay"
+  const isCard = order.paymentMethod === "card" || order.paymentMethod === "alppay" || order.paymentMethod === "skrill_card"
+  const isIdeal = order.paymentMethod === "skrill_ideal"
   const isSquare = order.paymentMethod === "square"
   const isSumup = order.paymentMethod === "sumup"
   const isPaypal = order.paymentMethod === "paypal"
@@ -117,6 +120,9 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
       : null,
     awaitingPayment && isCard
       ? `\nCard payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
+      : null,
+    awaitingPayment && isIdeal
+      ? `\niDEAL payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
       : null,
     awaitingPayment && isSquare
       ? `\nCard payment of ${euros(order.totalCents)} is not confirmed yet. Open your order page to pay by Visa or Mastercard. The charge is in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA. If you have already paid, wait for the status to update and do not pay twice.`
@@ -171,6 +177,13 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     </div>`
       : ""
 
+  const idealHtml =
+    awaitingPayment && isIdeal
+      ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
+      <p style="margin:0;font-size:14px;color:#7a4b00">iDEAL payment of <strong>${euros(order.totalCents)}</strong> is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.</p>
+    </div>`
+      : ""
+
   const squareHtml =
     awaitingPayment && isSquare
       ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
@@ -207,6 +220,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     ${sepaHtml}
     ${cryptoHtml}
     ${cardHtml}
+    ${idealHtml}
     ${squareHtml}
     ${sumupHtml}
     ${paypalHtml}
