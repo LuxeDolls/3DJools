@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/i18n/config"
 
 // Set to true to show bank transfer (SEPA) checkout.
-export const BANK_TRANSFER_CHECKOUT_ENABLED = true
+export const BANK_TRANSFER_CHECKOUT_ENABLED = false
 
 const BANK_TRANSFER_ALLOWED_EMAILS = new Set<string>([])
 
@@ -12,21 +12,21 @@ export function isBankTransferCheckoutEnabled(email?: string | null) {
 }
 
 export const BANK_TRANSFER_OFF_USP: Record<Locale, string> = {
-  en: "Card payment or 4× instalments. Bank transfer (SEPA) is temporarily unavailable.",
-  de: "Kartenzahlung oder 4× Raten. Banküberweisung (SEPA) ist vorübergehend nicht verfügbar.",
-  fr: "Paiement par carte ou 4× sans frais. Le virement bancaire (SEPA) est temporairement indisponible.",
-  it: "Pagamento con carta o 4× senza interessi. Il bonifico bancario (SEPA) è temporaneamente non disponibile.",
-  es: "Pago con tarjeta o 4× sin intereses. La transferencia bancaria (SEPA) no está disponible temporalmente.",
-  nl: "Betalen met kaart of 4× rentevrij. Bankoverschrijving (SEPA) is tijdelijk niet beschikbaar.",
+  en: "Visa, Mastercard, iDEAL (NL) or 4× interest-free instalments.",
+  de: "Visa, Mastercard, iDEAL (NL) oder 4× zinsfreie Raten.",
+  fr: "Visa, Mastercard, iDEAL (NL) ou 4× sans frais.",
+  it: "Visa, Mastercard, iDEAL (NL) o 4× senza interessi.",
+  es: "Visa, Mastercard, iDEAL (NL) o 4× sin intereses.",
+  nl: "Visa, Mastercard, iDEAL (NL) of 4× rentevrij.",
 }
 
 export const BANK_TRANSFER_OFF_METHODS_NOTE: Record<Locale, string> = {
-  en: "All prices are shown in euro (EUR) and include VAT where applicable. Card payments are charged on a secure payment page. Apple Pay, Link, Bancontact and Klarna are available when you pay by card. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) is temporarily unavailable.",
-  de: "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Kartenzahlungen werden auf einer sicheren Zahlungsseite abgewickelt. Apple Pay, Link, Bancontact und Klarna stehen bei Kartenzahlung zur Verfügung. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate. Banküberweisung (SEPA) ist vorübergehend nicht verfügbar.",
-  fr: "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Les paiements par carte sont effectués sur une page sécurisée. Apple Pay, Link, Bancontact et Klarna sont disponibles lors du paiement par carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Le virement bancaire (SEPA) est temporairement indisponible.",
-  it: "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con carta avvengono su una pagina sicura. Apple Pay, Link, Bancontact e Klarna sono disponibili pagando con carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Il bonifico bancario (SEPA) è temporaneamente non disponibile.",
-  es: "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Los pagos con tarjeta se realizan en una página segura. Apple Pay, Link, Bancontact y Klarna están disponibles al pagar con tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, durante dos meses. La transferencia bancaria (SEPA) no está disponible temporalmente.",
-  nl: "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen verlopen via een beveiligde betaalpagina. Apple Pay, Link, Bancontact en Klarna zijn beschikbaar bij kaartbetaling. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bankoverschrijving (SEPA) is tijdelijk niet beschikbaar.",
+  en: "All prices are shown in euro (EUR) and include VAT where applicable. Visa and Mastercard payments (up to €5,000 per order) and iDEAL payments (for orders shipped to the Netherlands) are processed in euros on Skrill's secure hosted payment page. We never see your card number or bank login. Instalment plans split your order into four equal, interest-free payments over two months.",
+  de: "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Zahlungen mit Visa und Mastercard (bis zu 5.000 € pro Bestellung) sowie iDEAL (für Bestellungen in die Niederlande) werden in Euro auf der sicheren Zahlungsseite von Skrill abgewickelt. Wir sehen weder Ihre Kartennummer noch Ihre Bankzugangsdaten. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate.",
+  fr: "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Les paiements par Visa et Mastercard (jusqu'à 5 000 € par commande) ainsi qu'iDEAL (pour les commandes aux Pays-Bas) sont traités en euros sur la page de paiement sécurisée de Skrill. Nous ne voyons jamais votre numéro de carte ni vos identifiants bancaires. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois.",
+  it: "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con Visa e Mastercard (fino a 5.000 € per ordine) e iDEAL (per gli ordini nei Paesi Bassi) vengono elaborati in euro sulla pagina di pagamento sicura di Skrill. Non vediamo mai il numero della carta né le credenziali bancarie. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi.",
+  es: "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Los pagos con Visa y Mastercard (hasta 5.000 € por pedido) e iDEAL (para pedidos en los Países Bajos) se procesan en euros en la página de pago segura de Skrill. Nunca vemos el número de tu tarjeta ni tus credenciales bancarias. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses.",
+  nl: "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Betalingen met Visa en Mastercard (tot € 5.000 per bestelling) en iDEAL (voor bestellingen binnen Nederland) worden in euro verwerkt op de beveiligde betaalpagina van Skrill. Wij zien uw kaartnummer of bankgegevens nooit. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden.",
 }
 
 // SEPA receiving account (Finom), shown at checkout and on order confirmation for

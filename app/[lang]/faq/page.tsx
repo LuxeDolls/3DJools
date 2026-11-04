@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
+import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -41,12 +42,24 @@ const CARD_OFF_FAQ: Record<Locale, string> = {
 }
 
 const SKRILL_FAQ: Record<Locale, string> = {
-  en: "Visa, Mastercard (up to €5,000 per order), iDEAL (for orders shipped to the Netherlands), SEPA bank transfer and interest-free instalments. Card and iDEAL payments open Skrill's secure payment page. Details are on our ",
-  de: "Visa, Mastercard (bis 5.000 € pro Bestellung), iDEAL (für Bestellungen in die Niederlande), SEPA-Überweisung und zinsfreie Ratenzahlung. Karten- und iDEAL-Zahlungen öffnen die sichere Zahlungsseite von Skrill. Einzelheiten stehen auf unserer Seite ",
-  fr: "Visa, Mastercard (jusqu'à 5 000 € par commande), iDEAL (pour les commandes aux Pays-Bas), virement SEPA et paiement en plusieurs fois sans intérêt. Les paiements par carte et iDEAL ouvrent la page de paiement sécurisée de Skrill. Les détails figurent sur notre ",
-  it: "Visa, Mastercard (fino a 5.000 € per ordine), iDEAL (per gli ordini nei Paesi Bassi), bonifico SEPA e rate senza interessi. I pagamenti con carta e iDEAL aprono la pagina di pagamento sicura di Skrill. I dettagli sono sulla nostra ",
-  es: "Visa, Mastercard (hasta 5.000 € por pedido), iDEAL (para pedidos en los Países Bajos), transferencia SEPA y plazos sin intereses. Los pagos con tarjeta e iDEAL abren la página de pago segura de Skrill. Los detalles están en nuestra ",
-  nl: "Visa, Mastercard (tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland), SEPA-overschrijving en renteloze termijnen. Kaart- en iDEAL-betalingen openen de beveiligde betaalpagina van Skrill. De details staan op onze ",
+  en: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard (up to €5,000 per order), iDEAL (for orders shipped to the Netherlands), SEPA bank transfer and interest-free instalments. Card and iDEAL payments open Skrill's secure payment page. Details are on our "
+    : "Visa, Mastercard (up to €5,000 per order), iDEAL (for orders shipped to the Netherlands) and interest-free instalments. Card and iDEAL payments open Skrill's secure payment page. Details are on our ",
+  de: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard (bis 5.000 € pro Bestellung), iDEAL (für Bestellungen in die Niederlande), SEPA-Überweisung und zinsfreie Ratenzahlung. Karten- und iDEAL-Zahlungen öffnen die sichere Zahlungsseite von Skrill. Einzelheiten stehen auf unserer Seite "
+    : "Visa, Mastercard (bis 5.000 € pro Bestellung), iDEAL (für Bestellungen in die Niederlande) und zinsfreie Ratenzahlung. Karten- und iDEAL-Zahlungen öffnen die sichere Zahlungsseite von Skrill. Einzelheiten stehen auf unserer Seite ",
+  fr: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard (jusqu'à 5 000 € par commande), iDEAL (pour les commandes aux Pays-Bas), virement SEPA et paiement en plusieurs fois sans intérêt. Les paiements par carte et iDEAL ouvrent la page de paiement sécurisée de Skrill. Les détails figurent sur notre "
+    : "Visa, Mastercard (jusqu'à 5 000 € par commande), iDEAL (pour les commandes aux Pays-Bas) et paiement en plusieurs fois sans intérêt. Les paiements par carte et iDEAL ouvrent la page de paiement sécurisée de Skrill. Les détails figurent sur notre ",
+  it: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard (fino a 5.000 € per ordine), iDEAL (per gli ordini nei Paesi Bassi), bonifico SEPA e rate senza interessi. I pagamenti con carta e iDEAL aprono la pagina di pagamento sicura di Skrill. I dettagli sono sulla nostra "
+    : "Visa, Mastercard (fino a 5.000 € per ordine), iDEAL (per gli ordini nei Paesi Bassi) e rate senza interessi. I pagamenti con carta e iDEAL aprono la pagina di pagamento sicura di Skrill. I dettagli sono sulla nostra ",
+  es: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard (hasta 5.000 € por pedido), iDEAL (para pedidos en los Países Bajos), transferencia SEPA y plazos sin intereses. Los pagos con tarjeta e iDEAL abren la página de pago segura de Skrill. Los detalles están en nuestra "
+    : "Visa, Mastercard (hasta 5.000 € por pedido), iDEAL (para pedidos en los Países Bajos) y plazos sin intereses. Los pagos con tarjeta e iDEAL abren la página de pago segura de Skrill. Los detalles están en nuestra ",
+  nl: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard (tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland), SEPA-overschrijving en renteloze termijnen. Kaart- en iDEAL-betalingen openen de beveiligde betaalpagina van Skrill. De details staan op onze "
+    : "Visa, Mastercard (tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland) en renteloze termijnen. Kaart- en iDEAL-betalingen openen de beveiligde betaalpagina van Skrill. De details staan op onze ",
 }
 
 function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {
