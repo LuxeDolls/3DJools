@@ -30,6 +30,8 @@ import {
   isSkrillIdealCountry,
   isSkrillPayment,
 } from "@/lib/payments/skrill-availability"
+import { ZEN_CHECKOUT_ENABLED, ZEN_COPY } from "@/lib/payments/zen-availability"
+import { syncZenOrderStatus } from "@/lib/payments/zen-order"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
@@ -47,13 +49,20 @@ export default async function OrderConfirmationPage({
   searchParams,
 }: {
   params: Promise<{ lang: string; orderNumber: string }>
-  searchParams: Promise<{ paypal?: string; stripe?: string; alppay?: string; sumup?: string; skrill?: string }>
+  searchParams: Promise<{ paypal?: string; stripe?: string; alppay?: string; sumup?: string; skrill?: string; zen?: string }>
 }) {
   const { lang, orderNumber } = await params
-  const { paypal, stripe, alppay, sumup, skrill } = await searchParams
+  const { paypal, stripe, alppay, sumup, skrill, zen } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
-  const order = await getOrderByOrderNumber(decodeURIComponent(orderNumber))
+  const decodedOrderNumber = decodeURIComponent(orderNumber)
+  let order = await getOrderByOrderNumber(decodedOrderNumber)
+  if (order && order.paymentMethod === "zen" && order.status === "awaiting_payment") {
+    const synced = await syncZenOrderStatus(order)
+    if (synced === "paid") {
+      order = (await getOrderByOrderNumber(decodedOrderNumber)) ?? order
+    }
+  }
 
   if (!order) {
     return (
@@ -79,9 +88,11 @@ export default async function OrderConfirmationPage({
   const personalDiscountCents = Number(notes.personal_discount_cents || 0)
   const discountGap = order.subtotalCents + order.shippingCents - order.totalCents
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
+  const zenCopy = ZEN_COPY[locale]
   const paymentLabels: Record<PaymentMethod, string> = {
     card: dict.checkout.payCard,
     alppay: dict.checkout.payAlppay,
+    zen: zenCopy.title,
     skrill_card: dict.checkout.paySkrillCard,
     skrill_ideal: dict.checkout.paySkrillIdeal,
     paypal: dict.checkout.payPaypal,
@@ -111,6 +122,7 @@ export default async function OrderConfirmationPage({
   // only for methods that are actually configured right now.
   const canSwitchPayment = status === "awaiting_payment" || status === "reviewing_payment"
   const rawSwitchOptions: Array<{ method: PaymentMethod; label: string } | false> = [
+    ZEN_CHECKOUT_ENABLED && { method: "zen", label: zenCopy.title },
     SKRILL_CHECKOUT_ENABLED &&
       order.totalCents <= SKRILL_CARD_MAX_CENTS && {
         method: "skrill_card",
@@ -135,9 +147,10 @@ export default async function OrderConfirmationPage({
       )
     : []
 
-  const shouldClearCart = isSkrillPayment(order.paymentMethod)
-    ? status === "paid" || status === "processing" || status === "shipped" || status === "delivered"
-    : true
+  const shouldClearCart =
+    isSkrillPayment(order.paymentMethod) || order.paymentMethod === "zen"
+      ? status === "paid" || status === "processing" || status === "shipped" || status === "delivered"
+      : true
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -381,6 +394,26 @@ export default async function OrderConfirmationPage({
             ) : (
               <p className="mt-2">{dict.checkout.paySquareUnavailable}</p>
             )}
+          </div>
+        )}
+
+        {order.paymentMethod === "zen" && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            {ZEN_CHECKOUT_ENABLED ? <p>{zenCopy.note}</p> : <p>{zenCopy.unavailable}</p>}
+            {zen === "cancelled" || notes.zen_last_status === "CANCELLED" ? (
+              <p className="mt-2 text-destructive">{zenCopy.cancelled}</p>
+            ) : zen === "failed" || notes.zen_last_status === "REJECTED" ? (
+              <p className="mt-2 text-destructive">{zenCopy.failed}</p>
+            ) : null}
+            {ZEN_CHECKOUT_ENABLED ? (
+              <CardPayButton
+                orderNumber={order.orderNumber}
+                locale={locale}
+                method="zen"
+                label={zenCopy.title}
+                errorLabel={zenCopy.unavailable}
+              />
+            ) : null}
           </div>
         )}
 

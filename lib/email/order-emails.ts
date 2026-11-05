@@ -38,6 +38,7 @@ function siteUrl(): string {
 const PAYMENT_LABELS: Record<string, string> = {
   card: "Card",
   alppay: "Visa / Mastercard",
+  zen: "Visa / Mastercard (ZEN.COM)",
   skrill_card: "Visa / Mastercard (Skrill)",
   skrill_ideal: "iDEAL (Skrill)",
   paypal: "PayPal",
@@ -70,7 +71,11 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const awaitingPayment = order.status === "awaiting_payment"
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
-  const isCard = order.paymentMethod === "card" || order.paymentMethod === "alppay" || order.paymentMethod === "skrill_card"
+  const isCard =
+    order.paymentMethod === "card" ||
+    order.paymentMethod === "alppay" ||
+    order.paymentMethod === "zen" ||
+    order.paymentMethod === "skrill_card"
   const isIdeal = order.paymentMethod === "skrill_ideal"
   const isSquare = order.paymentMethod === "square"
   const isSumup = order.paymentMethod === "sumup"

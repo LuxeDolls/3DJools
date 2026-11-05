@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/i18n/config"
 import { countryCode } from "@/lib/payments/country-codes"
 
-export const SKRILL_CHECKOUT_ENABLED = true
+export const SKRILL_CHECKOUT_ENABLED = false
 
 export const SKRILL_MERCHANT_ID = "362079454"
 export const SKRILL_RECEIVING_EMAIL = "predaj@mrpool.sk"

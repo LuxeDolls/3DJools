@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
+import { ZEN_CHECKOUT_ENABLED } from "@/lib/payments/zen-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
@@ -62,9 +63,34 @@ const SKRILL_FAQ: Record<Locale, string> = {
     : "Visa, Mastercard (tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland) en renteloze termijnen. Kaart- en iDEAL-betalingen openen de beveiligde betaalpagina van Skrill. De details staan op onze ",
 }
 
+const ZEN_FAQ: Record<Locale, string> = {
+  en: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard, SEPA bank transfer and interest-free instalments. Card payments open ZEN.COM's secure payment page. Details are on our "
+    : "Visa, Mastercard and interest-free instalments. Card payments open ZEN.COM's secure payment page. Details are on our ",
+  de: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard, SEPA-Überweisung und zinsfreie Ratenzahlung. Kartenzahlungen öffnen die sichere Zahlungsseite von ZEN.COM. Einzelheiten stehen auf unserer Seite "
+    : "Visa, Mastercard und zinsfreie Ratenzahlung. Kartenzahlungen öffnen die sichere Zahlungsseite von ZEN.COM. Einzelheiten stehen auf unserer Seite ",
+  fr: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard, virement SEPA et paiement en plusieurs fois sans intérêt. Les paiements par carte ouvrent la page de paiement sécurisée de ZEN.COM. Les détails figurent sur notre "
+    : "Visa, Mastercard et paiement en plusieurs fois sans intérêt. Les paiements par carte ouvrent la page de paiement sécurisée de ZEN.COM. Les détails figurent sur notre ",
+  it: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard, bonifico SEPA e rate senza interessi. I pagamenti con carta aprono la pagina di pagamento sicura di ZEN.COM. I dettagli sono sulla nostra "
+    : "Visa, Mastercard e rate senza interessi. I pagamenti con carta aprono la pagina di pagamento sicura di ZEN.COM. I dettagli sono sulla nostra ",
+  es: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard, transferencia SEPA y plazos sin intereses. Los pagos con tarjeta abren la página de pago segura de ZEN.COM. Los detalles están en nuestra "
+    : "Visa, Mastercard y plazos sin intereses. Los pagos con tarjeta abren la página de pago segura de ZEN.COM. Los detalles están en nuestra ",
+  nl: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Visa, Mastercard, SEPA-overschrijving en renteloze termijnen. Kaartbetalingen openen de beveiligde betaalpagina van ZEN.COM. De details staan op onze "
+    : "Visa, Mastercard en renteloze termijnen. Kaartbetalingen openen de beveiligde betaalpagina van ZEN.COM. De details staan op onze ",
+}
+
 function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {
   if (STRIPE_CHECKOUT_ENABLED) return copy
-  const replacement = SKRILL_CHECKOUT_ENABLED ? SKRILL_FAQ[locale] : CARD_OFF_FAQ[locale]
+  const replacement = ZEN_CHECKOUT_ENABLED
+    ? ZEN_FAQ[locale]
+    : SKRILL_CHECKOUT_ENABLED
+      ? SKRILL_FAQ[locale]
+      : CARD_OFF_FAQ[locale]
   return {
     ...copy,
     groups: copy.groups.map((group) => ({

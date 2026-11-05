@@ -8,6 +8,7 @@ import {
   startSkrillPayment,
   startSquarePayment,
   startSumupPayment,
+  startZenPayment,
 } from "@/lib/actions/orders"
 
 export function CardPayButton({
@@ -25,7 +26,7 @@ export function CardPayButton({
   label: string
   errorLabel: string
   holdLabel?: string
-  method?: "card" | "alppay" | "square" | "sumup" | "skrill_card" | "skrill_ideal"
+  method?: "card" | "alppay" | "zen" | "square" | "sumup" | "skrill_card" | "skrill_ideal"
   needsPhone?: boolean
   phoneLabel?: string
 }) {
@@ -44,13 +45,15 @@ export function CardPayButton({
     try {
       const result = method === "alppay"
         ? await startAlppayPayment(orderNumber, locale, phone)
-        : method === "square"
-          ? await startSquarePayment(orderNumber, locale)
-          : method === "sumup"
-            ? await startSumupPayment(orderNumber, locale)
-            : method === "skrill_card" || method === "skrill_ideal"
-              ? await startSkrillPayment(orderNumber, locale)
-              : await startCardPayment(orderNumber, locale)
+        : method === "zen"
+          ? await startZenPayment(orderNumber, locale)
+          : method === "square"
+            ? await startSquarePayment(orderNumber, locale)
+            : method === "sumup"
+              ? await startSumupPayment(orderNumber, locale)
+              : method === "skrill_card" || method === "skrill_ideal"
+                ? await startSkrillPayment(orderNumber, locale)
+                : await startCardPayment(orderNumber, locale)
       if (!result.ok) {
         setError(result.error === "alppay_hold" && holdLabel ? holdLabel : errorLabel)
         setPending(false)

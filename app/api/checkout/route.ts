@@ -72,7 +72,7 @@ export async function POST(request: Request) {
 
   const payment = str("payment")
   if (
-    !["card", "alppay", "skrill_card", "skrill_ideal", "paypal", "square", "sumup", "sepa", "installments"].includes(
+    !["card", "alppay", "zen", "skrill_card", "skrill_ideal", "paypal", "square", "sumup", "sepa", "installments"].includes(
       payment,
     )
   ) {

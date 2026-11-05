@@ -9,6 +9,7 @@ import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
+import { ZEN_CHECKOUT_ENABLED } from "@/lib/payments/zen-availability"
 
 const NOTICE_TITLE: Record<Locale, string> = {
   en: "Payment gateway notice",
@@ -38,6 +39,7 @@ export function GatewayNotice({
   const [dismissed, setDismissed] = useState(false)
 
   const cardsDisabled =
+    !ZEN_CHECKOUT_ENABLED &&
     !SKRILL_CHECKOUT_ENABLED &&
     !STRIPE_CHECKOUT_ENABLED &&
     !SQUARE_CHECKOUT_ENABLED &&

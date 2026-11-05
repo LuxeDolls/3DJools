@@ -28,6 +28,7 @@ const CLOSED = new Set<OrderStatus>(["delivered", "cancelled", "refunded"])
 const METHODS: PaymentMethod[] = [
   "card",
   "alppay",
+  "zen",
   "skrill_card",
   "skrill_ideal",
   "paypal",

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
+import { ZEN_CHECKOUT_ENABLED } from "@/lib/payments/zen-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
@@ -292,6 +293,27 @@ const SKRILL_TERMS: Record<Locale, string> = {
     : "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland) en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaart- en iDEAL-betalingen worden uitgevoerd op de beveiligde betaalpagina van Skrill. Wij zien uw kaartnummer of bankgegevens nooit.",
 }
 
+const ZEN_TERMS: Record<Locale, string> = {
+  en: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard), SEPA bank transfer and interest-free instalments as described on our payment methods page. Card payments open ZEN.COM's secure payment page. We never see your card number."
+    : "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard) and interest-free instalments as described on our payment methods page. Card payments open ZEN.COM's secure payment page. We never see your card number.",
+  de: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard), SEPA-Überweisung und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Kartenzahlungen werden auf der sicheren Zahlungsseite von ZEN.COM abgewickelt. Wir sehen Ihre Kartennummer nie."
+    : "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard) und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Kartenzahlungen werden auf der sicheren Zahlungsseite von ZEN.COM abgewickelt. Wir sehen Ihre Kartennummer nie.",
+  fr: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard), le virement SEPA et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte s'ouvrent sur la page de paiement sécurisée de ZEN.COM. Nous ne voyons jamais votre numéro de carte."
+    : "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard) et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte s'ouvrent sur la page de paiement sécurisée de ZEN.COM. Nous ne voyons jamais votre numéro de carte.",
+  it: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard), bonifico SEPA e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta avvengono sulla pagina di pagamento sicura di ZEN.COM. Non vediamo mai il numero della carta."
+    : "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard) e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta avvengono sulla pagina di pagamento sicura di ZEN.COM. Non vediamo mai il numero della carta.",
+  es: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard), transferencia SEPA y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta se realizan en la página de pago segura de ZEN.COM. Nunca vemos el número de tu tarjeta."
+    : "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard) y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta se realizan en la página de pago segura de ZEN.COM. Nunca vemos el número de tu tarjeta.",
+  nl: BANK_TRANSFER_CHECKOUT_ENABLED
+    ? "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard), SEPA-overschrijving en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaartbetalingen worden uitgevoerd op de beveiligde betaalpagina van ZEN.COM. Wij zien uw kaartnummer nooit."
+    : "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard) en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaartbetalingen worden uitgevoerd op de beveiligde betaalpagina van ZEN.COM. Wij zien uw kaartnummer nooit.",
+}
+
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
   const locale: Locale = isLocale(lang) ? lang : "en"
@@ -306,7 +328,13 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
   const source = COPY[locale]
   const t = fillCompany({
     ...source,
-    s4: STRIPE_CHECKOUT_ENABLED ? source.s4 : SKRILL_CHECKOUT_ENABLED ? SKRILL_TERMS[locale] : CARD_OFF_TERMS[locale],
+    s4: STRIPE_CHECKOUT_ENABLED
+      ? source.s4
+      : ZEN_CHECKOUT_ENABLED
+        ? ZEN_TERMS[locale]
+        : SKRILL_CHECKOUT_ENABLED
+          ? SKRILL_TERMS[locale]
+          : CARD_OFF_TERMS[locale],
   })
 
   return (
