@@ -3,6 +3,7 @@ import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_METHODS_NOTE } from "@/lib/payments/stripe-availability"
 import { SKRILL_ACTIVE_METHODS_NOTE, SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
+import { ZEN_ACTIVE_METHODS_NOTE, ZEN_CHECKOUT_ENABLED, ZEN_COPY } from "@/lib/payments/zen-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED, BANK_TRANSFER_OFF_METHODS_NOTE } from "@/lib/payments/bank-transfer"
@@ -27,6 +28,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
+    ...(ZEN_CHECKOUT_ENABLED
+      ? [{ icon: CreditCard, title: ZEN_COPY[locale].title, desc: ZEN_COPY[locale].desc }]
+      : []),
     ...(SKRILL_CHECKOUT_ENABLED
       ? [
           { icon: CreditCard, title: dict.checkout.paySkrillCard, desc: dict.checkout.paySkrillCardDesc },
@@ -110,13 +114,15 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
         <p>
           {methods.length === 0
             ? dict.checkout.payCardGatewayNotice
-            : !BANK_TRANSFER_CHECKOUT_ENABLED
-              ? BANK_TRANSFER_OFF_METHODS_NOTE[locale]
-              : SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED
-                ? SKRILL_ACTIVE_METHODS_NOTE[locale]
-                : !STRIPE_CHECKOUT_ENABLED
-                  ? STRIPE_OFF_METHODS_NOTE[locale]
-                  : dict.checkout.payMethodsNote}
+            : ZEN_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED
+              ? ZEN_ACTIVE_METHODS_NOTE[locale]
+              : !BANK_TRANSFER_CHECKOUT_ENABLED
+                ? BANK_TRANSFER_OFF_METHODS_NOTE[locale]
+                : SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED
+                  ? SKRILL_ACTIVE_METHODS_NOTE[locale]
+                  : !STRIPE_CHECKOUT_ENABLED
+                    ? STRIPE_OFF_METHODS_NOTE[locale]
+                    : dict.checkout.payMethodsNote}
         </p>
       </div>
 

@@ -7,6 +7,7 @@ import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
 import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
 import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
+import { ZEN_CHECKOUT_ENABLED, ZEN_COPY } from "@/lib/payments/zen-availability"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import type { Locale } from "@/lib/i18n/config"
@@ -55,6 +56,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   const payments = [
+    ...(ZEN_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: ZEN_COPY[locale].title }] : []),
     ...(SKRILL_CHECKOUT_ENABLED
       ? [
           { icon: CreditCard, label: dict.checkout.paySkrillCard },

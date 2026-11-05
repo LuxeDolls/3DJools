@@ -26,6 +26,7 @@ import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/l
 import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
 import { isSkrillPayment, skrillMethodError } from "@/lib/payments/skrill-availability"
 import { appendSkrillTransactionId, createSkrillPayment, skrillConfigured } from "@/lib/payments/skrill"
+import { appendZenTransactionId, createZenPayment, zenConfigured } from "@/lib/payments/zen"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import { squareConfigured } from "@/lib/payments/square"
@@ -49,6 +50,7 @@ type CheckoutShipping = "standard"
 type CheckoutPayment =
   | "card"
   | "alppay"
+  | "zen"
   | "skrill_card"
   | "skrill_ideal"
   | "paypal"
@@ -62,6 +64,7 @@ type CheckoutPayment =
 const PAYMENT_METHOD: Record<CheckoutPayment, PaymentMethod> = {
   card: "card",
   alppay: "alppay",
+  zen: "zen",
   skrill_card: "skrill_card",
   skrill_ideal: "skrill_ideal",
   paypal: "paypal",
@@ -152,6 +155,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
   if (input.payment === "square" && !squareConfigured()) return { ok: false, error: "square_unavailable" }
   if (input.payment === "sumup" && !sumupConfigured()) return { ok: false, error: "sumup_unavailable" }
+  if (input.payment === "zen" && !zenConfigured()) return { ok: false, error: "zen_unavailable" }
   if (isSkrillPayment(input.payment) && !skrillConfigured()) return { ok: false, error: "skrill_unavailable" }
 
   // Recompute the cart from the catalog (source of truth for prices).
@@ -212,6 +216,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     paymentMethod === "crypto" ||
     paymentMethod === "card" ||
     paymentMethod === "alppay" ||
+    paymentMethod === "zen" ||
     paymentMethod === "skrill_card" ||
     paymentMethod === "skrill_ideal" ||
     paymentMethod === "paypal" ||
@@ -357,6 +362,32 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       console.error("[v0] PayPal payment could not start:", err)
       await abandonUnpaidOrder(order.id)
       return { ok: false, error: "paypal_start_failed" }
+    }
+  }
+
+  if (paymentMethod === "zen") {
+    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
+    const transactionId = randomUUID()
+    await mergeOrderNotes(order.id, {
+      checkout_locale: locale,
+      zen_transaction_id: transactionId,
+      zen_transaction_ids: transactionId,
+    })
+    try {
+      const checkout = await createZenPayment({
+        orderNumber: order.orderNumber,
+        transactionId,
+        amountCents: totalCents,
+        locale,
+        email: input.email.trim(),
+        firstName: input.firstName.trim(),
+        lastName: input.lastName.trim(),
+      })
+      paymentUrl = checkout.redirectUrl
+    } catch (err) {
+      console.error("[v0] ZEN payment could not start:", err)
+      await abandonUnpaidOrder(order.id)
+      return { ok: false, error: "zen_start_failed" }
     }
   }
 
@@ -618,6 +649,52 @@ export async function startSkrillPayment(orderNumber: string, locale: string): P
   }
 }
 
+export type StartZenPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
+
+/** Opens a fresh ZEN Checkout session for an order that is still awaiting payment. */
+export async function startZenPayment(orderNumber: string, locale: string): Promise<StartZenPaymentResult> {
+  if (!zenConfigured()) return { ok: false, error: "zen_unavailable" }
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order || order.paymentMethod !== "zen") return { ok: false, error: "not_found" }
+  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
+
+  const notes = parseOrderNotes(order.notes)
+  const safeLocale = isLocale(locale)
+    ? locale
+    : notes.checkout_locale && isLocale(notes.checkout_locale)
+      ? notes.checkout_locale
+      : "en"
+  const holder = splitFullName(order.shippingName || "")
+  const firstName = holder?.firstName || order.shippingName?.trim() || "Customer"
+  const lastName = holder?.lastName || firstName
+  const transactionId = randomUUID()
+
+  try {
+    const checkout = await createZenPayment({
+      orderNumber: order.orderNumber,
+      transactionId,
+      amountCents: order.totalCents,
+      locale: safeLocale,
+      email: order.email,
+      firstName,
+      lastName,
+    })
+    await mergeOrderNotes(order.id, {
+      zen_transaction_id: transactionId,
+      zen_transaction_ids: appendZenTransactionId(
+        notes.zen_transaction_ids ?? notes.zen_transaction_id,
+        transactionId,
+      ),
+      zen_last_status: undefined,
+      checkout_locale: safeLocale,
+    })
+    return { ok: true, paymentUrl: checkout.redirectUrl }
+  } catch (err) {
+    console.error("[v0] ZEN payment retry failed:", err)
+    return { ok: false, error: "zen_start_failed" }
+  }
+}
+
 export type SwitchPaymentMethodResult = { ok: true } | { ok: false; error: string }
 
 // Methods a customer can self-serve switch to from the order page, e.g. after a
@@ -626,6 +703,7 @@ export type SwitchPaymentMethodResult = { ok: true } | { ok: false; error: strin
 const SWITCHABLE_METHODS: Record<PaymentMethod, boolean> = {
   card: true,
   alppay: true,
+  zen: true,
   skrill_card: true,
   skrill_ideal: true,
   paypal: true,
@@ -644,6 +722,7 @@ function isMethodAvailable(
 ): boolean {
   if (method === "card") return stripeConfigured()
   if (method === "alppay") return ALPPAY_CHECKOUT_ENABLED && alppayConfigured()
+  if (method === "zen") return zenConfigured() && totalCents > 0
   if (method === "skrill_card" || method === "skrill_ideal") {
     return skrillConfigured() && !skrillMethodError(method, totalCents, country)
   }

@@ -36,10 +36,12 @@ import {
   isSkrillPayment,
   skrillMethodError,
 } from "@/lib/payments/skrill-availability"
+import { ZEN_CHECKOUT_ENABLED, ZEN_COPY } from "@/lib/payments/zen-availability"
 
 type PaymentId =
   | "card"
   | "alppay"
+  | "zen"
   | "skrill_card"
   | "skrill_ideal"
   | "square"
@@ -64,7 +66,7 @@ function checkoutErrorText(checkout: {
   paySkrillCardMaxNote: string
   paySkrillIdealNlOnly: string
   orderError: string
-}, code: string): string {
+}, code: string, locale: Locale): string {
   if (code === "cardholder_required") return checkout.payCardholderRequired
   if (code === "dob_invalid") return checkout.payCardholderDobInvalid
   if (code === "phone_required") return checkout.payCardholderPhoneRequired
@@ -75,6 +77,7 @@ function checkoutErrorText(checkout: {
   if (code === "paypal_unavailable" || code === "paypal_start_failed") return checkout.payPaypalUnavailable
   if (code === "square_unavailable" || code === "square_start_failed") return checkout.paySquareUnavailable
   if (code === "sumup_unavailable" || code === "sumup_start_failed") return checkout.paySumupUnavailable
+  if (code === "zen_unavailable" || code === "zen_start_failed") return ZEN_COPY[locale].unavailable
   if (code === "skrill_card_limit") return checkout.paySkrillCardMaxNote
   if (code === "skrill_ideal_nl_only") return checkout.paySkrillIdealNlOnly
   if (code === "skrill_unavailable" || code === "skrill_start_failed") return checkout.paySkrillUnavailable
@@ -90,21 +93,24 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const isMember = Boolean(session?.user)
   const bankTransferEnabled = isBankTransferCheckoutEnabled(session?.user?.email)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
+  const zenCopy = ZEN_COPY[locale]
 
   const [payment, setPayment] = useState<PaymentId>(
-    SKRILL_CHECKOUT_ENABLED
-      ? "skrill_card"
-      : STRIPE_CHECKOUT_ENABLED
-        ? "card"
-        : SQUARE_CHECKOUT_ENABLED
-          ? "square"
-          : SUMUP_CHECKOUT_ENABLED
-            ? "sumup"
-            : ALPPAY_CHECKOUT_ENABLED
-              ? "alppay"
-              : BANK_TRANSFER_CHECKOUT_ENABLED
-                ? "sepa"
-                : "installments",
+    ZEN_CHECKOUT_ENABLED
+      ? "zen"
+      : SKRILL_CHECKOUT_ENABLED
+        ? "skrill_card"
+        : STRIPE_CHECKOUT_ENABLED
+          ? "card"
+          : SQUARE_CHECKOUT_ENABLED
+            ? "square"
+            : SUMUP_CHECKOUT_ENABLED
+              ? "sumup"
+              : ALPPAY_CHECKOUT_ENABLED
+                ? "alppay"
+                : BANK_TRANSFER_CHECKOUT_ENABLED
+                  ? "sepa"
+                  : "installments",
   )
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Netherlands")
@@ -114,7 +120,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const [dateOfBirth, setDateOfBirth] = useState("")
   const [region, setRegion] = useState("")
   const [orderError, setOrderError] = useState<string | null>(
-    initialError ? checkoutErrorText(dict.checkout, initialError) : null,
+    initialError ? checkoutErrorText(dict.checkout, initialError, locale) : null,
   )
   const router = useRouter()
 
@@ -143,6 +149,16 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   }
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
+    ...(ZEN_CHECKOUT_ENABLED
+      ? [
+          {
+            id: "zen" as const,
+            icon: CreditCard,
+            title: zenCopy.title,
+            desc: zenCopy.desc,
+          },
+        ]
+      : []),
     ...(SKRILL_CHECKOUT_ENABLED
       ? [
           {
@@ -226,6 +242,10 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
       setOrderError(dict.checkout.payAlppayUnavailable)
       return
     }
+    if (payment === "zen" && !ZEN_CHECKOUT_ENABLED) {
+      setOrderError(zenCopy.unavailable)
+      return
+    }
     if (isSkrillPayment(payment)) {
       if (!SKRILL_CHECKOUT_ENABLED) {
         setOrderError(dict.checkout.paySkrillUnavailable)
@@ -233,7 +253,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
       }
       const skrillErr = skrillMethodError(payment, totalCents, country)
       if (skrillErr) {
-        setOrderError(checkoutErrorText(dict.checkout, skrillErr))
+        setOrderError(checkoutErrorText(dict.checkout, skrillErr, locale))
         return
       }
     }
@@ -373,7 +393,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
         {/* Payment method */}
         <section>
           <h2 className="font-heading text-lg font-bold text-foreground">{dict.checkout.paymentMethod}</h2>
-          {!SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED && !SQUARE_CHECKOUT_ENABLED && !SUMUP_CHECKOUT_ENABLED && !ALPPAY_CHECKOUT_ENABLED && (
+          {!ZEN_CHECKOUT_ENABLED && !SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED && !SQUARE_CHECKOUT_ENABLED && !SUMUP_CHECKOUT_ENABLED && !ALPPAY_CHECKOUT_ENABLED && (
             <p
               role="alert"
               className="mt-2.5 flex items-start gap-2 rounded-lg border border-destructive/35 bg-destructive/10 px-3.5 py-2.5 text-sm font-medium leading-relaxed text-destructive"
@@ -451,6 +471,11 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
           )}
 
           {/* Contextual panels per payment method */}
+          {payment === "zen" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{zenCopy.note}</p>
+            </div>
+          )}
           {payment === "skrill_card" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.paySkrillCardNote}</p>

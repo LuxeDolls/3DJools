@@ -159,6 +159,21 @@ export async function getOrderBySkrillTransactionId(transactionId: string): Prom
   return { ...order, items }
 }
 
+export async function getOrderByZenTransactionId(transactionId: string): Promise<OrderWithItems | null> {
+  const trimmed = transactionId.trim()
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(trimmed)) {
+    return null
+  }
+  const [order] = await db
+    .select()
+    .from(orders)
+    .where(like(orders.notes, `%${trimmed}%`))
+    .limit(1)
+  if (!order) return null
+  const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id))
+  return { ...order, items }
+}
+
   export async function getOrderByOrderNumber(orderNumber: string): Promise<OrderWithItems | null> {
   const [order] = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1)
   if (!order) return null
@@ -203,6 +218,7 @@ export async function updateOrderPaymentMethod(orderId: string, method: PaymentM
     square_last_status: undefined,
     sumup_last_status: undefined,
     skrill_last_status: undefined,
+    zen_last_status: undefined,
   })
   return getOrderById(orderId)
 }
