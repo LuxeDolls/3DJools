@@ -174,18 +174,11 @@ export async function createZenPayment(
 
   body.signature = signZenCheckoutPayload(body, zenPaywallSecret())
 
-  const headers: Record<string, string> = {
-    "Content-Type": "application/json",
-    "request-id": randomUUID(),
-  }
-  const apiKey = zenTerminalApiKey()
-  if (apiKey) {
-    headers.Authorization = apiKey
-  }
-
   const response = await fetch(ZEN_CHECKOUT_URL, {
     method: "POST",
-    headers,
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify(body),
     cache: "no-store",
     signal: AbortSignal.timeout(15_000),
