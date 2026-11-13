@@ -144,26 +144,11 @@ export async function notifyOrderStatusChange(
 ): Promise<void> {
   const providerPaid =
     order.status === "paid" &&
-    (order.paymentMethod === "card" ||
-      order.paymentMethod === "alppay" ||
-      order.paymentMethod === "zen" ||
-      order.paymentMethod === "skrill_card" ||
-      order.paymentMethod === "skrill_ideal" ||
-      order.paymentMethod === "paypal" ||
-      order.paymentMethod === "square" ||
-      order.paymentMethod === "sumup")
+    (order.paymentMethod === "card" || order.paymentMethod === "paypal")
   const title =
     order.paymentMethod === "paypal"
       ? "PayPal payment received"
-      : order.paymentMethod === "zen"
-        ? "Visa/Mastercard payment received (ZEN.COM)"
-        : order.paymentMethod === "skrill_ideal"
-          ? "iDEAL payment received (Skrill)"
-          : order.paymentMethod === "skrill_card"
-            ? "Visa/Mastercard payment received (Skrill)"
-            : order.paymentMethod === "alppay"
-              ? "Visa/Mastercard payment received"
-              : "Card payment received"
+      : "Visa/Mastercard payment received"
   const lines = [
     providerPaid
       ? `Payment confirmed: ${previousStatus} → ${order.status}`
@@ -195,7 +180,7 @@ export async function notifyPaymentSubmitted(order: OrderWithItems): Promise<voi
 }
 
 export async function notifyCardDeclined(order: OrderWithItems, reason: string): Promise<void> {
-  const lines = [`A card payment was declined by Stripe: ${reason}`, "", ...orderLines(order)]
+  const lines = [`A card payment was declined: ${reason}`, "", ...orderLines(order)]
   await notifyAdmin({
     subject: `Card declined for order ${order.orderNumber}`,
     title: "Card payment declined",
