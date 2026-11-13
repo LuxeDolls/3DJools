@@ -111,16 +111,16 @@ export async function handleAviagramWebhook(request: NextRequest, token: string)
     readField(body, "DeclinedReaction", "declinedReason", "declined_reason", "declinedReaction", "error", "message"),
   )
   const audit = {
-    aviagram_last_status: status || undefined,
-    aviagram_settled_amount: amount ? noteSafe(amount) : undefined,
-    aviagram_settled_currency: currency || undefined,
-    aviagram_declined_reason: decline || undefined,
+    aviagram_last_status: status || notes.aviagram_last_status,
+    aviagram_settled_amount: amount ? noteSafe(amount) : notes.aviagram_settled_amount,
+    aviagram_settled_currency: currency || notes.aviagram_settled_currency,
+    aviagram_declined_reason: SUCCESS_STATUSES.has(status) ? undefined : decline || notes.aviagram_declined_reason,
   }
 
   const nextIds =
     providerOrderId && isProviderOrderId(providerOrderId) && !knownIds.includes(providerOrderId)
       ? [...knownIds, providerOrderId].join(",")
-      : undefined
+      : notes.aviagram_order_ids
 
   if (nextIds || status || amount || decline || currency) {
     await mergeOrderNotes(order.id, {
