@@ -2,25 +2,38 @@ import "server-only"
 
 import { COMPANY } from "@/lib/company"
 
-// Hosted card checkout. Docs: https://aviagram.gitbook.io/docsavialooo
-// POST {host}/api/payment/create with Authorization: Basic base64(clientId:clientSecret).
-// createForm is a different method and is not enabled for this client.
+// Hosted card checkout via Zenthoryx API (https://paydocs.dev).
+// Endpoint: https://web.zenthoryx.app/api/payment/create (or /api/payment/createForm)
+// Available gateways: EUR-ALP, EUR-PMF, EUR-SHP. Active gateway: EUR-ALP.
+const DEFAULT_HOST = "https://web.zenthoryx.app/api/payment/createForm"
+const DEFAULT_CURRENCY = "EUR-ALP"
+const DEFAULT_CLIENT_ID = "f482893b2d11ff75cb7fb16b0a8a2035"
+const DEFAULT_CLIENT_SECRET = "34b677d8ee6162fcd069a18287293d52c6c25512df464be5847ca7b90456955f"
 
-// Docs write the host as <HOST_URL>. Set AVIAGRAM_API_URL to the host from Aviagram.
-const DEFAULT_HOST = "https://aviagram.app"
-const DEFAULT_CURRENCY = "EUR-GT"
+export const AVAILABLE_CARD_GATEWAYS = ["EUR-ALP", "EUR-PMF", "EUR-SHP"] as const
 
-export function aviagramConfigured(): boolean {
-  return Boolean(process.env.AVIAGRAM_CLIENT_ID && process.env.AVIAGRAM_CLIENT_SECRET)
+function resolveCredentials(): { clientId: string; clientSecret: string } {
+  const clientId = (process.env.ZENTHORYX_CLIENT_ID || DEFAULT_CLIENT_ID).trim()
+  const clientSecret = (process.env.ZENTHORYX_CLIENT_SECRET || DEFAULT_CLIENT_SECRET).trim()
+  return { clientId, clientSecret }
 }
 
-function paymentEndpoint(): string {
-  const raw = (process.env.AVIAGRAM_API_URL || DEFAULT_HOST).trim()
+function resolveGateway(): string {
+  const raw = (process.env.ZENTHORYX_GATEWAY || DEFAULT_CURRENCY).trim()
+  return raw || DEFAULT_CURRENCY
+}
+
+function resolveEndpoints(): string[] {
+  const raw = (process.env.ZENTHORYX_API_URL || DEFAULT_HOST).trim()
   const withScheme = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`
   const url = new URL(withScheme)
   if (url.protocol !== "https:" && url.protocol !== "http:") throw new Error("aviagram_bad_host")
-  // The saved host may be the origin or the full createForm URL from Aviagram.
-  return `${url.origin}/api/payment/create`
+  return [`${url.origin}/api/payment/create`, `${url.origin}/api/payment/createForm`]
+}
+
+export function aviagramConfigured(): boolean {
+  const { clientId, clientSecret } = resolveCredentials()
+  return Boolean(clientId && clientSecret)
 }
 
 export function cardAmount(cents: number): string {
@@ -45,20 +58,42 @@ export type CardForm = {
   redirectUrl: string
 }
 
+async function postPayment(
+  endpoint: string,
+  headers: Record<string, string>,
+  baseBody: Record<string, string>,
+  returnUrl: string,
+): Promise<Response> {
+  let response = await fetch(endpoint, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({ ...baseBody, redirect_url: returnUrl }),
+    cache: "no-store",
+  })
+  if (response.status === 400 || response.status === 422) {
+    response = await fetch(endpoint, {
+      method: "POST",
+      headers,
+      body: JSON.stringify(baseBody),
+      cache: "no-store",
+    })
+  }
+  return response
+}
+
 export async function createCardForm(input: {
   orderNumber: string
   amountCents: number
   locale: string
   webhookToken: string
 }): Promise<CardForm> {
-  const clientId = process.env.AVIAGRAM_CLIENT_ID?.trim()
-  const clientSecret = process.env.AVIAGRAM_CLIENT_SECRET?.trim()
+  const { clientId, clientSecret } = resolveCredentials()
   if (!clientId || !clientSecret) throw new Error("aviagram_not_configured")
   if (!Number.isInteger(input.amountCents) || input.amountCents <= 0) {
     throw new Error("aviagram_bad_amount")
   }
 
-  const currency = (process.env.AVIAGRAM_CURRENCY || DEFAULT_CURRENCY).trim()
+  const currency = resolveGateway()
   const webhookUrl = `${COMPANY.url}/api/payments/aviagram/webhook/${input.webhookToken}`
   const returnUrl = `${COMPANY.url}/${input.locale}/order/${encodeURIComponent(input.orderNumber)}?card=return`
 
@@ -67,9 +102,7 @@ export async function createCardForm(input: {
     "Content-Type": "application/json",
     Accept: "application/json",
   }
-  // Shop prices are EUR. currency is the gateway code (EUR-GT). With
-  // convertCurrency the gateway converts amount from originalCurrency into
-  // that code; the settled charge comes back on the webhook as EUR.
+
   const baseBody = {
     amount: cardAmount(input.amountCents),
     currency,
@@ -78,22 +111,14 @@ export async function createCardForm(input: {
     payment_method: "card",
     webhook_url: webhookUrl,
   }
-  const endpoint = paymentEndpoint()
-  let response = await fetch(endpoint, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({ ...baseBody, redirect_url: returnUrl }),
-    cache: "no-store",
-  })
-  // redirect_url is used by working clients but is not in the public field list.
-  // If the gateway rejects the extra field, retry with the documented body only.
-  if (response.status === 400 || response.status === 422) {
-    response = await fetch(endpoint, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(baseBody),
-      cache: "no-store",
-    })
+
+  const endpoints = resolveEndpoints()
+  let response = await postPayment(endpoints[0], headers, baseBody, returnUrl)
+  if ((response.status === 403 || response.status === 404) && endpoints[1]) {
+    const fallbackResponse = await postPayment(endpoints[1], headers, baseBody, returnUrl)
+    if (fallbackResponse.ok) {
+      response = fallbackResponse
+    }
   }
 
   const text = await response.text()
@@ -113,7 +138,7 @@ export async function createCardForm(input: {
   const redirectRaw = typeof data.redirect_url === "string" ? data.redirect_url : data.redirectUrl
   const redirectUrl = typeof redirectRaw === "string" ? redirectRaw.trim() : ""
   if (!response.ok || !isProviderOrderId(providerOrderId) || !redirectUrl.startsWith("https://")) {
-    console.error("[v0] Aviagram create failed", response.status)
+    console.error("[v0] Zenthoryx card create failed", response.status, text)
     throw new Error("aviagram_create_failed")
   }
 

@@ -124,57 +124,7 @@ export async function getOrderForUser(userId: string, orderId: string): Promise<
  * order number acts as the access token for the post-checkout thank-you page
  * so guests (no account) can still see their confirmation.
  */
-export async function getOrderNumberBySquareOrderId(squareOrderId: string): Promise<string | null> {
-  if (!/^[A-Za-z0-9]{8,64}$/.test(squareOrderId)) return null
-  const [row] = await db
-    .select({ orderNumber: orders.orderNumber })
-    .from(orders)
-    .where(like(orders.notes, `%square_order_id=${squareOrderId}%`))
-    .limit(1)
-  return row?.orderNumber ?? null
-}
-
-  export async function getOrderNumberBySumupCheckoutId(checkoutId: string): Promise<string | null> {
-  if (!/^[A-Za-z0-9-]{8,80}$/.test(checkoutId)) return null
-  const [row] = await db
-  .select({ orderNumber: orders.orderNumber })
-  .from(orders)
-  .where(like(orders.notes, `%sumup_checkout_ids=%${checkoutId}%`))
-  .limit(1)
-  return row?.orderNumber ?? null
-  }
-
-export async function getOrderBySkrillTransactionId(transactionId: string): Promise<OrderWithItems | null> {
-  const trimmed = transactionId.trim()
-  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(trimmed)) {
-    return null
-  }
-  const [order] = await db
-    .select()
-    .from(orders)
-    .where(like(orders.notes, `%${trimmed}%`))
-    .limit(1)
-  if (!order) return null
-  const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id))
-  return { ...order, items }
-}
-
-export async function getOrderByZenTransactionId(transactionId: string): Promise<OrderWithItems | null> {
-  const trimmed = transactionId.trim()
-  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(trimmed)) {
-    return null
-  }
-  const [order] = await db
-    .select()
-    .from(orders)
-    .where(like(orders.notes, `%${trimmed}%`))
-    .limit(1)
-  if (!order) return null
-  const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id))
-  return { ...order, items }
-}
-
-  export async function getOrderByOrderNumber(orderNumber: string): Promise<OrderWithItems | null> {
+export async function getOrderByOrderNumber(orderNumber: string): Promise<OrderWithItems | null> {
   const [order] = await db.select().from(orders).where(eq(orders.orderNumber, orderNumber)).limit(1)
   if (!order) return null
   const items = await db.select().from(orderItems).where(eq(orderItems.orderId, order.id))
@@ -210,15 +160,9 @@ export async function mergeOrderNotes(orderId: string, fields: Record<string, st
 export async function updateOrderPaymentMethod(orderId: string, method: PaymentMethod): Promise<OrderWithItems | null> {
   await db.update(orders).set({ paymentMethod: method, updatedAt: new Date() }).where(eq(orders.id, orderId))
   await mergeOrderNotes(orderId, {
-    stripe_last_status: undefined,
-    stripe_decline_reason: undefined,
     aviagram_last_status: undefined,
     aviagram_declined_reason: undefined,
     paypal_last_status: undefined,
-    square_last_status: undefined,
-    sumup_last_status: undefined,
-    skrill_last_status: undefined,
-    zen_last_status: undefined,
   })
   return getOrderById(orderId)
 }

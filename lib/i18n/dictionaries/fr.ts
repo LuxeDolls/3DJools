@@ -103,7 +103,7 @@ export const fr: Dictionary = {
     uspWarrantyTitle: "Garantie 2 ans",
     uspWarrantyText: "Chaque machine couverte par la garantie consommateur UE.",
     uspPaymentTitle: "Paiement flexible",
-    uspPaymentText: "Carte, Apple Pay, Link, Bancontact, Klarna, SEPA ou 4× sans frais.",
+    uspPaymentText: "Visa, Mastercard, virement SEPA ou 4× sans frais.",
     newsletterTitle: "Recevez nos offres par e-mail",
     newsletterText: "Nouveautés, réassorts et offres réservées aux membres. Pas de spam.",
     newsletterPlaceholder: "Votre adresse e-mail",
@@ -184,14 +184,14 @@ export const fr: Dictionary = {
     shippingStandardDesc: "3–7 jours ouvrés",
     shippingFree: "Livraison standard gratuite",
     shippingFreeDesc: "3–7 jours ouvrés · gratuit pour toute commande",
-    payCard: "Carte de crédit / débit",
-    payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact et Klarna",
+    payCard: "Visa / Mastercard",
+    payCardDesc: "Paiement sécurisé par carte",
     payCardUnavailable: "Le paiement par carte est temporairement indisponible",
     payCardGatewayNotice:
       "En raison de problèmes techniques avec notre passerelle de paiement, le paiement par carte est temporairement désactivé. Veuillez utiliser le virement bancaire SEPA ou le paiement en 4× sans frais.",
     payCardFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
     payCardNote:
-      "Vous serez redirigé vers une page Stripe sécurisée. Vous pouvez payer par carte, Apple Pay, Link, Bancontact ou Klarna. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
+      "Après avoir passé la commande, vous êtes redirigé vers une page de paiement sécurisée pour payer par Visa ou Mastercard. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Ouvre la page sécurisée Square · débit en dollars américains · relevé : HIRA",
     paySquareNote:
@@ -247,7 +247,7 @@ export const fr: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponible sur la page Stripe sécurisée lorsque vous payez par carte.",
     payMethodsNote:
-      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Les paiements par carte sont débités en euros sur une page de paiement sécurisée. Apple Pay, Link, Bancontact et Klarna sont disponibles lors du paiement par carte. Nous ne voyons jamais le numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
+      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Les paiements par carte (Visa, Mastercard) sont débités en euros sur une page de paiement sécurisée. Nous ne voyons jamais votre numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
     payPaypal: "PayPal",
     payPaypalDesc: "Payez avec votre solde PayPal, votre compte bancaire ou votre carte",
     payPaypalUnavailable: "PayPal est temporairement indisponible",

@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useEffect, useState, type FormEvent } from "react"
+import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
 import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock, AlertTriangle } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
@@ -19,68 +19,30 @@ import type { Locale } from "@/lib/i18n/config"
 import { getInstallmentDict } from "@/lib/i18n/installments"
 import { computeInstallmentAmounts, INSTALLMENTS_CHECKOUT_ENABLED, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
-import { dateSeparator, isAdultDateOfBirth, isCardPayment, maskBirthDate, splitFullName } from "@/lib/payments/cardholder"
-import { callingCode, toE164Phone } from "@/lib/payments/phone-country"
+import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
+import { callingCode } from "@/lib/payments/phone-country"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_CHECKOUT_ENABLED, CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT, BANK_TRANSFER_CHECKOUT_ENABLED, isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
-import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
-import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
-import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
-import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
-import {
-  SKRILL_CARD_MAX_CENTS,
-  SKRILL_CHECKOUT_ENABLED,
-  isSkrillIdealCountry,
-  isSkrillPayment,
-  skrillMethodError,
-} from "@/lib/payments/skrill-availability"
-import { ZEN_CHECKOUT_ENABLED, ZEN_COPY } from "@/lib/payments/zen-availability"
 
 type PaymentId =
   | "card"
-  | "alppay"
-  | "zen"
-  | "skrill_card"
-  | "skrill_ideal"
-  | "square"
-  | "sumup"
   | "paypal"
   | "sepa"
   | "crypto"
   | "installments"
 
-function checkoutErrorText(checkout: {
-  payCardholderRequired: string
-  payCardholderDobInvalid: string
-  payCardholderPhoneRequired: string
-  payCardholderRegionRequired: string
-  payCardUnavailable: string
-  payAlppayUnavailable: string
-  payAlppayHold: string
-  payPaypalUnavailable: string
-  paySquareUnavailable: string
-  paySumupUnavailable: string
-  paySkrillUnavailable: string
-  paySkrillCardMaxNote: string
-  paySkrillIdealNlOnly: string
-  orderError: string
-}, code: string, locale: Locale): string {
-  if (code === "cardholder_required") return checkout.payCardholderRequired
-  if (code === "dob_invalid") return checkout.payCardholderDobInvalid
-  if (code === "phone_required") return checkout.payCardholderPhoneRequired
-  if (code === "region_required") return checkout.payCardholderRegionRequired
+function checkoutErrorText(
+  checkout: {
+    payCardUnavailable: string
+    payPaypalUnavailable: string
+    orderError: string
+  },
+  code: string,
+): string {
   if (code === "card_unavailable" || code === "card_start_failed") return checkout.payCardUnavailable
-  if (code === "alppay_hold") return checkout.payAlppayHold
-  if (code === "alppay_unavailable" || code === "alppay_start_failed" || code === "ip_required") return checkout.payAlppayUnavailable
   if (code === "paypal_unavailable" || code === "paypal_start_failed") return checkout.payPaypalUnavailable
-  if (code === "square_unavailable" || code === "square_start_failed") return checkout.paySquareUnavailable
-  if (code === "sumup_unavailable" || code === "sumup_start_failed") return checkout.paySumupUnavailable
-  if (code === "zen_unavailable" || code === "zen_start_failed") return ZEN_COPY[locale].unavailable
-  if (code === "skrill_card_limit") return checkout.paySkrillCardMaxNote
-  if (code === "skrill_ideal_nl_only") return checkout.paySkrillIdealNlOnly
-  if (code === "skrill_unavailable" || code === "skrill_start_failed") return checkout.paySkrillUnavailable
   return checkout.orderError
 }
 
@@ -93,51 +55,26 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const isMember = Boolean(session?.user)
   const bankTransferEnabled = isBankTransferCheckoutEnabled(session?.user?.email)
   const discountCents = isMember ? memberDiscountCents(subtotalCents) : 0
-  const zenCopy = ZEN_COPY[locale]
 
   const [payment, setPayment] = useState<PaymentId>(
-    ZEN_CHECKOUT_ENABLED
-      ? "zen"
-      : SKRILL_CHECKOUT_ENABLED
-        ? "skrill_card"
-        : STRIPE_CHECKOUT_ENABLED
-          ? "card"
-          : SQUARE_CHECKOUT_ENABLED
-            ? "square"
-            : SUMUP_CHECKOUT_ENABLED
-              ? "sumup"
-              : ALPPAY_CHECKOUT_ENABLED
-                ? "alppay"
-                : BANK_TRANSFER_CHECKOUT_ENABLED
-                  ? "sepa"
-                  : "installments",
+    CARD_CHECKOUT_ENABLED
+      ? "card"
+      : BANK_TRANSFER_CHECKOUT_ENABLED
+        ? "sepa"
+        : "installments",
   )
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Netherlands")
   const [submitting, setSubmitting] = useState(false)
   const [termsAccepted, setTermsAccepted] = useState(false)
-  const [cardholderName, setCardholderName] = useState("")
-  const [dateOfBirth, setDateOfBirth] = useState("")
-  const [region, setRegion] = useState("")
   const [orderError, setOrderError] = useState<string | null>(
-    initialError ? checkoutErrorText(dict.checkout, initialError, locale) : null,
+    initialError ? checkoutErrorText(dict.checkout, initialError) : null,
   )
   const router = useRouter()
 
   const shippingCents = computeShippingCents(subtotalCents, country)
   const totalCents = subtotalCents - discountCents + shippingCents
   const installmentsEligible = qualifiesForInstallments(totalCents)
-  const skrillCardEligible = totalCents > 0 && totalCents <= SKRILL_CARD_MAX_CENTS
-  const skrillIdealEligible = isSkrillIdealCountry(country)
-
-  useEffect(() => {
-    if (lines.length === 0) return
-    if (payment === "skrill_ideal" && !skrillIdealEligible) {
-      setPayment(skrillCardEligible ? "skrill_card" : bankTransferEnabled ? "sepa" : "installments")
-    } else if (payment === "skrill_card" && !skrillCardEligible) {
-      setPayment(skrillIdealEligible ? "skrill_ideal" : bankTransferEnabled ? "sepa" : "installments")
-    }
-  }, [lines.length, payment, skrillIdealEligible, skrillCardEligible, bankTransferEnabled])
 
   if (lines.length === 0) {
     return (
@@ -149,48 +86,8 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   }
 
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
-    ...(ZEN_CHECKOUT_ENABLED
-      ? [
-          {
-            id: "zen" as const,
-            icon: CreditCard,
-            title: zenCopy.title,
-            desc: zenCopy.desc,
-          },
-        ]
-      : []),
-    ...(SKRILL_CHECKOUT_ENABLED
-      ? [
-          {
-            id: "skrill_card" as const,
-            icon: CreditCard,
-            title: dict.checkout.paySkrillCard,
-            desc: skrillCardEligible ? dict.checkout.paySkrillCardDesc : dict.checkout.paySkrillCardMaxNote,
-            disabled: !skrillCardEligible,
-          },
-          ...(skrillIdealEligible
-            ? [
-                {
-                  id: "skrill_ideal" as const,
-                  icon: Landmark,
-                  title: dict.checkout.paySkrillIdeal,
-                  desc: dict.checkout.paySkrillIdealDesc,
-                },
-              ]
-            : []),
-        ]
-      : []),
-    ...(STRIPE_CHECKOUT_ENABLED
+    ...(CARD_CHECKOUT_ENABLED
       ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
-      : []),
-    ...(SQUARE_CHECKOUT_ENABLED
-      ? [{ id: "square" as const, icon: CreditCard, title: dict.checkout.paySquare, desc: dict.checkout.paySquareDesc }]
-      : []),
-    ...(SUMUP_CHECKOUT_ENABLED
-      ? [{ id: "sumup" as const, icon: CreditCard, title: dict.checkout.paySumup, desc: dict.checkout.paySumupDesc }]
-      : []),
-    ...(ALPPAY_CHECKOUT_ENABLED
-      ? [{ id: "alppay" as const, icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc }]
       : []),
     ...(bankTransferEnabled
       ? [{ id: "sepa" as const, icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc }]
@@ -226,36 +123,9 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
       setOrderError(dict.checkout.termsConsentError)
       return
     }
-    if (payment === "card" && !STRIPE_CHECKOUT_ENABLED) {
+    if (payment === "card" && !CARD_CHECKOUT_ENABLED) {
       setOrderError(dict.checkout.payCardUnavailable)
       return
-    }
-    if (payment === "square" && !SQUARE_CHECKOUT_ENABLED) {
-      setOrderError(dict.checkout.paySquareUnavailable)
-      return
-    }
-    if (payment === "sumup" && !SUMUP_CHECKOUT_ENABLED) {
-      setOrderError(dict.checkout.paySumupUnavailable)
-      return
-    }
-    if (payment === "alppay" && !ALPPAY_CHECKOUT_ENABLED) {
-      setOrderError(dict.checkout.payAlppayUnavailable)
-      return
-    }
-    if (payment === "zen" && !ZEN_CHECKOUT_ENABLED) {
-      setOrderError(zenCopy.unavailable)
-      return
-    }
-    if (isSkrillPayment(payment)) {
-      if (!SKRILL_CHECKOUT_ENABLED) {
-        setOrderError(dict.checkout.paySkrillUnavailable)
-        return
-      }
-      const skrillErr = skrillMethodError(payment, totalCents, country)
-      if (skrillErr) {
-        setOrderError(checkoutErrorText(dict.checkout, skrillErr, locale))
-        return
-      }
     }
     if (payment === "paypal" && !isPaypalCheckoutEnabled()) {
       setOrderError(dict.checkout.payPaypalUnavailable)
@@ -265,31 +135,8 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
       setOrderError(dict.checkout.paySepaUnavailable)
       return
     }
-    if (isCardPayment(payment) && !splitFullName(cardholderName)) {
-      setOrderError(dict.checkout.payCardholderRequired)
-      return
-    }
-    if (isCardPayment(payment) && !isAdultDateOfBirth(dateOfBirth)) {
-      setOrderError(dict.checkout.payCardholderDobInvalid)
-      return
-    }
-    const fd = new FormData(e.currentTarget)
-    const str = (k: string) => String(fd.get(k) ?? "").trim()
-    if (payment === "card" && !toE164Phone(str("phone"), country)) {
-      setOrderError(dict.checkout.payCardholderPhoneRequired)
-      return
-    }
-    if (payment === "alppay" && !str("phone")) {
-      setOrderError(dict.checkout.payCardholderPhoneRequired)
-      return
-    }
-    if (payment === "alppay" && !region.trim()) {
-      setOrderError(dict.checkout.payCardholderRegionRequired)
-      return
-    }
     setOrderError(null)
     setSubmitting(true)
-    // Native submit, not a server action: the preview was leaving that promise pending.
     e.currentTarget.submit()
   }
   const { downPaymentCents, remainingCents } = computeInstallmentAmounts(totalCents)
@@ -366,12 +213,8 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
                   type="tel"
                   inputMode="tel"
                   autoComplete="tel-national"
-                  required={payment === "card" || payment === "alppay"}
                 />
               </div>
-              {payment === "card" ? (
-                <p className="text-sm leading-relaxed text-muted-foreground">{dict.checkout.phoneCountryHint}</p>
-              ) : null}
             </div>
           </div>
         </section>
@@ -393,7 +236,7 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
         {/* Payment method */}
         <section>
           <h2 className="font-heading text-lg font-bold text-foreground">{dict.checkout.paymentMethod}</h2>
-          {!ZEN_CHECKOUT_ENABLED && !SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED && !SQUARE_CHECKOUT_ENABLED && !SUMUP_CHECKOUT_ENABLED && !ALPPAY_CHECKOUT_ENABLED && (
+          {!CARD_CHECKOUT_ENABLED && (
             <p
               role="alert"
               className="mt-2.5 flex items-start gap-2 rounded-lg border border-destructive/35 bg-destructive/10 px-3.5 py-2.5 text-sm font-medium leading-relaxed text-destructive"
@@ -417,93 +260,10 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
             ))}
           </div>
 
-          {(payment === "card" || payment === "alppay") && (
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
-              <div className="space-y-1.5 sm:col-span-2">
-                <Label htmlFor="cardholderName">{dict.checkout.payCardholderName}</Label>
-                <Input
-                  id="cardholderName"
-                  name="cardholderName"
-                  autoComplete="name"
-                  required
-                  value={cardholderName}
-                  onChange={(e) => setCardholderName(e.target.value)}
-                />
-              </div>
-              {payment === "alppay" && (
-                <div className="space-y-1.5">
-                  <Label htmlFor="billingRegion">{dict.checkout.payCardholderRegion}</Label>
-                  <Input
-                    id="billingRegion"
-                    name="billingRegion"
-                    autoComplete="address-level1"
-                    required
-                    value={region}
-                    onChange={(e) => setRegion(e.target.value)}
-                  />
-                </div>
-              )}
-              <div className="space-y-1.5">
-                <Label htmlFor="dateOfBirth">{dict.checkout.payCardholderDob}</Label>
-                <Input
-                  id="dateOfBirth"
-                  name="dateOfBirth"
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="bday"
-                  lang={locale}
-                  placeholder={dict.checkout.payCardholderDobPlaceholder}
-                  required
-                  value={dateOfBirth}
-                  onChange={(e) => {
-                    const el = e.currentTarget
-                    const typingAtEnd = (el.selectionStart ?? el.value.length) >= el.value.length
-                    const next = maskBirthDate(el.value, dateOfBirth, dateSeparator(dict.checkout.payCardholderDobPlaceholder))
-                    setDateOfBirth(next)
-                    if (typingAtEnd) requestAnimationFrame(() => el.setSelectionRange(next.length, next.length))
-                  }}
-                />
-              </div>
-              <p className="text-sm leading-relaxed text-muted-foreground sm:col-span-2">
-                {dict.checkout.payCardholderHint}
-              </p>
-            </div>
-          )}
-
           {/* Contextual panels per payment method */}
-          {payment === "zen" && (
-            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
-              <p>{zenCopy.note}</p>
-            </div>
-          )}
-          {payment === "skrill_card" && (
-            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
-              <p>{dict.checkout.paySkrillCardNote}</p>
-            </div>
-          )}
-          {payment === "skrill_ideal" && (
-            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
-              <p>{dict.checkout.paySkrillIdealNote}</p>
-            </div>
-          )}
-          {payment === "square" && (
-            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
-              <p>{dict.checkout.paySquareNote}</p>
-            </div>
-          )}
           {payment === "card" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.payCardNote}</p>
-            </div>
-          )}
-          {payment === "sumup" && (
-            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
-              <p>{dict.checkout.paySumupNote}</p>
-            </div>
-          )}
-          {payment === "alppay" && (
-            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
-              <p>{dict.checkout.payAlppayNote}</p>
             </div>
           )}
           {payment === "paypal" && (
@@ -659,11 +419,11 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
           </span>
         </label>
         {orderError && (
-                <p className="mb-3 text-sm text-destructive" role="alert">
-                  {orderError}
-                </p>
-              )}
-              {payment === "installments" && installmentsEligible ? (
+          <p className="mb-3 text-sm text-destructive" role="alert">
+            {orderError}
+          </p>
+        )}
+        {payment === "installments" && installmentsEligible ? (
           <Button
             size="lg"
             className="mt-4 w-full"

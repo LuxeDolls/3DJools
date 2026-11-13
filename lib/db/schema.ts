@@ -231,13 +231,7 @@ export type OrderStatus = (typeof ORDER_STATUSES)[number]
 
 export const PAYMENT_METHODS = [
   "card",
-  "alppay",
-  "zen",
-  "skrill_card",
-  "skrill_ideal",
   "paypal",
-  "square",
-  "sumup",
   "bank_transfer",
   "crypto",
   "installments",

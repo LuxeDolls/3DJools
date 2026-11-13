@@ -49,7 +49,14 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const raw = readStoredCart()
-      if (raw) setLines(JSON.parse(raw))
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (Array.isArray(parsed)) {
+          setLines(parsed)
+        } else {
+          localStorage.removeItem(STORAGE_KEY)
+        }
+      }
     } catch {
       // ignore malformed storage
     }

@@ -101,7 +101,7 @@ export const en = {
     uspWarrantyTitle: "2-year warranty",
     uspWarrantyText: "Every machine covered by EU consumer guarantee.",
     uspPaymentTitle: "Flexible payment",
-    uspPaymentText: "Cards, Apple Pay, Link, Bancontact, Klarna, SEPA or 4× instalments.",
+    uspPaymentText: "Visa, Mastercard, SEPA bank transfer or 4× interest-free instalments.",
     newsletterTitle: "Get maker deals in your inbox",
     newsletterText: "New drops, restocks and members-only offers. No spam.",
     newsletterPlaceholder: "Your email address",
@@ -182,14 +182,14 @@ export const en = {
     shippingStandardDesc: "3–7 business days",
     shippingFree: "Free standard shipping",
     shippingFreeDesc: "3–7 business days · free on every order",
-    payCard: "Credit / debit card",
-    payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact and Klarna",
+    payCard: "Visa / Mastercard",
+    payCardDesc: "Secure card payment",
     payCardUnavailable: "Card payment is temporarily unavailable",
     payCardGatewayNotice:
       "Due to technical issues with our payment gateway, card payments are temporarily disabled. Please use SEPA bank transfer or 4× interest-free instalments.",
     payCardFailed: "The card payment was not completed. You can try again.",
     payCardNote:
-      "You will be redirected to a secure Stripe page. You can pay by card, Apple Pay, Link, Bancontact or Klarna. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
+      "After placing your order, you are redirected to a secure payment page to pay by Visa or Mastercard. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Opens Square's secure page · charged in US dollars · statement name HIRA",
     paySquareNote:
@@ -245,7 +245,7 @@ export const en = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Available on the secure Stripe page when you pay by card.",
     payMethodsNote:
-      "All prices are shown in euro (EUR) and include VAT where applicable. Card payments are charged in euros on a secure payment page. Apple Pay, Link, Bancontact and Klarna are available when you pay by card. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
+      "All prices are shown in euro (EUR) and include VAT where applicable. Card payments (Visa, Mastercard) are charged in euros on a secure payment page. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pay with your PayPal balance, bank account or card",
     payPaypalUnavailable: "PayPal is temporarily unavailable",

@@ -1,6 +1,6 @@
 "use server"
 
-import { randomUUID } from "node:crypto"
+import { randomBytes } from "node:crypto"
 import { headers } from "next/headers"
 import { after } from "next/server"
 import { auth } from "@/lib/auth"
@@ -20,22 +20,11 @@ import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { CRYPTO_CHECKOUT_ENABLED, isCryptoCoinId } from "@/lib/payments/crypto"
-import { toE164Phone } from "@/lib/payments/phone-country"
-import { appendStripeSessionId, createStripeCheckout, stripeConfigured } from "@/lib/payments/stripe"
+import { appendProviderOrderId, aviagramConfigured, createCardForm } from "@/lib/payments/aviagram"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
-import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
-import { isSkrillPayment, skrillMethodError } from "@/lib/payments/skrill-availability"
-import { appendSkrillTransactionId, createSkrillPayment, skrillConfigured } from "@/lib/payments/skrill"
-import { appendZenTransactionId, createZenPayment, zenConfigured } from "@/lib/payments/zen"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
-import { squareConfigured } from "@/lib/payments/square"
-import { openSquareCheckout } from "@/lib/payments/square-order"
-import { sumupConfigured } from "@/lib/payments/sumup"
-import { appendSumupCheckoutIds, openSumupCheckout } from "@/lib/payments/sumup-order"
-import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
-import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
-import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
+import { noteSafeName } from "@/lib/payments/cardholder"
 import {
   blockIpAddress,
   checkCustomerBlock,
@@ -43,37 +32,19 @@ import {
 } from "@/lib/security/blocked-customers"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
-// Prices are authoritative here, never taken from the client — the cart only
-// supplies slugs + quantities. Shipping cost is recomputed from lib/shipping
-// (single EU/UK shipping method, 3–7 working days) using the destination
-// country submitted at checkout; it becomes free automatically once the
-// subtotal reaches the threshold.
 const MAX_QTY = 20
 
 type CheckoutShipping = "standard"
 type CheckoutPayment =
   | "card"
-  | "alppay"
-  | "zen"
-  | "skrill_card"
-  | "skrill_ideal"
   | "paypal"
-  | "square"
-  | "sumup"
   | "sepa"
   | "crypto"
   | "installments"
 
-// Maps the checkout selector id onto the persisted PaymentMethod enum.
 const PAYMENT_METHOD: Record<CheckoutPayment, PaymentMethod> = {
   card: "card",
-  alppay: "alppay",
-  zen: "zen",
-  skrill_card: "skrill_card",
-  skrill_ideal: "skrill_ideal",
   paypal: "paypal",
-  square: "square",
-  sumup: "sumup",
   sepa: "bank_transfer",
   crypto: "crypto",
   installments: "installments",
@@ -89,15 +60,11 @@ export type PlaceOrderInput = {
   postalCode: string
   country: string
   phone?: string
-  /** Billing region or state. Required for Visa / Mastercard. */
   region?: string
-  /** Cardholder full name. Required for card payments. */
   cardholderName?: string
-  /** Cardholder date of birth, YYYY-MM-DD. Required for card payments. */
   dateOfBirth?: string
   shipping?: CheckoutShipping
   payment: CheckoutPayment
-  /** Selected coin/network id when payment is "crypto" (see lib/payments/crypto.ts). */
   cryptoCoin?: string
   termsAccepted?: boolean
   locale?: string
@@ -112,17 +79,6 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
 
-async function requestIp(): Promise<string | null> {
-  const h = await headers()
-  return formatAlppayIp(h.get("x-forwarded-for") ?? h.get("x-real-ip") ?? "")
-}
-
-/**
- * Creates a real order (header + line items) from a checkout submission.
- * Every monetary value is recomputed server-side from the catalog, and the
- * member discount is applied only when there is a valid signed-in session —
- * the client cannot grant itself a discount or set its own prices.
- */
 export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResult> {
   const required: [string, string | undefined][] = [
     ["email", input.email],
@@ -151,29 +107,9 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (blockCheck.blocked) return { ok: false, error: "account_blocked" }
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
-  if (isCardPayment(input.payment)) {
-    if (!splitFullName(input.cardholderName ?? "")) return { ok: false, error: "cardholder_required" }
-    if (!input.dateOfBirth || !isAdultDateOfBirth(input.dateOfBirth)) return { ok: false, error: "dob_invalid" }
-  }
-  if (input.payment === "card" && !stripeConfigured()) return { ok: false, error: "card_unavailable" }
-  const cardPhone = input.payment === "card" ? toE164Phone(input.phone, input.country.trim()) : null
-  if (input.payment === "card" && !cardPhone) return { ok: false, error: "phone_required" }
-  if (input.payment === "alppay" && (!ALPPAY_CHECKOUT_ENABLED || !alppayConfigured())) {
-    return { ok: false, error: "alppay_unavailable" }
-  }
-  if (input.payment === "alppay" && !formatAlppayPhone(input.phone, input.country.trim())) {
-    return { ok: false, error: "phone_required" }
-  }
-  if (input.payment === "alppay" && !input.region?.trim()) return { ok: false, error: "region_required" }
-  if (input.payment === "alppay" && !(await requestIp())) return { ok: false, error: "ip_required" }
-  if (input.payment === "alppay" && (await alppayHoldUntil(input.email))) return { ok: false, error: "alppay_hold" }
+  if (input.payment === "card" && !aviagramConfigured()) return { ok: false, error: "card_unavailable" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
-  if (input.payment === "square" && !squareConfigured()) return { ok: false, error: "square_unavailable" }
-  if (input.payment === "sumup" && !sumupConfigured()) return { ok: false, error: "sumup_unavailable" }
-  if (input.payment === "zen" && !zenConfigured()) return { ok: false, error: "zen_unavailable" }
-  if (isSkrillPayment(input.payment) && !skrillConfigured()) return { ok: false, error: "skrill_unavailable" }
 
-  // Recompute the cart from the catalog (source of truth for prices).
   const items: Array<Omit<NewOrderItemRow, "id" | "orderId">> = []
   let subtotalCents = 0
   for (const line of input.items) {
@@ -195,7 +131,6 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   }
   if (subtotalCents <= 0) return { ok: false, error: "invalid_total" }
 
-  // Member discount depends on a verified server-side session, not the client.
   const session = await auth.api.getSession({ headers: await headers() })
   const userId = session?.user?.id ?? null
   if (input.payment === "crypto" && !CRYPTO_CHECKOUT_ENABLED) {
@@ -212,31 +147,15 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     return { ok: false, error: "order_failed" }
   }
   const discountCents = userId ? memberDiscountCents(subtotalCents) : 0
-
-  // Shipping is recomputed too: the Netherlands gets the domestic rate, every other
-  // destination pays the international rate, and both are waived above the
-  // free-shipping threshold.
   const shippingCents = computeShippingCents(subtotalCents, input.country)
-
   const totalCents = subtotalCents - discountCents + shippingCents
-  if (isSkrillPayment(input.payment)) {
-    const skrillErr = skrillMethodError(input.payment, totalCents, input.country)
-    if (skrillErr) return { ok: false, error: skrillErr }
-  }
 
   const paymentMethod = PAYMENT_METHOD[input.payment] ?? "card"
-  // Card, bank transfer and crypto stay unpaid until funds are confirmed.
   const status: OrderStatus =
     paymentMethod === "bank_transfer" ||
     paymentMethod === "crypto" ||
     paymentMethod === "card" ||
-    paymentMethod === "alppay" ||
-    paymentMethod === "zen" ||
-    paymentMethod === "skrill_card" ||
-    paymentMethod === "skrill_ideal" ||
-    paymentMethod === "paypal" ||
-    paymentMethod === "square" ||
-    paymentMethod === "sumup"
+    paymentMethod === "paypal"
       ? "awaiting_payment"
       : "paid"
 
@@ -262,10 +181,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
         paymentMethod === "crypto" && input.cryptoCoin && isCryptoCoinId(input.cryptoCoin)
           ? input.cryptoCoin
           : undefined,
-      cardholder_name: isCardPayment(input.payment) ? noteSafeName(input.cardholderName ?? "") : undefined,
-      date_of_birth: isCardPayment(input.payment) ? toIsoDate(input.dateOfBirth ?? "") ?? undefined : undefined,
-      phone: input.payment === "card" ? cardPhone ?? undefined : input.payment === "alppay" ? noteSafeName(input.phone ?? "") : undefined,
-      billing_state: input.payment === "alppay" ? noteSafeName(input.region ?? "") : undefined,
+      phone: input.phone?.trim() ? noteSafeName(input.phone) : undefined,
       client_ip: clientMeta.ip ?? undefined,
       client_ip_country: clientMeta.ipCountry ?? undefined,
     }),
@@ -275,92 +191,24 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   let paymentUrl: string | undefined
   if (paymentMethod === "card") {
     const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
-    await mergeOrderNotes(order.id, { checkout_locale: locale })
+    const webhookToken = randomBytes(32).toString("hex")
+    await mergeOrderNotes(order.id, {
+      aviagram_webhook_token: webhookToken,
+      checkout_locale: locale,
+    })
     try {
-      const checkout = await createStripeCheckout({
+      const form = await createCardForm({
         orderNumber: order.orderNumber,
         amountCents: totalCents,
         locale,
-        email: input.email.trim(),
-        phone: cardPhone ?? undefined,
-        name: `${input.firstName.trim()} ${input.lastName.trim()}`.trim(),
-        address: input.address.trim(),
-        city: input.city.trim(),
-        postalCode: input.postalCode.trim(),
-        country: input.country.trim(),
+        webhookToken,
       })
-      await mergeOrderNotes(order.id, { stripe_session_ids: checkout.sessionId })
-      paymentUrl = checkout.url
+      await mergeOrderNotes(order.id, { aviagram_order_ids: form.providerOrderId })
+      paymentUrl = form.redirectUrl
     } catch (err) {
       console.error("[v0] Card payment could not start:", err)
       await abandonUnpaidOrder(order.id)
       return { ok: false, error: "card_start_failed" }
-    }
-  }
-
-  if (paymentMethod === "alppay") {
-    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
-    await mergeOrderNotes(order.id, { checkout_locale: locale })
-    const holder = splitFullName(input.cardholderName ?? "")
-    if (!holder || !input.dateOfBirth) {
-      await abandonUnpaidOrder(order.id)
-      return { ok: false, error: "cardholder_required" }
-    }
-    try {
-      const checkout = await createAlppayCheckout({
-        orderNumber: order.orderNumber,
-        amountCents: totalCents,
-        locale,
-        email: input.email.trim(),
-        firstName: holder.firstName,
-        lastName: holder.lastName,
-      dateOfBirth: input.dateOfBirth ?? "",
-      phone: input.phone ?? "",
-      ip: (await requestIp()) ?? "",
-      address: input.address.trim(),
-      city: input.city.trim(),
-      postalCode: input.postalCode.trim(),
-      country: input.country.trim(),
-      state: input.region?.trim() ?? "",
-    })
-      await mergeOrderNotes(order.id, { alppay_payment_ids: checkout.paymentId })
-      paymentUrl = checkout.redirectUrl
-    } catch (err) {
-      console.error("[v0] AlpPay payment could not start:", err)
-      await abandonUnpaidOrder(order.id)
-      return { ok: false, error: "alppay_start_failed" }
-    }
-  }
-
-  if (paymentMethod === "square") {
-    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
-    await mergeOrderNotes(order.id, { checkout_locale: locale })
-    try {
-      const created = await getOrderByOrderNumber(order.orderNumber)
-      if (!created) throw new Error("square_missing_order")
-      paymentUrl = await openSquareCheckout(created, locale)
-    } catch (err) {
-      console.error("[v0] Square payment could not start:", err)
-      await abandonUnpaidOrder(order.id)
-      return { ok: false, error: "square_start_failed" }
-    }
-  }
-
-  if (paymentMethod === "sumup") {
-    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
-    await mergeOrderNotes(order.id, { checkout_locale: locale })
-    try {
-      const checkout = await openSumupCheckout({
-        orderNumber: order.orderNumber,
-        amountCents: totalCents,
-        locale,
-      })
-      await mergeOrderNotes(order.id, { sumup_checkout_ids: checkout.checkoutId })
-      paymentUrl = checkout.url
-    } catch (err) {
-      console.error("[v0] SumUp payment could not start:", err)
-      await abandonUnpaidOrder(order.id)
-      return { ok: false, error: "sumup_start_failed" }
     }
   }
 
@@ -382,62 +230,6 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     }
   }
 
-  if (paymentMethod === "zen") {
-    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
-    const transactionId = randomUUID()
-    await mergeOrderNotes(order.id, {
-      checkout_locale: locale,
-      zen_transaction_id: transactionId,
-      zen_transaction_ids: transactionId,
-    })
-    try {
-      const checkout = await createZenPayment({
-        orderNumber: order.orderNumber,
-        transactionId,
-        amountCents: totalCents,
-        locale,
-        email: input.email.trim(),
-        firstName: input.firstName.trim(),
-        lastName: input.lastName.trim(),
-      })
-      paymentUrl = checkout.redirectUrl
-    } catch (err) {
-      console.error("[v0] ZEN payment could not start:", err)
-      await abandonUnpaidOrder(order.id)
-      return { ok: false, error: "zen_start_failed" }
-    }
-  }
-
-  if (isSkrillPayment(paymentMethod)) {
-    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
-    const transactionId = randomUUID()
-    await mergeOrderNotes(order.id, {
-      checkout_locale: locale,
-      skrill_transaction_id: transactionId,
-      skrill_transaction_ids: transactionId,
-    })
-    try {
-      const checkout = await createSkrillPayment({
-        method: paymentMethod,
-        orderNumber: order.orderNumber,
-        transactionId,
-        amountCents: totalCents,
-        locale,
-        email: input.email.trim(),
-        firstName: input.firstName.trim(),
-        lastName: input.lastName.trim(),
-        country: input.country.trim(),
-      })
-      paymentUrl = checkout.redirectUrl
-    } catch (err) {
-      console.error("[v0] Skrill payment could not start:", err)
-      await abandonUnpaidOrder(order.id)
-      return { ok: false, error: "skrill_start_failed" }
-    }
-  }
-
-  // Send the receipt. Never let an email failure break checkout — the order
-  // is already committed, so we log and move on (a safe no-op without Resend).
   try {
     await sendOrderConfirmationEmail(order)
   } catch (err) {
@@ -447,141 +239,44 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   return { ok: true, orderNumber: order.orderNumber, paymentUrl }
 }
 
-export type StartSquarePaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
-
-/** Opens Square's hosted card page for an order that is still awaiting payment. */
-export async function startSquarePayment(orderNumber: string, locale: string): Promise<StartSquarePaymentResult> {
-  if (!squareConfigured()) return { ok: false, error: "square_unavailable" }
-  const order = await getOrderByOrderNumber(orderNumber)
-  if (!order || order.paymentMethod !== "square") return { ok: false, error: "not_found" }
-  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
-  const notes = parseOrderNotes(order.notes)
-  const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
-  try {
-    const paymentUrl = await openSquareCheckout(order, safeLocale)
-    await mergeOrderNotes(order.id, { checkout_locale: safeLocale })
-    return { ok: true, paymentUrl }
-  } catch (err) {
-    console.error("[v0] Square payment retry failed:", err)
-    return { ok: false, error: "square_start_failed" }
-  }
-}
-
-export type StartSumupPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
-
-/** Opens a new SumUp Hosted Checkout page for an order that is still awaiting payment. */
-export async function startSumupPayment(orderNumber: string, locale: string): Promise<StartSumupPaymentResult> {
-  if (!sumupConfigured()) return { ok: false, error: "sumup_unavailable" }
-  const order = await getOrderByOrderNumber(orderNumber)
-  if (!order || order.paymentMethod !== "sumup") return { ok: false, error: "not_found" }
-  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
-
-  const notes = parseOrderNotes(order.notes)
-  const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
-  try {
-    const checkout = await openSumupCheckout({
-      orderNumber: order.orderNumber,
-      amountCents: order.totalCents,
-      locale: safeLocale,
-    })
-    await mergeOrderNotes(order.id, {
-      sumup_checkout_ids: appendSumupCheckoutIds(notes.sumup_checkout_ids, checkout.checkoutId),
-      checkout_locale: safeLocale,
-    })
-    return { ok: true, paymentUrl: checkout.url }
-  } catch (err) {
-    console.error("[v0] SumUp payment retry failed:", err)
-    return { ok: false, error: "sumup_start_failed" }
-  }
-}
-
 export type StartCardPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
 
 /** Opens a new hosted card form for an order that is still awaiting payment. */
 export async function startCardPayment(orderNumber: string, locale: string): Promise<StartCardPaymentResult> {
-  if (!stripeConfigured()) return { ok: false, error: "card_unavailable" }
+  if (!aviagramConfigured()) return { ok: false, error: "card_unavailable" }
   const order = await getOrderByOrderNumber(orderNumber)
   if (!order || order.paymentMethod !== "card") return { ok: false, error: "not_found" }
   if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
 
   const notes = parseOrderNotes(order.notes)
-  const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
+  const existingToken = notes.aviagram_webhook_token ?? ""
+  const webhookToken = /^[a-f0-9]{64}$/.test(existingToken) ? existingToken : randomBytes(32).toString("hex")
+  const safeLocale = isLocale(locale)
+    ? locale
+    : notes.checkout_locale && isLocale(notes.checkout_locale)
+      ? notes.checkout_locale
+      : "en"
+  if (webhookToken !== notes.aviagram_webhook_token) {
+    await mergeOrderNotes(order.id, { aviagram_webhook_token: webhookToken, checkout_locale: safeLocale })
+  }
 
   try {
-    const checkout = await createStripeCheckout({
+    const form = await createCardForm({
       orderNumber: order.orderNumber,
       amountCents: order.totalCents,
       locale: safeLocale,
-      email: order.email,
-      phone: toE164Phone(notes.phone, order.shippingCountry ?? "") ?? undefined,
-      name: order.shippingName ?? undefined,
-      address: order.shippingAddress1 ?? undefined,
-      city: order.shippingCity ?? undefined,
-      postalCode: order.shippingPostalCode ?? undefined,
-      country: order.shippingCountry ?? undefined,
+      webhookToken,
     })
     await mergeOrderNotes(order.id, {
-      stripe_session_ids: appendStripeSessionId(notes.stripe_session_ids, checkout.sessionId),
+      aviagram_order_ids: appendProviderOrderId(notes.aviagram_order_ids, form.providerOrderId),
+      aviagram_last_status: undefined,
+      aviagram_declined_reason: undefined,
       checkout_locale: safeLocale,
     })
-    return { ok: true, paymentUrl: checkout.url }
+    return { ok: true, paymentUrl: form.redirectUrl }
   } catch (err) {
     console.error("[v0] Card payment retry failed:", err)
     return { ok: false, error: "card_start_failed" }
-  }
-}
-
-export type StartAlppayPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
-
-/** Opens a new hosted Visa/Mastercard page for an order that is still awaiting payment. */
-export async function startAlppayPayment(
-  orderNumber: string,
-  locale: string,
-  phone?: string,
-): Promise<StartAlppayPaymentResult> {
-  if (!ALPPAY_CHECKOUT_ENABLED || !alppayConfigured()) return { ok: false, error: "alppay_unavailable" }
-  const order = await getOrderByOrderNumber(orderNumber)
-  if (!order || order.paymentMethod !== "alppay") return { ok: false, error: "not_found" }
-  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
-  if (await alppayHoldUntil(order.email)) return { ok: false, error: "alppay_hold" }
-
-  const notes = parseOrderNotes(order.notes)
-  const safeLocale = isLocale(locale) ? locale : notes.checkout_locale && isLocale(notes.checkout_locale) ? notes.checkout_locale : "en"
-  const holder = splitFullName(notes.cardholder_name || order.shippingName || "")
-  const firstName = holder?.firstName || "Customer"
-  const lastName = holder?.lastName || firstName
-  const country = order.shippingCountry ?? ""
-  const suppliedPhone = formatAlppayPhone(phone, country) ? phone?.trim() : ""
-  const phoneValue = suppliedPhone || notes.phone || ""
-  const state = notes.billing_state || order.shippingCity || ""
-
-  try {
-    const checkout = await createAlppayCheckout({
-      orderNumber: order.orderNumber,
-      amountCents: order.totalCents,
-      locale: safeLocale,
-      email: order.email,
-      firstName,
-      lastName,
-      dateOfBirth: notes.date_of_birth && isAdultDateOfBirth(notes.date_of_birth) ? notes.date_of_birth : "",
-      phone: phoneValue,
-      ip: (await requestIp()) ?? "",
-      address: order.shippingAddress1 ?? "",
-      city: order.shippingCity ?? "",
-      postalCode: order.shippingPostalCode ?? "",
-      country,
-      state,
-    })
-    await mergeOrderNotes(order.id, {
-      alppay_payment_ids: appendAlppayPaymentId(notes.alppay_payment_ids, checkout.paymentId),
-      checkout_locale: safeLocale,
-      phone: formatAlppayPhone(phoneValue, country) ? noteSafeName(phoneValue) : undefined,
-      billing_state: state ? noteSafeName(state) : undefined,
-    })
-    return { ok: true, paymentUrl: checkout.redirectUrl }
-  } catch (err) {
-    console.error("[v0] AlpPay payment retry failed:", err)
-    return { ok: false, error: "alppay_start_failed" }
   }
 }
 
@@ -615,146 +310,21 @@ export async function startPaypalPayment(orderNumber: string, locale: string): P
   }
 }
 
-export type StartSkrillPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
-
-/** Opens a fresh Skrill Hosted Checkout session for an order that is still awaiting payment. */
-export async function startSkrillPayment(orderNumber: string, locale: string): Promise<StartSkrillPaymentResult> {
-  if (!skrillConfigured()) return { ok: false, error: "skrill_unavailable" }
-  const order = await getOrderByOrderNumber(orderNumber)
-  if (!order || !isSkrillPayment(order.paymentMethod)) return { ok: false, error: "not_found" }
-  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
-
-  const methodErr = skrillMethodError(order.paymentMethod, order.totalCents, order.shippingCountry)
-  if (methodErr) return { ok: false, error: methodErr }
-
-  const notes = parseOrderNotes(order.notes)
-  const safeLocale = isLocale(locale)
-    ? locale
-    : notes.checkout_locale && isLocale(notes.checkout_locale)
-      ? notes.checkout_locale
-      : "en"
-  const holder = splitFullName(order.shippingName || "")
-  const firstName = holder?.firstName || order.shippingName?.trim() || "Customer"
-  const lastName = holder?.lastName || firstName
-  const transactionId = randomUUID()
-
-  try {
-    const checkout = await createSkrillPayment({
-      method: order.paymentMethod,
-      orderNumber: order.orderNumber,
-      transactionId,
-      amountCents: order.totalCents,
-      locale: safeLocale,
-      email: order.email,
-      firstName,
-      lastName,
-      country: order.shippingCountry ?? "Netherlands",
-    })
-    await mergeOrderNotes(order.id, {
-      skrill_transaction_id: transactionId,
-      skrill_transaction_ids: appendSkrillTransactionId(
-        notes.skrill_transaction_ids ?? notes.skrill_transaction_id,
-        transactionId,
-      ),
-      skrill_last_status: undefined,
-      checkout_locale: safeLocale,
-    })
-    return { ok: true, paymentUrl: checkout.redirectUrl }
-  } catch (err) {
-    console.error("[v0] Skrill payment retry failed:", err)
-    return { ok: false, error: "skrill_start_failed" }
-  }
-}
-
-export type StartZenPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
-
-/** Opens a fresh ZEN Checkout session for an order that is still awaiting payment. */
-export async function startZenPayment(orderNumber: string, locale: string): Promise<StartZenPaymentResult> {
-  if (!zenConfigured()) return { ok: false, error: "zen_unavailable" }
-  const order = await getOrderByOrderNumber(orderNumber)
-  if (!order || order.paymentMethod !== "zen") return { ok: false, error: "not_found" }
-  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
-
-  const notes = parseOrderNotes(order.notes)
-  const safeLocale = isLocale(locale)
-    ? locale
-    : notes.checkout_locale && isLocale(notes.checkout_locale)
-      ? notes.checkout_locale
-      : "en"
-  const holder = splitFullName(order.shippingName || "")
-  const firstName = holder?.firstName || order.shippingName?.trim() || "Customer"
-  const lastName = holder?.lastName || firstName
-  const transactionId = randomUUID()
-
-  try {
-    const checkout = await createZenPayment({
-      orderNumber: order.orderNumber,
-      transactionId,
-      amountCents: order.totalCents,
-      locale: safeLocale,
-      email: order.email,
-      firstName,
-      lastName,
-    })
-    await mergeOrderNotes(order.id, {
-      zen_transaction_id: transactionId,
-      zen_transaction_ids: appendZenTransactionId(
-        notes.zen_transaction_ids ?? notes.zen_transaction_id,
-        transactionId,
-      ),
-      zen_last_status: undefined,
-      checkout_locale: safeLocale,
-    })
-    return { ok: true, paymentUrl: checkout.redirectUrl }
-  } catch (err) {
-    console.error("[v0] ZEN payment retry failed:", err)
-    return { ok: false, error: "zen_start_failed" }
-  }
-}
-
 export type SwitchPaymentMethodResult = { ok: true } | { ok: false; error: string }
 
-// Methods a customer can self-serve switch to from the order page, e.g. after a
-// card decline. Crypto and instalments are excluded: crypto is disabled and
-// instalments need a separate credit application, not a one-click switch.
-const SWITCHABLE_METHODS: Record<PaymentMethod, boolean> = {
+const SWITCHABLE_METHODS: Partial<Record<PaymentMethod, boolean>> = {
   card: true,
-  alppay: true,
-  zen: true,
-  skrill_card: true,
-  skrill_ideal: true,
   paypal: true,
-  square: true,
-  sumup: true,
   bank_transfer: true,
-  crypto: false,
-  installments: false,
 }
 
-function isMethodAvailable(
-  method: PaymentMethod,
-  email: string,
-  totalCents: number,
-  country: string | null | undefined,
-): boolean {
-  if (method === "card") return stripeConfigured()
-  if (method === "alppay") return ALPPAY_CHECKOUT_ENABLED && alppayConfigured()
-  if (method === "zen") return zenConfigured() && totalCents > 0
-  if (method === "skrill_card" || method === "skrill_ideal") {
-    return skrillConfigured() && !skrillMethodError(method, totalCents, country)
-  }
+function isMethodAvailable(method: PaymentMethod, email: string): boolean {
+  if (method === "card") return aviagramConfigured()
   if (method === "paypal") return paypalConfigured()
-  if (method === "square") return squareConfigured()
-  if (method === "sumup") return sumupConfigured()
   if (method === "bank_transfer") return isBankTransferCheckoutEnabled(email)
   return false
 }
 
-/**
- * Lets a customer switch an unpaid order to a different payment method, e.g.
- * after a card decline. Only allowed while the order is still unpaid, and only
- * onto a method that is actually available right now.
- */
 export async function switchOrderPaymentMethod(orderNumber: string, method: PaymentMethod): Promise<SwitchPaymentMethodResult> {
   if (!SWITCHABLE_METHODS[method]) return { ok: false, error: "invalid_method" }
   const order = await getOrderByOrderNumber(orderNumber)
@@ -791,7 +361,7 @@ export async function switchOrderPaymentMethod(orderNumber: string, method: Paym
     return { ok: false, error: "invalid_status" }
   }
   if (method === order.paymentMethod) return { ok: true }
-  if (!isMethodAvailable(method, order.email, order.totalCents, order.shippingCountry)) {
+  if (!isMethodAvailable(method, order.email)) {
     return { ok: false, error: "method_unavailable" }
   }
 
@@ -810,12 +380,6 @@ export async function switchOrderPaymentMethod(orderNumber: string, method: Paym
 export type TrackOrderInput = { orderNumber: string; email: string }
 export type TrackOrderResult = { ok: true; orderNumber: string } | { ok: false; error: string }
 
-/**
- * Looks up an order for guests who never created an account. Requiring both
- * the order number and the checkout email (rather than the order number
- * alone) prevents anyone from browsing arbitrary orders by guessing or
- * incrementing order numbers.
- */
 export async function trackOrder(input: TrackOrderInput): Promise<TrackOrderResult> {
   const orderNumber = input.orderNumber?.trim()
   const email = input.email?.trim()
@@ -831,15 +395,13 @@ export async function trackOrder(input: TrackOrderInput): Promise<TrackOrderResu
 
 export type MarkOrderPaidResult = { ok: true } | { ok: false; error: string }
 
-/**
- * Called when the customer clicks "I've paid" after seeing the bank/crypto
- * payment instructions. Moves the order into `reviewing_payment` so the
- * customer sees a "we're checking your payment" state and the admin sees it
- * in the queue — this never marks an order as actually paid by itself.
- */
 export async function markOrderPaidByCustomer(orderNumber: string): Promise<MarkOrderPaidResult> {
-  const order = await getOrderByOrderNumber(orderNumber)
+  const trimmed = orderNumber?.trim()
+  if (!trimmed) return { ok: false, error: "missing_order" }
+
+  const order = await getOrderByOrderNumber(trimmed)
   if (!order) return { ok: false, error: "not_found" }
+
   const clientMeta = extractClientRequestMeta(await headers())
   const existingNotes = parseOrderNotes(order.notes)
   if (clientMeta.ip && !existingNotes.client_ip) {
@@ -861,26 +423,28 @@ export async function markOrderPaidByCustomer(orderNumber: string): Promise<Mark
   if (existingNotes.blocked_reason || blockCheck.blocked) {
     if (clientMeta.ip) {
       await blockIpAddress(clientMeta.ip, {
-        reason: existingNotes.blocked_reason || blockCheck.reason || "Blocked order payment submission",
+        reason: existingNotes.blocked_reason || blockCheck.reason || "Blocked order activity",
         orderNumber: order.orderNumber,
         email: order.email,
       })
     }
     return { ok: false, error: "account_blocked" }
   }
+
   if (order.paymentMethod !== "bank_transfer" && order.paymentMethod !== "crypto") {
     return { ok: false, error: "invalid_method" }
   }
-  if (order.status !== "awaiting_payment") {
+  if (order.status === "reviewing_payment" || order.status === "paid" || order.status === "processing" || order.status === "shipped" || order.status === "delivered") {
+    return { ok: true }
+  }
+  if (order.status !== "awaiting_payment" && order.status !== "pending") {
     return { ok: false, error: "invalid_status" }
   }
+
   await updateOrderStatus(order.id, "reviewing_payment")
-  // Scheduled via after(): a bare fire-and-forget promise can get dropped the
-  // moment the response is sent on Vercel's serverless runtime, which caused
-  // this notification (and its Telegram alert) to only arrive intermittently.
   after(() =>
-    notifyPaymentSubmitted({ ...order, status: "reviewing_payment" }).catch((err) => {
-      console.error("[v0] Payment-submitted admin notification failed:", err)
+    notifyPaymentSubmitted({ ...order, status: "reviewing_payment" }).catch((error) => {
+      console.error("[v0] Payment-submitted admin notification failed:", error)
     }),
   )
   return { ok: true }

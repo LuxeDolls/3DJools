@@ -103,7 +103,7 @@ export const nl: Dictionary = {
     uspWarrantyTitle: "2 jaar garantie",
     uspWarrantyText: "Elke machine gedekt door EU-consumentengarantie.",
     uspPaymentTitle: "Flexibel betalen",
-    uspPaymentText: "Kaart, Apple Pay, Link, Bancontact, Klarna, SEPA of 4× rentevrij.",
+    uspPaymentText: "Visa, Mastercard, SEPA-overschrijving of 4× rentevrij.",
     newsletterTitle: "Ontvang maker-aanbiedingen per e-mail",
     newsletterText: "Nieuwe releases, herbevoorrading en exclusieve aanbiedingen. Geen spam.",
     newsletterPlaceholder: "Je e-mailadres",
@@ -184,14 +184,14 @@ export const nl: Dictionary = {
     shippingStandardDesc: "3–7 werkdagen",
     shippingFree: "Gratis standaardverzending",
     shippingFreeDesc: "3–7 werkdagen · gratis bij elke bestelling",
-    payCard: "Credit-/debetkaart",
-    payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact en Klarna",
+    payCard: "Visa / Mastercard",
+    payCardDesc: "Veilige kaartbetaling",
     payCardUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
     payCardGatewayNotice:
       "Vanwege technische problemen met onze betaalgateway zijn kaartbetalingen tijdelijk uitgeschakeld. Gebruik een SEPA-bankoverschrijving of betaling in 4× rentevrije termijnen.",
     payCardFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payCardNote:
-      "U wordt doorgestuurd naar een beveiligde Stripe-pagina. U kunt betalen met kaart, Apple Pay, Link, Bancontact of Klarna. Wij zien uw kaartnummer niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
+      "Na het plaatsen van de bestelling wordt u doorgestuurd naar een beveiligde betaalpagina om te betalen met Visa of Mastercard. Wij zien uw kaartnummer nooit. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Opent de beveiligde Square-pagina · afschrijving in Amerikaanse dollars · afschrift: HIRA",
     paySquareNote:
@@ -247,7 +247,7 @@ export const nl: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen worden in euro afgeschreven op een beveiligde betaalpagina. Apple Pay, Link, Bancontact en Klarna zijn beschikbaar bij betaling met kaart. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
+      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen (Visa, Mastercard) worden in euro afgeschreven op een beveiligde betaalpagina. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",

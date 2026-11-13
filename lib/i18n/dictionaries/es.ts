@@ -103,7 +103,7 @@ export const es: Dictionary = {
     uspWarrantyTitle: "2 años de garantía",
     uspWarrantyText: "Cada máquina cubierta por la garantía del consumidor de la UE.",
     uspPaymentTitle: "Pago flexible",
-    uspPaymentText: "Tarjeta, Apple Pay, Link, Bancontact, Klarna, SEPA o 4× sin intereses.",
+    uspPaymentText: "Visa, Mastercard, transferencia SEPA o 4× sin intereses.",
     newsletterTitle: "Recibe ofertas maker en tu correo",
     newsletterText: "Novedades, reposiciones y ofertas exclusivas. Sin spam.",
     newsletterPlaceholder: "Tu dirección de correo",
@@ -184,14 +184,14 @@ export const es: Dictionary = {
     shippingStandardDesc: "3–7 días laborables",
     shippingFree: "Envío estándar gratis",
     shippingFreeDesc: "3–7 días laborables · gratis en todos los pedidos",
-    payCard: "Tarjeta de crédito / débito",
-    payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact y Klarna",
+    payCard: "Visa / Mastercard",
+    payCardDesc: "Pago seguro con tarjeta",
     payCardUnavailable: "El pago con tarjeta no está disponible temporalmente",
     payCardGatewayNotice:
       "Debido a problemas técnicos con nuestra pasarela de pago, los pagos con tarjeta están temporalmente deshabilitados. Utiliza la transferencia bancaria SEPA o el pago en 4× sin intereses.",
     payCardFailed: "El pago con tarjeta no se ha completado. Puedes intentarlo de nuevo.",
     payCardNote:
-      "Se le redirigirá a una página segura de Stripe. Puede pagar con tarjeta, Apple Pay, Link, Bancontact o Klarna. Nunca vemos el número de su tarjeta. Si ya ha pagado, espere a que se actualice el estado y no pague dos veces.",
+      "Después de realizar el pedido, serás redirigido a una página de pago segura para pagar con Visa o Mastercard. Nunca vemos el número de tu tarjeta. Si ya has pagado, espera a que se actualice el estado y no pagues dos veces.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Abre la página segura de Square · cargo en dólares estadounidenses · extracto: HIRA",
     paySquareNote:
@@ -247,7 +247,7 @@ export const es: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponible en la página segura de Stripe cuando paga con tarjeta.",
     payMethodsNote:
-      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Los pagos con tarjeta se cargan en euros en una página de pago segura. Apple Pay, Link, Bancontact y Klarna están disponibles al pagar con tarjeta. Nunca vemos el número de tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
+      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Los pagos con tarjeta (Visa, Mastercard) se cargan en euros en una página de pago segura. Nunca vemos el número de tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pague con saldo de PayPal, cuenta bancaria o tarjeta",
     payPaypalUnavailable: "PayPal no está disponible temporalmente",

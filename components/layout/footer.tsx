@@ -3,11 +3,7 @@ import Link from "next/link"
 import { CreditCard, Landmark, CalendarClock, Clock, Mail, Phone } from "lucide-react"
 import { COMPANY, companyStreetLine } from "@/lib/company"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
-import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
-import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
-import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
-import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
-import { ZEN_CHECKOUT_ENABLED, ZEN_COPY } from "@/lib/payments/zen-availability"
+import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import type { Locale } from "@/lib/i18n/config"
@@ -56,24 +52,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   const payments = [
-    ...(ZEN_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: ZEN_COPY[locale].title }] : []),
-    ...(SKRILL_CHECKOUT_ENABLED
-      ? [
-          { icon: CreditCard, label: dict.checkout.paySkrillCard },
-          { icon: Landmark, label: dict.checkout.paySkrillIdeal, word: dict.checkout.paySkrillIdeal },
-        ]
-      : []),
-    ...(SQUARE_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.paySquare }] : []),
-    ...(STRIPE_CHECKOUT_ENABLED
-      ? [
-          { icon: CreditCard, label: dict.checkout.payCard },
-          { icon: CreditCard, label: dict.checkout.payApplePay, word: dict.checkout.payApplePay },
-          { icon: CreditCard, label: dict.checkout.payLink, word: dict.checkout.payLink },
-          { icon: CreditCard, label: dict.checkout.payBancontact, word: dict.checkout.payBancontact },
-          { icon: CreditCard, label: dict.checkout.payKlarna, word: dict.checkout.payKlarna },
-        ]
-      : []),
-    ...(ALPPAY_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.payAlppay }] : []),
+    ...(CARD_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.payCard }] : []),
     ...(BANK_TRANSFER_CHECKOUT_ENABLED ? [{ icon: Landmark, label: dict.checkout.paySepa }] : []),
     ...(isPaypalCheckoutEnabled()
       ? [{ icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" }]
@@ -165,20 +144,14 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
                 className="flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-[11px] font-medium text-muted-foreground sm:text-xs"
                 title={p.label}
               >
-                {"word" in p && p.word ? (
-                  <span>{p.word}</span>
+                {"mark" in p && p.mark ? (
+                  <span className="flex h-5 items-center rounded-sm bg-white px-1">
+                    <Image src={p.mark} alt="" width={56} height={14} className="h-3.5 w-auto" />
+                  </span>
                 ) : (
-                  <>
-                    {"mark" in p && p.mark ? (
-                      <span className="flex h-5 items-center rounded-sm bg-white px-1">
-                        <Image src={p.mark} alt="" width={56} height={14} className="h-3.5 w-auto" />
-                      </span>
-                    ) : (
-                      <p.icon className="size-3.5 shrink-0 text-foreground sm:size-4" />
-                    )}
-                    <span>{p.label}</span>
-                  </>
+                  <p.icon className="size-3.5 shrink-0 text-foreground sm:size-4" />
                 )}
+                <span>{p.label}</span>
               </li>
             ))}
           </ul>

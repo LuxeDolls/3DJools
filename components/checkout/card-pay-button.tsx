@@ -2,60 +2,30 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import {
-  startAlppayPayment,
-  startCardPayment,
-  startSkrillPayment,
-  startSquarePayment,
-  startSumupPayment,
-  startZenPayment,
-} from "@/lib/actions/orders"
+import { startCardPayment } from "@/lib/actions/orders"
 
 export function CardPayButton({
   orderNumber,
   locale,
   label,
   errorLabel,
-  holdLabel,
-  method = "card",
-  needsPhone = false,
-  phoneLabel = "Phone",
 }: {
   orderNumber: string
   locale: string
   label: string
   errorLabel: string
-  holdLabel?: string
-  method?: "card" | "alppay" | "zen" | "square" | "sumup" | "skrill_card" | "skrill_ideal"
-  needsPhone?: boolean
-  phoneLabel?: string
 }) {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [phone, setPhone] = useState("")
 
   async function pay() {
     if (pending) return
-    if (needsPhone && phone.trim().length < 6) {
-      setError(phoneLabel)
-      return
-    }
     setPending(true)
     setError(null)
     try {
-      const result = method === "alppay"
-        ? await startAlppayPayment(orderNumber, locale, phone)
-        : method === "zen"
-          ? await startZenPayment(orderNumber, locale)
-          : method === "square"
-            ? await startSquarePayment(orderNumber, locale)
-            : method === "sumup"
-              ? await startSumupPayment(orderNumber, locale)
-              : method === "skrill_card" || method === "skrill_ideal"
-                ? await startSkrillPayment(orderNumber, locale)
-                : await startCardPayment(orderNumber, locale)
+      const result = await startCardPayment(orderNumber, locale)
       if (!result.ok) {
-        setError(result.error === "alppay_hold" && holdLabel ? holdLabel : errorLabel)
+        setError(errorLabel)
         setPending(false)
         return
       }
@@ -78,19 +48,6 @@ export function CardPayButton({
 
   return (
     <div className="mt-3 flex flex-col items-start gap-2">
-      {needsPhone ? (
-        <label className="flex w-full max-w-xs flex-col gap-1 text-sm text-foreground">
-          <span>{phoneLabel}</span>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(event) => setPhone(event.target.value)}
-            autoComplete="tel"
-            required
-            className="h-10 rounded-md border border-border bg-background px-3"
-          />
-        </label>
-      ) : null}
       <Button type="button" onClick={pay} disabled={pending}>
         {label}
       </Button>

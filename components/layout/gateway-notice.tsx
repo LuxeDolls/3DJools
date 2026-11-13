@@ -4,12 +4,7 @@ import { useState } from "react"
 import { AlertTriangle, X } from "lucide-react"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
-import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
-import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
-import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
-import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
-import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
-import { ZEN_CHECKOUT_ENABLED } from "@/lib/payments/zen-availability"
+import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 
 const NOTICE_TITLE: Record<Locale, string> = {
   en: "Payment gateway notice",
@@ -38,15 +33,7 @@ export function GatewayNotice({
 }) {
   const [dismissed, setDismissed] = useState(false)
 
-  const cardsDisabled =
-    !ZEN_CHECKOUT_ENABLED &&
-    !SKRILL_CHECKOUT_ENABLED &&
-    !STRIPE_CHECKOUT_ENABLED &&
-    !SQUARE_CHECKOUT_ENABLED &&
-    !SUMUP_CHECKOUT_ENABLED &&
-    !ALPPAY_CHECKOUT_ENABLED
-
-  if (!cardsDisabled || dismissed) return null
+  if (CARD_CHECKOUT_ENABLED || dismissed) return null
 
   return (
     <div
