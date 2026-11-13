@@ -1,9 +1,11 @@
 "use server"
 
+import { headers } from "next/headers"
 import { db } from "@/lib/db"
 import { contactMessages } from "@/lib/db/schema"
 import { issueContactCaptcha, verifyContactCaptcha, type ContactCaptcha } from "@/lib/contact/captcha"
 import { sendEmail } from "@/lib/email/send"
+import { checkCustomerBlock, extractClientRequestMeta } from "@/lib/security/blocked-customers"
 
 export type ContactInput = {
   name: string
@@ -58,6 +60,15 @@ export async function submitContactMessage(input: ContactInput): Promise<Contact
   if (message.length > 5000) return { ok: false, error: "Message too long" }
   if (!verifyContactCaptcha(input.captchaToken ?? "", input.captchaAnswer ?? "")) {
     return { ok: false, error: "captcha" }
+  }
+  const clientMeta = extractClientRequestMeta(await headers())
+  const blockCheck = await checkCustomerBlock({
+    email,
+    ip: clientMeta.ip,
+    fullName: name,
+  })
+  if (blockCheck.blocked) {
+    return { ok: false, error: "Unable to send message" }
   }
 
   // Fold the optional order reference into the subject so it reaches the inbox.

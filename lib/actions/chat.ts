@@ -1,8 +1,10 @@
 "use server"
 
+import { headers } from "next/headers"
 import { liveChatAutoReply } from "@/lib/chat/assistant"
 import { notifyChatOnTelegram } from "@/lib/notifications/chat-telegram"
 import { notifyNewLiveChatVisitor } from "@/lib/notifications/live-chat"
+import { checkCustomerBlock, extractClientRequestMeta } from "@/lib/security/blocked-customers"
 import {
   findConversation,
   getMessagesForConversation,
@@ -57,6 +59,16 @@ export async function sendChatMessage(
   const email = cleanEmail(identity?.email)
   const existing = await findConversation(visitorId)
   if (!existing && (!name || !email)) return { ok: false, messages: [] }
+
+  const clientMeta = extractClientRequestMeta(await headers())
+  const blockCheck = await checkCustomerBlock({
+    email: email ?? existing?.visitorEmail ?? undefined,
+    ip: clientMeta.ip,
+    fullName: name ?? existing?.visitorName ?? undefined,
+  })
+  if (blockCheck.blocked) {
+    return { ok: false, messages: [] }
+  }
 
   const conversation = await getOrCreateConversation(
     visitorId,

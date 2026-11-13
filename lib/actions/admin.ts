@@ -15,7 +15,13 @@ import { updateMessageStatus } from "@/lib/contact/queries"
 import { getAllOrders, getOrderById, mergeOrderNotes, updateOrderStatus, updateOrderTracking } from "@/lib/orders/queries"
 import { runOrderAutomation } from "@/lib/orders/automation"
 import { sendPaymentReminderEmail } from "@/lib/email/order-emails"
-import { blockCustomer, unblockCustomer } from "@/lib/security/blocked-customers"
+import {
+  blockCharacteristic,
+  blockCustomer,
+  blockIpAddress,
+  unblockCustomer,
+} from "@/lib/security/blocked-customers"
+import { parseOrderNotes } from "@/lib/orders/notes"
 import {
   sendInstallmentApplicationApprovedEmail,
   sendInstallmentApplicationRejectedEmail,
@@ -405,9 +411,36 @@ export async function blockCustomerForOrder(orderId: string, reason: string): Pr
   const order = await getOrderById(orderId)
   if (!order) throw new Error("Order not found")
 
-  await blockCustomer(order.email, { reason, orderNumber: order.orderNumber })
+  const blockReason = reason.trim() || "Blocked by admin"
+  const notes = parseOrderNotes(order.notes)
+  await blockCustomer(order.email, { reason: blockReason, orderNumber: order.orderNumber })
+  if (notes.client_ip) {
+    await blockIpAddress(notes.client_ip, {
+      reason: blockReason,
+      orderNumber: order.orderNumber,
+      email: order.email,
+    })
+  }
+  if (order.shippingName) {
+    await blockCharacteristic("name", order.shippingName, {
+      reason: blockReason,
+      orderNumber: order.orderNumber,
+    })
+  }
+  if (order.shippingAddress1) {
+    await blockCharacteristic("address", order.shippingAddress1, {
+      reason: blockReason,
+      orderNumber: order.orderNumber,
+    })
+  }
+  if (order.shippingPostalCode) {
+    await blockCharacteristic("postal_code", order.shippingPostalCode, {
+      reason: blockReason,
+      orderNumber: order.orderNumber,
+    })
+  }
   await updateOrderStatus(orderId, "cancelled")
-  await mergeOrderNotes(orderId, { blocked_reason: reason || "Blocked by admin" })
+  await mergeOrderNotes(orderId, { blocked_reason: blockReason })
 
   revalidatePath("/admin/orders")
   revalidatePath(`/admin/orders/${orderId}`)

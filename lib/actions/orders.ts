@@ -36,7 +36,11 @@ import { appendSumupCheckoutIds, openSumupCheckout } from "@/lib/payments/sumup-
 import { alppayConfigured, appendAlppayPaymentId, createAlppayCheckout, formatAlppayIp, formatAlppayPhone } from "@/lib/payments/alppay"
 import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
 import { isAdultDateOfBirth, isCardPayment, noteSafeName, splitFullName, toIsoDate } from "@/lib/payments/cardholder"
-import { isCustomerBlocked } from "@/lib/security/blocked-customers"
+import {
+  blockIpAddress,
+  checkCustomerBlock,
+  extractClientRequestMeta,
+} from "@/lib/security/blocked-customers"
 import type { NewOrderItemRow, OrderStatus, PaymentMethod } from "@/lib/db/schema"
 
 // Prices are authoritative here, never taken from the client — the cart only
@@ -133,7 +137,18 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     if (!value || !value.trim()) return { ok: false, error: "missing_fields" }
   }
   if (!isValidEmail(input.email)) return { ok: false, error: "invalid_email" }
-  if (await isCustomerBlocked(input.email)) return { ok: false, error: "account_blocked" }
+  const clientMeta = extractClientRequestMeta(await headers())
+  const blockCheck = await checkCustomerBlock({
+    email: input.email,
+    ip: clientMeta.ip,
+    firstName: input.firstName,
+    lastName: input.lastName,
+    address: input.address,
+    city: input.city,
+    postalCode: input.postalCode,
+    country: input.country,
+  })
+  if (blockCheck.blocked) return { ok: false, error: "account_blocked" }
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
   if (isCardPayment(input.payment)) {
@@ -251,6 +266,8 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       date_of_birth: isCardPayment(input.payment) ? toIsoDate(input.dateOfBirth ?? "") ?? undefined : undefined,
       phone: input.payment === "card" ? cardPhone ?? undefined : input.payment === "alppay" ? noteSafeName(input.phone ?? "") : undefined,
       billing_state: input.payment === "alppay" ? noteSafeName(input.region ?? "") : undefined,
+      client_ip: clientMeta.ip ?? undefined,
+      client_ip_country: clientMeta.ipCountry ?? undefined,
     }),
     items,
   })
@@ -742,6 +759,34 @@ export async function switchOrderPaymentMethod(orderNumber: string, method: Paym
   if (!SWITCHABLE_METHODS[method]) return { ok: false, error: "invalid_method" }
   const order = await getOrderByOrderNumber(orderNumber)
   if (!order) return { ok: false, error: "not_found" }
+  const clientMeta = extractClientRequestMeta(await headers())
+  const existingNotes = parseOrderNotes(order.notes)
+  if (clientMeta.ip && !existingNotes.client_ip) {
+    await mergeOrderNotes(order.id, {
+      client_ip: clientMeta.ip,
+      client_ip_country: clientMeta.ipCountry ?? undefined,
+    })
+  }
+  const blockCheck = await checkCustomerBlock({
+    email: order.email,
+    ip: clientMeta.ip,
+    fullName: order.shippingName,
+    address: order.shippingAddress1,
+    city: order.shippingCity,
+    postalCode: order.shippingPostalCode,
+    country: order.shippingCountry,
+    orderNumber: order.orderNumber,
+  })
+  if (existingNotes.blocked_reason || blockCheck.blocked) {
+    if (clientMeta.ip) {
+      await blockIpAddress(clientMeta.ip, {
+        reason: existingNotes.blocked_reason || blockCheck.reason || "Blocked order activity",
+        orderNumber: order.orderNumber,
+        email: order.email,
+      })
+    }
+    return { ok: false, error: "account_blocked" }
+  }
   if (order.status !== "awaiting_payment" && order.status !== "reviewing_payment") {
     return { ok: false, error: "invalid_status" }
   }
@@ -795,6 +840,34 @@ export type MarkOrderPaidResult = { ok: true } | { ok: false; error: string }
 export async function markOrderPaidByCustomer(orderNumber: string): Promise<MarkOrderPaidResult> {
   const order = await getOrderByOrderNumber(orderNumber)
   if (!order) return { ok: false, error: "not_found" }
+  const clientMeta = extractClientRequestMeta(await headers())
+  const existingNotes = parseOrderNotes(order.notes)
+  if (clientMeta.ip && !existingNotes.client_ip) {
+    await mergeOrderNotes(order.id, {
+      client_ip: clientMeta.ip,
+      client_ip_country: clientMeta.ipCountry ?? undefined,
+    })
+  }
+  const blockCheck = await checkCustomerBlock({
+    email: order.email,
+    ip: clientMeta.ip,
+    fullName: order.shippingName,
+    address: order.shippingAddress1,
+    city: order.shippingCity,
+    postalCode: order.shippingPostalCode,
+    country: order.shippingCountry,
+    orderNumber: order.orderNumber,
+  })
+  if (existingNotes.blocked_reason || blockCheck.blocked) {
+    if (clientMeta.ip) {
+      await blockIpAddress(clientMeta.ip, {
+        reason: existingNotes.blocked_reason || blockCheck.reason || "Blocked order payment submission",
+        orderNumber: order.orderNumber,
+        email: order.email,
+      })
+    }
+    return { ok: false, error: "account_blocked" }
+  }
   if (order.paymentMethod !== "bank_transfer" && order.paymentMethod !== "crypto") {
     return { ok: false, error: "invalid_method" }
   }
