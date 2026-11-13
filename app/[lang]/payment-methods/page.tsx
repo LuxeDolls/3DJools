@@ -1,11 +1,6 @@
 import Image from "next/image"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
-import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
-import { STRIPE_CHECKOUT_ENABLED, STRIPE_OFF_METHODS_NOTE } from "@/lib/payments/stripe-availability"
-import { SKRILL_ACTIVE_METHODS_NOTE, SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
-import { ZEN_ACTIVE_METHODS_NOTE, ZEN_CHECKOUT_ENABLED, ZEN_COPY } from "@/lib/payments/zen-availability"
-import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
-import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
+import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { BANK_TRANSFER_CHECKOUT_ENABLED, BANK_TRANSFER_OFF_METHODS_NOTE } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import Link from "next/link"
@@ -28,37 +23,8 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const dict = await getDictionary(locale)
 
   const methods = [
-    ...(ZEN_CHECKOUT_ENABLED
-      ? [{ icon: CreditCard, title: ZEN_COPY[locale].title, desc: ZEN_COPY[locale].desc }]
-      : []),
-    ...(SKRILL_CHECKOUT_ENABLED
-      ? [
-          { icon: CreditCard, title: dict.checkout.paySkrillCard, desc: dict.checkout.paySkrillCardDesc },
-          {
-            icon: Landmark,
-            word: dict.checkout.paySkrillIdeal,
-            title: dict.checkout.paySkrillIdeal,
-            desc: dict.checkout.paySkrillIdealDesc,
-          },
-        ]
-      : []),
-    ...(STRIPE_CHECKOUT_ENABLED
-      ? [
-          { icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc },
-          { icon: CreditCard, word: dict.checkout.payApplePay, title: dict.checkout.payApplePay, desc: dict.checkout.payStripeMethodDesc },
-          { icon: CreditCard, word: dict.checkout.payLink, title: dict.checkout.payLink, desc: dict.checkout.payStripeMethodDesc },
-          { icon: CreditCard, word: dict.checkout.payBancontact, title: dict.checkout.payBancontact, desc: dict.checkout.payStripeMethodDesc },
-          { icon: CreditCard, word: dict.checkout.payKlarna, title: dict.checkout.payKlarna, desc: dict.checkout.payStripeMethodDesc },
-        ]
-      : []),
-    ...(SQUARE_CHECKOUT_ENABLED
-      ? [{ icon: CreditCard, title: dict.checkout.paySquare, desc: dict.checkout.paySquareDesc }]
-      : []),
-    ...(SUMUP_CHECKOUT_ENABLED
-      ? [{ icon: CreditCard, title: dict.checkout.paySumup, desc: dict.checkout.paySumupDesc }]
-      : []),
-    ...(ALPPAY_CHECKOUT_ENABLED
-      ? [{ icon: CreditCard, title: dict.checkout.payAlppay, desc: dict.checkout.payAlppayDesc }]
+    ...(CARD_CHECKOUT_ENABLED
+      ? [{ icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
       : []),
     ...(BANK_TRANSFER_CHECKOUT_ENABLED
       ? [{ icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc }]
@@ -94,9 +60,7 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
             className="rounded-lg border border-border bg-card p-5"
           >
             <span className="flex h-11 items-center justify-center rounded-md bg-primary/10 px-3 text-primary">
-              {"word" in m && m.word ? (
-                <span className="font-heading text-xs font-bold tracking-tight text-foreground">{m.word}</span>
-              ) : "mark" in m && m.mark ? (
+              {"mark" in m && m.mark ? (
                 <span className="flex h-7 items-center rounded-sm bg-white px-1.5">
                   <Image src={m.mark} alt="" width={72} height={18} className="h-[18px] w-auto" />
                 </span>
@@ -114,15 +78,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
         <p>
           {methods.length === 0
             ? dict.checkout.payCardGatewayNotice
-            : ZEN_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED
-              ? ZEN_ACTIVE_METHODS_NOTE[locale]
-              : !BANK_TRANSFER_CHECKOUT_ENABLED
-                ? BANK_TRANSFER_OFF_METHODS_NOTE[locale]
-                : SKRILL_CHECKOUT_ENABLED && !STRIPE_CHECKOUT_ENABLED
-                  ? SKRILL_ACTIVE_METHODS_NOTE[locale]
-                  : !STRIPE_CHECKOUT_ENABLED
-                    ? STRIPE_OFF_METHODS_NOTE[locale]
-                    : dict.checkout.payMethodsNote}
+            : !BANK_TRANSFER_CHECKOUT_ENABLED
+              ? BANK_TRANSFER_OFF_METHODS_NOTE[locale]
+              : dict.checkout.payMethodsNote}
         </p>
       </div>
 

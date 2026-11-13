@@ -103,7 +103,7 @@ export const de: Dictionary = {
     uspWarrantyTitle: "2 Jahre Garantie",
     uspWarrantyText: "Jede Maschine durch EU-Verbrauchergarantie abgedeckt.",
     uspPaymentTitle: "Flexible Zahlung",
-    uspPaymentText: "Karte, Apple Pay, Link, Bancontact, Klarna, SEPA oder 4× Raten.",
+    uspPaymentText: "Visa, Mastercard, SEPA-Überweisung oder 4× zinsfreie Raten.",
     newsletterTitle: "Maker-Angebote per E-Mail erhalten",
     newsletterText: "Neuheiten, Nachschub und exklusive Angebote. Kein Spam.",
     newsletterPlaceholder: "Deine E-Mail-Adresse",
@@ -184,14 +184,14 @@ export const de: Dictionary = {
     shippingStandardDesc: "3–7 Werktage",
     shippingFree: "Kostenloser Standardversand",
     shippingFreeDesc: "3–7 Werktage · kostenlos bei jeder Bestellung",
-    payCard: "Kredit-/Debitkarte",
-    payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact und Klarna",
+    payCard: "Visa / Mastercard",
+    payCardDesc: "Sichere Kartenzahlung",
     payCardUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",
     payCardGatewayNotice:
       "Aufgrund technischer Probleme mit unserem Zahlungsgateway ist die Kartenzahlung vorübergehend deaktiviert. Bitte nutzen Sie die SEPA-Banküberweisung oder die 4× zinsfreie Ratenzahlung.",
     payCardFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     payCardNote:
-      "Sie werden zu einer sicheren Stripe-Seite weitergeleitet. Sie können mit Karte, Apple Pay, Link, Bancontact oder Klarna zahlen. Wir sehen Ihre Kartennummer nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
+      "Nach der Bestellung werden Sie zu einer sicheren Zahlungsseite weitergeleitet, um mit Visa oder Mastercard zu bezahlen. Wir sehen Ihre Kartennummer nie. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Öffnet die sichere Square-Seite · Abbuchung in US-Dollar · Kontoauszug: HIRA",
     paySquareNote:
@@ -247,7 +247,7 @@ export const de: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Verfügbar auf der sicheren Stripe-Seite, wenn Sie mit Karte zahlen.",
     payMethodsNote:
-      "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Kartenzahlungen werden in Euro auf einer sicheren Zahlungsseite belastet. Apple Pay, Link, Bancontact und Klarna stehen bei der Kartenzahlung zur Verfügung. Wir sehen die Kartennummer nicht. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate. Bestellungen per SEPA-Überweisung werden reserviert und versendet, sobald die Zahlung auf unserer IBAN eingegangen ist. Die Bankdaten sehen Sie an der Kasse und in der Bestellbestätigung.",
+      "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Kartenzahlungen (Visa, Mastercard) werden in Euro auf einer sicheren Zahlungsseite belastet. Wir sehen Ihre Kartennummer nie. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate. Bestellungen per SEPA-Überweisung werden reserviert und versendet, sobald die Zahlung auf unserer IBAN eingegangen ist. Die Bankdaten sehen Sie an der Kasse und in der Bestellbestätigung.",
     payPaypal: "PayPal",
     payPaypalDesc: "Mit PayPal-Guthaben, Bankkonto oder Karte zahlen",
     payPaypalUnavailable: "PayPal ist vorübergehend nicht verfügbar",

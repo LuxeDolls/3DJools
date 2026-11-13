@@ -27,13 +27,7 @@ const STATUSES: OrderStatus[] = [
 const CLOSED = new Set<OrderStatus>(["delivered", "cancelled", "refunded"])
 const METHODS: PaymentMethod[] = [
   "card",
-  "alppay",
-  "zen",
-  "skrill_card",
-  "skrill_ideal",
   "paypal",
-  "square",
-  "sumup",
   "bank_transfer",
   "crypto",
   "installments",
@@ -193,7 +187,7 @@ function BlockCustomerControl({ order }: { order: OrderWithItems }) {
 
 function paymentLabel(method: string): string {
   if (method === "paypal") return "PayPal"
-  if (method === "alppay") return "Visa / Mastercard"
+  if (method === "card") return "Visa / Mastercard"
   return method.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
 }
 

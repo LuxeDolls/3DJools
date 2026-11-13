@@ -103,7 +103,7 @@ export const it: Dictionary = {
     uspWarrantyTitle: "Garanzia 2 anni",
     uspWarrantyText: "Ogni macchina coperta dalla garanzia consumatori UE.",
     uspPaymentTitle: "Pagamento flessibile",
-    uspPaymentText: "Carta, Apple Pay, Link, Bancontact, Klarna, SEPA o 4× senza interessi.",
+    uspPaymentText: "Visa, Mastercard, bonifico SEPA o 4× senza interessi.",
     newsletterTitle: "Ricevi le offerte via e-mail",
     newsletterText: "Novità, riassortimenti e offerte riservate. Niente spam.",
     newsletterPlaceholder: "Il tuo indirizzo e-mail",
@@ -184,14 +184,14 @@ export const it: Dictionary = {
     shippingStandardDesc: "3–7 giorni lavorativi",
     shippingFree: "Spedizione standard gratuita",
     shippingFreeDesc: "3–7 giorni lavorativi · gratuita su ogni ordine",
-    payCard: "Carta di credito / debito",
-    payCardDesc: "Visa, Mastercard, Apple Pay, Link, Bancontact e Klarna",
+    payCard: "Visa / Mastercard",
+    payCardDesc: "Pagamento sicuro con carta",
     payCardUnavailable: "Il pagamento con carta non è al momento disponibile",
     payCardGatewayNotice:
       "A causa di problemi tecnici con il nostro gateway di pagamento, i pagamenti con carta sono temporaneamente disabilitati. Utilizza il bonifico bancario SEPA o il pagamento in 4× senza interessi.",
     payCardFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
     payCardNote:
-      "Verrai reindirizzato a una pagina Stripe sicura. Puoi pagare con carta, Apple Pay, Link, Bancontact o Klarna. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
+      "Dopo aver effettuato l'ordine, verrai reindirizzato a una pagina di pagamento sicura per pagare con Visa o Mastercard. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Apre la pagina sicura di Square · addebito in dollari USA · estratto conto: HIRA",
     paySquareNote:
@@ -247,7 +247,7 @@ export const it: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponibile sulla pagina Stripe sicura quando paghi con carta.",
     payMethodsNote:
-      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con carta vengono addebitati in euro su una pagina di pagamento sicura. Apple Pay, Link, Bancontact e Klarna sono disponibili quando paghi con carta. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
+      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con carta (Visa, Mastercard) vengono addebitati in euro su una pagina di pagamento sicura. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
     payPaypal: "PayPal",
     payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
     payPaypalUnavailable: "PayPal non è al momento disponibile",

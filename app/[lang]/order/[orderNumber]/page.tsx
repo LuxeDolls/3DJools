@@ -14,7 +14,7 @@ import {
 import { getShipmentEvents } from "@/lib/shipping/events"
 import { trackingPageCopy } from "@/lib/shipping/tracking"
 import { ShipmentTimeline } from "@/components/orders/shipment-timeline"
-import { formatPrice, formatUsd } from "@/lib/format"
+import { formatPrice } from "@/lib/format"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -24,24 +24,22 @@ import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { ChangePaymentMethod } from "@/components/checkout/change-payment-method"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
-import { ALPPAY_CHECKOUT_ENABLED } from "@/lib/payments/alppay-availability"
-import { alppayHoldUntil } from "@/lib/payments/alppay-limit"
-import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
-import { SQUARE_CHECKOUT_ENABLED } from "@/lib/payments/square-availability"
-import { ensureSquareQuote } from "@/lib/payments/square-order"
-import { SUMUP_CHECKOUT_ENABLED } from "@/lib/payments/sumup-availability"
-import {
-  SKRILL_CARD_MAX_CENTS,
-  SKRILL_CHECKOUT_ENABLED,
-  isSkrillIdealCountry,
-  isSkrillPayment,
-} from "@/lib/payments/skrill-availability"
-import { ZEN_CHECKOUT_ENABLED, ZEN_COPY } from "@/lib/payments/zen-availability"
-import { syncZenOrderStatus } from "@/lib/payments/zen-order"
+import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
+
+const DECLINED_CARD_STATUSES = new Set([
+  "canceled",
+  "cancelled",
+  "declined",
+  "failed",
+  "timeout",
+  "expired",
+  "rejected",
+  "error",
+])
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -55,20 +53,14 @@ export default async function OrderConfirmationPage({
   searchParams,
 }: {
   params: Promise<{ lang: string; orderNumber: string }>
-  searchParams: Promise<{ paypal?: string; stripe?: string; alppay?: string; sumup?: string; skrill?: string; zen?: string }>
+  searchParams: Promise<{ paypal?: string; card?: string }>
 }) {
   const { lang, orderNumber } = await params
-  const { paypal, stripe, alppay, sumup, skrill, zen } = await searchParams
+  const { paypal, card } = await searchParams
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const decodedOrderNumber = decodeURIComponent(orderNumber)
-  let order = await getOrderByOrderNumber(decodedOrderNumber)
-  if (order && order.paymentMethod === "zen" && order.status === "awaiting_payment") {
-    const synced = await syncZenOrderStatus(order)
-    if (synced === "paid") {
-      order = (await getOrderByOrderNumber(decodedOrderNumber)) ?? order
-    }
-  }
+  const order = await getOrderByOrderNumber(decodedOrderNumber)
 
   if (!order) {
     return (
@@ -117,61 +109,25 @@ export default async function OrderConfirmationPage({
       }).catch(() => undefined)
     }
   }
-  const alppayHeld = order.paymentMethod === "alppay" ? Boolean(await alppayHoldUntil(order.email)) : false
   const memberFromNotes = Number(notes.member_discount_cents || 0)
   const personalDiscountCents = Number(notes.personal_discount_cents || 0)
   const discountGap = order.subtotalCents + order.shippingCents - order.totalCents
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
-  const zenCopy = ZEN_COPY[locale]
-  const paymentLabels: Record<PaymentMethod, string> = {
+  const paymentLabels: Record<string, string> = {
     card: dict.checkout.payCard,
-    alppay: dict.checkout.payAlppay,
-    zen: zenCopy.title,
-    skrill_card: dict.checkout.paySkrillCard,
-    skrill_ideal: dict.checkout.paySkrillIdeal,
     paypal: dict.checkout.payPaypal,
-    square: dict.checkout.paySquare,
-    sumup: dict.checkout.paySumup,
     bank_transfer: dict.checkout.paySepa,
     crypto: dict.checkout.payCrypto,
     installments: dict.checkout.payInstallments,
   }
-  const squareQuote =
-    order.paymentMethod === "square" && status === "awaiting_payment" && SQUARE_CHECKOUT_ENABLED
-      ? await ensureSquareQuote(order)
-      : null
-  const squareFx = squareQuote
-    ? dict.checkout.paySquareFx
-        .replace("{eur}", formatPrice(order.totalCents, locale))
-        .replace("{usd}", formatUsd(squareQuote.usdCents, locale))
-        .replace("{rate}", squareQuote.rate)
-        .replace("{date}", squareQuote.date)
-    : ""
   const awaitingOfflinePayment =
     (order.paymentMethod === "bank_transfer" || order.paymentMethod === "crypto") && status === "awaiting_payment"
-  const cryptoCoin = parseOrderNotes(order.notes).crypto_coin
+  const cryptoCoin = notes.crypto_coin
 
-  // Lets the customer pick a different way to pay (e.g. after a card decline)
-  // without having to place a new order. Only offered while still unpaid, and
-  // only for methods that are actually configured right now.
   const canSwitchPayment = status === "awaiting_payment" || status === "reviewing_payment"
   const rawSwitchOptions: Array<{ method: PaymentMethod; label: string } | false> = [
-    ZEN_CHECKOUT_ENABLED && { method: "zen", label: zenCopy.title },
-    SKRILL_CHECKOUT_ENABLED &&
-      order.totalCents <= SKRILL_CARD_MAX_CENTS && {
-        method: "skrill_card",
-        label: dict.checkout.paySkrillCard,
-      },
-    SKRILL_CHECKOUT_ENABLED &&
-      isSkrillIdealCountry(order.shippingCountry) && {
-        method: "skrill_ideal",
-        label: dict.checkout.paySkrillIdeal,
-      },
-    STRIPE_CHECKOUT_ENABLED && { method: "card", label: dict.checkout.payCard },
-    ALPPAY_CHECKOUT_ENABLED && { method: "alppay", label: dict.checkout.payAlppay },
+    CARD_CHECKOUT_ENABLED && { method: "card", label: dict.checkout.payCard },
     isPaypalCheckoutEnabled() && { method: "paypal", label: dict.checkout.payPaypal },
-    SQUARE_CHECKOUT_ENABLED && { method: "square", label: dict.checkout.paySquare },
-    SUMUP_CHECKOUT_ENABLED && { method: "sumup", label: dict.checkout.paySumup },
     isBankTransferCheckoutEnabled(order.email) && { method: "bank_transfer", label: dict.checkout.paySepa },
   ]
   const switchOptions = canSwitchPayment
@@ -181,14 +137,14 @@ export default async function OrderConfirmationPage({
       )
     : []
 
-  const shouldClearCart =
-    isSkrillPayment(order.paymentMethod) || order.paymentMethod === "zen"
-      ? status === "paid" || status === "processing" || status === "shipped" || status === "delivered"
-      : true
+  const cardDeclined =
+    card === "cancelled" ||
+    card === "failed" ||
+    (notes.aviagram_last_status ? DECLINED_CARD_STATUSES.has(notes.aviagram_last_status.toLowerCase()) : false)
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      {shouldClearCart ? <ClearCart /> : null}
+      <ClearCart />
       <Breadcrumb
         locale={locale}
         items={[{ label: dict.common.home, href: "/" }, { label: dict.orderConfirmation.orderNumber }]}
@@ -300,7 +256,7 @@ export default async function OrderConfirmationPage({
             <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               {dict.orderConfirmation.payment}
             </h3>
-            <p className="mt-2 text-sm text-foreground">{paymentLabels[order.paymentMethod as PaymentMethod]}</p>
+            <p className="mt-2 text-sm text-foreground">{paymentLabels[order.paymentMethod] ?? dict.checkout.payCard}</p>
           </div>
         </div>
 
@@ -380,142 +336,16 @@ export default async function OrderConfirmationPage({
           </div>
         )}
 
-        {order.paymentMethod === "alppay" && status === "awaiting_payment" && (
-          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            {ALPPAY_CHECKOUT_ENABLED ? <p>{dict.checkout.payAlppayNote}</p> : <p>{dict.checkout.payAlppayUnavailable}</p>}
-            {alppay === "failed" ||
-            notes.alppay_last_status === "DECLINED" ||
-            notes.alppay_last_status === "CANCELLED" ? (
-              <p className="mt-2 text-destructive">{dict.checkout.payAlppayFailed}</p>
-            ) : null}
-            {alppayHeld ? (
-              <p className="mt-2 text-destructive">{dict.checkout.payAlppayHold}</p>
-            ) : ALPPAY_CHECKOUT_ENABLED ? (
-              <CardPayButton
-                orderNumber={order.orderNumber}
-                locale={locale}
-                method="alppay"
-                label={dict.checkout.payAlppay}
-                errorLabel={dict.checkout.payAlppayUnavailable}
-                holdLabel={dict.checkout.payAlppayHold}
-                needsPhone={!notes.phone}
-                phoneLabel={dict.checkout.phone}
-              />
-            ) : null}
-          </div>
-        )}
-
-        {order.paymentMethod === "square" && status === "awaiting_payment" && (
-          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            <p>{dict.checkout.paySquareNote}</p>
-            {notes.square_last_status &&
-            notes.square_last_status !== "COMPLETED" &&
-            notes.square_last_status !== "PENDING" &&
-            notes.square_last_status !== "APPROVED" ? (
-              <p className="mt-2 text-destructive">{dict.checkout.paySquareFailed}</p>
-            ) : null}
-            {squareQuote ? (
-              <>
-                <p className="mt-2">{squareFx}</p>
-                <CardPayButton
-                  orderNumber={order.orderNumber}
-                  locale={locale}
-                  method="square"
-                  label={dict.checkout.paySquarePay.replace("{amount}", formatUsd(squareQuote.usdCents, locale))}
-                  errorLabel={dict.checkout.paySquareUnavailable}
-                />
-              </>
-            ) : (
-              <p className="mt-2">{dict.checkout.paySquareUnavailable}</p>
-            )}
-          </div>
-        )}
-
-        {order.paymentMethod === "zen" && status === "awaiting_payment" && (
-          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            {ZEN_CHECKOUT_ENABLED ? <p>{zenCopy.note}</p> : <p>{zenCopy.unavailable}</p>}
-            {zen === "cancelled" || notes.zen_last_status === "CANCELLED" ? (
-              <p className="mt-2 text-destructive">{zenCopy.cancelled}</p>
-            ) : zen === "failed" || notes.zen_last_status === "REJECTED" ? (
-              <p className="mt-2 text-destructive">{zenCopy.failed}</p>
-            ) : null}
-            {ZEN_CHECKOUT_ENABLED ? (
-              <CardPayButton
-                orderNumber={order.orderNumber}
-                locale={locale}
-                method="zen"
-                label={zenCopy.title}
-                errorLabel={zenCopy.unavailable}
-              />
-            ) : null}
-          </div>
-        )}
-
-        {isSkrillPayment(order.paymentMethod) && status === "awaiting_payment" && (
-          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            {SKRILL_CHECKOUT_ENABLED ? (
-              <p>
-                {order.paymentMethod === "skrill_ideal"
-                  ? dict.checkout.paySkrillIdealNote
-                  : dict.checkout.paySkrillCardNote}
-              </p>
-            ) : (
-              <p>{dict.checkout.paySkrillUnavailable}</p>
-            )}
-            {skrill === "cancelled" || notes.skrill_last_status === "CANCELLED" ? (
-              <p className="mt-2 text-destructive">{dict.checkout.paySkrillCancelled}</p>
-            ) : skrill === "failed" || notes.skrill_last_status === "FAILED" ? (
-              <p className="mt-2 text-destructive">{dict.checkout.paySkrillFailed}</p>
-            ) : null}
-            {SKRILL_CHECKOUT_ENABLED ? (
-              <CardPayButton
-                orderNumber={order.orderNumber}
-                locale={locale}
-                method={order.paymentMethod}
-                label={
-                  order.paymentMethod === "skrill_ideal"
-                    ? dict.checkout.paySkrillIdeal
-                    : dict.checkout.paySkrillCard
-                }
-                errorLabel={dict.checkout.paySkrillUnavailable}
-              />
-            ) : null}
-          </div>
-        )}
-
-        {order.paymentMethod === "sumup" && status === "awaiting_payment" && (
-          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            {SUMUP_CHECKOUT_ENABLED ? <p>{dict.checkout.paySumupNote}</p> : <p>{dict.checkout.paySumupUnavailable}</p>}
-            {sumup === "failed" || notes.sumup_last_status === "FAILED" || notes.sumup_last_status === "EXPIRED" ? (
-              <p className="mt-2 text-destructive">{dict.checkout.paySumupFailed}</p>
-            ) : null}
-            {SUMUP_CHECKOUT_ENABLED ? (
-              <CardPayButton
-                orderNumber={order.orderNumber}
-                locale={locale}
-                method="sumup"
-                label={dict.checkout.paySumup}
-                errorLabel={dict.checkout.paySumupUnavailable}
-              />
-            ) : null}
-          </div>
-        )}
-
         {order.paymentMethod === "card" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            {STRIPE_CHECKOUT_ENABLED ? <p>{dict.checkout.payCardNote}</p> : <p>{dict.checkout.payCardUnavailable}</p>}
-            {stripe === "cancelled" ||
-            stripe === "failed" ||
-            notes.stripe_last_status === "declined" ||
-            notes.aviagram_last_status === "canceled" ||
-            notes.aviagram_last_status === "cancelled" ||
-            notes.aviagram_last_status === "timeout" ? (
+            {CARD_CHECKOUT_ENABLED ? <p>{dict.checkout.payCardNote}</p> : <p>{dict.checkout.payCardUnavailable}</p>}
+            {cardDeclined ? (
               <p className="mt-2 text-destructive">{dict.checkout.payCardFailed}</p>
             ) : null}
-            {notes.stripe_decline_reason || notes.aviagram_declined_reason ? (
-              <p className="mt-1 text-muted-foreground">{notes.stripe_decline_reason || notes.aviagram_declined_reason}</p>
+            {notes.aviagram_declined_reason ? (
+              <p className="mt-1 text-muted-foreground">{notes.aviagram_declined_reason}</p>
             ) : null}
-            {STRIPE_CHECKOUT_ENABLED ? (
+            {CARD_CHECKOUT_ENABLED ? (
               <CardPayButton
                 orderNumber={order.orderNumber}
                 locale={locale}

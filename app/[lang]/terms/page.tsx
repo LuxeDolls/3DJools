@@ -1,7 +1,5 @@
 import Link from "next/link"
-import { STRIPE_CHECKOUT_ENABLED } from "@/lib/payments/stripe-availability"
-import { SKRILL_CHECKOUT_ENABLED } from "@/lib/payments/skrill-availability"
-import { ZEN_CHECKOUT_ENABLED } from "@/lib/payments/zen-availability"
+import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
@@ -272,46 +270,25 @@ const CARD_OFF_TERMS: Record<Locale, string> = {
   nl: "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Betalen met kaart is tijdelijk niet beschikbaar. Wij aanvaarden SEPA-overschrijving en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden.",
 }
 
-const SKRILL_TERMS: Record<Locale, string> = {
+const CARD_TERMS: Record<Locale, string> = {
   en: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard up to €5,000 per order), iDEAL (for orders shipped to the Netherlands), SEPA bank transfer and interest-free instalments as described on our payment methods page. Card and iDEAL payments open Skrill's secure payment page. We never see your card number or bank login."
-    : "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard up to €5,000 per order), iDEAL (for orders shipped to the Netherlands) and interest-free instalments as described on our payment methods page. Card and iDEAL payments open Skrill's secure payment page. We never see your card number or bank login.",
+    ? "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard), SEPA bank transfer and interest-free instalments as described on our payment methods page. Card payments open a secure payment page. We never see your card number."
+    : "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard) and interest-free instalments as described on our payment methods page. Card payments open a secure payment page. We never see your card number.",
   de: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard bis 5.000 € pro Bestellung), iDEAL (für Bestellungen in die Niederlande), SEPA-Überweisung und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Karten- und iDEAL-Zahlungen werden auf der sicheren Zahlungsseite von Skrill abgewickelt. Wir sehen weder Ihre Kartennummer noch Ihre Bankzugangsdaten."
-    : "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard bis 5.000 € pro Bestellung), iDEAL (für Bestellungen in die Niederlande) und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Karten- und iDEAL-Zahlungen werden auf der sicheren Zahlungsseite von Skrill abgewickelt. Wir sehen weder Ihre Kartennummer noch Ihre Bankzugangsdaten.",
+    ? "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard), SEPA-Überweisung und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Kartenzahlungen werden auf einer sicheren Zahlungsseite abgewickelt. Wir sehen Ihre Kartennummer nie."
+    : "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard) und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Kartenzahlungen werden auf einer sicheren Zahlungsseite abgewickelt. Wir sehen Ihre Kartennummer nie.",
   fr: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard jusqu'à 5 000 € par commande), iDEAL (pour les commandes aux Pays-Bas), le virement SEPA et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte et iDEAL s'ouvrent sur la page de paiement sécurisée de Skrill. Nous ne voyons jamais votre numéro de carte ni vos identifiants bancaires."
-    : "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard jusqu'à 5 000 € par commande), iDEAL (pour les commandes aux Pays-Bas) et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte et iDEAL s'ouvrent sur la page de paiement sécurisée de Skrill. Nous ne voyons jamais votre numéro de carte ni vos identifiants bancaires.",
+    ? "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard), le virement SEPA et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte s'ouvrent sur une page de paiement sécurisée. Nous ne voyons jamais votre numéro de carte."
+    : "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard) et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte s'ouvrent sur une page de paiement sécurisée. Nous ne voyons jamais votre numéro de carte.",
   it: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard fino a 5.000 € per ordine), iDEAL (per gli ordini nei Paesi Bassi), bonifico SEPA e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta e iDEAL avvengono sulla pagina di pagamento sicura di Skrill. Non vediamo mai il numero della carta né le credenziali bancarie."
-    : "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard fino a 5.000 € per ordine), iDEAL (per gli ordini nei Paesi Bassi) e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta e iDEAL avvengono sulla pagina di pagamento sicura di Skrill. Non vediamo mai il numero della carta né le credenziali bancarie.",
+    ? "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard), bonifico SEPA e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta avvengono su una pagina di pagamento sicura. Non vediamo mai il numero della carta."
+    : "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard) e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta avvengono su una pagina di pagamento sicura. Non vediamo mai il numero della carta.",
   es: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard hasta 5.000 € por pedido), iDEAL (para pedidos en los Países Bajos), transferencia SEPA y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta e iDEAL se realizan en la página de pago segura de Skrill. Nunca vemos el número de tu tarjeta ni tus credenciales bancarias."
-    : "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard hasta 5.000 € por pedido), iDEAL (para pedidos en los Países Bajos) y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta e iDEAL se realizan en la página de pago segura de Skrill. Nunca vemos el número de tu tarjeta ni tus credenciales bancarias.",
+    ? "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard), transferencia SEPA y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta se realizan en una página de pago segura. Nunca vemos el número de tu tarjeta."
+    : "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard) y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta se realizan en una página de pago segura. Nunca vemos el número de tu tarjeta.",
   nl: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland), SEPA-overschrijving en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaart- en iDEAL-betalingen worden uitgevoerd op de beveiligde betaalpagina van Skrill. Wij zien uw kaartnummer of bankgegevens nooit."
-    : "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard tot € 5.000 per bestelling), iDEAL (voor bestellingen binnen Nederland) en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaart- en iDEAL-betalingen worden uitgevoerd op de beveiligde betaalpagina van Skrill. Wij zien uw kaartnummer of bankgegevens nooit.",
-}
-
-const ZEN_TERMS: Record<Locale, string> = {
-  en: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard), SEPA bank transfer and interest-free instalments as described on our payment methods page. Card payments open ZEN.COM's secure payment page. We never see your card number."
-    : "All prices are in euro (EUR) and include statutory VAT where applicable. We accept card payments (Visa, Mastercard) and interest-free instalments as described on our payment methods page. Card payments open ZEN.COM's secure payment page. We never see your card number.",
-  de: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard), SEPA-Überweisung und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Kartenzahlungen werden auf der sicheren Zahlungsseite von ZEN.COM abgewickelt. Wir sehen Ihre Kartennummer nie."
-    : "Alle Preise sind in Euro (EUR) angegeben und enthalten die gesetzliche Mehrwertsteuer, soweit anwendbar. Wir akzeptieren Kartenzahlung (Visa, Mastercard) und zinsfreie Ratenzahlung, wie auf unserer Seite zu den Zahlungsmethoden beschrieben. Kartenzahlungen werden auf der sicheren Zahlungsseite von ZEN.COM abgewickelt. Wir sehen Ihre Kartennummer nie.",
-  fr: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard), le virement SEPA et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte s'ouvrent sur la page de paiement sécurisée de ZEN.COM. Nous ne voyons jamais votre numéro de carte."
-    : "Tous les prix sont exprimés en euros (EUR) et incluent la TVA légale lorsqu'applicable. Nous acceptons le paiement par carte (Visa, Mastercard) et le paiement en plusieurs fois sans intérêt, comme décrit sur notre page des moyens de paiement. Les paiements par carte s'ouvrent sur la page de paiement sécurisée de ZEN.COM. Nous ne voyons jamais votre numéro de carte.",
-  it: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard), bonifico SEPA e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta avvengono sulla pagina di pagamento sicura di ZEN.COM. Non vediamo mai il numero della carta."
-    : "Tutti i prezzi sono espressi in euro (EUR) e includono l'IVA di legge, se applicabile. Accettiamo pagamento con carta (Visa, Mastercard) e pagamento a rate senza interessi, come descritto nella pagina dei metodi di pagamento. I pagamenti con carta avvengono sulla pagina di pagamento sicura di ZEN.COM. Non vediamo mai il numero della carta.",
-  es: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard), transferencia SEPA y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta se realizan en la página de pago segura de ZEN.COM. Nunca vemos el número de tu tarjeta."
-    : "Todos los precios están en euros (EUR) e incluyen el IVA legal cuando corresponda. Aceptamos pago con tarjeta (Visa, Mastercard) y pago a plazos sin intereses, tal como se describe en nuestra página de métodos de pago. Los pagos con tarjeta se realizan en la página de pago segura de ZEN.COM. Nunca vemos el número de tu tarjeta.",
-  nl: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard), SEPA-overschrijving en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaartbetalingen worden uitgevoerd op de beveiligde betaalpagina van ZEN.COM. Wij zien uw kaartnummer nooit."
-    : "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard) en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaartbetalingen worden uitgevoerd op de beveiligde betaalpagina van ZEN.COM. Wij zien uw kaartnummer nooit.",
+    ? "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard), SEPA-overschrijving en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaartbetalingen worden uitgevoerd op een beveiligde betaalpagina. Wij zien uw kaartnummer nooit."
+    : "Alle prijzen zijn in euro (EUR) en zijn inclusief wettelijke btw waar van toepassing. Wij aanvaarden kaartbetaling (Visa, Mastercard) en rentevrije gespreide betaling zoals beschreven op onze pagina met betaalmethoden. Kaartbetalingen worden uitgevoerd op een beveiligde betaalpagina. Wij zien uw kaartnummer nooit.",
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
@@ -328,13 +305,7 @@ export default async function TermsPage({ params }: { params: Promise<{ lang: st
   const source = COPY[locale]
   const t = fillCompany({
     ...source,
-    s4: STRIPE_CHECKOUT_ENABLED
-      ? source.s4
-      : ZEN_CHECKOUT_ENABLED
-        ? ZEN_TERMS[locale]
-        : SKRILL_CHECKOUT_ENABLED
-          ? SKRILL_TERMS[locale]
-          : CARD_OFF_TERMS[locale],
+    s4: CARD_CHECKOUT_ENABLED ? CARD_TERMS[locale] : CARD_OFF_TERMS[locale],
   })
 
   return (

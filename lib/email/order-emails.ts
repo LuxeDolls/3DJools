@@ -367,8 +367,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
   const isPaypal = order.paymentMethod === "paypal"
-  const isSquare = order.paymentMethod === "square"
-  const isSumup = order.paymentMethod === "sumup"
+  const isCard = order.paymentMethod === "card"
   const cryptoCoin = getCryptoCoinOption(parseOrderNotes(order.notes).crypto_coin)
   const firstName = order.shippingName?.trim().split(/\s+/)[0] ?? ""
 
@@ -396,11 +395,8 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
       ? `If you haven't sent the payment yet, here are the details again:\nAmount: ${euros(order.totalCents)}\nNetwork: ${cryptoCoin.coinLabel} · ${cryptoCoin.network}\nAddress: ${cryptoCoin.address}\n\nOnce you've sent it, simply click "I've paid" on your order page so our team can start verifying it.`
       : null,
     isPaypal ? paypalReminderText(order.totalCents) : null,
-    isSquare
-      ? `Card payment of ${euros(order.totalCents)} is still open. Open your order page to pay by Visa or Mastercard. The charge is in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA. If you have already paid, wait for the status to update and do not pay twice.`
-      : null,
-    isSumup
-      ? `Card payment of ${euros(order.totalCents)} via SumUp is still open. Open your order page to complete it. If you have already paid, wait for the status to update and do not pay twice.`
+    isCard
+      ? `Card payment of ${euros(order.totalCents)} is still open. Open your order page to complete payment by Visa or Mastercard. If you have already paid, wait for the status to update and do not pay twice.`
       : null,
     "",
     "If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've changed your mind or run into any trouble, simply reply to this email; we're happy to help.",
@@ -427,15 +423,9 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     </div>`
     : ""
 
-  const squareHtml = isSquare
+  const cardReminderHtml = isCard
     ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
-      <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> is still open. Open your order page to pay by Visa or Mastercard. The charge is in US dollars at the European Central Bank rate, shown before you pay. Your statement shows HIRA.</p>
-    </div>`
-    : ""
-
-  const sumupHtml = isSumup
-    ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
-      <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> via SumUp is still open. Open your order page to complete it.</p>
+      <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> is still open. Open your order page to complete payment by Visa or Mastercard.</p>
     </div>`
     : ""
 
@@ -458,8 +448,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     <p style="margin:0 0 20px;color:#555;font-size:14px;line-height:1.6">Thank you for your order — we're delighted to have you with us. We noticed order <strong>${order.orderNumber}</strong> is still marked as <strong>awaiting payment</strong>, so we wanted to check in and make sure everything is on track.</p>
     ${sepaHtml}
     ${cryptoHtml}
-    ${squareHtml}
-    ${sumupHtml}
+    ${cardReminderHtml}
     ${paypalHtml}
     <table style="width:100%;border-collapse:collapse;font-size:14px;border-top:1px solid #eee;margin-bottom:8px">${itemsHtml}</table>
     <table style="width:100%;border-collapse:collapse;font-size:14px;margin-bottom:24px">
