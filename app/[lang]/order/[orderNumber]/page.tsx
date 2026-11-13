@@ -1,10 +1,16 @@
+import { headers } from "next/headers"
 import Image from "next/image"
 import Link from "next/link"
 import { CheckCircle2, Clock, PackageX, Truck } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
-import { getOrderByOrderNumber } from "@/lib/orders/queries"
+import { getOrderByOrderNumber, mergeOrderNotes } from "@/lib/orders/queries"
+import {
+  blockIpAddress,
+  checkCustomerBlock,
+  extractClientRequestMeta,
+} from "@/lib/security/blocked-customers"
 import { getShipmentEvents } from "@/lib/shipping/events"
 import { trackingPageCopy } from "@/lib/shipping/tracking"
 import { ShipmentTimeline } from "@/components/orders/shipment-timeline"
@@ -83,6 +89,34 @@ export default async function OrderConfirmationPage({
   const shipmentEvents = await getShipmentEvents(order.id)
   const trackingCopy = trackingPageCopy(locale)
   const notes = parseOrderNotes(order.notes)
+  const clientMeta = extractClientRequestMeta(await headers())
+  if (clientMeta.ip && !notes.client_ip) {
+    notes.client_ip = clientMeta.ip
+    if (clientMeta.ipCountry) notes.client_ip_country = clientMeta.ipCountry
+    await mergeOrderNotes(order.id, {
+      client_ip: clientMeta.ip,
+      client_ip_country: clientMeta.ipCountry ?? undefined,
+    }).catch(() => undefined)
+  }
+  if (clientMeta.ip) {
+    const blockCheck = await checkCustomerBlock({
+      email: order.email,
+      ip: clientMeta.ip,
+      fullName: order.shippingName,
+      address: order.shippingAddress1,
+      city: order.shippingCity,
+      postalCode: order.shippingPostalCode,
+      country: order.shippingCountry,
+      orderNumber: order.orderNumber,
+    }).catch(() => ({ blocked: false }))
+    if (notes.blocked_reason || blockCheck.blocked) {
+      await blockIpAddress(clientMeta.ip, {
+        reason: notes.blocked_reason || "Visited blocked order page",
+        orderNumber: order.orderNumber,
+        email: order.email,
+      }).catch(() => undefined)
+    }
+  }
   const alppayHeld = order.paymentMethod === "alppay" ? Boolean(await alppayHoldUntil(order.email)) : false
   const memberFromNotes = Number(notes.member_discount_cents || 0)
   const personalDiscountCents = Number(notes.personal_discount_cents || 0)

@@ -306,6 +306,14 @@ function OrderDetails({ order }: { order: OrderWithItems }) {
         <div>
           <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Payment</h3>
           <p className="text-sm">{paymentLabel(order.paymentMethod)}</p>
+          {parseOrderNotes(order.notes).client_ip ? (
+            <p className="mt-1 font-mono text-xs text-muted-foreground">
+              IP: {parseOrderNotes(order.notes).client_ip}
+              {parseOrderNotes(order.notes).client_ip_country
+                ? ` (${parseOrderNotes(order.notes).client_ip_country})`
+                : ""}
+            </p>
+          ) : null}
         </div>
         <div>
           <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">Tracking</h3>
