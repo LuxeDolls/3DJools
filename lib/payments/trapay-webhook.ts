@@ -148,28 +148,27 @@ export async function syncTrapayOrderStatus(order: OrderWithItems): Promise<Orde
 
 /**
  * Handles Trapay HTTP POST webhooks (https://doc.trapay.uk/#webhooks).
- * Verifies X-Webhook-Signature using HMAC-SHA256 over the raw request body.
+ * Verifies X-Webhook-Signature using HMAC-SHA256 over the raw request body,
+ * with a fallback to direct server-to-server status verification via Trapay API.
  */
 export async function handleTrapayWebhook(request: NextRequest): Promise<NextResponse> {
   const rawBody = await request.text()
-  const signature = request.headers.get("x-webhook-signature")
-
-  if (!verifyTrapayWebhookSignature(rawBody, signature)) {
-    return NextResponse.json({ error: "Invalid signature" }, { status: 401 })
+  if (!rawBody.trim()) {
+    return NextResponse.json({ received: true, test: true }, { status: 200 })
   }
 
   let parsed: Record<string, unknown>
   try {
     const json = JSON.parse(rawBody) as unknown
     if (!json || typeof json !== "object" || Array.isArray(json)) {
-      return NextResponse.json({ error: "Invalid payload" }, { status: 400 })
+      return NextResponse.json({ received: true }, { status: 200 })
     }
     parsed = json as Record<string, unknown>
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 })
+    return NextResponse.json({ received: true }, { status: 200 })
   }
 
-  const event = readString(parsed.event).toLowerCase()
+  const event = readString(parsed.event || parsed.type).toLowerCase()
   const paymentObj =
     parsed.payment && typeof parsed.payment === "object" && !Array.isArray(parsed.payment)
       ? (parsed.payment as Record<string, unknown>)
@@ -178,14 +177,36 @@ export async function handleTrapayWebhook(request: NextRequest): Promise<NextRes
   const providerPaymentId = readString(paymentObj.id)
   const orderRef = readString(paymentObj.orderId || paymentObj.order_id)
 
-  // Trapay Dashboard "Send Test Webhook" sends event: "test" with orderId: "test_order_123"
-  if (event === "test" || orderRef === "test_order_123" || providerPaymentId === "test_payment_123") {
+  // Trapay Dashboard "Test" webhook sends event: "test" or orderId: "test_order_123"
+  if (
+    event === "test" ||
+    event.startsWith("test") ||
+    parsed.test === true ||
+    orderRef === "test_order_123" ||
+    orderRef.startsWith("test_") ||
+    providerPaymentId === "test_payment_123" ||
+    providerPaymentId.startsWith("test_") ||
+    (!orderRef && !providerPaymentId)
+  ) {
     return NextResponse.json({ received: true, test: true }, { status: 200 })
   }
 
   const order = await findOrderForTrapay(orderRef, providerPaymentId)
   if (!order) {
-    return NextResponse.json({ error: "Order not found" }, { status: 404 })
+    return NextResponse.json({ received: true, ignored: "order_not_found" }, { status: 200 })
+  }
+
+  const signature =
+    request.headers.get("x-webhook-signature") ??
+    request.headers.get("x-trapay-signature") ??
+    request.headers.get("x-signature")
+
+  const signatureValid = verifyTrapayWebhookSignature(rawBody, signature)
+
+  if (!signatureValid) {
+    // Fallback: verify directly against Trapay API so legitimate callbacks still update the order
+    const synced = await syncTrapayOrderStatus(order)
+    return NextResponse.json({ received: true, synced: synced.status }, { status: 200 })
   }
 
   const rawStatus = readString(paymentObj.status)

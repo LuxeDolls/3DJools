@@ -41,10 +41,13 @@ export function cardAmountNumber(cents: number): number {
 
 export function verifyTrapayWebhookSignature(rawBody: string, signatureHeader: string | null | undefined): boolean {
   const { secretKey } = resolveCredentials()
-  const signature = (signatureHeader ?? "").trim()
+  const signature = (signatureHeader ?? "")
+    .trim()
+    .replace(/^sha256=/i, "")
+    .toLowerCase()
   if (!secretKey || !signature) return false
 
-  const expectedSignature = createHmac("sha256", secretKey).update(rawBody).digest("hex")
+  const expectedSignature = createHmac("sha256", secretKey).update(rawBody).digest("hex").toLowerCase()
   const sigBuf = Buffer.from(signature, "utf8")
   const expBuf = Buffer.from(expectedSignature, "utf8")
   if (sigBuf.length !== expBuf.length) return false

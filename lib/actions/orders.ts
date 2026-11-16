@@ -1,5 +1,6 @@
 "use server"
 
+import { randomBytes } from "node:crypto"
 import { headers } from "next/headers"
 import { after } from "next/server"
 import { auth } from "@/lib/auth"
@@ -19,7 +20,17 @@ import { memberDiscountCents } from "@/lib/discount"
 import { computeShippingCents } from "@/lib/shipping"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
 import { CRYPTO_CHECKOUT_ENABLED, isCryptoCoinId } from "@/lib/payments/crypto"
-import { appendProviderOrderId, createCardForm, trapayConfigured } from "@/lib/payments/trapay"
+import {
+  ZENTHORYX_CHECKOUT_ENABLED,
+  appendProviderOrderId as appendZenthoryxOrderId,
+  aviagramConfigured,
+  createZenthoryxCardForm,
+} from "@/lib/payments/aviagram"
+import {
+  appendProviderOrderId as appendTrapayOrderId,
+  createCardForm as createTrapayCardForm,
+  trapayConfigured,
+} from "@/lib/payments/trapay"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
@@ -106,7 +117,9 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (blockCheck.blocked) return { ok: false, error: "account_blocked" }
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
-  if (input.payment === "card" && !trapayConfigured()) return { ok: false, error: "card_unavailable" }
+  const useZenthoryx = ZENTHORYX_CHECKOUT_ENABLED && aviagramConfigured()
+  const cardConfigured = useZenthoryx ? aviagramConfigured() : trapayConfigured()
+  if (input.payment === "card" && !cardConfigured) return { ok: false, error: "card_unavailable" }
   if (input.payment === "paypal" && !paypalConfigured()) return { ok: false, error: "paypal_unavailable" }
 
   const items: Array<Omit<NewOrderItemRow, "id" | "orderId">> = []
@@ -191,19 +204,35 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (paymentMethod === "card") {
     const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
     const customerName = `${input.firstName.trim()} ${input.lastName.trim()}`.trim()
-    await mergeOrderNotes(order.id, {
-      checkout_locale: locale,
-    })
     try {
-      const form = await createCardForm({
-        orderNumber: order.orderNumber,
-        amountCents: totalCents,
-        locale,
-        customerEmail: input.email.trim(),
-        customerName: customerName || undefined,
-      })
-      await mergeOrderNotes(order.id, { trapay_payment_ids: form.providerOrderId })
-      paymentUrl = form.redirectUrl
+      if (useZenthoryx) {
+        const webhookToken = randomBytes(32).toString("hex")
+        await mergeOrderNotes(order.id, {
+          aviagram_webhook_token: webhookToken,
+          checkout_locale: locale,
+        })
+        const form = await createZenthoryxCardForm({
+          orderNumber: order.orderNumber,
+          amountCents: totalCents,
+          locale,
+          webhookToken,
+        })
+        await mergeOrderNotes(order.id, { aviagram_order_ids: form.providerOrderId })
+        paymentUrl = form.redirectUrl
+      } else {
+        await mergeOrderNotes(order.id, {
+          checkout_locale: locale,
+        })
+        const form = await createTrapayCardForm({
+          orderNumber: order.orderNumber,
+          amountCents: totalCents,
+          locale,
+          customerEmail: input.email.trim(),
+          customerName: customerName || undefined,
+        })
+        await mergeOrderNotes(order.id, { trapay_payment_ids: form.providerOrderId })
+        paymentUrl = form.redirectUrl
+      }
     } catch (err) {
       console.error("[v0] Card payment could not start:", err)
       await abandonUnpaidOrder(order.id)
@@ -242,7 +271,9 @@ export type StartCardPaymentResult = { ok: true; paymentUrl: string } | { ok: fa
 
 /** Opens a new hosted card form for an order that is still awaiting payment. */
 export async function startCardPayment(orderNumber: string, locale: string): Promise<StartCardPaymentResult> {
-  if (!trapayConfigured()) return { ok: false, error: "card_unavailable" }
+  const useZenthoryx = ZENTHORYX_CHECKOUT_ENABLED && aviagramConfigured()
+  const cardConfigured = useZenthoryx ? aviagramConfigured() : trapayConfigured()
+  if (!cardConfigured) return { ok: false, error: "card_unavailable" }
   const order = await getOrderByOrderNumber(orderNumber)
   if (!order || order.paymentMethod !== "card") return { ok: false, error: "not_found" }
   if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
@@ -255,7 +286,28 @@ export async function startCardPayment(orderNumber: string, locale: string): Pro
       : "en"
 
   try {
-    const form = await createCardForm({
+    if (useZenthoryx) {
+      const existingToken = notes.aviagram_webhook_token ?? ""
+      const webhookToken = /^[a-f0-9]{64}$/.test(existingToken) ? existingToken : randomBytes(32).toString("hex")
+      if (webhookToken !== notes.aviagram_webhook_token) {
+        await mergeOrderNotes(order.id, { aviagram_webhook_token: webhookToken, checkout_locale: safeLocale })
+      }
+      const form = await createZenthoryxCardForm({
+        orderNumber: order.orderNumber,
+        amountCents: order.totalCents,
+        locale: safeLocale,
+        webhookToken,
+      })
+      await mergeOrderNotes(order.id, {
+        aviagram_order_ids: appendZenthoryxOrderId(notes.aviagram_order_ids, form.providerOrderId),
+        aviagram_last_status: undefined,
+        aviagram_declined_reason: undefined,
+        checkout_locale: safeLocale,
+      })
+      return { ok: true, paymentUrl: form.redirectUrl }
+    }
+
+    const form = await createTrapayCardForm({
       orderNumber: order.orderNumber,
       amountCents: order.totalCents,
       locale: safeLocale,
@@ -263,7 +315,7 @@ export async function startCardPayment(orderNumber: string, locale: string): Pro
       customerName: order.shippingName ?? undefined,
     })
     await mergeOrderNotes(order.id, {
-      trapay_payment_ids: appendProviderOrderId(notes.trapay_payment_ids, form.providerOrderId),
+      trapay_payment_ids: appendTrapayOrderId(notes.trapay_payment_ids, form.providerOrderId),
       trapay_last_status: undefined,
       trapay_declined_reason: undefined,
       checkout_locale: safeLocale,
@@ -314,7 +366,7 @@ const SWITCHABLE_METHODS: Partial<Record<PaymentMethod, boolean>> = {
 }
 
 function isMethodAvailable(method: PaymentMethod, email: string): boolean {
-  if (method === "card") return trapayConfigured()
+  if (method === "card") return (ZENTHORYX_CHECKOUT_ENABLED && aviagramConfigured()) || trapayConfigured()
   if (method === "paypal") return paypalConfigured()
   if (method === "bank_transfer") return isBankTransferCheckoutEnabled(email)
   return false
