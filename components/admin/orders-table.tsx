@@ -27,6 +27,7 @@ const STATUSES: OrderStatus[] = [
 const CLOSED = new Set<OrderStatus>(["delivered", "cancelled", "refunded"])
 const METHODS: PaymentMethod[] = [
   "card",
+  "open_banking",
   "paypal",
   "bank_transfer",
   "crypto",
@@ -188,6 +189,7 @@ function BlockCustomerControl({ order }: { order: OrderWithItems }) {
 function paymentLabel(method: string): string {
   if (method === "paypal") return "PayPal"
   if (method === "card") return "Visa / Mastercard"
+  if (method === "open_banking") return "Open Banking (Bank / IBAN)"
   return method.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
 }
 

@@ -3,9 +3,13 @@ import "server-only"
 import { createHmac, timingSafeEqual } from "crypto"
 import { COMPANY } from "@/lib/company"
 
-// Hosted card checkout via Trapay API v2 (https://doc.trapay.uk).
+import { OPEN_BANKING_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
+
+// Hosted Open Banking (Pay by bank app / IBAN) checkout via Trapay API v2 (https://doc.trapay.uk).
 // Create payment: POST https://api.trapay.uk/api/payments/create
 // Get status:     POST https://api.trapay.uk/api/payments/status
+export { OPEN_BANKING_CHECKOUT_ENABLED }
+
 const DEFAULT_API_BASE = "https://api.trapay.uk"
 const DEFAULT_GATEWAY = "3018"
 

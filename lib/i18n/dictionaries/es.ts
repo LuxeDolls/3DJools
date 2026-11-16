@@ -192,6 +192,12 @@ export const es: Dictionary = {
     payCardFailed: "El pago con tarjeta no se ha completado. Puedes intentarlo de nuevo.",
     payCardNote:
       "Después de realizar el pedido, serás redirigido a una página de pago segura para pagar con Visa o Mastercard. Nunca vemos el número de tu tarjeta. Si ya has pagado, espera a que se actualice el estado y no pagues dos veces.",
+    payOpenBanking: "Pago desde cuenta bancaria (Open Banking)",
+    payOpenBankingDesc: "Pago instantáneo desde la app de tu banco o por IBAN — sin tarjeta",
+    payOpenBankingUnavailable: "El pago desde cuenta bancaria (Open Banking) no está disponible temporalmente",
+    payOpenBankingFailed: "El pago bancario no se ha completado. Puedes intentarlo de nuevo.",
+    payOpenBankingNote:
+      "Después de realizar el pedido, serás redirigido a nuestra página segura de Open Banking para pagar en un clic directamente desde tu cuenta bancaria (app del banco o IBAN) sin compartir datos de tarjeta. Si ya has pagado, espera a que se actualice el estado y no pagues dos veces.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Abre la página segura de Square · cargo en dólares estadounidenses · extracto: HIRA",
     paySquareNote:
@@ -247,7 +253,7 @@ export const es: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponible en la página segura de Stripe cuando paga con tarjeta.",
     payMethodsNote:
-      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Los pagos con tarjeta (Visa, Mastercard) se cargan en euros en una página de pago segura. Nunca vemos el número de tarjeta. El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
+      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Los pagos con tarjeta (Visa, Mastercard) se cargan en euros en una página de pago segura y nunca vemos el número de tarjeta. Con Open Banking puedes pagar directamente desde tu cuenta bancaria (app del banco o IBAN). El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pague con saldo de PayPal, cuenta bancaria o tarjeta",
     payPaypalUnavailable: "PayPal no está disponible temporalmente",

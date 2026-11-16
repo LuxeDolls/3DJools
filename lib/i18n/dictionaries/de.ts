@@ -192,6 +192,12 @@ export const de: Dictionary = {
     payCardFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     payCardNote:
       "Nach der Bestellung werden Sie zu einer sicheren Zahlungsseite weitergeleitet, um mit Visa oder Mastercard zu bezahlen. Wir sehen Ihre Kartennummer nie. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
+    payOpenBanking: "Zahlung per Bankkonto (Open Banking)",
+    payOpenBankingDesc: "Direktzahlung über Ihre Banking-App oder per IBAN — ohne Karte",
+    payOpenBankingUnavailable: "Zahlung per Bankkonto (Open Banking) ist vorübergehend nicht verfügbar",
+    payOpenBankingFailed: "Die Bankzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
+    payOpenBankingNote:
+      "Nach der Bestellung werden Sie zu unserer sicheren Open-Banking-Seite weitergeleitet, auf der Sie mit einem Klick direkt über Ihre Banking-App oder per IBAN von Ihrem Bankkonto bezahlen können, ohne Kartendaten einzugeben. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Öffnet die sichere Square-Seite · Abbuchung in US-Dollar · Kontoauszug: HIRA",
     paySquareNote:
@@ -247,7 +253,7 @@ export const de: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Verfügbar auf der sicheren Stripe-Seite, wenn Sie mit Karte zahlen.",
     payMethodsNote:
-      "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Kartenzahlungen (Visa, Mastercard) werden in Euro auf einer sicheren Zahlungsseite belastet. Wir sehen Ihre Kartennummer nie. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate. Bestellungen per SEPA-Überweisung werden reserviert und versendet, sobald die Zahlung auf unserer IBAN eingegangen ist. Die Bankdaten sehen Sie an der Kasse und in der Bestellbestätigung.",
+      "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Kartenzahlungen (Visa, Mastercard) werden in Euro auf einer sicheren Zahlungsseite belastet, und wir sehen Ihre Kartennummer nie. Mit Open Banking können Sie direkt von Ihrem Bankkonto (über Ihre Banking-App oder per IBAN) bezahlen. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate. Bestellungen per SEPA-Überweisung werden reserviert und versendet, sobald die Zahlung auf unserer IBAN eingegangen ist. Die Bankdaten sehen Sie an der Kasse und in der Bestellbestätigung.",
     payPaypal: "PayPal",
     payPaypalDesc: "Mit PayPal-Guthaben, Bankkonto oder Karte zahlen",
     payPaypalUnavailable: "PayPal ist vorübergehend nicht verfügbar",

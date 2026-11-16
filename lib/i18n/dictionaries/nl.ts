@@ -192,6 +192,12 @@ export const nl: Dictionary = {
     payCardFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payCardNote:
       "Na het plaatsen van de bestelling wordt u doorgestuurd naar een beveiligde betaalpagina om te betalen met Visa of Mastercard. Wij zien uw kaartnummer nooit. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
+    payOpenBanking: "Betalen via bankrekening (Open Banking)",
+    payOpenBankingDesc: "Direct betalen vanuit je bank-app of via IBAN — geen kaart nodig",
+    payOpenBankingUnavailable: "Betalen via bankrekening (Open Banking) is tijdelijk niet beschikbaar",
+    payOpenBankingFailed: "De bankbetaling is niet voltooid. U kunt het opnieuw proberen.",
+    payOpenBankingNote:
+      "Na het plaatsen van de bestelling wordt u doorgestuurd naar onze beveiligde Open Banking-pagina om met één klik direct vanuit uw bankrekening (bank-app of IBAN) te betalen zonder kaartgegevens te delen. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Opent de beveiligde Square-pagina · afschrijving in Amerikaanse dollars · afschrift: HIRA",
     paySquareNote:
@@ -247,7 +253,7 @@ export const nl: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen (Visa, Mastercard) worden in euro afgeschreven op een beveiligde betaalpagina. Wij zien het kaartnummer niet. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
+      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen (Visa, Mastercard) worden in euro afgeschreven op een beveiligde betaalpagina en wij zien het kaartnummer nooit. Met Open Banking kunt u direct vanuit uw bankrekening (bank-app of IBAN) betalen. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",

@@ -190,6 +190,12 @@ export const en = {
     payCardFailed: "The card payment was not completed. You can try again.",
     payCardNote:
       "After placing your order, you are redirected to a secure payment page to pay by Visa or Mastercard. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
+    payOpenBanking: "Pay by bank account (Open Banking)",
+    payOpenBankingDesc: "Instant payment from your bank app or via IBAN — no card needed",
+    payOpenBankingUnavailable: "Bank account payment (Open Banking) is temporarily unavailable",
+    payOpenBankingFailed: "The bank payment was not completed. You can try again.",
+    payOpenBankingNote:
+      "After placing your order, you are redirected to our secure Open Banking page where you can pay in one click directly from your bank app or via IBAN without sharing card details. If you have already paid, wait for the status to update and do not pay twice.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Opens Square's secure page · charged in US dollars · statement name HIRA",
     paySquareNote:
@@ -245,7 +251,7 @@ export const en = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Available on the secure Stripe page when you pay by card.",
     payMethodsNote:
-      "All prices are shown in euro (EUR) and include VAT where applicable. Card payments (Visa, Mastercard) are charged in euros on a secure payment page. We never see your card number. Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
+      "All prices are shown in euro (EUR) and include VAT where applicable. Card payments (Visa, Mastercard) are charged in euros on a secure payment page, and we never see your card number. With Open Banking, you can pay in one click directly from your bank account (bank app or IBAN). Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
     payPaypal: "PayPal",
     payPaypalDesc: "Pay with your PayPal balance, bank account or card",
     payPaypalUnavailable: "PayPal is temporarily unavailable",

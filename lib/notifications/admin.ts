@@ -144,11 +144,13 @@ export async function notifyOrderStatusChange(
 ): Promise<void> {
   const providerPaid =
     order.status === "paid" &&
-    (order.paymentMethod === "card" || order.paymentMethod === "paypal")
+    (order.paymentMethod === "card" || order.paymentMethod === "open_banking" || order.paymentMethod === "paypal")
   const title =
     order.paymentMethod === "paypal"
       ? "PayPal payment received"
-      : "Visa/Mastercard payment received"
+      : order.paymentMethod === "open_banking"
+        ? "Open Banking payment received"
+        : "Visa/Mastercard payment received"
   const lines = [
     providerPaid
       ? `Payment confirmed: ${previousStatus} → ${order.status}`

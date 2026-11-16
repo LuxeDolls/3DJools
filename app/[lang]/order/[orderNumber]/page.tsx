@@ -24,7 +24,7 @@ import { CardPayButton } from "@/components/checkout/card-pay-button"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { ChangePaymentMethod } from "@/components/checkout/change-payment-method"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
-import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
+import { CARD_CHECKOUT_ENABLED, OPEN_BANKING_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { syncTrapayOrderStatus } from "@/lib/payments/trapay-webhook"
 import { ClearCart } from "@/components/checkout/clear-cart"
@@ -79,8 +79,14 @@ export default async function OrderConfirmationPage({
     )
   }
 
-  if (order.paymentMethod === "card" && (order.status === "awaiting_payment" || order.status === "reviewing_payment")) {
-    order = await syncTrapayOrderStatus(order)
+  if (
+    (order.paymentMethod === "open_banking" || order.paymentMethod === "card") &&
+    (order.status === "awaiting_payment" || order.status === "reviewing_payment")
+  ) {
+    const initialNotes = parseOrderNotes(order.notes)
+    if (order.paymentMethod === "open_banking" || initialNotes.trapay_payment_ids) {
+      order = await syncTrapayOrderStatus(order)
+    }
   }
 
   const status = order.status as OrderStatus
@@ -121,6 +127,7 @@ export default async function OrderConfirmationPage({
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
   const paymentLabels: Record<string, string> = {
     card: dict.checkout.payCard,
+    open_banking: dict.checkout.payOpenBanking,
     paypal: dict.checkout.payPaypal,
     bank_transfer: dict.checkout.paySepa,
     crypto: dict.checkout.payCrypto,
@@ -133,6 +140,7 @@ export default async function OrderConfirmationPage({
   const canSwitchPayment = status === "awaiting_payment" || status === "reviewing_payment"
   const rawSwitchOptions: Array<{ method: PaymentMethod; label: string } | false> = [
     CARD_CHECKOUT_ENABLED && { method: "card", label: dict.checkout.payCard },
+    OPEN_BANKING_CHECKOUT_ENABLED && { method: "open_banking", label: dict.checkout.payOpenBanking },
     isPaypalCheckoutEnabled() && { method: "paypal", label: dict.checkout.payPaypal },
     isBankTransferCheckoutEnabled(order.email) && { method: "bank_transfer", label: dict.checkout.paySepa },
   ]
@@ -143,12 +151,19 @@ export default async function OrderConfirmationPage({
       )
     : []
 
-  const lastCardStatus = notes.trapay_last_status ?? notes.aviagram_last_status
-  const cardDeclinedReason = notes.trapay_declined_reason ?? notes.aviagram_declined_reason
+  const lastCardStatus = notes.aviagram_last_status ?? notes.trapay_last_status
+  const cardDeclinedReason = notes.aviagram_declined_reason ?? notes.trapay_declined_reason
   const cardDeclined =
     card === "cancelled" ||
     card === "failed" ||
     (lastCardStatus ? DECLINED_CARD_STATUSES.has(lastCardStatus.toLowerCase()) : false)
+
+  const lastBankStatus = notes.trapay_last_status
+  const bankDeclinedReason = notes.trapay_declined_reason
+  const bankDeclined =
+    card === "cancelled" ||
+    card === "failed" ||
+    (lastBankStatus ? DECLINED_CARD_STATUSES.has(lastBankStatus.toLowerCase()) : false)
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -359,6 +374,31 @@ export default async function OrderConfirmationPage({
                 locale={locale}
                 label={dict.checkout.payCard}
                 errorLabel={dict.checkout.payCardUnavailable}
+              />
+            ) : null}
+          </div>
+        )}
+
+        {order.paymentMethod === "open_banking" && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            {OPEN_BANKING_CHECKOUT_ENABLED ? (
+              <p>{dict.checkout.payOpenBankingNote}</p>
+            ) : (
+              <p>{dict.checkout.payOpenBankingUnavailable}</p>
+            )}
+            {bankDeclined ? (
+              <p className="mt-2 text-destructive">{dict.checkout.payOpenBankingFailed}</p>
+            ) : null}
+            {bankDeclinedReason ? (
+              <p className="mt-1 text-muted-foreground">{bankDeclinedReason}</p>
+            ) : null}
+            {OPEN_BANKING_CHECKOUT_ENABLED ? (
+              <CardPayButton
+                mode="open_banking"
+                orderNumber={order.orderNumber}
+                locale={locale}
+                label={dict.checkout.payOpenBanking}
+                errorLabel={dict.checkout.payOpenBankingUnavailable}
               />
             ) : null}
           </div>

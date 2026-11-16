@@ -37,6 +37,7 @@ function siteUrl(): string {
 
 const PAYMENT_LABELS: Record<string, string> = {
   card: "Visa / Mastercard",
+  open_banking: "Pay by bank account (Open Banking)",
   paypal: "PayPal",
   bank_transfer: "Bank transfer (SEPA)",
   crypto: "Cryptocurrency",
@@ -66,6 +67,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
   const isSepa = order.paymentMethod === "bank_transfer"
   const isCrypto = order.paymentMethod === "crypto"
   const isCard = order.paymentMethod === "card"
+  const isOpenBanking = order.paymentMethod === "open_banking"
   const isPaypal = order.paymentMethod === "paypal"
   // Same coin/network the customer actually selected at checkout (see lib/payments/crypto.ts),
   // persisted on the order as `crypto_coin=<id>` in the notes field.
@@ -112,6 +114,9 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
       : null,
     awaitingPayment && isCard
       ? `\nCard payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
+      : null,
+    awaitingPayment && isOpenBanking
+      ? `\nOpen Banking payment of ${euros(order.totalCents)} is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.`
       : null,
     awaitingPayment && isPaypal
       ? `\n${paypalAwaitingText(order.totalCents)}`
@@ -161,7 +166,11 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
       ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
       <p style="margin:0;font-size:14px;color:#7a4b00">Card payment of <strong>${euros(order.totalCents)}</strong> is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.</p>
     </div>`
-      : ""
+      : awaitingPayment && isOpenBanking
+        ? `<div style="background:#fff4ea;border:1px solid #ffd7b8;border-left:4px solid #f97316;border-radius:12px;padding:16px;margin-bottom:20px">
+      <p style="margin:0;font-size:14px;color:#7a4b00">Open Banking payment of <strong>${euros(order.totalCents)}</strong> is not confirmed yet. Complete it from your order page. If you have already paid, wait for the status to update and do not pay twice.</p>
+    </div>`
+        : ""
 
   const paypalHtml =
     awaitingPayment && isPaypal
@@ -368,6 +377,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
   const isCrypto = order.paymentMethod === "crypto"
   const isPaypal = order.paymentMethod === "paypal"
   const isCard = order.paymentMethod === "card"
+  const isOpenBanking = order.paymentMethod === "open_banking"
   const cryptoCoin = getCryptoCoinOption(parseOrderNotes(order.notes).crypto_coin)
   const firstName = order.shippingName?.trim().split(/\s+/)[0] ?? ""
 
@@ -397,6 +407,9 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
     isPaypal ? paypalReminderText(order.totalCents) : null,
     isCard
       ? `Card payment of ${euros(order.totalCents)} is still open. Open your order page to complete payment by Visa or Mastercard. If you have already paid, wait for the status to update and do not pay twice.`
+      : null,
+    isOpenBanking
+      ? `Open Banking payment of ${euros(order.totalCents)} is still open. Open your order page to complete payment from your bank app or via IBAN. If you have already paid, wait for the status to update and do not pay twice.`
       : null,
     "",
     "If you've already paid and just haven't clicked the confirmation button yet, no problem — just head to your order page and let us know. And if you've changed your mind or run into any trouble, simply reply to this email; we're happy to help.",

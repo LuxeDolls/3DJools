@@ -192,6 +192,12 @@ export const fr: Dictionary = {
     payCardFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
     payCardNote:
       "Après avoir passé la commande, vous êtes redirigé vers une page de paiement sécurisée pour payer par Visa ou Mastercard. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
+    payOpenBanking: "Paiement par compte bancaire (Open Banking)",
+    payOpenBankingDesc: "Paiement instantané depuis votre application bancaire ou par IBAN — sans carte",
+    payOpenBankingUnavailable: "Le paiement par compte bancaire (Open Banking) est temporairement indisponible",
+    payOpenBankingFailed: "Le paiement bancaire n'a pas abouti. Vous pouvez réessayer.",
+    payOpenBankingNote:
+      "Après avoir passé la commande, vous êtes redirigé vers notre page sécurisée Open Banking pour payer en un clic directement depuis votre compte bancaire (application bancaire ou IBAN), sans saisir de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Ouvre la page sécurisée Square · débit en dollars américains · relevé : HIRA",
     paySquareNote:
@@ -247,7 +253,7 @@ export const fr: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponible sur la page Stripe sécurisée lorsque vous payez par carte.",
     payMethodsNote:
-      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Les paiements par carte (Visa, Mastercard) sont débités en euros sur une page de paiement sécurisée. Nous ne voyons jamais votre numéro de carte. Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
+      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Les paiements par carte (Visa, Mastercard) sont débités en euros sur une page de paiement sécurisée et nous ne voyons jamais votre numéro de carte. Avec l'Open Banking, vous pouvez payer directement depuis votre compte bancaire (application bancaire ou IBAN). Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
     payPaypal: "PayPal",
     payPaypalDesc: "Payez avec votre solde PayPal, votre compte bancaire ou votre carte",
     payPaypalUnavailable: "PayPal est temporairement indisponible",
