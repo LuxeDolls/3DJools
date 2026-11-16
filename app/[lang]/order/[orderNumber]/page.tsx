@@ -143,10 +143,12 @@ export default async function OrderConfirmationPage({
       )
     : []
 
+  const lastCardStatus = notes.trapay_last_status ?? notes.aviagram_last_status
+  const cardDeclinedReason = notes.trapay_declined_reason ?? notes.aviagram_declined_reason
   const cardDeclined =
     card === "cancelled" ||
     card === "failed" ||
-    (notes.trapay_last_status ? DECLINED_CARD_STATUSES.has(notes.trapay_last_status.toLowerCase()) : false)
+    (lastCardStatus ? DECLINED_CARD_STATUSES.has(lastCardStatus.toLowerCase()) : false)
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -348,8 +350,8 @@ export default async function OrderConfirmationPage({
             {cardDeclined ? (
               <p className="mt-2 text-destructive">{dict.checkout.payCardFailed}</p>
             ) : null}
-            {notes.trapay_declined_reason ? (
-              <p className="mt-1 text-muted-foreground">{notes.trapay_declined_reason}</p>
+            {cardDeclinedReason ? (
+              <p className="mt-1 text-muted-foreground">{cardDeclinedReason}</p>
             ) : null}
             {CARD_CHECKOUT_ENABLED ? (
               <CardPayButton
