@@ -26,6 +26,7 @@ import { ChangePaymentMethod } from "@/components/checkout/change-payment-method
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
+import { syncTrapayOrderStatus } from "@/lib/payments/trapay-webhook"
 import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
 import type { OrderStatus, PaymentMethod } from "@/lib/db/schema"
@@ -37,6 +38,7 @@ const DECLINED_CARD_STATUSES = new Set([
   "failed",
   "timeout",
   "expired",
+  "blocked",
   "rejected",
   "error",
 ])
@@ -60,7 +62,7 @@ export default async function OrderConfirmationPage({
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const decodedOrderNumber = decodeURIComponent(orderNumber)
-  const order = await getOrderByOrderNumber(decodedOrderNumber)
+  let order = await getOrderByOrderNumber(decodedOrderNumber)
 
   if (!order) {
     return (
@@ -75,6 +77,10 @@ export default async function OrderConfirmationPage({
         </div>
       </div>
     )
+  }
+
+  if (order.paymentMethod === "card" && (order.status === "awaiting_payment" || order.status === "reviewing_payment")) {
+    order = await syncTrapayOrderStatus(order)
   }
 
   const status = order.status as OrderStatus
@@ -140,7 +146,7 @@ export default async function OrderConfirmationPage({
   const cardDeclined =
     card === "cancelled" ||
     card === "failed" ||
-    (notes.aviagram_last_status ? DECLINED_CARD_STATUSES.has(notes.aviagram_last_status.toLowerCase()) : false)
+    (notes.trapay_last_status ? DECLINED_CARD_STATUSES.has(notes.trapay_last_status.toLowerCase()) : false)
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -342,8 +348,8 @@ export default async function OrderConfirmationPage({
             {cardDeclined ? (
               <p className="mt-2 text-destructive">{dict.checkout.payCardFailed}</p>
             ) : null}
-            {notes.aviagram_declined_reason ? (
-              <p className="mt-1 text-muted-foreground">{notes.aviagram_declined_reason}</p>
+            {notes.trapay_declined_reason ? (
+              <p className="mt-1 text-muted-foreground">{notes.trapay_declined_reason}</p>
             ) : null}
             {CARD_CHECKOUT_ENABLED ? (
               <CardPayButton
