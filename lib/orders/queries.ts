@@ -160,8 +160,8 @@ export async function mergeOrderNotes(orderId: string, fields: Record<string, st
 export async function updateOrderPaymentMethod(orderId: string, method: PaymentMethod): Promise<OrderWithItems | null> {
   await db.update(orders).set({ paymentMethod: method, updatedAt: new Date() }).where(eq(orders.id, orderId))
   await mergeOrderNotes(orderId, {
-    aviagram_last_status: undefined,
-    aviagram_declined_reason: undefined,
+    trapay_last_status: undefined,
+    trapay_declined_reason: undefined,
     paypal_last_status: undefined,
   })
   return getOrderById(orderId)
