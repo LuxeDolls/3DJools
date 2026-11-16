@@ -192,6 +192,12 @@ export const it: Dictionary = {
     payCardFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
     payCardNote:
       "Dopo aver effettuato l'ordine, verrai reindirizzato a una pagina di pagamento sicura per pagare con Visa o Mastercard. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
+    payOpenBanking: "Pagamento da conto bancario (Open Banking)",
+    payOpenBankingDesc: "Pagamento istantaneo dalla tua app bancaria o tramite IBAN — senza carta",
+    payOpenBankingUnavailable: "Il pagamento da conto bancario (Open Banking) non è al momento disponibile",
+    payOpenBankingFailed: "Il pagamento bancario non è andato a buon fine. Puoi riprovare.",
+    payOpenBankingNote:
+      "Dopo aver effettuato l'ordine, verrai reindirizzato alla nostra pagina sicura Open Banking per pagare in un clic direttamente dal tuo conto bancario (app bancaria o IBAN) senza condividere i dati della carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Apre la pagina sicura di Square · addebito in dollari USA · estratto conto: HIRA",
     paySquareNote:
@@ -247,7 +253,7 @@ export const it: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponibile sulla pagina Stripe sicura quando paghi con carta.",
     payMethodsNote:
-      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con carta (Visa, Mastercard) vengono addebitati in euro su una pagina di pagamento sicura. Non vediamo mai il numero della carta. Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
+      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con carta (Visa, Mastercard) vengono addebitati in euro su una pagina di pagamento sicura e non vediamo mai il numero della carta. Con l'Open Banking puoi pagare direttamente dal tuo conto bancario (app bancaria o IBAN). Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
     payPaypal: "PayPal",
     payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
     payPaypalUnavailable: "PayPal non è al momento disponibile",

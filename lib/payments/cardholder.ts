@@ -1,6 +1,7 @@
 /** Cardholder details collected before a hosted card page. The card number stays there. */
 
 export const CARD_CHECKOUT_ENABLED = true
+export const OPEN_BANKING_CHECKOUT_ENABLED = true
 
 export function isCardPayment(payment: string): boolean {
   return payment === "card"

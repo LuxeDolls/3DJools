@@ -1,10 +1,10 @@
 import Image from "next/image"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
-import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
+import { CARD_CHECKOUT_ENABLED, OPEN_BANKING_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { BANK_TRANSFER_CHECKOUT_ENABLED, BANK_TRANSFER_OFF_METHODS_NOTE } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import Link from "next/link"
-import { CreditCard, Landmark, CalendarClock } from "lucide-react"
+import { CreditCard, Landmark, Building2, CalendarClock } from "lucide-react"
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { localizedPath } from "@/lib/i18n/paths"
@@ -25,6 +25,9 @@ export default async function PaymentMethodsPage({ params }: { params: Promise<{
   const methods = [
     ...(CARD_CHECKOUT_ENABLED
       ? [{ icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
+      : []),
+    ...(OPEN_BANKING_CHECKOUT_ENABLED
+      ? [{ icon: Building2, title: dict.checkout.payOpenBanking, desc: dict.checkout.payOpenBankingDesc }]
       : []),
     ...(BANK_TRANSFER_CHECKOUT_ENABLED
       ? [{ icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc }]

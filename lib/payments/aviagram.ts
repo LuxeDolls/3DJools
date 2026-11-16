@@ -5,8 +5,7 @@ import { COMPANY } from "@/lib/company"
 // Hosted card checkout via Zenthoryx API (https://paydocs.dev).
 // Endpoint: https://web.zenthoryx.app/api/payment/create (or /api/payment/createForm)
 // Available gateways: EUR-ALP, EUR-PMF, EUR-SHP. Active gateway: EUR-ALP.
-// Temporarily disabled in checkout while Trapay is active.
-export const ZENTHORYX_CHECKOUT_ENABLED = false
+export const ZENTHORYX_CHECKOUT_ENABLED = true
 
 const DEFAULT_HOST = "https://web.zenthoryx.app/api/payment/createForm"
 const DEFAULT_CURRENCY = "EUR-ALP"

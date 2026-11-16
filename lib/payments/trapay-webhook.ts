@@ -33,10 +33,14 @@ function readString(value: unknown): string {
   return ""
 }
 
+function isTrapayMethod(method: string): boolean {
+  return method === "open_banking" || method === "card"
+}
+
 async function findOrderForTrapay(orderRef: string, providerPaymentId: string): Promise<OrderWithItems | null> {
   if (orderRef) {
     const byNumber = await getOrderByOrderNumber(orderRef)
-    if (byNumber && byNumber.paymentMethod === "card") {
+    if (byNumber && isTrapayMethod(byNumber.paymentMethod)) {
       return byNumber
     }
   }
@@ -51,7 +55,7 @@ async function findOrderForTrapay(orderRef: string, providerPaymentId: string): 
     const order = await getOrderById(match.id)
     const notes = parseOrderNotes(order?.notes)
     const knownIds = (notes.trapay_payment_ids ?? "").split(",").filter(Boolean)
-    if (order && order.paymentMethod === "card" && knownIds.includes(providerPaymentId)) {
+    if (order && isTrapayMethod(order.paymentMethod) && knownIds.includes(providerPaymentId)) {
       return order
     }
   }
@@ -116,7 +120,7 @@ export async function applyTrapayPaymentUpdate(
 }
 
 export async function syncTrapayOrderStatus(order: OrderWithItems): Promise<OrderWithItems> {
-  if (order.paymentMethod !== "card" || !PAYABLE_STATUSES.has(order.status)) {
+  if (!isTrapayMethod(order.paymentMethod) || !PAYABLE_STATUSES.has(order.status)) {
     return order
   }
   const notes = parseOrderNotes(order.notes)

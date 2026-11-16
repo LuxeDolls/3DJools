@@ -1,9 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
-import { CreditCard, Landmark, CalendarClock, Clock, Mail, Phone } from "lucide-react"
+import { CreditCard, Landmark, Building2, CalendarClock, Clock, Mail, Phone } from "lucide-react"
 import { COMPANY, companyStreetLine } from "@/lib/company"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
-import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
+import { CARD_CHECKOUT_ENABLED, OPEN_BANKING_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { BANK_TRANSFER_CHECKOUT_ENABLED } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
 import type { Locale } from "@/lib/i18n/config"
@@ -53,6 +53,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
 
   const payments = [
     ...(CARD_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.payCard }] : []),
+    ...(OPEN_BANKING_CHECKOUT_ENABLED ? [{ icon: Building2, label: dict.checkout.payOpenBanking }] : []),
     ...(BANK_TRANSFER_CHECKOUT_ENABLED ? [{ icon: Landmark, label: dict.checkout.paySepa }] : []),
     ...(isPaypalCheckoutEnabled()
       ? [{ icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" }]

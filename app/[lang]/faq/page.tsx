@@ -42,23 +42,23 @@ const CARD_OFF_FAQ: Record<Locale, string> = {
 
 const CARD_FAQ: Record<Locale, string> = {
   en: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, SEPA bank transfer and interest-free instalments. Card payments open a secure payment page. Details are on our "
-    : "Visa, Mastercard and interest-free instalments. Card payments open a secure payment page. Details are on our ",
+    ? "Visa, Mastercard, Open Banking (instant payment from your bank account), SEPA bank transfer and interest-free instalments. Details are on our "
+    : "Visa, Mastercard, Open Banking (instant payment from your bank account) and interest-free instalments. Details are on our ",
   de: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, SEPA-Überweisung und zinsfreie Ratenzahlung. Kartenzahlungen öffnen eine sichere Zahlungsseite. Einzelheiten stehen auf unserer Seite "
-    : "Visa, Mastercard und zinsfreie Ratenzahlung. Kartenzahlungen öffnen eine sichere Zahlungsseite. Einzelheiten stehen auf unserer Seite ",
+    ? "Visa, Mastercard, Open Banking (Direktzahlung vom Bankkonto), SEPA-Überweisung und zinsfreie Ratenzahlung. Einzelheiten stehen auf unserer Seite "
+    : "Visa, Mastercard, Open Banking (Direktzahlung vom Bankkonto) und zinsfreie Ratenzahlung. Einzelheiten stehen auf unserer Seite ",
   fr: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, virement SEPA et paiement en plusieurs fois sans intérêt. Les paiements par carte ouvrent une page de paiement sécurisée. Les détails figurent sur notre "
-    : "Visa, Mastercard et paiement en plusieurs fois sans intérêt. Les paiements par carte ouvrent une page de paiement sécurisée. Les détails figurent sur notre ",
+    ? "Visa, Mastercard, Open Banking (paiement direct depuis votre compte bancaire), virement SEPA et paiement en plusieurs fois sans intérêt. Les détails figurent sur notre "
+    : "Visa, Mastercard, Open Banking (paiement direct depuis votre compte bancaire) et paiement en plusieurs fois sans intérêt. Les détails figurent sur notre ",
   it: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, bonifico SEPA e rate senza interessi. I pagamenti con carta aprono una pagina di pagamento sicura. I dettagli sono sulla nostra "
-    : "Visa, Mastercard e rate senza interessi. I pagamenti con carta aprono una pagina di pagamento sicura. I dettagli sono sulla nostra ",
+    ? "Visa, Mastercard, Open Banking (pagamento diretto dal conto bancario), bonifico SEPA e rate senza interessi. I dettagli sono sulla nostra "
+    : "Visa, Mastercard, Open Banking (pagamento diretto dal conto bancario) e rate senza interessi. I dettagli sono sulla nostra ",
   es: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, transferencia SEPA y plazos sin intereses. Los pagos con tarjeta abren una página de pago segura. Los detalles están en nuestra "
-    : "Visa, Mastercard y plazos sin intereses. Los pagos con tarjeta abren una página de pago segura. Los detalles están en nuestra ",
+    ? "Visa, Mastercard, Open Banking (pago directo desde cuenta bancaria), transferencia SEPA y plazos sin intereses. Los detalles están en nuestra "
+    : "Visa, Mastercard, Open Banking (pago directo desde cuenta bancaria) y plazos sin intereses. Los detalles están en nuestra ",
   nl: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, SEPA-overschrijving en renteloze termijnen. Kaartbetalingen openen een beveiligde betaalpagina. De details staan op onze "
-    : "Visa, Mastercard en renteloze termijnen. Kaartbetalingen openen een beveiligde betaalpagina. De details staan op onze ",
+    ? "Visa, Mastercard, Open Banking (direct betalen vanaf uw bankrekening), SEPA-overschrijving en renteloze termijnen. De details staan op onze "
+    : "Visa, Mastercard, Open Banking (direct betalen vanaf uw bankrekening) en renteloze termijnen. De details staan op onze ",
 }
 
 function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {

@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
-import { CreditCard, Landmark, Bitcoin, CalendarClock, Truck, Lock, AlertTriangle } from "lucide-react"
+import { CreditCard, Landmark, Building2, Bitcoin, CalendarClock, Truck, Lock, AlertTriangle } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useCart } from "@/components/cart/cart-provider"
 import { Button } from "@/components/ui/button"
@@ -19,7 +19,7 @@ import type { Locale } from "@/lib/i18n/config"
 import { getInstallmentDict } from "@/lib/i18n/installments"
 import { computeInstallmentAmounts, INSTALLMENTS_CHECKOUT_ENABLED, qualifiesForInstallments } from "@/lib/installments"
 import { cn } from "@/lib/utils"
-import { CARD_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
+import { CARD_CHECKOUT_ENABLED, OPEN_BANKING_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { callingCode } from "@/lib/payments/phone-country"
 import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_CHECKOUT_ENABLED, CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
@@ -28,6 +28,7 @@ import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 
 type PaymentId =
   | "card"
+  | "open_banking"
   | "paypal"
   | "sepa"
   | "crypto"
@@ -36,12 +37,16 @@ type PaymentId =
 function checkoutErrorText(
   checkout: {
     payCardUnavailable: string
+    payOpenBankingUnavailable: string
     payPaypalUnavailable: string
     orderError: string
   },
   code: string,
 ): string {
   if (code === "card_unavailable" || code === "card_start_failed") return checkout.payCardUnavailable
+  if (code === "open_banking_unavailable" || code === "open_banking_start_failed") {
+    return checkout.payOpenBankingUnavailable
+  }
   if (code === "paypal_unavailable" || code === "paypal_start_failed") return checkout.payPaypalUnavailable
   return checkout.orderError
 }
@@ -59,9 +64,11 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const [payment, setPayment] = useState<PaymentId>(
     CARD_CHECKOUT_ENABLED
       ? "card"
-      : BANK_TRANSFER_CHECKOUT_ENABLED
-        ? "sepa"
-        : "installments",
+      : OPEN_BANKING_CHECKOUT_ENABLED
+        ? "open_banking"
+        : BANK_TRANSFER_CHECKOUT_ENABLED
+          ? "sepa"
+          : "installments",
   )
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Netherlands")
@@ -88,6 +95,16 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
     ...(CARD_CHECKOUT_ENABLED
       ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
+      : []),
+    ...(OPEN_BANKING_CHECKOUT_ENABLED
+      ? [
+          {
+            id: "open_banking" as const,
+            icon: Building2,
+            title: dict.checkout.payOpenBanking,
+            desc: dict.checkout.payOpenBankingDesc,
+          },
+        ]
       : []),
     ...(bankTransferEnabled
       ? [{ id: "sepa" as const, icon: Landmark, title: dict.checkout.paySepa, desc: dict.checkout.paySepaDesc }]
@@ -125,6 +142,10 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     }
     if (payment === "card" && !CARD_CHECKOUT_ENABLED) {
       setOrderError(dict.checkout.payCardUnavailable)
+      return
+    }
+    if (payment === "open_banking" && !OPEN_BANKING_CHECKOUT_ENABLED) {
+      setOrderError(dict.checkout.payOpenBankingUnavailable)
       return
     }
     if (payment === "paypal" && !isPaypalCheckoutEnabled()) {
@@ -264,6 +285,11 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
           {payment === "card" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.payCardNote}</p>
+            </div>
+          )}
+          {payment === "open_banking" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{dict.checkout.payOpenBankingNote}</p>
             </div>
           )}
           {payment === "paypal" && (
