@@ -6,14 +6,24 @@ import { toIsoDate } from "@/lib/payments/cardholder"
 
 export const dynamic = "force-dynamic"
 
+function normalizeHostname(host: string): string {
+  return host.split(":")[0]!.trim().toLowerCase().replace(/^www\./, "")
+}
+
 function sameSite(request: Request): boolean {
   const hosts = [request.headers.get("host"), request.headers.get("x-forwarded-host")]
     .flatMap((value) => (value ? value.split(",").map((part) => part.trim()) : []))
+    .filter(Boolean)
   const origin = request.headers.get("origin") ?? request.headers.get("referer")
-  if (!origin || hosts.length === 0) return false
+  if (!origin) {
+    const fetchSite = (request.headers.get("sec-fetch-site") ?? "").toLowerCase()
+    return fetchSite === "same-origin" || fetchSite === "same-site"
+  }
+  if (hosts.length === 0) return false
   try {
     const source = new URL(origin)
-    return hosts.some((host) => host === source.host || host.split(":")[0] === source.hostname)
+    const sourceNorm = normalizeHostname(source.hostname)
+    return hosts.some((host) => host === source.host || normalizeHostname(host) === sourceNorm)
   } catch {
     return false
   }

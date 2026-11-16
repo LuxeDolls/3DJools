@@ -108,24 +108,16 @@ function ensureTable(): Promise<void> {
 // Known scammer / keyboard-mash tokens and disposable domains observed in abuse attempts
 const BLOCKED_EMAIL_SUBSTRINGS = ["holyscam", "adjhifhadfa", "dowococ797"]
 const BLOCKED_EMAIL_DOMAINS = new Set(["micropaste.com", "agaexpress.com"])
-const BLOCKED_EXACT_NAMES = new Set(["adg", "adg adg", "adga", "asdf", "asdf asdf", "asdf lkajslk", "test test"])
-const BLOCKED_EXACT_ADDRESSES = new Set(["adga", "adg", "123", "asdf", "alskdjf 3"])
-const BLOCKED_EXACT_POSTAL_CODES = new Set(["212143", "123", "123456", "00000", "0000"])
-const BLOCKED_EXACT_CITIES = new Set(["123", "adg", "adga", "alksfjkl", "asdf"])
+const BLOCKED_EXACT_NAMES = new Set(["adg", "adg adg", "adga", "asdf lkajslk"])
+const BLOCKED_EXACT_ADDRESSES = new Set(["adga", "adg", "alskdjf 3"])
+const BLOCKED_EXACT_POSTAL_CODES = new Set(["212143"])
+const BLOCKED_EXACT_CITIES = new Set(["adg", "adga", "alksfjkl"])
 
-// Keyboard-row mash detector for short gibberish names/addresses (e.g. "adg", "adga", "adjhifhadfa", "alskdjf")
+// Keyboard-row mash detector for specific gibberish strings observed in abuse attempts
 function looksLikeKeyboardMash(raw: string): boolean {
   const s = normalizeTextCharacteristic(raw).replace(/[^a-z]/g, "")
   if (!s) return false
-  if (s === "adg" || s === "adga" || s.startsWith("adg") || s.includes("adjhif") || s.includes("alskdj")) {
-    return true
-  }
-  // 5+ letters with no vowels at all (including y)
-  if (s.length >= 4 && !/[aeiouyäöü]/i.test(s)) {
-    return true
-  }
-  // 6+ characters composed exclusively of home-row letters [asdfghjkl]
-  if (s.length >= 6 && /^[asdfghjkl]+$/.test(s)) {
+  if (s === "adg" || s === "adga" || s.includes("adjhif") || s.includes("alskdj") || s.includes("alksfjkl")) {
     return true
   }
   return false
@@ -190,7 +182,7 @@ export async function checkCustomerBlock(
     }
   }
 
-  // 3. Check exact & heuristic buyer characteristics
+  // 3. Check exact scam buyer characteristics
   if (!matchedReason) {
     if (
       (fullName && BLOCKED_EXACT_NAMES.has(fullName)) ||
@@ -198,8 +190,6 @@ export async function checkCustomerBlock(
       (lastName && BLOCKED_EXACT_NAMES.has(lastName))
     ) {
       matchedReason = `Blocked buyer name characteristic: ${fullName || firstName}`
-    } else if (firstName && lastName && firstName === lastName && firstName.length <= 4) {
-      matchedReason = `Blocked duplicate short name: ${firstName} ${lastName}`
     } else if (
       (firstName && looksLikeKeyboardMash(firstName)) ||
       (lastName && looksLikeKeyboardMash(lastName))
@@ -207,19 +197,9 @@ export async function checkCustomerBlock(
       matchedReason = `Blocked gibberish name: ${fullName}`
     } else if (address && (BLOCKED_EXACT_ADDRESSES.has(address) || looksLikeKeyboardMash(address))) {
       matchedReason = `Blocked address characteristic: ${address}`
-    } else if (address && (/^\d+$/.test(address) || (address.length < 4 && !/\d/.test(address)))) {
-      matchedReason = `Blocked invalid short address: ${address}`
     } else if (postalCode && BLOCKED_EXACT_POSTAL_CODES.has(postalCode)) {
       matchedReason = `Blocked postal code characteristic: ${postalCode}`
-    } else if (
-      postalCode &&
-      /^\d{6}$/.test(postalCode) &&
-      ["germany", "netherlands", "belgium", "france", "austria", "italy", "spain", "luxembourg", "denmark"].includes(
-        country,
-      )
-    ) {
-      matchedReason = `Blocked invalid 6-digit postal code ${postalCode} for ${country}`
-    } else if (city && (BLOCKED_EXACT_CITIES.has(city) || /^\d+$/.test(city) || looksLikeKeyboardMash(city))) {
+    } else if (city && (BLOCKED_EXACT_CITIES.has(city) || looksLikeKeyboardMash(city))) {
       matchedReason = `Blocked city characteristic: ${city}`
     }
   }
