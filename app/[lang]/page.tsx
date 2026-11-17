@@ -3,6 +3,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { getFeaturedProducts, getBestsellers } from "@/lib/catalog"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Hero } from "@/components/home/hero"
+import { BrandMarquee } from "@/components/home/brand-marquee"
 import { UspBar } from "@/components/home/usp-bar"
 import { CategoryTiles } from "@/components/home/category-tiles"
 import { FeaturedShowcase } from "@/components/home/featured-showcase"
@@ -12,7 +13,8 @@ import { MemberPromo } from "@/components/home/member-promo"
 import { Newsletter } from "@/components/home/newsletter"
 import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 import { SectionHeading } from "@/components/section-heading"
-import { ProductGrid } from "@/components/product/product-grid"
+import { ProductCard } from "@/components/product/product-card"
+import { ProductRail } from "@/components/product/product-rail"
 
 // Product prices come from the database. Without this, the homepage stays
 // frozen at build time and a price change never reaches the live site.
@@ -31,27 +33,34 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <>
       <Hero locale={locale} dict={dict} />
-      <UspBar dict={dict} locale={locale} />
-      <MemberPromo />
-      <CategoryTiles locale={locale} dict={dict} />
+      <BrandMarquee locale={locale} dict={dict} />
 
       <PrinterFinder products={[...featured, ...bestsellers]} locale={locale} dict={dict} />
 
-      <FeaturedShowcase products={featured} locale={locale} dict={dict} />
+      <CategoryTiles locale={locale} dict={dict} />
 
-      <section className="relative z-10 border-t border-border bg-card shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:py-12">
-          <SectionHeading
-            title={dict.home.bestsellers}
-            viewAllHref={localizedPath(locale, "/catalog")}
-            viewAllLabel={dict.home.viewAll}
-          />
-          <ProductGrid products={bestsellers.slice(0, 8)} locale={locale} dict={dict} />
-        </div>
+      <section className="mx-auto max-w-7xl px-4 pb-4">
+        <SectionHeading
+          eyebrow={dict.common.staffPick}
+          title={dict.home.bestsellers}
+          viewAllHref={localizedPath(locale, "/catalog")}
+          viewAllLabel={dict.home.viewAll}
+        />
+        <ProductRail label={dict.home.bestsellers}>
+          {bestsellers.slice(0, 12).map((p) => (
+            <ProductCard key={p.id} product={p} locale={locale} dict={dict} />
+          ))}
+        </ProductRail>
       </section>
 
-      <ScamAdviserTrust dict={dict} />
+      <MemberPromo />
+
+      <FeaturedShowcase products={featured} locale={locale} dict={dict} />
+
+      <UspBar dict={dict} locale={locale} />
       <HelpStrip locale={locale} dict={dict} />
+      <ScamAdviserTrust dict={dict} />
+
       <Newsletter />
     </>
   )

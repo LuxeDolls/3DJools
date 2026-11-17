@@ -107,8 +107,9 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   return (
-    <footer className="mt-12 border-t border-border bg-card sm:mt-16">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:gap-10 sm:py-12 lg:grid-cols-5">
+    <footer className="mt-10 px-2 pb-2 sm:mt-16 sm:px-4 sm:pb-4">
+      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-border bg-card sm:rounded-[2.5rem]">
+      <div className="grid gap-8 px-5 py-10 sm:gap-10 sm:px-8 sm:py-12 lg:grid-cols-5 lg:px-12">
         <div className="lg:col-span-2">
           <Logo showTagline />
           <p className="mt-3 max-w-sm text-pretty text-xs leading-relaxed text-muted-foreground sm:mt-4 sm:text-sm">
@@ -158,15 +159,15 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
         <div className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:col-span-3">
           {columns.map((col) => (
             <nav key={col.title} aria-label={col.title}>
-              <h3 className="font-heading text-xs font-semibold uppercase tracking-wider text-foreground sm:text-sm sm:normal-case sm:tracking-normal">
+              <h3 className="font-mono text-[11px] tracking-wider text-primary uppercase">
                 {col.title}
               </h3>
-              <ul className="mt-3 space-y-2 sm:mt-4 sm:space-y-2.5">
+              <ul className="mt-3 flex flex-col gap-2 sm:mt-4 sm:gap-2.5">
                 {col.links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={lp(link.href)}
-                      className="text-xs text-muted-foreground transition-colors hover:text-primary sm:text-sm"
+                      className="text-sm font-medium text-foreground/80 transition-colors hover:text-primary"
                     >
                       {link.label}
                     </Link>
@@ -179,7 +180,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       </div>
 
       <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col-reverse items-center justify-between gap-4 px-4 py-5 sm:flex-row sm:py-6">
+        <div className="flex flex-col-reverse items-center justify-between gap-4 px-5 py-5 sm:flex-row sm:px-8 sm:py-6 lg:px-12">
           <p className="text-center text-xs text-muted-foreground sm:text-left">
             &copy; {new Date().getFullYear()} {COMPANY.tradingName} — {COMPANY.legalName} {dict.footer.rights}
           </p>
@@ -217,6 +218,13 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             ))}
           </ul>
         </div>
+      </div>
+      <p
+        aria-hidden="true"
+        className="pointer-events-none -mb-[0.18em] px-3 text-center font-heading text-[21vw] leading-none font-extrabold tracking-tighter text-primary/10 select-none lg:text-[15.5rem]"
+      >
+        {dict.brandName}
+      </p>
       </div>
     </footer>
   )

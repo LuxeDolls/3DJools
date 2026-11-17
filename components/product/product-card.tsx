@@ -1,13 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
-import { CalendarClock } from "lucide-react"
 import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import type { Product } from "@/lib/catalog/types"
 import { localizedPath } from "@/lib/i18n/paths"
 import { formatPrice } from "@/lib/format"
 import { qualifiesForInstallments } from "@/lib/installments"
-import { Badge } from "@/components/ui/badge"
 import { Price } from "./price"
 import { QuickAddButton } from "./quick-add-button"
 import { ProductQuickView } from "./product-quick-view"
@@ -36,13 +34,20 @@ export function ProductCard({
       ? product.specs[0].value
       : null
 
+  const availabilityLabel =
+    product.availability === "in_stock"
+      ? dict.common.inStock
+      : product.availability === "preorder"
+        ? dict.common.preorder
+        : dict.common.outOfStock
+
   return (
     <div
       data-product-id={product.productId}
       data-product-sku={product.mpn || product.slug}
-      className="group relative flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_8px_20px_rgba(0,0,0,0.25),0_28px_60px_-12px_rgba(0,0,0,0.65)]"
+      className="group relative flex h-full flex-col gap-2 rounded-3xl border border-border bg-card p-1.5 transition-colors duration-200 hover:border-primary/60 sm:gap-3 sm:p-2"
     >
-      <div className="relative aspect-square overflow-hidden border-b border-border/60 bg-white">
+      <div className="relative aspect-square overflow-hidden rounded-[1.15rem] bg-photo">
         <Link href={href} className="relative block size-full" aria-label={product.name}>
           <Image
             src={primaryImage}
@@ -50,7 +55,7 @@ export function ProductCard({
             fill
             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className={cn(
-              "object-contain p-2.5 transition-all duration-300 group-hover:scale-105 sm:p-3.5",
+              "object-contain p-3 transition-all duration-500 ease-out group-hover:scale-[1.04] sm:p-5",
               secondaryImage && "group-hover:opacity-0",
             )}
           />
@@ -60,99 +65,75 @@ export function ProductCard({
               alt=""
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-contain p-2.5 opacity-0 transition-all duration-300 group-hover:scale-105 group-hover:opacity-100 sm:p-3.5"
+              className="object-contain p-3 opacity-0 transition-all duration-500 ease-out group-hover:scale-[1.04] group-hover:opacity-100 sm:p-5"
             />
           )}
         </Link>
 
-        {/* Top-left badges */}
-        <div className="pointer-events-none absolute top-2 left-2 flex flex-col gap-1 sm:top-2.5 sm:left-2.5 sm:gap-1.5">
+        <div className="pointer-events-none absolute top-2 left-2 flex flex-wrap gap-1">
           {product.bestseller && (
-            <Badge className="bg-foreground px-1.5 py-0 text-[9px] font-bold tracking-wide text-background uppercase sm:px-2 sm:py-0.5 sm:text-[10px]">
+            <span className="rounded-full bg-signal px-2 py-0.5 text-[9px] font-bold tracking-wide text-signal-foreground uppercase sm:text-[10px]">
               {dict.common.staffPick}
-            </Badge>
+            </span>
           )}
           {onSale && (
-            <Badge className="px-1.5 py-0 text-[9px] font-bold tracking-wide uppercase sm:px-2 sm:py-0.5 sm:text-[10px]">
+            <span className="rounded-full bg-primary px-2 py-0.5 text-[9px] font-bold text-primary-foreground sm:text-[10px]">
               -5%
-            </Badge>
+            </span>
           )}
           {product.availability === "preorder" && (
-            <Badge variant="secondary" className="px-1.5 py-0 text-[9px] font-bold tracking-wide uppercase sm:px-2 sm:py-0.5 sm:text-[10px]">
+            <span className="rounded-full bg-ink px-2 py-0.5 text-[9px] font-bold tracking-wide text-ink-foreground uppercase sm:text-[10px]">
               {dict.common.preorder}
-            </Badge>
+            </span>
           )}
         </div>
 
-        {/* Top-right Quick View trigger */}
-        <div className="absolute top-2 right-2 z-10 opacity-90 transition-opacity sm:top-2.5 sm:right-2.5 sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
+        <div className="absolute top-2 right-2 z-10 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
           <ProductQuickView product={product} locale={locale} dict={dict} />
         </div>
 
-        {/* Bottom-left tech / key spec pill */}
         {techBadge && (
-          <div className="absolute bottom-1.5 left-2 z-10 max-w-[calc(100%-1rem)] sm:bottom-2 sm:left-2.5">
-            <span className="inline-flex max-w-full items-center truncate rounded-md border border-neutral-200 bg-white/95 px-1.5 py-0.5 text-[9px] font-semibold tracking-tight text-neutral-800 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:px-2 sm:text-[10px]">
-              {techBadge}
-            </span>
-          </div>
+          <span className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-full bg-ink/85 px-2 py-0.5 font-mono text-[9px] text-ink-foreground backdrop-blur sm:text-[10px]">
+            {techBadge}
+          </span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-2.5 sm:p-4">
+      <div className="flex flex-1 flex-col gap-1 px-1.5 pb-1 sm:px-2 sm:pb-1.5">
         <div className="flex items-center justify-between gap-1.5">
-          <p className="truncate text-[10px] font-bold tracking-wider text-muted-foreground uppercase sm:text-[11px]">
+          <p className="truncate font-mono text-[10px] tracking-wider text-muted-foreground uppercase sm:text-[11px]">
             {brand}
           </p>
-          <span
-            className="inline-flex shrink-0 items-center gap-1 text-[10px] font-medium text-muted-foreground sm:text-[11px]"
-            title={
-              product.availability === "in_stock"
-                ? dict.common.inStock
-                : product.availability === "preorder"
-                  ? dict.common.preorder
-                  : dict.common.outOfStock
-            }
-          >
+          <span className="inline-flex shrink-0 items-center gap-1 text-[10px] text-muted-foreground" title={availabilityLabel}>
             <span
               className={cn(
                 "size-1.5 rounded-full",
                 product.availability === "in_stock"
                   ? "bg-emerald-500"
                   : product.availability === "preorder"
-                    ? "bg-amber-500"
+                    ? "bg-signal"
                     : "bg-muted-foreground",
               )}
+              aria-hidden="true"
             />
-            <span className="hidden sm:inline">
-              {product.availability === "in_stock"
-                ? dict.common.inStock
-                : product.availability === "preorder"
-                  ? dict.common.preorder
-                  : dict.common.outOfStock}
-            </span>
+            <span className="sr-only sm:not-sr-only">{availabilityLabel}</span>
           </span>
         </div>
 
-        <Link href={href} className="mt-1 sm:mt-1.5">
-          <h3 className="line-clamp-2 text-xs font-semibold leading-snug text-foreground transition-colors group-hover:text-primary sm:text-sm">
+        <Link href={href}>
+          <h3 className="line-clamp-2 text-[13px] leading-snug font-semibold text-foreground transition-colors group-hover:text-primary sm:text-[15px]">
             {product.name}
           </h3>
         </Link>
 
-        <div className="mt-auto flex items-end justify-between gap-1.5 pt-2.5 sm:gap-2 sm:pt-3.5">
+        <div className="mt-auto flex items-end justify-between gap-2 pt-2">
           <div className="min-w-0">
             <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} />
-            {installmentsEligible ? (
-              <p className="mt-0.5 flex items-center gap-1 truncate text-[10px] font-medium text-muted-foreground sm:text-[11px]">
-                <CalendarClock className="size-2.5 shrink-0 text-primary sm:size-3" />
-                <span className="truncate">3 × {formatPrice(installmentCents, locale)}</span>
-              </p>
-            ) : (
-              <p className="mt-0.5 truncate text-[10px] text-muted-foreground sm:text-[11px]">
-                {dict.product.freeShipping}
-              </p>
-            )}
+            <p className="mt-0.5 truncate text-[10px] text-muted-foreground sm:text-[11px]">
+              {installmentsEligible
+                ? `3 × ${formatPrice(installmentCents, locale)} · 0%`
+                : dict.product.freeShipping}
+            </p>
           </div>
           <QuickAddButton product={product} label={dict.common.addToCart} />
         </div>

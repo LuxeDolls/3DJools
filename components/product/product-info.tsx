@@ -69,7 +69,7 @@ export function ProductInfo({ product }: { product: Product }) {
       <div className="flex flex-wrap items-center gap-2">
         <Link
           href={lp(`/brands/${product.brandSlug}`)}
-          className="inline-flex items-center rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold tracking-wider text-foreground uppercase shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:text-primary"
+          className="inline-flex items-center rounded-full border border-border bg-secondary px-3 py-1 text-xs font-bold tracking-wider text-foreground uppercase shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-primary hover:text-primary"
         >
           {brand}
         </Link>
@@ -105,7 +105,7 @@ export function ProductInfo({ product }: { product: Product }) {
       </div>
 
       {/* Price & Instalments Box */}
-      <div className="mt-4 rounded-xl border border-border bg-card p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:mt-5 sm:p-4">
+      <div className="mt-4 rounded-xl border border-border bg-card p-3.5 shadow-xs sm:mt-5 sm:p-4">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <div className="flex flex-wrap items-baseline gap-2">
             <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} size="lg" />
@@ -117,7 +117,7 @@ export function ProductInfo({ product }: { product: Product }) {
         </div>
 
         {installmentsEligible && (
-          <div className="mt-3 flex items-center justify-between gap-2 rounded-lg border border-primary/25 bg-primary/10 px-3 py-2 text-xs shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5">
+          <div className="mt-3 flex items-center justify-between gap-2 rounded-lg border border-primary/25 bg-primary/10 px-3 py-2 text-xs shadow-xs transition-transform duration-200 hover:-translate-y-0.5">
             <span className="flex min-w-0 items-center gap-2 text-foreground">
               <CalendarClock className="size-4 shrink-0 text-primary" />
               <span className="truncate">
@@ -127,7 +127,7 @@ export function ProductInfo({ product }: { product: Product }) {
                 </strong>
               </span>
             </span>
-            <span className="shrink-0 whitespace-nowrap rounded bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)]">
+            <span className="shrink-0 whitespace-nowrap rounded bg-primary px-1.5 py-0.5 text-[10px] font-bold text-primary-foreground shadow-xs">
               0%
             </span>
           </div>
@@ -154,7 +154,7 @@ export function ProductInfo({ product }: { product: Product }) {
           {product.specs.slice(0, 3).map((s) => (
             <div
               key={s.label}
-              className="rounded-lg border border-border/80 bg-secondary/30 px-3 py-2 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 last:col-span-2 sm:last:col-span-1"
+              className="rounded-lg border border-border/80 bg-secondary/30 px-3 py-2 shadow-xs transition-transform duration-200 hover:-translate-y-0.5 last:col-span-2 sm:last:col-span-1"
             >
               <p className="truncate text-[11px] text-muted-foreground">{s.label}</p>
               <p className="mt-0.5 truncate text-xs font-semibold text-foreground">{s.value}</p>
@@ -165,7 +165,7 @@ export function ProductInfo({ product }: { product: Product }) {
 
       {/* Quantity + add to cart — side-by-side on mobile & desktop */}
       <div ref={actionBoxRef} className="mt-5 flex items-center gap-2.5 sm:mt-6 sm:gap-3">
-        <div className="flex shrink-0 items-center rounded-lg border border-border bg-card shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)]">
+        <div className="flex shrink-0 items-center rounded-lg border border-border bg-card shadow-xs">
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -188,7 +188,7 @@ export function ProductInfo({ product }: { product: Product }) {
       </div>
 
       {/* Trust badges */}
-      <ul className="mt-5 grid grid-cols-1 gap-2.5 rounded-xl border border-border bg-card p-3.5 shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:mt-6 sm:grid-cols-2 sm:gap-3 sm:p-4">
+      <ul className="mt-5 grid grid-cols-1 gap-2.5 rounded-xl border border-border bg-card p-3.5 shadow-xs sm:mt-6 sm:grid-cols-2 sm:gap-3 sm:p-4">
         <li className="flex items-start gap-2.5 text-sm text-foreground">
           <Truck className="mt-0.5 size-4 shrink-0 text-primary" />
           <span>

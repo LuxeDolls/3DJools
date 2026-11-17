@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { BadgePercent, Check } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useSession } from "@/lib/auth-client"
 
@@ -12,59 +12,60 @@ export function MemberPromo() {
   const isMember = Boolean(session?.user)
 
   return (
-    <section aria-labelledby="member-promo-title" className="mx-auto max-w-7xl px-4 py-4 sm:py-6">
-      <div className="relative overflow-hidden rounded-2xl border border-primary/30 bg-primary/10 px-4 py-5 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] sm:px-10 sm:py-9">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -right-8 -top-10 hidden select-none font-heading text-[9rem] font-black leading-none text-primary/10 sm:block"
-        >
-          {dict.promo.memberBadge}
+    <section aria-labelledby="member-promo-title" className="mx-auto max-w-7xl px-4 py-10 sm:py-16">
+      <div className="relative grid overflow-hidden rounded-[2rem] bg-signal text-signal-foreground sm:rounded-[2.5rem] md:grid-cols-12">
+        <div className="bg-dots pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
+
+        <div className="relative flex items-center justify-center border-b border-signal-foreground/15 p-6 md:col-span-5 md:border-r md:border-b-0 md:p-10">
+          <p className="font-heading text-[6.5rem] leading-[0.8] font-extrabold tracking-tighter sm:text-[9rem] lg:text-[11rem]" aria-hidden="true">
+            5<span className="align-top text-[0.45em]">%</span>
+          </p>
         </div>
 
-        {isMember ? (
-          <div className="relative flex flex-col gap-2">
-            <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5">
-              <Check className="size-3.5" />
-              {dict.promo.memberBadge}
-            </span>
-            <h2 id="member-promo-title" className="font-heading text-xl font-bold text-balance text-foreground sm:text-2xl">
-              {dict.promo.memberActiveTitle}
-            </h2>
-            <p className="max-w-2xl text-pretty text-xs leading-relaxed text-muted-foreground sm:text-sm">
-              {dict.promo.memberActiveText}
-            </p>
-          </div>
-        ) : (
-          <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex flex-col gap-1.5 sm:gap-2">
-              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-primary shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:px-3 sm:py-1 sm:text-xs">
-                <BadgePercent className="size-3.5" />
-                {dict.promo.memberEyebrow}
+        <div className="relative flex flex-col justify-center gap-3 p-6 md:col-span-7 md:p-10 lg:p-12">
+          {isMember ? (
+            <>
+              <span className="inline-flex w-fit items-center gap-1.5 rounded-full bg-signal-foreground px-3 py-1 text-xs font-semibold text-signal">
+                <Check className="size-3.5" aria-hidden="true" />
+                {dict.promo.memberBadge}
               </span>
-              <h2 id="member-promo-title" className="font-heading text-xl font-bold text-balance text-foreground sm:text-3xl">
+              <h2 id="member-promo-title" className="font-heading text-2xl leading-tight font-bold text-balance sm:text-4xl">
+                {dict.promo.memberActiveTitle}
+              </h2>
+              <p className="max-w-xl text-pretty text-sm leading-relaxed text-signal-foreground/80">
+                {dict.promo.memberActiveText}
+              </p>
+            </>
+          ) : (
+            <>
+              <p className="font-mono text-[11px] tracking-wider uppercase">{dict.promo.memberEyebrow}</p>
+              <h2 id="member-promo-title" className="font-heading text-2xl leading-tight font-bold text-balance sm:text-4xl">
                 {dict.promo.memberTitle}
               </h2>
-              <p className="max-w-2xl text-pretty text-xs leading-relaxed text-muted-foreground sm:text-sm">
+              <p className="max-w-xl text-pretty text-sm leading-relaxed text-signal-foreground/80">
                 {dict.promo.memberText}
               </p>
-            </div>
-            <div className="flex shrink-0 flex-col gap-2 sm:items-end">
-              <Link
-                href={lp("/sign-up")}
-                className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90"
-                aria-disabled={isPending}
-              >
-                {dict.promo.memberCtaGuest}
-              </Link>
-              <Link
-                href={lp("/sign-in")}
-                className="text-center text-xs font-medium text-primary underline-offset-4 hover:underline"
-              >
-                {dict.promo.memberCtaSignIn}
-              </Link>
-            </div>
-          </div>
-        )}
+              <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+                <Link
+                  href={lp("/sign-up")}
+                  aria-disabled={isPending}
+                  className="group inline-flex h-12 items-center justify-between gap-3 rounded-full bg-signal-foreground pr-1.5 pl-5 text-sm font-semibold text-signal transition-transform hover:scale-[1.02] sm:justify-start"
+                >
+                  {dict.promo.memberCtaGuest}
+                  <span className="flex size-9 items-center justify-center rounded-full bg-signal text-signal-foreground">
+                    <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </span>
+                </Link>
+                <Link
+                  href={lp("/sign-in")}
+                  className="text-center text-sm font-semibold underline underline-offset-4 hover:no-underline"
+                >
+                  {dict.promo.memberCtaSignIn}
+                </Link>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </section>
   )

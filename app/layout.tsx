@@ -1,18 +1,18 @@
 import { OptionalAnalytics } from '@/components/legal/optional-analytics'
 import { OrganizationJsonLd } from '@/components/legal/organization-jsonld'
 import type { Metadata, Viewport } from 'next'
-import { Outfit, Plus_Jakarta_Sans } from 'next/font/google'
+import { Bricolage_Grotesque, Geist } from 'next/font/google'
 import './globals.css'
 
-const jakarta = Plus_Jakarta_Sans({
+const geist = Geist({
   subsets: ['latin'],
-  variable: '--font-jakarta',
+  variable: '--font-geist',
   display: 'swap',
 })
 
-const outfit = Outfit({
+const bricolage = Bricolage_Grotesque({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-bricolage',
   display: 'swap',
 })
 
@@ -40,8 +40,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'light dark',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#fafafa' },
-    { media: '(prefers-color-scheme: dark)', color: '#121110' },
+    { media: '(prefers-color-scheme: light)', color: '#f3f6fa' },
+    { media: '(prefers-color-scheme: dark)', color: '#0f1629' },
   ],
 }
 
@@ -53,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-background ${jakarta.variable} ${outfit.variable}`}
+      className={`bg-background ${geist.variable} ${bricolage.variable}`}
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">

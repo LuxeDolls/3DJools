@@ -10,7 +10,7 @@ export function LogoMark({ className }: { className?: string }) {
   return (
     <span
       className={cn(
-        "relative inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#141210] shadow-[inset_0_1px_0_rgba(255,255,255,0.14),0_2px_8px_-2px_rgba(0,0,0,0.45)] ring-1 ring-white/15 dark:bg-[#1a1613] dark:ring-white/18",
+        "relative inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-[#0C1530] shadow-xs ring-1 ring-white/15 dark:bg-[#0E1A3A] dark:ring-white/18",
         className
       )}
       aria-hidden="true"
@@ -18,17 +18,17 @@ export function LogoMark({ className }: { className?: string }) {
       <svg viewBox="0 0 32 32" className="size-7" fill="none">
         <defs>
           <linearGradient id="logo-top-prism" x1="7" y1="5" x2="25" y2="15" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#FFE4B8" />
-            <stop offset="50%" stopColor="#FB923C" />
-            <stop offset="100%" stopColor="#EA580C" />
+            <stop offset="0%" stopColor="#FFF6C2" />
+            <stop offset="50%" stopColor="#FACC15" />
+            <stop offset="100%" stopColor="#E3B007" />
           </linearGradient>
           <linearGradient id="logo-right-3" x1="16.5" y1="11" x2="25.5" y2="26" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#FF7A29" />
-            <stop offset="100%" stopColor="#D9460F" />
+            <stop offset="0%" stopColor="#5B82FF" />
+            <stop offset="100%" stopColor="#1E40D8" />
           </linearGradient>
           <linearGradient id="logo-left-e" x1="6.5" y1="10.5" x2="15.5" y2="26" gradientUnits="userSpaceOnUse">
             <stop offset="0%" stopColor="#FFFFFF" />
-            <stop offset="100%" stopColor="#E6E1DA" />
+            <stop offset="100%" stopColor="#DCE3EE" />
           </linearGradient>
         </defs>
 
@@ -40,13 +40,13 @@ export function LogoMark({ className }: { className?: string }) {
         {/* Recessed dark isometric core on top face */}
         <path
           d="M16 6.55L21.8 9.85L16 13.15L10.2 9.85L16 6.55Z"
-          fill="#141210"
+          fill="#0C1530"
           fillOpacity="0.82"
         />
         {/* Isometric Eureka 4-point spark inside the core */}
         <path
           d="M16 7.15L16.75 9.15L20.3 9.85L16.75 10.55L16 12.55L15.25 10.55L11.7 9.85L15.25 9.15L16 7.15Z"
-          fill="#FFFDF9"
+          fill="#FFFFFF"
         />
 
         {/* Left isometric face: Sculpted 3-layer 'E' */}
@@ -87,7 +87,7 @@ export function Logo({ className, markClassName, showTagline = false }: LogoProp
             Eureka
           </span>
           <span
-            className="ml-0.5 inline-block size-1.5 -translate-y-2 rounded-full bg-primary"
+            className="ml-0.5 inline-block size-1.5 -translate-y-2 rounded-full bg-signal ring-1 ring-foreground/20"
             aria-hidden="true"
           />
         </span>

@@ -41,7 +41,7 @@ export function GatewayNotice({
       aria-live="polite"
       className="fixed top-3 left-1/2 z-50 w-[calc(100%-1.5rem)] max-w-xl -translate-x-1/2 animate-in fade-in slide-in-from-top-5 duration-300"
     >
-      <div className="flex items-start gap-3 rounded-xl border border-destructive/40 bg-card/95 px-4 py-3 text-card-foreground shadow-[0_12px_32px_-8px_rgba(0,0,0,0.55)] backdrop-blur-md">
+      <div className="flex items-start gap-3 rounded-xl border border-destructive/40 bg-card/95 px-4 py-3 text-card-foreground shadow-xs backdrop-blur-md">
         <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-destructive/15 text-destructive">
           <AlertTriangle className="size-4" aria-hidden="true" />
         </div>
