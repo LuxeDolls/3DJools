@@ -318,7 +318,7 @@ export function PrinterFinder({
           <div
             role="radiogroup"
             aria-label={copy.eyebrow}
-            className="no-scrollbar -mx-4 flex min-w-0 gap-2 overflow-x-auto px-4 lg:col-span-4 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0"
+            className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:col-span-4 lg:flex lg:flex-col"
           >
             {copy.modes.map((m) => {
               const Icon = MODE_ICONS[m.id]
@@ -331,7 +331,7 @@ export function PrinterFinder({
                   aria-checked={active}
                   onClick={() => setActiveMode(m.id)}
                   className={cn(
-                    "flex w-60 shrink-0 items-start gap-3 rounded-2xl p-3.5 text-left transition-all duration-300 lg:w-auto lg:p-4",
+                    "flex w-full items-start gap-3 rounded-2xl p-3.5 text-left transition-all duration-300 lg:p-4",
                     active
                       ? "bg-signal text-signal-foreground"
                       : "bg-ink-foreground/6 text-ink-foreground ring-1 ring-ink-foreground/10 hover:bg-ink-foreground/10",

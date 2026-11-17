@@ -47,7 +47,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
                 sizes={hero ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"}
                 className={cn(
                   "object-contain transition-transform duration-500 ease-out group-hover:scale-105",
-                  hero ? "p-8 pb-16 sm:p-12 sm:pb-20" : "p-4 pb-12 sm:p-6 sm:pb-14",
+                  hero ? "p-4 pb-12 sm:p-6 sm:pb-14 lg:p-12 lg:pb-20" : "p-4 pb-12 sm:p-6 sm:pb-14",
                 )}
               />
               <span className="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-ink text-ink-foreground transition-all duration-300 group-hover:rotate-45 group-hover:bg-primary group-hover:text-primary-foreground">

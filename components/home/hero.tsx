@@ -19,8 +19,8 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
       <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-primary text-primary-foreground sm:rounded-[2.5rem]">
         <div className="bg-dots pointer-events-none absolute inset-0 text-primary-foreground opacity-60" aria-hidden="true" />
 
-        <div className="relative grid gap-8 p-5 sm:p-8 lg:grid-cols-12 lg:items-center lg:gap-10 lg:p-12">
-          <div className="flex min-w-0 flex-col gap-5 sm:gap-6 lg:col-span-6">
+        <div className="relative grid gap-8 p-5 sm:p-8 lg:grid-cols-12 lg:items-center lg:gap-10 lg:p-10">
+          <div className="flex min-w-0 flex-col gap-5 sm:gap-6 lg:col-span-7">
             <span className="animate-rise inline-flex w-fit items-center gap-2 rounded-full bg-primary-foreground/12 py-1 pr-3 pl-1 text-xs font-medium ring-1 ring-primary-foreground/20 sm:text-sm">
               <span className="rounded-full bg-signal px-2 py-0.5 font-mono text-[10px] font-bold text-signal-foreground uppercase">
                 EU
@@ -29,7 +29,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             </span>
 
             <h1
-              className="animate-rise font-heading text-[2.4rem] leading-[0.95] font-extrabold text-balance sm:text-6xl lg:text-[4.6rem]"
+              className="animate-rise font-heading text-[2.4rem] leading-[0.95] font-extrabold text-balance sm:text-6xl lg:text-[4.2rem]"
               style={{ animationDelay: "80ms" }}
             >
               {dict.home.heroTitle}
@@ -73,7 +73,7 @@ export function Hero({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             </ul>
           </div>
 
-          <div className="animate-rise min-w-0 lg:col-span-6" style={{ animationDelay: "200ms" }}>
+          <div className="animate-rise mx-auto w-full min-w-0 max-w-xl lg:col-span-5 lg:max-w-none" style={{ animationDelay: "200ms" }}>
             <CategoryTurntable
               categories={categories}
               hrefs={categories.map((c) => localizedPath(locale, c.href))}

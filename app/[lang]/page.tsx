@@ -1,6 +1,7 @@
 import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
-import { getFeaturedProducts, getBestsellers } from "@/lib/catalog"
+import { getFeaturedProducts, getBestsellers, getAllProducts } from "@/lib/catalog"
+import { selectShowcaseProducts } from "@/lib/catalog/showcase"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Hero } from "@/components/home/hero"
 import { BrandMarquee } from "@/components/home/brand-marquee"
@@ -11,7 +12,6 @@ import { PrinterFinder } from "@/components/home/printer-finder"
 import { HelpStrip } from "@/components/home/help-strip"
 import { MemberPromo } from "@/components/home/member-promo"
 import { Newsletter } from "@/components/home/newsletter"
-import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 import { SectionHeading } from "@/components/section-heading"
 import { ProductCard } from "@/components/product/product-card"
 import { ProductRail } from "@/components/product/product-rail"
@@ -25,9 +25,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
 
-  const [featured, bestsellers] = await Promise.all([
+  const [featured, bestsellers, allProducts] = await Promise.all([
     getFeaturedProducts(locale),
     getBestsellers(locale),
+    getAllProducts(locale),
   ])
 
   return (
@@ -55,11 +56,10 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
       <MemberPromo />
 
-      <FeaturedShowcase products={featured} locale={locale} dict={dict} />
+      <FeaturedShowcase products={selectShowcaseProducts(allProducts)} locale={locale} dict={dict} />
 
       <UspBar dict={dict} locale={locale} />
       <HelpStrip locale={locale} dict={dict} />
-      <ScamAdviserTrust dict={dict} />
 
       <Newsletter />
     </>

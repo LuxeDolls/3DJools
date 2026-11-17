@@ -7,8 +7,8 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import type { Product } from "@/lib/catalog/types"
 import { localizedPath } from "@/lib/i18n/paths"
-import { ProductGrid } from "@/components/product/product-grid"
-import { Button } from "@/components/ui/button"
+import { ProductRail } from "@/components/product/product-rail"
+import { ProductCard } from "@/components/product/product-card"
 import { cn } from "@/lib/utils"
 
 type TabId = "all" | "printers" | "laser-engravers" | "scanners" | "materials"
@@ -23,7 +23,6 @@ export function FeaturedShowcase({
   dict: Dictionary
 }) {
   const [activeTab, setActiveTab] = useState<TabId>("all")
-  const [expanded, setExpanded] = useState(false)
 
   const tabs = useMemo(
     () => [
@@ -50,7 +49,7 @@ export function FeaturedShowcase({
     return products.filter((p) => p.category === activeTab)
   }, [products, activeTab])
 
-  const visibleProducts = expanded ? filtered : filtered.slice(0, 8)
+  const visibleProducts = activeTab === "all" ? filtered.slice(0, 16) : filtered
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 sm:py-16">
@@ -73,12 +72,12 @@ export function FeaturedShowcase({
       <div
         role="tablist"
         aria-label={dict.home.featuredPrinters}
-        className="no-scrollbar -mx-4 mb-5 flex w-auto items-center gap-1 overflow-x-auto px-4 sm:mx-0 sm:mb-8 sm:w-fit sm:rounded-full sm:border sm:border-border sm:bg-card sm:p-1"
+        className="no-scrollbar -mx-4 mb-5 flex w-auto items-center gap-1 overflow-x-auto px-4 sm:mx-0 sm:mb-8 sm:w-fit sm:flex-wrap sm:overflow-visible sm:rounded-3xl sm:border sm:border-border sm:bg-card sm:p-1"
       >
         {tabs.map((tab) => {
           const count =
             tab.id === "all"
-              ? products.length
+              ? Math.min(products.length, 16)
               : tab.id === "materials"
                 ? products.filter(
                     (p) => p.category === "resins" || p.category === "filaments" || p.category === "accessories",
@@ -96,7 +95,6 @@ export function FeaturedShowcase({
               aria-selected={isActive}
               onClick={() => {
                 setActiveTab(tab.id)
-                setExpanded(false)
               }}
               className={cn(
                 "inline-flex shrink-0 items-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold transition-colors duration-200 sm:gap-2 sm:px-4 sm:text-sm",
@@ -120,26 +118,15 @@ export function FeaturedShowcase({
         })}
       </div>
 
-      <ProductGrid
+      <ProductRail
         key={activeTab}
-        products={visibleProducts}
-        locale={locale}
-        dict={dict}
+        label={dict.home.featuredPrinters}
         className="animate-in fade-in slide-in-from-bottom-2 duration-500"
-      />
-
-      {filtered.length > 8 && !expanded && (
-        <div className="mt-6 flex justify-center sm:mt-8">
-          <Button
-            variant="outline"
-            size="lg"
-            onClick={() => setExpanded(true)}
-            className="h-12 w-full rounded-full font-semibold sm:w-auto sm:min-w-56"
-          >
-            {dict.common.readMore} ({filtered.length - 8}+)
-          </Button>
-        </div>
-      )}
+      >
+        {visibleProducts.map((p) => (
+          <ProductCard key={p.id} product={p} locale={locale} dict={dict} />
+        ))}
+      </ProductRail>
     </section>
   )
 }
