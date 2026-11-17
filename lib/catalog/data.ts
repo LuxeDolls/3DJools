@@ -24,7 +24,7 @@ export const categories: Category[] = [
   { slug: "laser-engravers", key: "laserEngravers" },
 ]
 
-export const products: Product[] = [
+const rawProducts: Omit<Product, "productId">[] = [
   // ---------- FDM PRINTERS ----------
   {
     id: "p-bambu-a1-mini",
@@ -1542,3 +1542,9 @@ export const products: Product[] = [
     reviewCount: 28,
   },
 ]
+
+export const products: Product[] = rawProducts.map((p, index) => ({
+  ...p,
+  productId: String(100001 + index),
+}))
+

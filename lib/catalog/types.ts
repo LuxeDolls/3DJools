@@ -48,6 +48,8 @@ export interface ProductTranslation {
 
 export interface Product {
   id: string
+  /** Numeric product ID used for Stamped.io review widgets, API, and feeds. */
+  productId: string
   slug: string
   name: string
   brandSlug: string

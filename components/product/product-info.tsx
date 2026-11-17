@@ -65,7 +65,7 @@ export function ProductInfo({ product }: { product: Product }) {
   const installmentsEligible = qualifiesForInstallments(product.priceCents)
 
   return (
-    <div>
+    <div data-product-id={product.productId} data-product-sku={product.mpn || product.slug}>
       <div className="flex flex-wrap items-center gap-2">
         <Link
           href={lp(`/brands/${product.brandSlug}`)}
@@ -90,8 +90,13 @@ export function ProductInfo({ product }: { product: Product }) {
 
       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground sm:mt-2.5">
         <span>
-          {dict.product.mpn}: <strong className="font-mono font-medium text-foreground">{product.mpn}</strong>
+          ID: <strong className="font-mono font-medium tabular-nums text-foreground">{product.productId}</strong>
         </span>
+        {product.mpn ? (
+          <span>
+            {dict.product.mpn}: <strong className="font-mono font-medium text-foreground">{product.mpn}</strong>
+          </span>
+        ) : null}
         {ean ? (
           <span>
             {dict.product.ean}: <strong className="font-mono font-medium tabular-nums text-foreground">{ean}</strong>

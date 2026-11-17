@@ -34,7 +34,11 @@ export function CatalogTable({
     const q = query.trim().toLowerCase()
     if (!q) return rows
     return rows.filter(
-      (row) => row.name.toLowerCase().includes(q) || row.brandName.toLowerCase().includes(q),
+      (row) =>
+        row.name.toLowerCase().includes(q) ||
+        row.brandName.toLowerCase().includes(q) ||
+        row.productId.toLowerCase().includes(q) ||
+        row.slug.toLowerCase().includes(q),
     )
   }, [rows, query])
 
@@ -106,7 +110,7 @@ export function CatalogTable({
               <div className="min-w-0 flex-1">
                 <p className="font-medium leading-snug">{row.name}</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  {row.brandName} · {row.category}
+                  <span className="font-mono">#{row.productId}</span> · {row.brandName} · {row.category}
                 </p>
                 <p className="mt-1 text-sm">
                   €{euros(row.priceCents)}
@@ -191,7 +195,7 @@ export function CatalogTable({
                         )}
                       </div>
                       <p className="text-xs text-muted-foreground">
-                        {row.brandName} · {row.category}
+                        <span className="font-mono">#{row.productId}</span> · {row.brandName} · {row.category}
                       </p>
                     </div>
                   </div>

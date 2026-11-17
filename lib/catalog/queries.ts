@@ -26,6 +26,7 @@ function rowToProduct(r: typeof productsTable.$inferSelect, brandName?: string):
   const { priceCents, compareAtCents } = effectivePrice(r)
   return {
     id: r.id,
+    productId: r.productId || r.id,
     slug: r.slug,
     name: r.name,
     brandSlug: r.brandSlug,
@@ -220,6 +221,7 @@ export async function getAllBrandSlugs(): Promise<string[]> {
 /* ------------------------------- admin ------------------------------- */
 
 export type AdminProductRow = {
+  productId: string
   slug: string
   name: string
   brandSlug: string
@@ -243,6 +245,7 @@ export async function getAdminProducts(): Promise<AdminProductRow[]> {
     .leftJoin(brandsTable, eq(brandsTable.slug, productsTable.brandSlug))
     .orderBy(asc(productsTable.archived), asc(productsTable.name))
   return rows.map((r) => ({
+    productId: r.p.productId || r.p.id,
     slug: r.p.slug,
     name: r.p.name,
     brandSlug: r.p.brandSlug,
@@ -261,6 +264,7 @@ export async function getAdminProducts(): Promise<AdminProductRow[]> {
 
 /** Full editable detail for a single product, powering the admin edit form. */
 export type AdminProductDetail = {
+  productId: string
   slug: string
   name: string
   brandSlug: string
@@ -290,6 +294,7 @@ export async function getAdminProductBySlug(slug: string): Promise<AdminProductD
   const [row] = await db.select().from(productsTable).where(eq(productsTable.slug, slug)).limit(1)
   if (!row) return null
   return {
+    productId: row.productId || row.id,
     slug: row.slug,
     name: row.name,
     brandSlug: row.brandSlug,

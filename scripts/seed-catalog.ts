@@ -37,7 +37,8 @@ async function seed() {
     // Seed a sensible stock level from availability so admin has real numbers to edit.
     const stock = p.availability === "in_stock" ? 25 : p.availability === "preorder" ? 0 : 0
     const values = {
-      id: p.id,
+      id: p.productId,
+      productId: p.productId,
       slug: p.slug,
       name: p.name,
       brandSlug: p.brandSlug,

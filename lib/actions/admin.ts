@@ -325,15 +325,26 @@ async function uniqueSlug(base: string): Promise<string> {
   return `${root}-${n}`
 }
 
+async function nextNumericProductId(): Promise<string> {
+  const existing = await db.select({ productId: products.productId }).from(products)
+  let maxId = 100000
+  for (const row of existing) {
+    const n = Number.parseInt(row.productId, 10)
+    if (Number.isFinite(n) && n > maxId) maxId = n
+  }
+  return String(maxId + 1)
+}
+
 export async function createProduct(
   input: ProductDetailsInput,
 ): Promise<{ ok: boolean; error?: string; slug?: string }> {
   await assertAdmin()
   const err = validateProduct(input)
   if (err) return { ok: false, error: err }
-  const slug = await uniqueSlug(input.name)
+  const [slug, productId] = await Promise.all([uniqueSlug(input.name), nextNumericProductId()])
   await db.insert(products).values({
-    id: crypto.randomUUID(),
+    id: productId,
+    productId,
     slug,
     ...toProductValues(input),
     archived: false,

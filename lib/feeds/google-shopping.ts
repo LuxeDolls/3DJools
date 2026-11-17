@@ -162,11 +162,12 @@ function hashForGoogleId(value: string): string {
   return `${first.toString(16).padStart(8, "0")}${second.toString(16).padStart(8, "0")}`
 }
 
-function googleProductId(product: { id: string; slug: string }): string {
-  if (product.id.length <= 50) return product.id
+function googleProductId(product: { id: string; productId?: string; slug: string }): string {
+  const rawId = product.productId || product.id
+  if (rawId.length <= 50) return rawId
 
   const readableSlug = product.slug.replace(/[^a-zA-Z0-9-]/g, "-").slice(0, 31)
-  return `p-${hashForGoogleId(product.id)}-${readableSlug}`.slice(0, 50)
+  return `p-${hashForGoogleId(rawId)}-${readableSlug}`.slice(0, 50)
 }
 
 function wordCount(value: string): number {
