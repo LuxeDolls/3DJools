@@ -60,8 +60,8 @@ export function ProductInfo({ product }: { product: Product }) {
     out_of_stock: { label: dict.common.outOfStock, icon: Clock, className: "text-muted-foreground" },
   }[product.availability]
 
-  // 4 interest-free instalments over 2 months — only available above the minimum order total.
-  const installmentCents = Math.round(product.priceCents / 4)
+  // 3 interest-free instalments — only available above the minimum order total.
+  const installmentCents = Math.round(product.priceCents / 3)
   const installmentsEligible = qualifiesForInstallments(product.priceCents)
 
   return (
@@ -123,7 +123,7 @@ export function ProductInfo({ product }: { product: Product }) {
               <span className="truncate">
                 {dict.checkout.payInstallments}:{" "}
                 <strong className="font-bold text-primary">
-                  4 × {formatPrice(installmentCents, locale)}
+                  3 × {formatPrice(installmentCents, locale)}
                 </strong>
               </span>
             </span>
@@ -237,7 +237,7 @@ export function ProductInfo({ product }: { product: Product }) {
                   <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} size="sm" />
                   {installmentsEligible && (
                     <span className="hidden text-xs text-muted-foreground md:inline">
-                      · 4 × {formatPrice(installmentCents, locale)}
+                      · 3 × {formatPrice(installmentCents, locale)}
                     </span>
                   )}
                 </div>

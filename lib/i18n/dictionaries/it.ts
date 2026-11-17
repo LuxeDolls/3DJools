@@ -103,7 +103,7 @@ export const it: Dictionary = {
     uspWarrantyTitle: "Garanzia UE di 2 anni",
     uspWarrantyText: "Ogni apparecchiatura è protetta dalla garanzia legale europea di due anni.",
     uspPaymentTitle: "Pagamenti versatili",
-    uspPaymentText: "Visa, Mastercard, Open Banking, bonifico SEPA o rateizzazione 4× a tasso zero.",
+    uspPaymentText: "Visa, Mastercard, Open Banking, bonifico SEPA o rateizzazione 3× a tasso zero.",
     newsletterTitle: "Ricevi aggiornamenti su nuovi modelli e rifornimenti",
     newsletterText: "Nuove uscite, ritorno a magazzino dei materiali e promozioni dedicate — zero spam.",
     newsletterPlaceholder: "Inserisci il tuo indirizzo e-mail",
@@ -188,7 +188,7 @@ export const it: Dictionary = {
     payCardDesc: "Transazione crittografata per carte Visa e Mastercard",
     payCardUnavailable: "Il pagamento con carta non è al momento disponibile",
     payCardGatewayNotice:
-      "A causa di problemi tecnici con il nostro gateway di pagamento, i pagamenti con carta sono temporaneamente disabilitati. Utilizza il bonifico bancario SEPA o il pagamento in 4× senza interessi.",
+      "A causa di problemi tecnici con il nostro gateway di pagamento, i pagamenti con carta sono temporaneamente disabilitati. Utilizza il bonifico bancario SEPA o il pagamento in 3× senza interessi.",
     payCardFailed: "Il pagamento con carta non è andato a buon fine. Puoi riprovare.",
     payCardNote:
       "Dopo aver effettuato l'ordine, verrai reindirizzato a una pagina di pagamento sicura per pagare con Visa o Mastercard. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
@@ -253,7 +253,7 @@ export const it: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponibile sulla pagina Stripe sicura quando paghi con carta.",
     payMethodsNote:
-      "Tutti i prezzi su 3DEureka sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. I pagamenti con carta (Visa, Mastercard) vengono elaborati in euro su una pagina protetta, senza che il numero della carta sia mai visibile a noi. Con l'Open Banking autorizzi un pagamento immediato direttamente dal tuo conto bancario (tramite app bancaria o IBAN). Il piano rateale 4× ripartisce gli ordini idonei in quattro quote uguali a tasso zero nell'arco di due mesi. Gli ordini saldati con bonifico SEPA vengono prenotati e spediti non appena l'importo viene accreditato sul nostro IBAN (mostrato al checkout e nell'e-mail di riepilogo).",
+      "Tutti i prezzi su 3DEureka sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. I pagamenti con carta (Visa, Mastercard) vengono elaborati in euro su una pagina protetta, senza che il numero della carta sia mai visibile a noi. Con l'Open Banking autorizzi un pagamento immediato direttamente dal tuo conto bancario (tramite app bancaria o IBAN). Il piano rateale 3× ripartisce gli ordini idonei in tre quote uguali a tasso zero. Gli ordini saldati con bonifico SEPA vengono prenotati e spediti non appena l'importo viene accreditato sul nostro IBAN (mostrato al checkout e nell'e-mail di riepilogo).",
     payPaypal: "PayPal",
     payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
     payPaypalUnavailable: "PayPal non è al momento disponibile",
@@ -275,8 +275,8 @@ export const it: Dictionary = {
     changePaymentMethodTitle: "Prova un altro metodo di pagamento",
     changePaymentMethodHint: "Puoi scegliere un altro modo per pagare questo ordine.",
     changePaymentMethodError: "Impossibile cambiare metodo di pagamento. Riprova.",
-    payInstallments: "Rate — 4× in 2 mesi",
-    payInstallmentsDesc: "4 quote quindicinali uguali a TAEG 0%",
+    payInstallments: "Rate — 3× senza interessi",
+    payInstallmentsDesc: "3 quote quindicinali uguali a TAEG 0%",
     payInstallmentsMinNote: "Attivabile su ordini a partire da 1.000 €",
     processing: "Invio dell'ordine…",
     orderError: "Impossibile completare l'ordine. Riprova.",

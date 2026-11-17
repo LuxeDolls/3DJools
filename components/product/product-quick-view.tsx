@@ -39,7 +39,7 @@ export function ProductQuickView({
   const brand = product.brandName ?? product.brandSlug
   const href = localizedPath(locale, `/product/${product.slug}`)
   const installmentsEligible = qualifiesForInstallments(product.priceCents)
-  const installmentCents = Math.round(product.priceCents / 4)
+  const installmentCents = Math.round(product.priceCents / 3)
   const topSpecs = product.specs.slice(0, 4)
   const topHighlights = product.highlights.slice(0, 3)
 
@@ -133,7 +133,7 @@ export function ProductQuickView({
                     <span>
                       {dict.checkout.payInstallments}:{" "}
                       <strong className="font-semibold text-foreground">
-                        4 × {formatPrice(installmentCents, locale)}
+                        3 × {formatPrice(installmentCents, locale)}
                       </strong>
                     </span>
                   </p>

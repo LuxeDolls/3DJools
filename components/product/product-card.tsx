@@ -28,7 +28,7 @@ export function ProductCard({
   const primaryImage = product.images[0] || "/placeholder.svg"
   const secondaryImage = product.images.length > 1 ? product.images[1] : null
   const installmentsEligible = qualifiesForInstallments(product.priceCents)
-  const installmentCents = Math.round(product.priceCents / 4)
+  const installmentCents = Math.round(product.priceCents / 3)
 
   const techBadge = product.technology
     ? dict.technology[product.technology]
@@ -146,7 +146,7 @@ export function ProductCard({
             {installmentsEligible ? (
               <p className="mt-0.5 flex items-center gap-1 truncate text-[10px] font-medium text-muted-foreground sm:text-[11px]">
                 <CalendarClock className="size-2.5 shrink-0 text-primary sm:size-3" />
-                <span className="truncate">4 × {formatPrice(installmentCents, locale)}</span>
+                <span className="truncate">3 × {formatPrice(installmentCents, locale)}</span>
               </p>
             ) : (
               <p className="mt-0.5 truncate text-[10px] text-muted-foreground sm:text-[11px]">

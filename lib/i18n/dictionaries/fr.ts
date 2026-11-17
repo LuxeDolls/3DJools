@@ -103,7 +103,7 @@ export const fr: Dictionary = {
     uspWarrantyTitle: "Garantie européenne 2 ans",
     uspWarrantyText: "Chaque machine bénéficie de la garantie légale européenne de deux ans.",
     uspPaymentTitle: "Règlement sur mesure",
-    uspPaymentText: "Visa, Mastercard, Open Banking, virement SEPA ou paiement en 4× sans frais.",
+    uspPaymentText: "Visa, Mastercard, Open Banking, virement SEPA ou paiement en 3× sans frais.",
     newsletterTitle: "Recevez nos alertes nouveautés & réassorts",
     newsletterText: "Nouvelles machines, arrivages de filaments et offres abonnés — sans courriers indésirables.",
     newsletterPlaceholder: "Saisissez votre adresse e-mail",
@@ -188,7 +188,7 @@ export const fr: Dictionary = {
     payCardDesc: "Règlement chiffré par carte Visa ou Mastercard",
     payCardUnavailable: "Le paiement par carte est temporairement indisponible",
     payCardGatewayNotice:
-      "En raison de problèmes techniques avec notre passerelle de paiement, le paiement par carte est temporairement désactivé. Veuillez utiliser le virement bancaire SEPA ou le paiement en 4× sans frais.",
+      "En raison de problèmes techniques avec notre passerelle de paiement, le paiement par carte est temporairement désactivé. Veuillez utiliser le virement bancaire SEPA ou le paiement en 3× sans frais.",
     payCardFailed: "Le paiement par carte n'a pas abouti. Vous pouvez réessayer.",
     payCardNote:
       "Après avoir passé la commande, vous êtes redirigé vers une page de paiement sécurisée pour payer par Visa ou Mastercard. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
@@ -253,7 +253,7 @@ export const fr: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponible sur la page Stripe sécurisée lorsque vous payez par carte.",
     payMethodsNote:
-      "Tous les tarifs sur 3DEureka sont indiqués en euros (EUR) et comprennent la TVA légale applicable. Les règlements par carte (Visa, Mastercard) sont traités en euros sur une page de paiement chiffrée, sans que nous n'ayons jamais accès à votre numéro de carte. Grâce à l'Open Banking, vous validez un paiement instantané directement depuis votre compte bancaire (application bancaire ou IBAN). Notre formule en 4× répartit les commandes éligibles en quatre échéances égales sans intérêt sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception des fonds sur notre IBAN (affiché au paiement et dans l'e-mail de confirmation).",
+      "Tous les tarifs sur 3DEureka sont indiqués en euros (EUR) et comprennent la TVA légale applicable. Les règlements par carte (Visa, Mastercard) sont traités en euros sur une page de paiement chiffrée, sans que nous n'ayons jamais accès à votre numéro de carte. Grâce à l'Open Banking, vous validez un paiement instantané directement depuis votre compte bancaire (application bancaire ou IBAN). Notre formule en 3× répartit les commandes éligibles en trois échéances égales sans intérêt. Les commandes par virement SEPA sont réservées et expédiées dès réception des fonds sur notre IBAN (affiché au paiement et dans l'e-mail de confirmation).",
     payPaypal: "PayPal",
     payPaypalDesc: "Payez avec votre solde PayPal, votre compte bancaire ou votre carte",
     payPaypalUnavailable: "PayPal est temporairement indisponible",
@@ -275,8 +275,8 @@ export const fr: Dictionary = {
     changePaymentMethodTitle: "Essayer un autre moyen de paiement",
     changePaymentMethodHint: "Vous pouvez choisir un autre moyen de paiement pour cette commande.",
     changePaymentMethodError: "Impossible de changer de moyen de paiement. Veuillez réessayer.",
-    payInstallments: "Paiement en 4× sur 2 mois",
-    payInstallmentsDesc: "4 échéances égales toutes les deux semaines à TAEG 0 %",
+    payInstallments: "Paiement en 3× sans frais",
+    payInstallmentsDesc: "3 échéances égales toutes les deux semaines à TAEG 0 %",
     payInstallmentsMinNote: "Accessible dès 1 000 € de commande",
     processing: "Commande en cours…",
     orderError: "Impossible de passer votre commande. Veuillez réessayer.",

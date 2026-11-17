@@ -54,7 +54,7 @@ const COPY: Record<Locale, TermsCopy> = {
     s3Heading: "3. Applicability",
     s3: "These general terms and conditions apply to every purchase made on the 3DEureka online store by private consumers and commercial buyers located in the European Union and supported neighbouring countries.",
     s4Heading: "4. Pricing & accepted payment methods",
-    s4: "Every price listed in the store is stated in euro (EUR) and includes applicable statutory VAT. We accept Visa and Mastercard, instant bank payments via Open Banking, SEPA bank transfers, and 4\u00d7 interest-free instalments as outlined on our payment methods page.",
+    s4: "Every price listed in the store is stated in euro (EUR) and includes applicable statutory VAT. We accept Visa and Mastercard, instant bank payments via Open Banking, SEPA bank transfers, and 3\u00d7 interest-free instalments as outlined on our payment methods page.",
     s5Heading: "5. Shipping & transfer of risk",
     s5: "Preparation windows, transit estimates, and free delivery terms are set out on our shipping page. For consumer purchases, the risk of accidental loss or damage passes to you once the parcel is delivered to your address.",
     s6Heading: "6. Right of withdrawal & 30-day return guarantee",
@@ -90,7 +90,7 @@ const COPY: Record<Locale, TermsCopy> = {
     s3Heading: "3. Geltungsbereich",
     s3: "Diese Allgemeinen Geschäftsbedingungen regeln sämtliche Einkäufe, die Verbraucher und Geschäftskunden innerhalb der Europäischen Union sowie unterstützter Nachbarstaaten über den 3DEureka-Onlineshop tätigen.",
     s4Heading: "4. Preise & Zahlungsmöglichkeiten",
-    s4: "Alle Katalogpreise lauten auf Euro (EUR) und verstehen sich inklusive der gesetzlichen Mehrwertsteuer, sofern anwendbar. Wir akzeptieren Visa und Mastercard, Direktzahlungen per Open Banking, SEPA-Banküberweisungen sowie die 4\u00d7 zinsfreie Ratenzahlung.",
+    s4: "Alle Katalogpreise lauten auf Euro (EUR) und verstehen sich inklusive der gesetzlichen Mehrwertsteuer, sofern anwendbar. Wir akzeptieren Visa und Mastercard, Direktzahlungen per Open Banking, SEPA-Banküberweisungen sowie die 3\u00d7 zinsfreie Ratenzahlung.",
     s5Heading: "5. Versand & Gefahrübergang",
     s5: "Bearbeitungszeiten, Lieferfristen und die Bedingungen unseres kostenlosen Versands sind auf unserer Versandseite erläutert. Bei Verbraucherkäufen geht die Gefahr des zufälligen Untergangs oder der Verschlechterung erst mit der Übergabe der Sendung an Sie über.",
     s6Heading: "6. Widerrufsrecht & 30-Tage-Rückgabegarantie",
@@ -126,7 +126,7 @@ const COPY: Record<Locale, TermsCopy> = {
     s3Heading: "3. Champ d'application",
     s3: "Les présentes conditions générales s'appliquent à l'ensemble des commandes passées sur la boutique 3DEureka par des consommateurs particuliers ou des acheteurs professionnels établis dans l'Union européenne et les pays voisins desservis.",
     s4Heading: "4. Tarifs & modalités de paiement",
-    s4: "Les prix affichés sur le site sont libellés en euros (EUR) et incluent la TVA légale applicable. Nous acceptons les cartes Visa et Mastercard, le paiement bancaire instantané Open Banking, le virement SEPA et le paiement en 4\u00d7 sans frais.",
+    s4: "Les prix affichés sur le site sont libellés en euros (EUR) et incluent la TVA légale applicable. Nous acceptons les cartes Visa et Mastercard, le paiement bancaire instantané Open Banking, le virement SEPA et le paiement en 3\u00d7 sans frais.",
     s5Heading: "5. Expédition & transfert des risques",
     s5: "Les délais de préparation, d'acheminement et la gratuité des frais de port sont précisés sur notre page de livraison. Pour les consommateurs, le risque de perte ou d'endommagement est transféré au moment de la remise physique du colis.",
     s6Heading: "6. Droit de rétractation & retour sous 30 jours",
@@ -162,7 +162,7 @@ const COPY: Record<Locale, TermsCopy> = {
     s3Heading: "3. Ambito di validità",
     s3: "Le presenti condizioni generali disciplinano tutti gli acquisti effettuati sullo store online 3DEureka da consumatori e clienti aziendali situati nell'Unione Europea e nei Paesi limitrofi serviti.",
     s4Heading: "4. Prezzi & modalità di pagamento",
-    s4: "Tutti i prezzi sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. Accettiamo carte Visa e Mastercard, pagamento bancario istantaneo Open Banking, bonifico SEPA e rateizzazione in 4\u00d7 senza interessi.",
+    s4: "Tutti i prezzi sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. Accettiamo carte Visa e Mastercard, pagamento bancario istantaneo Open Banking, bonifico SEPA e rateizzazione in 3\u00d7 senza interessi.",
     s5Heading: "5. Spedizione & passaggio del rischio",
     s5: "I tempi di preparazione, di consegna e la gratuità della spedizione sono illustrati nella pagina dedicata alle spedizioni. Nei contratti con i consumatori, il rischio di perdita o danneggiamento si trasferisce all'acquirente al momento della consegna fisica dei beni.",
     s6Heading: "6. Diritto di recesso & reso esteso a 30 giorni",
@@ -198,7 +198,7 @@ const COPY: Record<Locale, TermsCopy> = {
     s3Heading: "3. Ámbito de aplicación",
     s3: "Las presentes condiciones generales regulan todas las compras realizadas en la tienda online 3DEureka tanto por consumidores particulares como por empresas dentro de la Unión Europea y países vecinos habilitados.",
     s4Heading: "4. Precios y medios de pago",
-    s4: "Todos los precios figuran en euros (EUR) e incluyen el IVA legalmente aplicable. Admitimos pago con tarjeta Visa y Mastercard, pago bancario instantáneo Open Banking, transferencia SEPA y fraccionamiento en 4\u00d7 sin intereses.",
+    s4: "Todos los precios figuran en euros (EUR) e incluyen el IVA legalmente aplicable. Admitimos pago con tarjeta Visa y Mastercard, pago bancario instantáneo Open Banking, transferencia SEPA y fraccionamiento en 3\u00d7 sin intereses.",
     s5Heading: "5. Entrega y transmisión del riesgo",
     s5: "Los plazos de preparación, tiempos de tránsito y la gratuidad del envío se detallan en nuestra página de envíos. En ventas a consumidores, el riesgo de pérdida o deterioro se transmite en el momento en que recibes físicamente el paquete.",
     s6Heading: "6. Derecho de desistimiento y devolución en 30 días",
@@ -234,7 +234,7 @@ const COPY: Record<Locale, TermsCopy> = {
     s3Heading: "3. Toepasselijkheid",
     s3: "Deze algemene voorwaarden zijn van toepassing op alle aankopen die via de webshop van 3DEureka worden gedaan door consumenten en bedrijven binnen de Europese Unie en ondersteunde buurlanden.",
     s4Heading: "4. Prijzen & betaalmethoden",
-    s4: "Alle vermelde prijzen luiden in euro (EUR) en zijn inclusief de wettelijk geldende btw. Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking, SEPA-bankoverschrijvingen en gespreide betaling in 4\u00d7 zonder rente.",
+    s4: "Alle vermelde prijzen luiden in euro (EUR) en zijn inclusief de wettelijk geldende btw. Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking, SEPA-bankoverschrijvingen en gespreide betaling in 3\u00d7 zonder rente.",
     s5Heading: "5. Verzending & risico-overgang",
     s5: "Verwerkingstijden, levertijden en de voorwaarden voor gratis verzending staan beschreven op onze verzendpagina. Bij consumentenkoop gaat het risico van beschadiging of verlies pas op u over zodra de goederen bij u zijn afgeleverd.",
     s6Heading: "6. Herroepingsrecht & 30 dagen retourgarantie",
@@ -262,33 +262,33 @@ const COPY: Record<Locale, TermsCopy> = {
 }
 
 const CARD_OFF_TERMS: Record<Locale, string> = {
-  en: "Every price listed in the store is stated in euro (EUR) and includes applicable statutory VAT. Card checkout is temporarily offline. We currently accept SEPA bank transfers and 4× interest-free instalments as outlined on our payment methods page.",
-  de: "Alle Katalogpreise lauten auf Euro (EUR) und verstehen sich inklusive der gesetzlichen Mehrwertsteuer, sofern anwendbar. Die Kartenzahlung ist vorübergehend deaktiviert. Wir akzeptieren derzeit SEPA-Banküberweisungen sowie die 4× zinsfreie Ratenzahlung gemäß unserer Seite zu den Zahlungsarten.",
-  fr: "Les prix affichés sur le site sont libellés en euros (EUR) et incluent la TVA légale applicable. Le paiement par carte est momentanément indisponible. Nous acceptons le virement SEPA et le paiement en 4× sans frais, détaillés sur notre page des moyens de paiement.",
-  it: "Tutti i prezzi sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. Il pagamento con carta è temporaneamente sospeso. Accettiamo bonifico SEPA e rateizzazione in 4× senza interessi, come descritto nella pagina dei metodi di pagamento.",
-  es: "Todos los precios figuran en euros (EUR) e incluyen el IVA legalmente aplicable. El pago con tarjeta está temporalmente inactivo. Aceptamos transferencia SEPA y fraccionamiento en 4× sin intereses según se detalla en nuestra página de métodos de pago.",
-  nl: "Alle vermelde prijzen luiden in euro (EUR) en zijn inclusief de wettelijk geldende btw. Betalen met kaart is tijdelijk niet beschikbaar. Wij accepteren SEPA-bankoverschrijvingen en gespreide betaling in 4× zonder rente zoals toegelicht op onze pagina met betaalmethoden.",
+  en: "Every price listed in the store is stated in euro (EUR) and includes applicable statutory VAT. Card checkout is temporarily offline. We currently accept SEPA bank transfers and 3× interest-free instalments as outlined on our payment methods page.",
+  de: "Alle Katalogpreise lauten auf Euro (EUR) und verstehen sich inklusive der gesetzlichen Mehrwertsteuer, sofern anwendbar. Die Kartenzahlung ist vorübergehend deaktiviert. Wir akzeptieren derzeit SEPA-Banküberweisungen sowie die 3× zinsfreie Ratenzahlung gemäß unserer Seite zu den Zahlungsarten.",
+  fr: "Les prix affichés sur le site sont libellés en euros (EUR) et incluent la TVA légale applicable. Le paiement par carte est momentanément indisponible. Nous acceptons le virement SEPA et le paiement en 3× sans frais, détaillés sur notre page des moyens de paiement.",
+  it: "Tutti i prezzi sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. Il pagamento con carta è temporaneamente sospeso. Accettiamo bonifico SEPA e rateizzazione in 3× senza interessi, come descritto nella pagina dei metodi di pagamento.",
+  es: "Todos los precios figuran en euros (EUR) e incluyen el IVA legalmente aplicable. El pago con tarjeta está temporalmente inactivo. Aceptamos transferencia SEPA y fraccionamiento en 3× sin intereses según se detalla en nuestra página de métodos de pago.",
+  nl: "Alle vermelde prijzen luiden in euro (EUR) en zijn inclusief de wettelijk geldende btw. Betalen met kaart is tijdelijk niet beschikbaar. Wij accepteren SEPA-bankoverschrijvingen en gespreide betaling in 3× zonder rente zoals toegelicht op onze pagina met betaalmethoden.",
 }
 
 const CARD_TERMS: Record<Locale, string> = {
   en: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Every price listed in the store is stated in euro (EUR) and includes applicable statutory VAT. We accept Visa and Mastercard, instant bank payments via Open Banking, SEPA bank transfers, and 4× interest-free instalments as outlined on our payment methods page. Card and Open Banking transactions are completed on encrypted payment pages, and we never have access to your card number."
-    : "Every price listed in the store is stated in euro (EUR) and includes applicable statutory VAT. We accept Visa and Mastercard, instant bank payments via Open Banking, and 4× interest-free instalments as outlined on our payment methods page. Card and Open Banking transactions are completed on encrypted payment pages, and we never have access to your card number.",
+    ? "Every price listed in the store is stated in euro (EUR) and includes applicable statutory VAT. We accept Visa and Mastercard, instant bank payments via Open Banking, SEPA bank transfers, and 3× interest-free instalments as outlined on our payment methods page. Card and Open Banking transactions are completed on encrypted payment pages, and we never have access to your card number."
+    : "Every price listed in the store is stated in euro (EUR) and includes applicable statutory VAT. We accept Visa and Mastercard, instant bank payments via Open Banking, and 3× interest-free instalments as outlined on our payment methods page. Card and Open Banking transactions are completed on encrypted payment pages, and we never have access to your card number.",
   de: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Alle Katalogpreise lauten auf Euro (EUR) und verstehen sich inklusive der gesetzlichen Mehrwertsteuer, sofern anwendbar. Wir akzeptieren Visa und Mastercard, Sofortzahlungen über Open Banking, SEPA-Banküberweisungen sowie die 4× zinsfreie Ratenzahlung gemäß unserer Seite zu den Zahlungsarten. Karten- und Open-Banking-Zahlungen erfolgen über verschlüsselte Zahlungsseiten; wir erhalten niemals Einblick in Ihre Kartennummer."
-    : "Alle Katalogpreise lauten auf Euro (EUR) und verstehen sich inklusive der gesetzlichen Mehrwertsteuer, sofern anwendbar. Wir akzeptieren Visa und Mastercard, Sofortzahlungen über Open Banking sowie die 4× zinsfreie Ratenzahlung gemäß unserer Seite zu den Zahlungsarten. Karten- und Open-Banking-Zahlungen erfolgen über verschlüsselte Zahlungsseiten; wir erhalten niemals Einblick in Ihre Kartennummer.",
+    ? "Alle Katalogpreise lauten auf Euro (EUR) und verstehen sich inklusive der gesetzlichen Mehrwertsteuer, sofern anwendbar. Wir akzeptieren Visa und Mastercard, Sofortzahlungen über Open Banking, SEPA-Banküberweisungen sowie die 3× zinsfreie Ratenzahlung gemäß unserer Seite zu den Zahlungsarten. Karten- und Open-Banking-Zahlungen erfolgen über verschlüsselte Zahlungsseiten; wir erhalten niemals Einblick in Ihre Kartennummer."
+    : "Alle Katalogpreise lauten auf Euro (EUR) und verstehen sich inklusive der gesetzlichen Mehrwertsteuer, sofern anwendbar. Wir akzeptieren Visa und Mastercard, Sofortzahlungen über Open Banking sowie die 3× zinsfreie Ratenzahlung gemäß unserer Seite zu den Zahlungsarten. Karten- und Open-Banking-Zahlungen erfolgen über verschlüsselte Zahlungsseiten; wir erhalten niemals Einblick in Ihre Kartennummer.",
   fr: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Les prix affichés sur le site sont libellés en euros (EUR) et incluent la TVA légale applicable. Nous acceptons les cartes Visa et Mastercard, le paiement bancaire instantané Open Banking, le virement SEPA et le paiement en 4× sans frais, détaillés sur notre page des moyens de paiement. Les transactions par carte et Open Banking s'effectuent sur des pages sécurisées et nous n'avons jamais accès à votre numéro de carte."
-    : "Les prix affichés sur le site sont libellés en euros (EUR) et incluent la TVA légale applicable. Nous acceptons les cartes Visa et Mastercard, le paiement bancaire instantané Open Banking et le paiement en 4× sans frais, détaillés sur notre page des moyens de paiement. Les transactions par carte et Open Banking s'effectuent sur des pages sécurisées et nous n'avons jamais accès à votre numéro de carte.",
+    ? "Les prix affichés sur le site sont libellés en euros (EUR) et incluent la TVA légale applicable. Nous acceptons les cartes Visa et Mastercard, le paiement bancaire instantané Open Banking, le virement SEPA et le paiement en 3× sans frais, détaillés sur notre page des moyens de paiement. Les transactions par carte et Open Banking s'effectuent sur des pages sécurisées et nous n'avons jamais accès à votre numéro de carte."
+    : "Les prix affichés sur le site sont libellés en euros (EUR) et incluent la TVA légale applicable. Nous acceptons les cartes Visa et Mastercard, le paiement bancaire instantané Open Banking et le paiement en 3× sans frais, détaillés sur notre page des moyens de paiement. Les transactions par carte et Open Banking s'effectuent sur des pages sécurisées et nous n'avons jamais accès à votre numéro de carte.",
   it: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Tutti i prezzi sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. Accettiamo carte Visa e Mastercard, pagamento bancario istantaneo Open Banking, bonifico SEPA e rateizzazione in 4× senza interessi, come descritto nella pagina dei metodi di pagamento. Le operazioni con carta e Open Banking avvengono su pagine protette e non visualizziamo mai il numero della tua carta."
-    : "Tutti i prezzi sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. Accettiamo carte Visa e Mastercard, pagamento bancario istantaneo Open Banking e rateizzazione in 4× senza interessi, come descritto nella pagina dei metodi di pagamento. Le operazioni con carta e Open Banking avvengono su pagine protette e non visualizziamo mai il numero della tua carta.",
+    ? "Tutti i prezzi sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. Accettiamo carte Visa e Mastercard, pagamento bancario istantaneo Open Banking, bonifico SEPA e rateizzazione in 3× senza interessi, come descritto nella pagina dei metodi di pagamento. Le operazioni con carta e Open Banking avvengono su pagine protette e non visualizziamo mai il numero della tua carta."
+    : "Tutti i prezzi sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. Accettiamo carte Visa e Mastercard, pagamento bancario istantaneo Open Banking e rateizzazione in 3× senza interessi, come descritto nella pagina dei metodi di pagamento. Le operazioni con carta e Open Banking avvengono su pagine protette e non visualizziamo mai il numero della tua carta.",
   es: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Todos los precios figuran en euros (EUR) e incluyen el IVA legalmente aplicable. Admitimos pago con tarjeta Visa y Mastercard, pago bancario instantáneo Open Banking, transferencia SEPA y fraccionamiento en 4× sin intereses según se detalla en nuestra página de métodos de pago. Los pagos con tarjeta y Open Banking se procesan en pasarelas cifradas y nunca vemos el número de tu tarjeta."
-    : "Todos los precios figuran en euros (EUR) e incluyen el IVA legalmente aplicable. Admitimos pago con tarjeta Visa y Mastercard, pago bancario instantáneo Open Banking y fraccionamiento en 4× sin intereses según se detalla en nuestra página de métodos de pago. Los pagos con tarjeta y Open Banking se procesan en pasarelas cifradas y nunca vemos el número de tu tarjeta.",
+    ? "Todos los precios figuran en euros (EUR) e incluyen el IVA legalmente aplicable. Admitimos pago con tarjeta Visa y Mastercard, pago bancario instantáneo Open Banking, transferencia SEPA y fraccionamiento en 3× sin intereses según se detalla en nuestra página de métodos de pago. Los pagos con tarjeta y Open Banking se procesan en pasarelas cifradas y nunca vemos el número de tu tarjeta."
+    : "Todos los precios figuran en euros (EUR) e incluyen el IVA legalmente aplicable. Admitimos pago con tarjeta Visa y Mastercard, pago bancario instantáneo Open Banking y fraccionamiento en 3× sin intereses según se detalla en nuestra página de métodos de pago. Los pagos con tarjeta y Open Banking se procesan en pasarelas cifradas y nunca vemos el número de tu tarjeta.",
   nl: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Alle vermelde prijzen luiden in euro (EUR) en zijn inclusief de wettelijk geldende btw. Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking, SEPA-bankoverschrijvingen en gespreide betaling in 4× zonder rente zoals toegelicht op onze pagina met betaalmethoden. Kaart- en Open Banking-transacties verlopen via beveiligde betaalpagina's en wij krijgen uw kaartnummer nooit te zien."
-    : "Alle vermelde prijzen luiden in euro (EUR) en zijn inclusief de wettelijk geldende btw. Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking en gespreide betaling in 4× zonder rente zoals toegelicht op onze pagina met betaalmethoden. Kaart- en Open Banking-transacties verlopen via beveiligde betaalpagina's en wij krijgen uw kaartnummer nooit te zien.",
+    ? "Alle vermelde prijzen luiden in euro (EUR) en zijn inclusief de wettelijk geldende btw. Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking, SEPA-bankoverschrijvingen en gespreide betaling in 3× zonder rente zoals toegelicht op onze pagina met betaalmethoden. Kaart- en Open Banking-transacties verlopen via beveiligde betaalpagina's en wij krijgen uw kaartnummer nooit te zien."
+    : "Alle vermelde prijzen luiden in euro (EUR) en zijn inclusief de wettelijk geldende btw. Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking en gespreide betaling in 3× zonder rente zoals toegelicht op onze pagina met betaalmethoden. Kaart- en Open Banking-transacties verlopen via beveiligde betaalpagina's en wij krijgen uw kaartnummer nooit te zien.",
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {

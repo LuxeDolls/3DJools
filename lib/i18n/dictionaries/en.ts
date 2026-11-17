@@ -101,7 +101,7 @@ export const en = {
     uspWarrantyTitle: "2-year EU warranty",
     uspWarrantyText: "Full two-year statutory European consumer warranty on every system.",
     uspPaymentTitle: "Versatile checkout",
-    uspPaymentText: "Visa, Mastercard, Open Banking, SEPA transfer or 4× interest-free instalments.",
+    uspPaymentText: "Visa, Mastercard, Open Banking, SEPA transfer or 3× interest-free instalments.",
     newsletterTitle: "Receive hardware updates & restock alerts",
     newsletterText: "New machine releases, material restocks and subscriber offers — zero spam.",
     newsletterPlaceholder: "Enter your email address",
@@ -186,7 +186,7 @@ export const en = {
     payCardDesc: "Encrypted checkout for Visa & Mastercard cards",
     payCardUnavailable: "Card payment is temporarily unavailable",
     payCardGatewayNotice:
-      "Due to technical issues with our payment gateway, card payments are temporarily disabled. Please use SEPA bank transfer or 4× interest-free instalments.",
+      "Due to technical issues with our payment gateway, card payments are temporarily disabled. Please use SEPA bank transfer or 3× interest-free instalments.",
     payCardFailed: "The card payment was not completed. You can try again.",
     payCardNote:
       "After placing your order, you are redirected to a secure payment page to pay by Visa or Mastercard. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
@@ -251,7 +251,7 @@ export const en = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Available on the secure Stripe page when you pay by card.",
     payMethodsNote:
-      "Every price on 3DEureka is quoted in euro (EUR) and includes statutory VAT where applicable. Visa and Mastercard payments are processed in euros on an encrypted payment page, and your card number is never visible to us. Through Open Banking, you can authorise an immediate payment straight from your bank account (via your banking app or IBAN). Our 4× instalment plan divides eligible orders into four equal, interest-free payments over two months. Orders paid by SEPA bank transfer are allocated for you and dispatched as soon as the transfer reaches our IBAN (shown at checkout and in your confirmation email).",
+      "Every price on 3DEureka is quoted in euro (EUR) and includes statutory VAT where applicable. Visa and Mastercard payments are processed in euros on an encrypted payment page, and your card number is never visible to us. Through Open Banking, you can authorise an immediate payment straight from your bank account (via your banking app or IBAN). Our 3× instalment plan divides eligible orders into three equal, interest-free payments. Orders paid by SEPA bank transfer are allocated for you and dispatched as soon as the transfer reaches our IBAN (shown at checkout and in your confirmation email).",
     payPaypal: "PayPal",
     payPaypalDesc: "Pay with your PayPal balance, bank account or card",
     payPaypalUnavailable: "PayPal is temporarily unavailable",
@@ -273,8 +273,8 @@ export const en = {
     changePaymentMethodTitle: "Try a different payment method",
     changePaymentMethodHint: "You can switch to another way to pay for this order.",
     changePaymentMethodError: "Could not switch payment method. Please try again.",
-  payInstallments: "Instalments — 4× over 2 months",
-  payInstallmentsDesc: "4 equal fortnightly payments at 0% APR",
+  payInstallments: "Instalments — 3× interest-free",
+  payInstallmentsDesc: "3 equal fortnightly payments at 0% APR",
   payInstallmentsMinNote: "Eligible on baskets of €1,000 and above",
     processing: "Placing your order…",
     orderError: "We couldn't place your order. Please try again.",

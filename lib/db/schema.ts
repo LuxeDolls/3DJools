@@ -69,8 +69,8 @@ export type ApplicationCartItem = {
 }
 
 /**
- * One scheduled installment. `amountCents` for the 4 payments always sums
- * to the order total; the first entry is the 25% down payment (due now).
+ * One scheduled installment. `amountCents` for the 3 payments always sums
+ * to the order total; the first entry is the 1/3 down payment (due now).
  * `status` tracks the customer/admin payment-confirmation cycle for this
  * entry: "unpaid" until the customer clicks "I've paid", then "reviewing"
  * until an admin confirms receipt, then "paid".

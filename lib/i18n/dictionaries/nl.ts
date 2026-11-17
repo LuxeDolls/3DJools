@@ -103,7 +103,7 @@ export const nl: Dictionary = {
     uspWarrantyTitle: "2 jaar EU-garantie",
     uspWarrantyText: "Volledige wettelijke Europese consumentengarantie van twee jaar op elk systeem.",
     uspPaymentTitle: "Ruime betaalkeuze",
-    uspPaymentText: "Visa, Mastercard, Open Banking, SEPA-overschrijving of 4× rentevrije termijnen.",
+    uspPaymentText: "Visa, Mastercard, Open Banking, SEPA-overschrijving of 3× rentevrije termijnen.",
     newsletterTitle: "Ontvang updates over nieuwe systemen & voorraad",
     newsletterText: "Nieuwe modellen, aangevulde materialen en abonneedeals — gegarandeerd geen spam.",
     newsletterPlaceholder: "Vul je e-mailadres in",
@@ -188,7 +188,7 @@ export const nl: Dictionary = {
     payCardDesc: "Versleutelde betaling met Visa & Mastercard",
     payCardUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
     payCardGatewayNotice:
-      "Vanwege technische problemen met onze betaalgateway zijn kaartbetalingen tijdelijk uitgeschakeld. Gebruik een SEPA-bankoverschrijving of betaling in 4× rentevrije termijnen.",
+      "Vanwege technische problemen met onze betaalgateway zijn kaartbetalingen tijdelijk uitgeschakeld. Gebruik een SEPA-bankoverschrijving of betaling in 3× rentevrije termijnen.",
     payCardFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payCardNote:
       "Na het plaatsen van de bestelling wordt u doorgestuurd naar een beveiligde betaalpagina om te betalen met Visa of Mastercard. Wij zien uw kaartnummer nooit. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
@@ -253,7 +253,7 @@ export const nl: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen bij 3DEureka luiden in euro (EUR) en zijn inclusief de wettelijk verschuldigde btw. Betalingen met Visa en Mastercard worden in euro verwerkt op een versleutelde betaalpagina, waarbij wij uw kaartnummer nooit te zien krijgen. Met Open Banking bevestigt u met één klik een directe betaling vanaf uw bankrekening (via uw bank-app of IBAN). Ons 4×-termijnplan verdeelt geschikte bestellingen in vier gelijke, rentevrije termijnen over twee maanden. Bestellingen per SEPA-bankoverschrijving worden voor u gereserveerd en verzonden zodra het bedrag op onze IBAN (getoond bij het afrekenen en in uw bevestigingsmail) is bijgeschreven.",
+      "Alle prijzen bij 3DEureka luiden in euro (EUR) en zijn inclusief de wettelijk verschuldigde btw. Betalingen met Visa en Mastercard worden in euro verwerkt op een versleutelde betaalpagina, waarbij wij uw kaartnummer nooit te zien krijgen. Met Open Banking bevestigt u met één klik een directe betaling vanaf uw bankrekening (via uw bank-app of IBAN). Ons 3×-termijnplan verdeelt geschikte bestellingen in drie gelijke, rentevrije termijnen. Bestellingen per SEPA-bankoverschrijving worden voor u gereserveerd en verzonden zodra het bedrag op onze IBAN (getoond bij het afrekenen en in uw bevestigingsmail) is bijgeschreven.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",
@@ -275,8 +275,8 @@ export const nl: Dictionary = {
     changePaymentMethodTitle: "Probeer een andere betaalmethode",
     changePaymentMethodHint: "Je kunt een andere manier kiezen om deze bestelling te betalen.",
     changePaymentMethodError: "Kon de betaalmethode niet wijzigen. Probeer het opnieuw.",
-    payInstallments: "In termijnen — 4× in 2 maanden",
-    payInstallmentsDesc: "4 gelijke tweewekelijkse termijnen tegen 0% JKP",
+    payInstallments: "In termijnen — 3× rentevrij",
+    payInstallmentsDesc: "3 gelijke tweewekelijkse termijnen tegen 0% JKP",
     payInstallmentsMinNote: "Beschikbaar bij een bestelwaarde vanaf € 1.000",
     processing: "Bestelling plaatsen…",
     orderError: "We konden je bestelling niet plaatsen. Probeer het opnieuw.",

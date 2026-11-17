@@ -185,8 +185,8 @@ export function ApplicationDetail({ app }: { app: InstallmentApplication & { ord
           <Separator className="my-4" />
           <dl className="space-y-2 text-sm">
             <Row label="Order total" value={formatPrice(app.totalAmountCents, "en")} />
-            <Row label="Down payment (25%)" value={formatPrice(app.downPaymentCents, "en")} highlight />
-            <Row label="Remaining (75%)" value={formatPrice(app.remainingCents, "en")} />
+            <Row label="Down payment (1/3)" value={formatPrice(app.downPaymentCents, "en")} highlight />
+            <Row label="Remaining (2/3)" value={formatPrice(app.remainingCents, "en")} />
           </dl>
           {app.order && (
             <>

@@ -33,33 +33,33 @@ function answerText(item: FaqItem) {
 }
 
 const CARD_OFF_FAQ: Record<Locale, string> = {
-  en: "You can pay by SEPA bank transfer or split your purchase into 4 interest-free instalments. Card checkout is temporarily offline. Full information is listed on our ",
-  de: "Sie können per SEPA-Banküberweisung bezahlen oder den Kaufbetrag in 4 zinsfreie Raten aufteilen. Die Kartenzahlung ist derzeit vorübergehend deaktiviert. Alle Einzelheiten finden Sie auf unserer Seite ",
-  fr: "Vous pouvez régler par virement bancaire SEPA ou étaler votre achat en 4 échéances sans frais. Le paiement par carte est momentanément indisponible. Retrouvez toutes les précisions sur notre ",
-  it: "Puoi saldare tramite bonifico bancario SEPA oppure suddividere l'acquisto in 4 rate a tasso zero. Il pagamento con carta è temporaneamente sospeso. Tutti i dettagli sono disponibili nella ",
-  es: "Puedes abonar tu pedido mediante transferencia bancaria SEPA o fraccionarlo en 4 cuotas sin intereses. El pago con tarjeta está temporalmente inactivo. Consulta toda la información en nuestra ",
-  nl: "U kunt afrekenen via een SEPA-bankoverschrijving of uw aankoop spreiden over 4 rentevrije termijnen. Kaartbetalingen zijn tijdelijk buiten gebruik. Alle informatie vindt u op onze ",
+  en: "You can pay by SEPA bank transfer or split your purchase into 3 interest-free instalments. Card checkout is temporarily offline. Full information is listed on our ",
+  de: "Sie können per SEPA-Banküberweisung bezahlen oder den Kaufbetrag in 3 zinsfreie Raten aufteilen. Die Kartenzahlung ist derzeit vorübergehend deaktiviert. Alle Einzelheiten finden Sie auf unserer Seite ",
+  fr: "Vous pouvez régler par virement bancaire SEPA ou étaler votre achat en 3 échéances sans frais. Le paiement par carte est momentanément indisponible. Retrouvez toutes les précisions sur notre ",
+  it: "Puoi saldare tramite bonifico bancario SEPA oppure suddividere l'acquisto in 3 rate a tasso zero. Il pagamento con carta è temporaneamente sospeso. Tutti i dettagli sono disponibili nella ",
+  es: "Puedes abonar tu pedido mediante transferencia bancaria SEPA o fraccionarlo en 3 cuotas sin intereses. El pago con tarjeta está temporalmente inactivo. Consulta toda la información en nuestra ",
+  nl: "U kunt afrekenen via een SEPA-bankoverschrijving of uw aankoop spreiden over 3 rentevrije termijnen. Kaartbetalingen zijn tijdelijk buiten gebruik. Alle informatie vindt u op onze ",
 }
 
 const CARD_FAQ: Record<Locale, string> = {
   en: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), SEPA bank transfers, and 4× interest-free instalments. Read the full breakdown on our "
-    : "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), and 4× interest-free instalments. Read the full breakdown on our ",
+    ? "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), SEPA bank transfers, and 3× interest-free instalments. Read the full breakdown on our "
+    : "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), and 3× interest-free instalments. Read the full breakdown on our ",
   de: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN), SEPA-Banküberweisungen sowie die 4× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite "
-    : "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN) sowie die 4× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite ",
+    ? "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN), SEPA-Banküberweisungen sowie die 3× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite "
+    : "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN) sowie die 3× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite ",
   fr: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN), le virement SEPA ainsi que le règlement en 4× sans intérêt. Consultez le récapitulatif sur notre "
-    : "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN) ainsi que le règlement en 4× sans intérêt. Consultez le récapitulatif sur notre ",
+    ? "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN), le virement SEPA ainsi que le règlement en 3× sans intérêt. Consultez le récapitulatif sur notre "
+    : "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN) ainsi que le règlement en 3× sans intérêt. Consultez le récapitulatif sur notre ",
   it: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN), bonifico SEPA e dilazione in 4 rate senza interessi. Scopri tutti i dettagli nella "
-    : "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN) e dilazione in 4 rate senza interessi. Scopri tutti i dettagli nella ",
+    ? "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN), bonifico SEPA e dilazione in 3 rate senza interessi. Scopri tutti i dettagli nella "
+    : "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN) e dilazione in 3 rate senza interessi. Scopri tutti i dettagli nella ",
   es: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN), transferencia SEPA y financiación en 4 plazos sin intereses. Revisa el detalle completo en nuestra "
-    : "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN) y financiación en 4 plazos sin intereses. Revisa el detalle completo en nuestra ",
+    ? "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN), transferencia SEPA y financiación en 3 plazos sin intereses. Revisa el detalle completo en nuestra "
+    : "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN) y financiación en 3 plazos sin intereses. Revisa el detalle completo en nuestra ",
   nl: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN), SEPA-overschrijvingen en gespreide betaling in 4 rentevrije termijnen. Bekijk het volledige overzicht op onze "
-    : "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN) en gespreide betaling in 4 rentevrije termijnen. Bekijk het volledige overzicht op onze ",
+    ? "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN), SEPA-overschrijvingen en gespreide betaling in 3 rentevrije termijnen. Bekijk het volledige overzicht op onze "
+    : "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN) en gespreide betaling in 3 rentevrije termijnen. Bekijk het volledige overzicht op onze ",
 }
 
 function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {
@@ -91,7 +91,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), SEPA bank transfers, and 4× interest-free instalments. Read the full breakdown on our ",
+                "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), SEPA bank transfers, and 3× interest-free instalments. Read the full breakdown on our ",
               label: "payment methods page",
               after: ".",
             },
@@ -102,9 +102,9 @@ const COPY: Record<Locale, FaqCopy> = {
               "Yes. Every price displayed across our catalogue is denominated in euro (EUR) and already includes applicable statutory VAT.",
           },
           {
-            question: "How does the 4× interest-free instalment plan work?",
+            question: "How does the 3× interest-free instalment plan work?",
             answer:
-              "Orders worth €1,000 or above can be divided into four equal 25% payments spread over two months (an initial 25% payment upon approval followed by three fortnightly instalments) at 0% APR and with zero extra charges.",
+              "Orders worth €1,000 or above can be divided into three equal payments (1/3 each): an initial 1/3 payment upon approval followed by two fortnightly instalments at 0% APR and with zero extra charges.",
           },
         ],
       },
@@ -192,7 +192,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN), SEPA-Banküberweisungen sowie die 4× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite ",
+                "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN), SEPA-Banküberweisungen sowie die 3× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite ",
               label: "Zahlungsarten",
               after: ".",
             },
@@ -203,9 +203,9 @@ const COPY: Record<Locale, FaqCopy> = {
               "Ja. Sämtliche Preise im Shop sind in Euro (EUR) ausgewiesen und enthalten bereits die gesetzlich vorgeschriebene Mehrwertsteuer, sofern anwendbar.",
           },
           {
-            question: "Wie läuft die zinsfreie 4×-Ratenzahlung ab?",
+            question: "Wie läuft die zinsfreie 3×-Ratenzahlung ab?",
             answer:
-              "Ab einem Warenkorbwert von 1.000 € lässt sich der Gesamtbetrag in vier gleich hohe Raten zu je 25 % über zwei Monate aufteilen (25 % Anzahlung bei Freigabe und drei weitere Raten im Zwei-Wochen-Takt) — bei 0 % Zinsen und ohne Zusatzgebühren.",
+              "Ab einem Warenkorbwert von 1.000 € lässt sich der Gesamtbetrag in drei gleich hohe Raten (je 1/3) aufteilen (1/3 Anzahlung bei Freigabe und zwei weitere Raten im Zwei-Wochen-Takt) — bei 0 % Zinsen und ohne Zusatzgebühren.",
           },
         ],
       },
@@ -293,7 +293,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN), le virement SEPA ainsi que le règlement en 4× sans intérêt. Consultez le récapitulatif sur notre ",
+                "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN), le virement SEPA ainsi que le règlement en 3× sans intérêt. Consultez le récapitulatif sur notre ",
               label: "page des moyens de paiement",
               after: ".",
             },
@@ -304,9 +304,9 @@ const COPY: Record<Locale, FaqCopy> = {
               "Oui. Tous les prix figurant sur la boutique sont libellés en euros (EUR) et incluent la TVA légale applicable.",
           },
           {
-            question: "Comment fonctionne l'échelonnement en 4× sans frais ?",
+            question: "Comment fonctionne l'échelonnement en 3× sans frais ?",
             answer:
-              "Dès 1 000 € d'achat, le total peut être divisé en quatre versements égaux de 25 % répartis sur deux mois (un premier versement de 25 % à la validation, suivi de trois échéances toutes les deux semaines), à 0 % d'intérêt et sans aucuns frais de dossier.",
+              "Dès 1 000 € d'achat, le total peut être divisé en trois versements égaux (1/3 chacun) : un premier versement d'1/3 à la validation, suivi de deux échéances toutes les deux semaines, à 0 % d'intérêt et sans aucuns frais de dossier.",
           },
         ],
       },
@@ -394,7 +394,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN), bonifico SEPA e dilazione in 4 rate senza interessi. Scopri tutti i dettagli nella ",
+                "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN), bonifico SEPA e dilazione in 3 rate senza interessi. Scopri tutti i dettagli nella ",
               label: "pagina dei metodi di pagamento",
               after: ".",
             },
@@ -405,9 +405,9 @@ const COPY: Record<Locale, FaqCopy> = {
               "Sì. Tutti gli importi presenti sul sito sono espressi in euro (EUR) e includono già l'IVA prevista dalla legge, ove applicabile.",
           },
           {
-            question: "Come funziona la rateizzazione in 4 quote a tasso zero?",
+            question: "Come funziona la rateizzazione in 3 quote a tasso zero?",
             answer:
-              "Per gli ordini a partire da 1.000 €, l'importo complessivo viene ripartito in quattro pagamenti uguali del 25% nell'arco di due mesi (25% all'approvazione e tre rate successive ogni due settimane), senza interessi (TAEG 0%) e senza costi aggiuntivi.",
+              "Per gli ordini a partire da 1.000 €, l'importo complessivo viene ripartito in tre pagamenti uguali (1/3 ciascuno): 1/3 all'approvazione e due rate successive ogni due settimane, senza interessi (TAEG 0%) e senza costi aggiuntivi.",
           },
         ],
       },
@@ -495,7 +495,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN), transferencia SEPA y financiación en 4 plazos sin intereses. Revisa el detalle completo en nuestra ",
+                "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN), transferencia SEPA y financiación en 3 plazos sin intereses. Revisa el detalle completo en nuestra ",
               label: "página de métodos de pago",
               after: ".",
             },
@@ -506,9 +506,9 @@ const COPY: Record<Locale, FaqCopy> = {
               "Sí. Todos los importes se muestran en euros (EUR) e incluyen el IVA legal correspondiente.",
           },
           {
-            question: "¿En qué consiste el pago fraccionado en 4 cuotas sin intereses?",
+            question: "¿En qué consiste el pago fraccionado en 3 cuotas sin intereses?",
             answer:
-              "En compras a partir de 1.000 €, el importe se reparte en cuatro pagos iguales del 25 % durante dos meses (un 25 % inicial al aprobarse la solicitud y tres cuotas quincenales posteriores), con un 0 % TAE y sin comisiones.",
+              "En compras a partir de 1.000 €, el importe se reparte en tres pagos iguales (1/3 cada uno): 1/3 inicial al aprobarse la solicitud y dos cuotas quincenales posteriores, con un 0 % TAE y sin comisiones.",
           },
         ],
       },
@@ -596,7 +596,7 @@ const COPY: Record<Locale, FaqCopy> = {
             link: {
               href: "/payment-methods",
               before:
-                "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN), SEPA-overschrijvingen en gespreide betaling in 4 rentevrije termijnen. Bekijk het volledige overzicht op onze ",
+                "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN), SEPA-overschrijvingen en gespreide betaling in 3 rentevrije termijnen. Bekijk het volledige overzicht op onze ",
               label: "pagina met betaalmethoden",
               after: ".",
             },
@@ -607,9 +607,9 @@ const COPY: Record<Locale, FaqCopy> = {
               "Ja. Alle prijzen in onze webshop worden weergegeven in euro (EUR) en zijn inclusief de wettelijk verschuldigde btw.",
           },
           {
-            question: "Hoe werkt gespreid betalen in 4 rentevrije termijnen?",
+            question: "Hoe werkt gespreid betalen in 3 rentevrije termijnen?",
             answer:
-              "Bij bestellingen vanaf € 1.000 wordt het totaalbedrag verdeeld over vier gelijke termijnen van 25% binnen twee maanden (25% aanbetaling bij goedkeuring en daarna drie tweewekelijkse termijnen), tegen 0% rente en zonder extra kosten.",
+              "Bij bestellingen vanaf € 1.000 wordt het totaalbedrag verdeeld over drie gelijke termijnen (elk 1/3): 1/3 aanbetaling bij goedkeuring en daarna twee tweewekelijkse termijnen, tegen 0% rente en zonder extra kosten.",
           },
         ],
       },

@@ -103,7 +103,7 @@ export const de: Dictionary = {
     uspWarrantyTitle: "2 Jahre EU-Garantie",
     uspWarrantyText: "Volle zweijährige europäische Gewährleistung auf jedes Gerät.",
     uspPaymentTitle: "Vielseitige Zahlungsarten",
-    uspPaymentText: "Visa, Mastercard, Open Banking, SEPA-Überweisung oder 4× zinsfreie Raten.",
+    uspPaymentText: "Visa, Mastercard, Open Banking, SEPA-Überweisung oder 3× zinsfreie Raten.",
     newsletterTitle: "Hardware-Neuheiten & Lager-Updates erhalten",
     newsletterText: "Neue Systeme, Material-Nachschub und Abonnenten-Aktionen — garantiert ohne Spam.",
     newsletterPlaceholder: "Ihre E-Mail-Adresse eingeben",
@@ -188,7 +188,7 @@ export const de: Dictionary = {
     payCardDesc: "Verschlüsselte Zahlung mit Visa & Mastercard",
     payCardUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",
     payCardGatewayNotice:
-      "Aufgrund technischer Probleme mit unserem Zahlungsgateway ist die Kartenzahlung vorübergehend deaktiviert. Bitte nutzen Sie die SEPA-Banküberweisung oder die 4× zinsfreie Ratenzahlung.",
+      "Aufgrund technischer Probleme mit unserem Zahlungsgateway ist die Kartenzahlung vorübergehend deaktiviert. Bitte nutzen Sie die SEPA-Banküberweisung oder die 3× zinsfreie Ratenzahlung.",
     payCardFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     payCardNote:
       "Nach der Bestellung werden Sie zu einer sicheren Zahlungsseite weitergeleitet, um mit Visa oder Mastercard zu bezahlen. Wir sehen Ihre Kartennummer nie. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
@@ -253,7 +253,7 @@ export const de: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Verfügbar auf der sicheren Stripe-Seite, wenn Sie mit Karte zahlen.",
     payMethodsNote:
-      "Alle Preise bei 3DEureka lauten auf Euro (EUR) und enthalten die gesetzliche Mehrwertsteuer, sofern anwendbar. Zahlungen mit Visa und Mastercard werden in Euro auf einer verschlüsselten Zahlungsseite abgewickelt, sodass wir Ihre Kartennummer niemals sehen. Über Open Banking autorisieren Sie mit einem Klick eine Direktzahlung von Ihrem Bankkonto (per Banking-App oder IBAN). Unser 4×-Ratenplan teilt berechtigte Bestellungen in vier gleich hohe, zinsfreie Raten über zwei Monate auf. Bei SEPA-Überweisung wird Ihre Ware reserviert und verschickt, sobald der Betrag auf unserer IBAN (angezeigt im Checkout und in Ihrer Bestellbestätigung) verbucht ist.",
+      "Alle Preise bei 3DEureka lauten auf Euro (EUR) und enthalten die gesetzliche Mehrwertsteuer, sofern anwendbar. Zahlungen mit Visa und Mastercard werden in Euro auf einer verschlüsselten Zahlungsseite abgewickelt, sodass wir Ihre Kartennummer niemals sehen. Über Open Banking autorisieren Sie mit einem Klick eine Direktzahlung von Ihrem Bankkonto (per Banking-App oder IBAN). Unser 3×-Ratenplan teilt berechtigte Bestellungen in drei gleich hohe, zinsfreie Raten auf. Bei SEPA-Überweisung wird Ihre Ware reserviert und verschickt, sobald der Betrag auf unserer IBAN (angezeigt im Checkout und in Ihrer Bestellbestätigung) verbucht ist.",
     payPaypal: "PayPal",
     payPaypalDesc: "Mit PayPal-Guthaben, Bankkonto oder Karte zahlen",
     payPaypalUnavailable: "PayPal ist vorübergehend nicht verfügbar",
@@ -275,8 +275,8 @@ export const de: Dictionary = {
     changePaymentMethodTitle: "Andere Zahlungsmethode versuchen",
     changePaymentMethodHint: "Sie können für diese Bestellung eine andere Zahlungsart wählen.",
     changePaymentMethodError: "Zahlungsmethode konnte nicht geändert werden. Bitte versuchen Sie es erneut.",
-    payInstallments: "Raten — 4× über 2 Monate",
-    payInstallmentsDesc: "4 gleiche zweiwöchentliche Raten bei 0 % Zinsen",
+    payInstallments: "Raten — 3× zinsfrei",
+    payInstallmentsDesc: "3 gleiche zweiwöchentliche Raten bei 0 % Zinsen",
     payInstallmentsMinNote: "Für Warenkörbe ab 1.000 € verfügbar",
     processing: "Bestellung wird aufgegeben…",
     orderError: "Ihre Bestellung konnte nicht aufgegeben werden. Bitte versuchen Sie es erneut.",

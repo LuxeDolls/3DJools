@@ -103,7 +103,7 @@ export const es: Dictionary = {
     uspWarrantyTitle: "Garantía europea de 2 años",
     uspWarrantyText: "Cobertura legal europea completa de dos años en cada equipo.",
     uspPaymentTitle: "Opciones de pago flexibles",
-    uspPaymentText: "Visa, Mastercard, Open Banking, transferencia SEPA o fraccionamiento 4× sin intereses.",
+    uspPaymentText: "Visa, Mastercard, Open Banking, transferencia SEPA o fraccionamiento 3× sin intereses.",
     newsletterTitle: "Recibe avisos de lanzamientos y reposiciones",
     newsletterText: "Nuevos equipos, entrada de materiales y promociones para suscriptores — cero spam.",
     newsletterPlaceholder: "Introduce tu correo electrónico",
@@ -188,7 +188,7 @@ export const es: Dictionary = {
     payCardDesc: "Pasarela cifrada para tarjetas Visa y Mastercard",
     payCardUnavailable: "El pago con tarjeta no está disponible temporalmente",
     payCardGatewayNotice:
-      "Debido a problemas técnicos con nuestra pasarela de pago, los pagos con tarjeta están temporalmente deshabilitados. Utiliza la transferencia bancaria SEPA o el pago en 4× sin intereses.",
+      "Debido a problemas técnicos con nuestra pasarela de pago, los pagos con tarjeta están temporalmente deshabilitados. Utiliza la transferencia bancaria SEPA o el pago en 3× sin intereses.",
     payCardFailed: "El pago con tarjeta no se ha completado. Puedes intentarlo de nuevo.",
     payCardNote:
       "Después de realizar el pedido, serás redirigido a una página de pago segura para pagar con Visa o Mastercard. Nunca vemos el número de tu tarjeta. Si ya has pagado, espera a que se actualice el estado y no pagues dos veces.",
@@ -253,7 +253,7 @@ export const es: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponible en la página segura de Stripe cuando paga con tarjeta.",
     payMethodsNote:
-      "Todos los precios en 3DEureka están expresados en euros (EUR) e incluyen el IVA legalmente aplicable. Los cobros con tarjeta (Visa, Mastercard) se procesan en euros en una pasarela cifrada sin que tengamos acceso al número de tu tarjeta. Mediante Open Banking autorizas un pago inmediato directamente desde tu cuenta bancaria (a través de la app de tu banco o por IBAN). Nuestro plan en 4× divide los pedidos elegibles en cuatro cuotas iguales sin intereses a lo largo de dos meses. Los pedidos por transferencia SEPA quedan reservados y se envían en cuanto recibimos el abono en nuestro IBAN (visible en el checkout y en la confirmación del pedido).",
+      "Todos los precios en 3DEureka están expresados en euros (EUR) e incluyen el IVA legalmente aplicable. Los cobros con tarjeta (Visa, Mastercard) se procesan en euros en una pasarela cifrada sin que tengamos acceso al número de tu tarjeta. Mediante Open Banking autorizas un pago inmediato directamente desde tu cuenta bancaria (a través de la app de tu banco o por IBAN). Nuestro plan en 3× divide los pedidos elegibles en tres cuotas iguales sin intereses. Los pedidos por transferencia SEPA quedan reservados y se envían en cuanto recibimos el abono en nuestro IBAN (visible en el checkout y en la confirmación del pedido).",
     payPaypal: "PayPal",
     payPaypalDesc: "Pague con saldo de PayPal, cuenta bancaria o tarjeta",
     payPaypalUnavailable: "PayPal no está disponible temporalmente",
@@ -275,8 +275,8 @@ export const es: Dictionary = {
     changePaymentMethodTitle: "Prueba otro método de pago",
     changePaymentMethodHint: "Puedes elegir otra forma de pagar este pedido.",
     changePaymentMethodError: "No se pudo cambiar el método de pago. Inténtalo de nuevo.",
-    payInstallments: "A plazos — 4× en 2 meses",
-    payInstallmentsDesc: "4 pagos quincenales iguales al 0 % TAE",
+    payInstallments: "A plazos — 3× sin intereses",
+    payInstallmentsDesc: "3 pagos quincenales iguales al 0 % TAE",
     payInstallmentsMinNote: "Disponible en carritos a partir de 1.000 €",
     processing: "Realizando el pedido…",
     orderError: "No pudimos realizar tu pedido. Inténtalo de nuevo.",

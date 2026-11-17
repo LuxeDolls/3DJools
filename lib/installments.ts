@@ -1,18 +1,18 @@
 import type { ScheduleEntry } from "./db/schema"
 
 /**
- * Installment plan constants. The plan is 4 equal payments over ~6 weeks:
- * a 25% down payment due at approval, then three further 25% payments
+ * Installment plan constants. The plan is 3 equal payments over ~4 weeks:
+ * a 1/3 down payment due at approval, then two further 1/3 payments
  * every two weeks.
  */
-export const INSTALLMENT_COUNT = 4
-export const DOWN_PAYMENT_RATIO = 0.25
+export const INSTALLMENT_COUNT = 3
+export const DOWN_PAYMENT_RATIO = 1 / 3
 export const INSTALLMENT_INTERVAL_DAYS = 14
 
 /** Installments are only available for orders of €1,000 or more. */
 export const MIN_INSTALLMENT_TOTAL_CENTS = 100_000
 
-/** Set to true to allow 4x interest-free installment applications. */
+/** Set to true to allow 3x interest-free installment applications. */
 export const INSTALLMENTS_CHECKOUT_ENABLED = true
 
 export function qualifiesForInstallments(totalCents: number): boolean {
@@ -20,8 +20,8 @@ export function qualifiesForInstallments(totalCents: number): boolean {
 }
 
 /**
- * Split a total (in cents) into 4 payments that sum EXACTLY to the total.
- * Each payment targets 25%; any rounding remainder is absorbed by the down
+ * Split a total (in cents) into 3 payments that sum EXACTLY to the total.
+ * Each payment targets 1/3; any rounding remainder is absorbed by the down
  * payment so the customer is never over- or under-charged in aggregate.
  */
 export function computeInstallmentAmounts(totalCents: number): {
