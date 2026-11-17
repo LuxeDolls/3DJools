@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { CreditCard, Landmark, Building2, CalendarClock, Clock, Mail, Phone } from "lucide-react"
+import { CreditCard, Landmark, Building2, CalendarClock, Clock, Mail } from "lucide-react"
 import { COMPANY, companyStreetLine } from "@/lib/company"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { CARD_CHECKOUT_ENABLED, OPEN_BANKING_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
@@ -10,7 +10,6 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Logo } from "./logo"
-import { WhatsAppMark } from "@/components/contact/whatsapp-mark"
 import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
 
 export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
@@ -122,22 +121,6 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             >
               <Mail className="size-4 shrink-0 text-primary" aria-hidden="true" />
               {COMPANY.email}
-            </a>
-            <a
-              href={`tel:${COMPANY.phoneTel}`}
-              className="inline-flex items-center gap-2 text-xs font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary sm:text-sm"
-            >
-              <Phone className="size-4 shrink-0 text-primary" aria-hidden="true" />
-              {COMPANY.phoneDisplay}
-            </a>
-            <a
-              href={COMPANY.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-medium text-foreground underline underline-offset-2 transition-colors hover:text-primary sm:text-sm"
-            >
-              <WhatsAppMark className="size-4 shrink-0" />
-              WhatsApp {COMPANY.whatsappDisplay}
             </a>
           </div>
           <div className="mt-4 flex items-start gap-2 text-xs text-muted-foreground sm:mt-5 sm:text-sm">

@@ -44,7 +44,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "If your parcel shows transit damage or a hardware defect upon delivery, please contact us within 48 hours of receipt and attach clear photos so we can arrange a free replacement or prepaid return right away.",
     contactHeading: "How to reach our returns desk",
     contactPre: "For order cancellations, return labels, or refund enquiries, contact {legalName} by email at",
-    contactMid: ", by phone on {phone} (Mon–Fri, 9:00–18:00 CET), or by post at",
+    contactMid: " (Mon–Fri, 9:00–18:00 CET), or by post at",
     contactPost: ".",
   },
   de: {
@@ -68,7 +68,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Sollte Ihre Lieferung beschädigt oder funktionsuntüchtig bei Ihnen eintreffen, senden Sie uns bitte innerhalb von 48 Stunden nach Empfang Fotos des Schadens. Wir veranlassen dann umgehend und kostenlos einen Ersatz oder die Rückholung.",
     contactHeading: "Kontakt für Rückgaben & Erstattungen",
     contactPre: "Bei Fragen zu Stornierungen, Rücksendeetiketten oder Rückzahlungen erreichen Sie {legalName} per E-Mail unter",
-    contactMid: ", telefonisch unter {phone} (Mo–Fr, 9:00–18:00 Uhr MEZ) oder schriftlich unter",
+    contactMid: " (Mo–Fr, 9:00–18:00 Uhr MEZ) oder schriftlich unter",
     contactPost: ".",
   },
   fr: {
@@ -92,7 +92,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Si votre commande vous parvient endommagée ou présente un défaut dès la réception, prévenez-nous sous 48 heures avec des photos afin que nous mettions en place gratuitement un remplacement ou une reprise.",
     contactHeading: "Contacter le service des retours",
     contactPre: "Pour toute demande d'annulation, de retour ou de suivi de remboursement, joignez {legalName} par e-mail à",
-    contactMid: ", par téléphone au {phone} (lun.–ven., 9h00–18h00 CET), ou par voie postale à",
+    contactMid: " (lun.–ven., 9h00–18h00 CET), ou par voie postale à",
     contactPost: ".",
   },
   it: {
@@ -116,7 +116,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Se il tuo ordine arriva danneggiato dal trasporto o presenta un difetto fin dall'apertura, scrivici entro 48 ore allegando delle foto: provvederemo subito e senza alcun costo a una sostituzione o a un ritiro gratuito.",
     contactHeading: "Recapiti per resi e rimborsi",
     contactPre: "Per annullamenti, pratiche di reso o informazioni sui rimborsi, contatta {legalName} via e-mail a",
-    contactMid: ", telefonicamente al numero {phone} (lun–ven, 9:00–18:00 CET), oppure per posta ordinaria presso",
+    contactMid: " (lun–ven, 9:00–18:00 CET), oppure per posta ordinaria presso",
     contactPost: ".",
   },
   es: {
@@ -140,7 +140,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Si tu paquete llega con daños de transporte o presenta un fallo al abrirlo, comunícanoslo en un máximo de 48 horas adjuntando fotografías para que organicemos sin coste alguno la sustitución o recogida.",
     contactHeading: "Contacto para cancelaciones y devoluciones",
     contactPre: "Para gestionar cancelaciones, devoluciones o consultas sobre reembolsos, contacta con {legalName} en",
-    contactMid: ", por teléfono en el {phone} (lun–vie, 9:00–18:00 CET), o por correo postal en",
+    contactMid: " (lun–vie, 9:00–18:00 CET), o por correo postal en",
     contactPost: ".",
   },
   nl: {
@@ -164,7 +164,7 @@ const COPY: Record<Locale, ReturnsCopy> = {
       "Komt uw bestelling met transportschade of een defect aan, meld dit dan binnen 48 uur na ontvangst met duidelijke foto's. Wij zorgen dan kosteloos voor een vervangend exemplaar of een gratis retourzending.",
     contactHeading: "Contact voor retouren en terugbetalingen",
     contactPre: "Voor annuleringen, retouraanvragen of vragen over uw terugbetaling bereikt u {legalName} via",
-    contactMid: ", telefonisch op {phone} (ma–vr, 9:00–18:00 uur CET), of per post op",
+    contactMid: " (ma–vr, 9:00–18:00 uur CET), of per post op",
     contactPost: ".",
   },
 }

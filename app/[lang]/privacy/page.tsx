@@ -110,7 +110,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "We may revise this privacy policy periodically to reflect changes in our technical setup or applicable privacy laws. Any significant update will be published on this page with a new revision date.",
     sectionContact: "Privacy contact details",
     contactBefore: "For any privacy-related enquiry or data request, reach {legalName} by email at ",
-    contactPhoneLabel: ", by telephone on {phone}, or by post at {street}, {postalCode} {city}, Belgium.",
+    contactPhoneLabel: ", or by post at {street}, {postalCode} {city}, Belgium.",
     contactAfter: "",
   },
   de: {
@@ -175,7 +175,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Wir passen diese Datenschutzerklärung bei technischen oder rechtlichen Neuerungen an. Maßgebliche Änderungen werden auf dieser Seite mit aktualisiertem Datum ausgewiesen.",
     sectionContact: "Datenschutz-Kontakt",
     contactBefore: "Bei Fragen zum Datenschutz erreichen Sie die {legalName} per E-Mail unter ",
-    contactPhoneLabel: ", telefonisch unter {phone} oder per Post unter {street}, {postalCode} {city}, Belgien.",
+    contactPhoneLabel: " oder per Post unter {street}, {postalCode} {city}, Belgien.",
     contactAfter: "",
   },
   fr: {
@@ -240,7 +240,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Nous pouvons actualiser cette notice de confidentialité pour refléter nos évolutions techniques ou réglementaires. Toute mise à jour substantielle sera publiée sur cette page avec une nouvelle date d'effet.",
     sectionContact: "Nous contacter au sujet de vos données",
     contactBefore: "Pour toute question relative à vos données personnelles, contactez {legalName} par e-mail à ",
-    contactPhoneLabel: ", par téléphone au {phone}, ou par courrier au {street}, {postalCode} {city}, Belgique.",
+    contactPhoneLabel: ", ou par courrier au {street}, {postalCode} {city}, Belgique.",
     contactAfter: "",
   },
   it: {
@@ -305,7 +305,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Potremo aggiornare periodicamente questa informativa per recepire novità tecniche o normative. Eventuali modifiche rilevanti saranno pubblicate su questa pagina con la data di ultimo aggiornamento.",
     sectionContact: "Contatti per la privacy",
     contactBefore: "Per chiarimenti sul trattamento dei tuoi dati personali, contatta {legalName} via e-mail a ",
-    contactPhoneLabel: ", telefonicamente al {phone}, oppure per posta presso {street}, {postalCode} {city}, Belgio.",
+    contactPhoneLabel: ", oppure per posta presso {street}, {postalCode} {city}, Belgio.",
     contactAfter: "",
   },
   es: {
@@ -370,7 +370,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Podemos modificar esta política de privacidad para adaptarla a novedades técnicas o legales. Cualquier cambio relevante se publicará en esta página actualizando la fecha de revisión.",
     sectionContact: "Contacto de privacidad",
     contactBefore: "Para cualquier consulta sobre privacidad o protección de datos, contacta con {legalName} en ",
-    contactPhoneLabel: ", por teléfono en el {phone}, o por correo postal en {street}, {postalCode} {city}, Bélgica.",
+    contactPhoneLabel: ", o por correo postal en {street}, {postalCode} {city}, Bélgica.",
     contactAfter: "",
   },
   nl: {
@@ -435,7 +435,7 @@ const COPY: Record<Locale, PrivacyCopy> = {
       "Wij kunnen deze privacyverklaring aanpassen wanneer onze werkwijze of de wetgeving verandert. Belangrijke wijzigingen worden op deze pagina vermeld met een bijgewerkte datum.",
     sectionContact: "Contact opnemen over privacy",
     contactBefore: "Voor vragen over deze verklaring of uw persoonsgegevens bereikt u {legalName} via ",
-    contactPhoneLabel: ", telefonisch op {phone}, of per post op {street}, {postalCode} {city}, België.",
+    contactPhoneLabel: ", of per post op {street}, {postalCode} {city}, België.",
     contactAfter: "",
   },
 }

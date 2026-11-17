@@ -367,9 +367,6 @@ export function renderEmail(input: EmailRenderInput): string {
                     ${escapeEmailHtml(companyStreetLine)} &middot; KBO ${escapeEmailHtml(COMPANY.companyNumber)} &middot; VAT ${escapeEmailHtml(COMPANY.vat)}
                   </td>
                   <td align="right" valign="top" style="white-space:nowrap;padding-left:12px;">
-                    <a href="tel:${escapeEmailHtml(COMPANY.phoneTel)}" style="color:#E2E8F0;text-decoration:none;">${escapeEmailHtml(COMPANY.phoneDisplay)}</a><br>
-                    <a href="${escapeEmailHtml(COMPANY.whatsappUrl)}" style="color:#FACC15;text-decoration:none;font-weight:600;">WhatsApp</a>
-                    &nbsp;&middot;&nbsp;
                     <a href="mailto:${escapeEmailHtml(COMPANY.email)}" style="color:#93C5FD;text-decoration:none;">${escapeEmailHtml(COMPANY.email)}</a>
                   </td>
                 </tr>

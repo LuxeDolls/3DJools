@@ -290,13 +290,6 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
           <a href={`mailto:${COMPANY.email}`} className="underline underline-offset-2 hover:text-foreground">
             {COMPANY.email}
           </a>
-          <br />
-          {t.phoneLabel}: <a href={`tel:${COMPANY.phoneTel}`} className="underline underline-offset-2 hover:text-foreground">{COMPANY.phoneDisplay}</a>
-          <br />
-          WhatsApp:{" "}
-          <a href={COMPANY.whatsappUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
-            {COMPANY.whatsappDisplay}
-          </a>
         </p>
       </ProseSection>
       <ProseSection heading={t.odrHeading}>

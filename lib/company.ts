@@ -13,11 +13,6 @@ export const COMPANY = {
   country: "Belgium",
   countryCode: "BE",
   statutorySeat: "Antwerpen (Deurne)",
-  phoneDisplay: "+31 970 102 675 78",
-  phoneTel: "+3197010267578",
-  whatsappDisplay: "+31 970 102 675 78",
-  whatsappTel: "+3197010267578",
-  whatsappUrl: "https://wa.me/3197010267578",
   email: "info@3deureka.com",
   companyNumber: "1005.815.863",
   vat: "BE1005815863",
@@ -36,7 +31,6 @@ const COMPANY_TOKENS: Record<string, string> = {
   region: COMPANY.region,
   companyNumber: COMPANY.companyNumber,
   vat: COMPANY.vat,
-  phone: COMPANY.phoneDisplay,
   email: COMPANY.email,
 }
 
@@ -46,7 +40,7 @@ export function fillCompany<T>(value: T): T {
 
 function fill(value: unknown): unknown {
   if (typeof value === "string") {
-    return value.replace(/\{(legalName|tradingName|street|postalCode|city|region|companyNumber|vat|phone|email)\}/g, (_, key: string) => COMPANY_TOKENS[key] ?? "")
+    return value.replace(/\{(legalName|tradingName|street|postalCode|city|region|companyNumber|vat|email)\}/g, (_, key: string) => COMPANY_TOKENS[key] ?? "")
   }
   if (Array.isArray(value)) return value.map(fill)
   if (value && typeof value === "object") {
@@ -64,20 +58,11 @@ export function companyJsonLd() {
     url: COMPANY.url,
     logo: `${COMPANY.url}/icon-48.png`,
     email: COMPANY.email,
-    telephone: COMPANY.phoneTel,
     contactPoint: [
       {
         "@type": "ContactPoint",
         contactType: "customer service",
-        telephone: COMPANY.phoneTel,
         email: COMPANY.email,
-      },
-      {
-        "@type": "ContactPoint",
-        contactType: "customer service",
-        name: "WhatsApp",
-        telephone: COMPANY.whatsappTel,
-        url: COMPANY.whatsappUrl,
       },
     ],
     vatID: COMPANY.vat,
