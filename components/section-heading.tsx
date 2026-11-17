@@ -25,10 +25,10 @@ export function SectionHeading({
       {viewAllHref && viewAllLabel && (
         <Link
           href={viewAllHref}
-          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full border border-border bg-card px-3.5 py-2 text-xs font-semibold text-foreground transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground sm:text-sm"
+          className="group inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary/40 bg-primary px-4 py-2 text-xs font-semibold text-primary-foreground shadow-md shadow-primary/25 transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/35 sm:px-5 sm:py-2.5 sm:text-sm"
         >
           {viewAllLabel}
-          <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+          <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 sm:size-4" aria-hidden="true" />
         </Link>
       )}
     </div>
