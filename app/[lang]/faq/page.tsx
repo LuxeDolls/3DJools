@@ -80,7 +80,7 @@ function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {
 const COPY: Record<Locale, FaqCopy> = {
   en: {
     intro: "Quick, clear answers covering payment options, European parcel delivery, our 30-day return window, warranty coverage, and customer care.",
-    description: "Frequently asked questions about payments, delivery times, 30-day returns, EU warranty, and support at DnD3D.",
+    description: "Frequently asked questions about payments, delivery times, 30-day returns, EU warranty, and support at 3DEureka.",
     policiesHeading: "Store policies & legal documents",
     groups: [
       {
@@ -124,7 +124,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "What warranty protection comes with my hardware?",
             answer:
-              "All equipment purchased from DnD3D is protected by the mandatory 2-year EU statutory warranty against manufacturing defects, alongside any additional commercial warranty offered by the brand. Our support specialists assist you with troubleshooting, repairs, or replacements.",
+              "All equipment purchased from 3DEureka is protected by the mandatory 2-year EU statutory warranty against manufacturing defects, alongside any additional commercial warranty offered by the brand. Our support specialists assist you with troubleshooting, repairs, or replacements.",
           },
         ],
       },
@@ -144,7 +144,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Where do you deliver and which couriers handle the parcels?",
             answer:
-              "We ship across the Netherlands, all other European Union member states, and selected nearby countries (United Kingdom, Switzerland, and Norway). Deliveries are carried out by our dedicated fleet, DnD3D Courier, or handed over to DHL or DPD on routes outside our direct network — always free of charge.",
+              "We ship across Belgium, all other European Union member states, and selected nearby countries (United Kingdom, Switzerland, and Norway). Deliveries are carried out by our dedicated fleet, 3DEureka Courier, or handed over to DHL or DPD on routes outside our direct network — always free of charge.",
           },
           {
             question: "What are the shipping costs and total delivery times?",
@@ -154,7 +154,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "When does your team process orders and messages?",
             answer:
-              "Our operations and customer care teams work Monday through Friday from 9:00 to 18:00 CET, excluding official Dutch public holidays. Enquiries and orders submitted outside those hours are picked up on the next working day.",
+              "Our operations and customer care teams work Monday through Friday from 9:00 to 18:00 CET, excluding official Belgian public holidays. Enquiries and orders submitted outside those hours are picked up on the next working day.",
           },
         ],
       },
@@ -181,7 +181,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   de: {
     intro: "Klare Antworten auf die wichtigsten Fragen rund um Zahlungsmethoden, kostenlose EU-Lieferung, unser 30-tägiges Rückgaberecht, Gewährleistung und Kundenservice.",
-    description: "Häufig gestellte Fragen zu Zahlung, Lieferzeiten, 30 Tagen Rückgabe, EU-Gewährleistung und Support bei DnD3D.",
+    description: "Häufig gestellte Fragen zu Zahlung, Lieferzeiten, 30 Tagen Rückgabe, EU-Gewährleistung und Support bei 3DEureka.",
     policiesHeading: "Richtlinien & Rechtliches",
     groups: [
       {
@@ -245,7 +245,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "In welche Länder versenden Sie und mit welchen Paketdiensten?",
             answer:
-              "Wir beliefern die Niederlande, alle weiteren Mitgliedstaaten der Europäischen Union sowie ausgewählte Nachbarstaaten (Schweiz, Norwegen, Vereinigtes Königreich). Die Zustellung erfolgt durch unseren eigenen Dienst DnD3D Courier oder — falls die Route außerhalb unseres Direktnetzes liegt — über DHL bzw. DPD, jeweils komplett versandkostenfrei.",
+              "Wir beliefern Belgien, alle weiteren Mitgliedstaaten der Europäischen Union sowie ausgewählte Nachbarstaaten (Schweiz, Norwegen, Vereinigtes Königreich). Die Zustellung erfolgt durch unseren eigenen Dienst 3DEureka Courier oder — falls die Route außerhalb unseres Direktnetzes liegt — über DHL bzw. DPD, jeweils komplett versandkostenfrei.",
           },
           {
             question: "Wie hoch sind die Versandkosten und wie lange dauert die Zustellung?",
@@ -255,7 +255,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Zu welchen Geschäftszeiten arbeitet Ihr Team?",
             answer:
-              "Unser Team ist montags bis freitags von 9:00 bis 18:00 Uhr MEZ im Einsatz (ausgenommen gesetzliche Feiertage in den Niederlanden). Außerhalb dieser Zeiten eingehende Bestellungen und Nachrichten bearbeiten wir am darauffolgenden Werktag.",
+              "Unser Team ist montags bis freitags von 9:00 bis 18:00 Uhr MEZ im Einsatz (ausgenommen gesetzliche Feiertage in Belgien). Außerhalb dieser Zeiten eingehende Bestellungen und Nachrichten bearbeiten wir am darauffolgenden Werktag.",
           },
         ],
       },
@@ -282,7 +282,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   fr: {
     intro: "Des réponses claires et directes concernant nos moyens de paiement, la livraison gratuite en Europe, notre délai de retour de 30 jours, la garantie légale et l'assistance client.",
-    description: "Questions fréquentes sur les paiements, les délais d'expédition, les retours sous 30 jours, la garantie UE et le support chez DnD3D.",
+    description: "Questions fréquentes sur les paiements, les délais d'expédition, les retours sous 30 jours, la garantie UE et le support chez 3DEureka.",
     policiesHeading: "Politiques de la boutique & documents légaux",
     groups: [
       {
@@ -346,7 +346,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quels pays desservez-vous et avec quels transporteurs ?",
             answer:
-              "Nous expédions aux Pays-Bas, dans l'ensemble de l'Union européenne ainsi que vers certains pays limitrophes (Royaume-Uni, Suisse et Norvège). L'acheminement est assuré par notre propre flotte DnD3D Courier, ou confié à DHL ou DPD lorsque l'itinéraire sort de notre réseau direct — toujours gratuitement.",
+              "Nous expédions en Belgique, dans l'ensemble de l'Union européenne ainsi que vers certains pays limitrophes (Royaume-Uni, Suisse et Norvège). L'acheminement est assuré par notre propre flotte 3DEureka Courier, ou confié à DHL ou DPD lorsque l'itinéraire sort de notre réseau direct — toujours gratuitement.",
           },
           {
             question: "Quels sont les délais et les frais de livraison ?",
@@ -356,7 +356,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quels sont vos horaires de traitement et d'ouverture ?",
             answer:
-              "Nos équipes sont mobilisées du lundi au vendredi de 9:00 à 18:00 CET, hors jours fériés néerlandais. Les commandes et demandes reçues en dehors de ces plages horaires sont prises en charge dès le jour ouvrable suivant.",
+              "Nos équipes sont mobilisées du lundi au vendredi de 9:00 à 18:00 CET, hors jours fériés belges. Les commandes et demandes reçues en dehors de ces plages horaires sont prises en charge dès le jour ouvrable suivant.",
           },
         ],
       },
@@ -383,7 +383,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   it: {
     intro: "Risposte chiare e immediate su opzioni di pagamento, consegna gratuita in Europa, reso esteso a 30 giorni, garanzia legale e assistenza clienti.",
-    description: "Domande frequenti su metodi di pagamento, tempi di spedizione, resi entro 30 giorni, garanzia UE e supporto su DnD3D.",
+    description: "Domande frequenti su metodi di pagamento, tempi di spedizione, resi entro 30 giorni, garanzia UE e supporto su 3DEureka.",
     policiesHeading: "Condizioni del negozio & documenti legali",
     groups: [
       {
@@ -427,7 +427,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quale copertura di garanzia accompagna le macchine?",
             answer:
-              "Ogni apparecchio venduto da DnD3D gode della garanzia legale europea di 2 anni contro i difetti di conformità, a cui si aggiunge l'eventuale garanzia commerciale del produttore. Il nostro servizio tecnico ti assiste per qualsiasi riparazione o sostituzione.",
+              "Ogni apparecchio venduto da 3DEureka gode della garanzia legale europea di 2 anni contro i difetti di conformità, a cui si aggiunge l'eventuale garanzia commerciale del produttore. Il nostro servizio tecnico ti assiste per qualsiasi riparazione o sostituzione.",
           },
         ],
       },
@@ -447,7 +447,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "In quali Paesi consegnate e a quali corrieri vi affidate?",
             answer:
-              "Consegniamo nei Paesi Bassi, in tutti gli altri Paesi dell'Unione Europea e in alcune nazioni limitrofe (Svizzera, Norvegia e Regno Unito). Le spedizioni viaggiano con il nostro corriere interno DnD3D Courier oppure tramite DHL o DPD sulle tratte non coperte direttamente — sempre a costo zero.",
+              "Consegniamo in Belgio, in tutti gli altri Paesi dell'Unione Europea e in alcune nazioni limitrofe (Svizzera, Norvegia e Regno Unito). Le spedizioni viaggiano con il nostro corriere interno 3DEureka Courier oppure tramite DHL o DPD sulle tratte non coperte direttamente — sempre a costo zero.",
           },
           {
             question: "Quali sono i tempi di consegna complessivi e i costi di spedizione?",
@@ -457,7 +457,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Quali sono i vostri orari operativi?",
             answer:
-              "Il nostro team è operativo dal lunedì al venerdì dalle 9:00 alle 18:00 CET, escluse le festività nazionali olandesi. Gli ordini e i messaggi inviati fuori orario vengono presi in carico il giorno lavorativo successivo.",
+              "Il nostro team è operativo dal lunedì al venerdì dalle 9:00 alle 18:00 CET, escluse le festività nazionali belghe. Gli ordini e i messaggi inviati fuori orario vengono presi in carico il giorno lavorativo successivo.",
           },
         ],
       },
@@ -484,7 +484,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   es: {
     intro: "Respuestas directas sobre formas de pago, envío gratuito en Europa, nuestro plazo de devolución de 30 días, garantía legal y atención al cliente.",
-    description: "Preguntas frecuentes sobre pagos, plazos de entrega, devoluciones en 30 días, garantía de la UE y soporte en DnD3D.",
+    description: "Preguntas frecuentes sobre pagos, plazos de entrega, devoluciones en 30 días, garantía de la UE y soporte en 3DEureka.",
     policiesHeading: "Políticas de la tienda y textos legales",
     groups: [
       {
@@ -548,7 +548,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿A qué países realizáis envíos y con qué empresas de transporte?",
             answer:
-              "Repartimos en los Países Bajos, en el resto de la Unión Europea y en varios países vecinos (Suiza, Noruega y Reino Unido). Operamos con nuestra propia red de reparto, DnD3D Courier, y nos apoyamos en DHL o DPD cuando la ruta queda fuera de nuestra cobertura directa, siempre con envío gratuito.",
+              "Repartimos en Bélgica, en el resto de la Unión Europea y en varios países vecinos (Suiza, Noruega y Reino Unido). Operamos con nuestra propia red de reparto, 3DEureka Courier, y nos apoyamos en DHL o DPD cuando la ruta queda fuera de nuestra cobertura directa, siempre con envío gratuito.",
           },
           {
             question: "¿Cuánto cuesta el envío y cuántos días tarda en llegar?",
@@ -558,7 +558,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "¿Cuál es vuestro horario de atención al público?",
             answer:
-              "Trabajamos de lunes a viernes de 9:00 a 18:00 CET, salvo los festivos oficiales de los Países Bajos. Las consultas y pedidos recibidos fuera de ese horario se gestionan el siguiente día laborable.",
+              "Trabajamos de lunes a viernes de 9:00 a 18:00 CET, salvo los festivos oficiales de Bélgica. Las consultas y pedidos recibidos fuera de ese horario se gestionan el siguiente día laborable.",
           },
         ],
       },
@@ -585,7 +585,7 @@ const COPY: Record<Locale, FaqCopy> = {
   },
   nl: {
     intro: "Duidelijke antwoorden op veelgestelde vragen over betaalopties, gratis Europese levering, onze retourtermijn van 30 dagen, wettelijke garantie en klantenservice.",
-    description: "Veelgestelde vragen over betalingen, levertijden, 30 dagen retourneren, EU-garantie en support bij DnD3D.",
+    description: "Veelgestelde vragen over betalingen, levertijden, 30 dagen retourneren, EU-garantie en support bij 3DEureka.",
     policiesHeading: "Winkelbeleid & juridische documenten",
     groups: [
       {
@@ -649,7 +649,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Naar welke landen leveren jullie en met welke vervoerders?",
             answer:
-              "Wij bezorgen in Nederland, de overige lidstaten van de Europese Unie en enkele omliggende landen (Verenigd Koninkrijk, Zwitserland en Noorwegen). Het vervoer gebeurt met onze eigen koeriersdienst DnD3D Courier, of via DHL en DPD wanneer een route buiten ons eigen netwerk valt — altijd volledig gratis.",
+              "Wij bezorgen in België, de overige lidstaten van de Europese Unie en enkele omliggende landen (Verenigd Koninkrijk, Zwitserland en Noorwegen). Het vervoer gebeurt met onze eigen koeriersdienst 3DEureka Courier, of via DHL en DPD wanneer een route buiten ons eigen netwerk valt — altijd volledig gratis.",
           },
           {
             question: "Wat zijn de verzendkosten en de totale levertijd?",
@@ -659,7 +659,7 @@ const COPY: Record<Locale, FaqCopy> = {
           {
             question: "Wat zijn jullie bereikbaarheids- en verwerkingstijden?",
             answer:
-              "Ons team werkt van maandag tot en met vrijdag van 9:00 tot 18:00 CET, met uitzondering van officiële Nederlandse feestdagen. Bestellingen en berichten buiten deze uren worden op de eerstvolgende werkdag opgepakt.",
+              "Ons team werkt van maandag tot en met vrijdag van 9:00 tot 18:00 CET, met uitzondering van officiële Belgische feestdagen. Bestellingen en berichten buiten deze uren worden op de eerstvolgende werkdag opgepakt.",
           },
         ],
       },

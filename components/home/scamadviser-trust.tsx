@@ -1,7 +1,7 @@
 import { ExternalLink } from "lucide-react"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 
-export const scamAdviserUrl = "https://www.scamadviser.com/check-website/dnd3d.com"
+export const scamAdviserUrl = "https://www.scamadviser.com/check-website/3deureka.com"
 
 export function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; compact?: boolean }) {
   if (compact) {

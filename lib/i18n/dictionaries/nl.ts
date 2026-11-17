@@ -1,10 +1,10 @@
 import type { Dictionary } from "./en"
 
 export const nl: Dictionary = {
-  brandName: "DnD3D",
+  brandName: "3DEureka",
   maintenance: {
     label: "Technisch onderhoud",
-    text: "De winkel wordt bijgewerkt. Het nieuwe adres wordt dnd3d.com. Wacht met een nieuwe bestelling.",
+    text: "De winkel wordt bijgewerkt. Het nieuwe adres wordt 3deureka.com. Wacht met een nieuwe bestelling.",
   },
   tagline: "Serieuze 3D-printers. Eerlijke prijzen.",
   nav: {
@@ -118,7 +118,7 @@ export const nl: Dictionary = {
   promo: {
     memberEyebrow: "Leden besparen meer",
     memberTitle: "5% korting op elke bestelling",
-    memberText: "Maak een gratis DnD3D-account aan en een exclusieve ledenkorting van 5% wordt automatisch toegepast bij het afrekenen — op elk product, elke keer.",
+    memberText: "Maak een gratis 3DEureka-account aan en een exclusieve ledenkorting van 5% wordt automatisch toegepast bij het afrekenen — op elk product, elke keer.",
     memberCtaGuest: "Gratis account aanmaken",
     memberCtaSignIn: "Inloggen",
     memberActiveTitle: "Je ledenkorting van 5% is actief",
@@ -201,7 +201,7 @@ export const nl: Dictionary = {
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Opent de beveiligde Square-pagina · afschrijving in Amerikaanse dollars · afschrift: HIRA",
     paySquareNote:
-      "Na de bestelling gaat u naar de beveiligde betaalpagina van Square. De kaart wordt afgeschreven in Amerikaanse dollars tegen de koers van de Europese Centrale Bank. Het bedrag staat vóór de betaling. Op het afschrift staat HIRA, niet DnD3D. Wij zien het kaartnummer niet.",
+      "Na de bestelling gaat u naar de beveiligde betaalpagina van Square. De kaart wordt afgeschreven in Amerikaanse dollars tegen de koers van de Europese Centrale Bank. Het bedrag staat vóór de betaling. Op het afschrift staat HIRA, niet 3DEureka. Wij zien het kaartnummer niet.",
     paySquareUnavailable: "Kaartbetaling is tijdelijk niet beschikbaar.",
     paySquareFailed: "De kaartbetaling is niet voltooid. U kunt het opnieuw proberen.",
     paySquarePending: "De betaling wordt nog verwerkt. Wacht op de statusupdate en betaal niet twee keer.",
@@ -253,7 +253,7 @@ export const nl: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen bij DnD3D luiden in euro (EUR) en zijn inclusief de wettelijk verschuldigde btw. Betalingen met Visa en Mastercard worden in euro verwerkt op een versleutelde betaalpagina, waarbij wij uw kaartnummer nooit te zien krijgen. Met Open Banking bevestigt u met één klik een directe betaling vanaf uw bankrekening (via uw bank-app of IBAN). Ons 4×-termijnplan verdeelt geschikte bestellingen in vier gelijke, rentevrije termijnen over twee maanden. Bestellingen per SEPA-bankoverschrijving worden voor u gereserveerd en verzonden zodra het bedrag op onze IBAN (getoond bij het afrekenen en in uw bevestigingsmail) is bijgeschreven.",
+      "Alle prijzen bij 3DEureka luiden in euro (EUR) en zijn inclusief de wettelijk verschuldigde btw. Betalingen met Visa en Mastercard worden in euro verwerkt op een versleutelde betaalpagina, waarbij wij uw kaartnummer nooit te zien krijgen. Met Open Banking bevestigt u met één klik een directe betaling vanaf uw bankrekening (via uw bank-app of IBAN). Ons 4×-termijnplan verdeelt geschikte bestellingen in vier gelijke, rentevrije termijnen over twee maanden. Bestellingen per SEPA-bankoverschrijving worden voor u gereserveerd en verzonden zodra het bedrag op onze IBAN (getoond bij het afrekenen en in uw bevestigingsmail) is bijgeschreven.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",
@@ -307,7 +307,7 @@ export const nl: Dictionary = {
     title: "Volg je bestelling",
     subtitle: "Voer je bestelnummer en het e-mailadres van je bestelling in om de status te zien.",
     orderNumberLabel: "Bestelnummer",
-    orderNumberPlaceholder: "bijv. DND-20250101-ABCDE",
+    orderNumberPlaceholder: "bijv. 3DE-20250101-ABCDE",
     emailLabel: "E-mailadres",
     emailPlaceholder: "jij@voorbeeld.nl",
     submit: "Bestelling volgen",
@@ -335,12 +335,12 @@ export const nl: Dictionary = {
     impressum: "Colofon",
     rights: "Alle rechten voorbehouden.",
     paymentsSecured: "Betalingen beveiligd & versleuteld",
-    operatedBy: "DnD3D wordt beheerd door BJX Business Group B.V.",
+    operatedBy: "3DEureka wordt beheerd door AIREF SOLUTIONS",
     companyBlurb: "Jouw Europese winkel voor 3D-printers, filament en accessoires van de merken die makers vertrouwen.",
-    companyNumber: "KvK-nummer",
+    companyNumber: "KBO-nummer",
     vatId: "Btw-nummer",
     scamAdviserBadge: "Zeer waarschijnlijk veilig",
-    scamAdviserLink: "Bekijk DnD3D op ScamAdviser",
+    scamAdviserLink: "Bekijk 3DEureka op ScamAdviser",
     hoursNote: "Ma–Vr, 9:00–18:00 CET · Bestellingen worden binnen 0–2 werkdagen verwerkt · We reageren binnen 48 uur",
   },
   contact: {
@@ -368,11 +368,11 @@ export const nl: Dictionary = {
     quickLinks: "Snelle links",
   },
   chat: {
-    title: "DnD3D support",
+    title: "3DEureka support",
     subtitle: "Een medewerker neemt zo contact op",
     placeholder: "Typ je bericht…",
-    greeting: "Wacht tot een medewerker verbinding maakt, of stuur uw vraag naar info@dnd3d.com.",
-    aiDisclaimer: "Een medewerker antwoordt hier. U kunt ook mailen naar info@dnd3d.com.",
+    greeting: "Wacht tot een medewerker verbinding maakt, of stuur uw vraag naar info@3deureka.com.",
+    aiDisclaimer: "Een medewerker antwoordt hier. U kunt ook mailen naar info@3deureka.com.",
     send: "Versturen",
     open: "Chat met ons",
     name: "Naam",
@@ -414,7 +414,7 @@ export const nl: Dictionary = {
     signInTitle: "Welkom terug",
     signInSubtitle: "Log in op je account om verder te gaan",
     signUpTitle: "Maak je account aan",
-    signUpSubtitle: "Word lid van DnD3D om bestellingen te volgen en sneller af te rekenen",
+    signUpSubtitle: "Word lid van 3DEureka om bestellingen te volgen en sneller af te rekenen",
     name: "Volledige naam",
     email: "E-mailadres",
     password: "Wachtwoord",
@@ -454,7 +454,7 @@ export const nl: Dictionary = {
   },
   cookiePolicy: {
     title: "Cookiebeleid",
-    intro: "Deze verklaring legt uit hoe DnD3D cookies en vergelijkbare opslagtechnologieën inzet wanneer u onze online winkel bezoekt.",
+    intro: "Deze verklaring legt uit hoe 3DEureka cookies en vergelijkbare opslagtechnologieën inzet wanneer u onze online winkel bezoekt.",
     sections: [
       {
         heading: "Hoe werken cookies?",

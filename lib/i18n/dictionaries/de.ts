@@ -1,11 +1,11 @@
 import type { Dictionary } from "./en"
 
 export const de: Dictionary = {
-  brandName: "DnD3D",
+  brandName: "3DEureka",
   tagline: "Ernsthafte 3D-Drucker. Ehrliche Preise.",
   maintenance: {
     label: "Technische Wartung",
-    text: "Der Shop wird gerade aktualisiert. Die neue Adresse wird dnd3d.com. Bitte warten Sie mit einer neuen Bestellung.",
+    text: "Der Shop wird gerade aktualisiert. Die neue Adresse wird 3deureka.com. Bitte warten Sie mit einer neuen Bestellung.",
   },
   nav: {
     catalog: "Katalog",
@@ -118,7 +118,7 @@ export const de: Dictionary = {
   promo: {
     memberEyebrow: "Mitglieder sparen mehr",
     memberTitle: "5% Rabatt auf jede Bestellung",
-    memberText: "Erstelle ein kostenloses DnD3D-Konto und ein exklusiver 5%-Mitgliederrabatt wird an der Kasse automatisch angewendet — auf jedes Produkt, jedes Mal.",
+    memberText: "Erstelle ein kostenloses 3DEureka-Konto und ein exklusiver 5%-Mitgliederrabatt wird an der Kasse automatisch angewendet — auf jedes Produkt, jedes Mal.",
     memberCtaGuest: "Kostenloses Konto erstellen",
     memberCtaSignIn: "Anmelden",
     memberActiveTitle: "Dein 5%-Mitgliederrabatt ist aktiv",
@@ -201,7 +201,7 @@ export const de: Dictionary = {
     paySquare: "Visa / Mastercard",
     paySquareDesc: "Öffnet die sichere Square-Seite · Abbuchung in US-Dollar · Kontoauszug: HIRA",
     paySquareNote:
-      "Nach der Bestellung werden Sie zur sicheren Zahlungsseite von Square weitergeleitet. Die Karte wird in US-Dollar zum Kurs der Europäischen Zentralbank belastet. Der Betrag steht vor der Zahlung. Auf dem Kontoauszug erscheint HIRA, nicht DnD3D. Wir sehen die Kartennummer nicht.",
+      "Nach der Bestellung werden Sie zur sicheren Zahlungsseite von Square weitergeleitet. Die Karte wird in US-Dollar zum Kurs der Europäischen Zentralbank belastet. Der Betrag steht vor der Zahlung. Auf dem Kontoauszug erscheint HIRA, nicht 3DEureka. Wir sehen die Kartennummer nicht.",
     paySquareUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar.",
     paySquareFailed: "Die Kartenzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     paySquarePending: "Die Zahlung wird noch verarbeitet. Warten Sie auf die Statusänderung und zahlen Sie nicht zweimal.",
@@ -253,7 +253,7 @@ export const de: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Verfügbar auf der sicheren Stripe-Seite, wenn Sie mit Karte zahlen.",
     payMethodsNote:
-      "Alle Preise bei DnD3D lauten auf Euro (EUR) und enthalten die gesetzliche Mehrwertsteuer, sofern anwendbar. Zahlungen mit Visa und Mastercard werden in Euro auf einer verschlüsselten Zahlungsseite abgewickelt, sodass wir Ihre Kartennummer niemals sehen. Über Open Banking autorisieren Sie mit einem Klick eine Direktzahlung von Ihrem Bankkonto (per Banking-App oder IBAN). Unser 4×-Ratenplan teilt berechtigte Bestellungen in vier gleich hohe, zinsfreie Raten über zwei Monate auf. Bei SEPA-Überweisung wird Ihre Ware reserviert und verschickt, sobald der Betrag auf unserer IBAN (angezeigt im Checkout und in Ihrer Bestellbestätigung) verbucht ist.",
+      "Alle Preise bei 3DEureka lauten auf Euro (EUR) und enthalten die gesetzliche Mehrwertsteuer, sofern anwendbar. Zahlungen mit Visa und Mastercard werden in Euro auf einer verschlüsselten Zahlungsseite abgewickelt, sodass wir Ihre Kartennummer niemals sehen. Über Open Banking autorisieren Sie mit einem Klick eine Direktzahlung von Ihrem Bankkonto (per Banking-App oder IBAN). Unser 4×-Ratenplan teilt berechtigte Bestellungen in vier gleich hohe, zinsfreie Raten über zwei Monate auf. Bei SEPA-Überweisung wird Ihre Ware reserviert und verschickt, sobald der Betrag auf unserer IBAN (angezeigt im Checkout und in Ihrer Bestellbestätigung) verbucht ist.",
     payPaypal: "PayPal",
     payPaypalDesc: "Mit PayPal-Guthaben, Bankkonto oder Karte zahlen",
     payPaypalUnavailable: "PayPal ist vorübergehend nicht verfügbar",
@@ -307,7 +307,7 @@ export const de: Dictionary = {
     title: "Bestellung verfolgen",
     subtitle: "Geben Sie Ihre Bestellnummer und die beim Bezahlvorgang verwendete E-Mail-Adresse ein, um den Status zu sehen.",
     orderNumberLabel: "Bestellnummer",
-    orderNumberPlaceholder: "z. B. DND-20250101-ABCDE",
+    orderNumberPlaceholder: "z. B. 3DE-20250101-ABCDE",
     emailLabel: "E-Mail-Adresse",
     emailPlaceholder: "sie@beispiel.de",
     submit: "Bestellung verfolgen",
@@ -336,11 +336,11 @@ export const de: Dictionary = {
     rights: "Alle Rechte vorbehalten.",
     paymentsSecured: "Zahlungen gesichert & verschlüsselt",
     companyBlurb: "Dein europäischer Shop für 3D-Drucker, Filament und Zubehör der Marken, denen Maker vertrauen.",
-    operatedBy: "DnD3D wird betrieben von BJX Business Group B.V.",
-    companyNumber: "KvK",
+    operatedBy: "3DEureka wird betrieben von AIREF SOLUTIONS",
+    companyNumber: "KBO-Nr.",
     vatId: "USt-IdNr.",
     scamAdviserBadge: "Sehr wahrscheinlich sicher",
-    scamAdviserLink: "DnD3D auf ScamAdviser ansehen",
+    scamAdviserLink: "3DEureka auf ScamAdviser ansehen",
     hoursNote: "Mo–Fr, 9:00–18:00 MEZ · Bestellungen werden innerhalb von 0–2 Werktagen bearbeitet · Wir antworten innerhalb von 48 Stunden",
   },
   contact: {
@@ -368,11 +368,11 @@ export const de: Dictionary = {
     quickLinks: "Schnelllinks",
   },
   chat: {
-    title: "DnD3D Support",
+    title: "3DEureka Support",
     subtitle: "Ein Mitarbeiter meldet sich in Kürze",
     placeholder: "Nachricht eingeben…",
-    greeting: "Bitte warten Sie, bis ein Mitarbeiter verbunden ist, oder senden Sie Ihre Frage an info@dnd3d.com.",
-    aiDisclaimer: "Ein Mitarbeiter antwortet hier. Sie können auch an info@dnd3d.com schreiben.",
+    greeting: "Bitte warten Sie, bis ein Mitarbeiter verbunden ist, oder senden Sie Ihre Frage an info@3deureka.com.",
+    aiDisclaimer: "Ein Mitarbeiter antwortet hier. Sie können auch an info@3deureka.com schreiben.",
     send: "Senden",
     open: "Chatte mit uns",
     name: "Name",
@@ -414,7 +414,7 @@ export const de: Dictionary = {
     signInTitle: "Willkommen zurück",
     signInSubtitle: "Melde dich an, um fortzufahren",
     signUpTitle: "Konto erstellen",
-    signUpSubtitle: "Werde Teil von DnD3D — Bestellungen verfolgen und schneller bezahlen",
+    signUpSubtitle: "Werde Teil von 3DEureka — Bestellungen verfolgen und schneller bezahlen",
     name: "Vollständiger Name",
     email: "E-Mail-Adresse",
     password: "Passwort",
@@ -454,7 +454,7 @@ export const de: Dictionary = {
   },
   cookiePolicy: {
     title: "Cookie-Richtlinie",
-    intro: "Dieser Hinweis erläutert, wie DnD3D beim Besuch unseres Onlineshops Cookies und vergleichbare Browserspeicher-Technologien einsetzt.",
+    intro: "Dieser Hinweis erläutert, wie 3DEureka beim Besuch unseres Onlineshops Cookies und vergleichbare Browserspeicher-Technologien einsetzt.",
     sections: [
       {
         heading: "Funktionsweise von Cookies",

@@ -1,29 +1,27 @@
 // Single source for the store's legal identity. Visible pages, the installment
 // contract and schema.org Organization all read from here.
-// Registry facts are from the KvK extract of 18 October 2026 (KvK 81194560).
-// VAT NL861980669B01 is the number published by Creditsafe and confirmed valid
-// in VIES for BJX BUSINESS GROUP B.V. at Herengracht 449 A, Amsterdam.
+// Registry facts are from the KBO public extract (1005.815.863) and the
+// founding deed published in the Bijlagen bij het Belgisch Staatsblad on
+// 12 February 2024 (ref. 24357554) for AIREF SOLUTIONS (Commanditaire vennootschap).
 export const COMPANY = {
-  tradingName: "DnD3D",
-  legalName: "BJX Business Group B.V.",
-  street: "Herengracht 449 A",
-  postalCode: "1017 BR",
-  city: "Amsterdam",
-  region: "",
-  country: "Netherlands",
-  countryCode: "NL",
-  statutorySeat: "Amsterdam",
+  tradingName: "3DEureka",
+  legalName: "AIREF SOLUTIONS",
+  street: "Turnhoutsebaan 243",
+  postalCode: "2100",
+  city: "Antwerpen",
+  region: "Antwerpen",
+  country: "Belgium",
+  countryCode: "BE",
+  statutorySeat: "Antwerpen (Deurne)",
   phoneDisplay: "+31 970 102 675 78",
   phoneTel: "+3197010267578",
   whatsappDisplay: "+31 970 102 675 78",
   whatsappTel: "+3197010267578",
   whatsappUrl: "https://wa.me/3197010267578",
-  email: "info@dnd3d.com",
-  companyNumber: "81194560",
-  establishmentNumber: "000047508043",
-  rsin: "861980669",
-  vat: "NL861980669B01",
-  url: "https://www.dnd3d.com",
+  email: "info@3deureka.com",
+  companyNumber: "1005.815.863",
+  vat: "BE1005815863",
+  url: "https://www.3deureka.com",
 } as const
 
 export const companyStreetLine = `${COMPANY.street}, ${COMPANY.postalCode} ${COMPANY.city}, ${COMPANY.country}`
@@ -82,13 +80,14 @@ export function companyJsonLd() {
       },
     ],
     vatID: COMPANY.vat,
-    taxID: COMPANY.rsin,
+    taxID: COMPANY.companyNumber,
     identifier: COMPANY.companyNumber,
     address: {
       "@type": "PostalAddress",
       streetAddress: COMPANY.street,
       postalCode: COMPANY.postalCode,
       addressLocality: COMPANY.city,
+      addressRegion: COMPANY.region,
       addressCountry: COMPANY.countryCode,
     },
   }

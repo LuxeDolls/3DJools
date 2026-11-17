@@ -18,13 +18,13 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: 'DnD3D — 3D Printers, Filament & Accessories',
-    template: '%s · DnD3D',
+    default: '3DEureka — 3D Printers, Filament & Accessories',
+    template: '%s · 3DEureka',
   },
   description:
     'Top-tier 3D printers, filament and accessories at honest prices. Free shipping on every order across the EU. Bambu Lab, Prusa, Creality, Anycubic, Elegoo and more.',
   generator: 'v0.app',
-  metadataBase: new URL('https://www.dnd3d.com'),
+  metadataBase: new URL('https://www.3deureka.com'),
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: '48x48' },

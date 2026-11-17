@@ -6,9 +6,12 @@
  *  Pages use a same-origin /media path so the HTML does not name a host.
  *  Feeds and schema use SITE_ORIGIN.
  */
-export const SITE_ORIGIN = "https://www.dnd3d.com"
-export const IMAGE_ORIGIN = "https://images.dnd3d.com"
+export const SITE_ORIGIN = "https://www.3deureka.com"
+export const IMAGE_ORIGIN = "https://images.3deureka.com"
 const OWN_HOSTS = new Set([
+  "3deureka.com",
+  "www.3deureka.com",
+  "images.3deureka.com",
   "dnd3d.com",
   "www.dnd3d.com",
   "images.dnd3d.com",

@@ -42,15 +42,15 @@ export function middleware(request: NextRequest) {
 
   // The image host only serves catalog photos. robots.txt and image files
   // are outside this matcher; everything else must not duplicate the storefront.
-  if (host === "images.dnd3d.com" || host === "images.3djools.com") {
+  if (host === "images.3deureka.com" || host === "images.dnd3d.com" || host === "images.3djools.com") {
     return new NextResponse("Not found", { status: 404 })
   }
 
   // The OAuth callback stays on www, but shoppers use the apex domain.
   // Page requests must not split the session across the two hosts.
-  if (host === "www.dnd3d.com") {
+  if (host === "www.3deureka.com") {
     const url = request.nextUrl.clone()
-    url.hostname = "dnd3d.com"
+    url.hostname = "3deureka.com"
     url.protocol = "https:"
     return NextResponse.redirect(url, 308)
   }

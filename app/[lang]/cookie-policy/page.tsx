@@ -43,8 +43,8 @@ export default async function CookiePolicyPage({
 
       <p className="mt-10 text-sm leading-relaxed text-muted-foreground">
         {dict.legal.contactPrompt}{" "}
-        <a href="mailto:info@dnd3d.com" className="underline underline-offset-2 hover:text-foreground">
-          info@dnd3d.com
+        <a href="mailto:info@3deureka.com" className="underline underline-offset-2 hover:text-foreground">
+          info@3deureka.com
         </a>.
       </p>
 
