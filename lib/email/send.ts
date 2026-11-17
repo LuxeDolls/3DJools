@@ -15,15 +15,15 @@ export type SendResult = { sent: boolean; skipped?: boolean; error?: string }
 
 function withStoreLayout(html: string): string {
   if (html.includes("data-dnd-email")) return html
-  return renderEmail({ preheader: "DnD3D", body: html })
+  return renderEmail({ preheader: "3DEureka", body: html })
 }
 
-const mailbox = "info@dnd3d.com"
+const mailbox = "info@3deureka.com"
 const configuredUser = process.env.ZOHO_SMTP_USER?.trim()
-const smtpUser = configuredUser?.toLowerCase().endsWith("@dnd3d.com") ? configuredUser : mailbox
+const smtpUser = configuredUser?.toLowerCase().endsWith("@3deureka.com") ? configuredUser : mailbox
 const smtpHost = process.env.ZOHO_SMTP_HOST ?? "smtp.zoho.eu"
 const smtpPort = Number(process.env.ZOHO_SMTP_PORT ?? "465")
-const smtpPassword = process.env.ZOHO_SMTP_PASSWORD
+const smtpPassword = process.env.ZOHO_3DEUREKA_PASSWORD?.trim() || process.env.ZOHO_SMTP_PASSWORD?.trim()
 
 const transporter = nodemailer.createTransport({
   host: smtpHost,
@@ -45,7 +45,7 @@ export async function sendEmail({ to, subject, html, text, replyTo }: SendEmailI
 
   try {
     await transporter.sendMail({
-      from: `DnD3D <${smtpUser}>`,
+      from: `3DEureka <${smtpUser}>`,
       to,
       replyTo,
       subject,

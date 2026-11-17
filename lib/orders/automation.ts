@@ -1,6 +1,6 @@
 import "server-only"
 
-import { and, eq, lte } from "drizzle-orm"
+import { and, eq, isNull, lte } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { orders } from "@/lib/db/schema"
 import { updateOrderStatus } from "@/lib/orders/queries"
@@ -34,7 +34,10 @@ export async function runOrderAutomation(): Promise<OrderAutomationResult> {
   const movedToProcessing: string[] = []
   const movedToShipped: string[] = []
 
-  const paidOrders = await db.select({ id: orders.id }).from(orders).where(eq(orders.status, "paid"))
+  const paidOrders = await db
+    .select({ id: orders.id })
+    .from(orders)
+    .where(and(eq(orders.status, "paid"), isNull(orders.archivedAt)))
   for (const { id } of paidOrders) {
     await updateOrderStatus(id, "processing")
     movedToProcessing.push(id)
@@ -44,7 +47,7 @@ export async function runOrderAutomation(): Promise<OrderAutomationResult> {
   const readyToShip = await db
     .select({ id: orders.id })
     .from(orders)
-    .where(and(eq(orders.status, "processing"), lte(orders.updatedAt, cutoff)))
+    .where(and(eq(orders.status, "processing"), isNull(orders.archivedAt), lte(orders.updatedAt, cutoff)))
   for (const { id } of readyToShip) {
     await updateOrderStatus(id, "shipped")
     movedToShipped.push(id)

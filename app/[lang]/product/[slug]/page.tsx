@@ -27,7 +27,7 @@ export async function generateMetadata({
   const locale: Locale = isLocale(lang) ? lang : "en"
   const product = await getProductBySlug(slug, locale)
   if (!product) return {}
-  const canonical = `https://www.dnd3d.com/${locale}/product/${product.slug}`
+  const canonical = `https://www.3deureka.com/${locale}/product/${product.slug}`
   return {
     title: product.name,
     description: product.shortDescription,
@@ -56,7 +56,7 @@ export default async function ProductPage({
   if (!product) notFound()
 
   const related = await getRelatedProducts(product, 4, locale)
-  const url = `https://www.dnd3d.com${localizedPath(locale, `/product/${product.slug}`)}`
+  const url = `https://www.3deureka.com${localizedPath(locale, `/product/${product.slug}`)}`
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
@@ -99,7 +99,7 @@ export default async function ProductPage({
 
         <div>
           <h2 className="font-heading text-lg font-bold text-foreground sm:text-xl">{dict.product.specifications}</h2>
-          <dl className="mt-3 divide-y divide-border rounded-xl border border-border bg-card/40 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 sm:mt-4">
+          <dl className="mt-3 divide-y divide-border rounded-xl border border-border bg-card/40 shadow-xs transition-transform duration-200 hover:-translate-y-0.5 sm:mt-4">
             {product.specs.map((spec) => (
               <div
                 key={spec.label}

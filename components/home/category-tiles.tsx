@@ -5,83 +5,70 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { SectionHeading } from "@/components/section-heading"
+import { getHomeCategories } from "./category-data"
+import { cn } from "@/lib/utils"
+
+const LAYOUT: Record<string, string> = {
+  printers: "col-span-2 lg:col-span-2 lg:row-span-2",
+  filaments: "col-span-1 lg:col-span-2",
+  resins: "col-span-1",
+  accessories: "col-span-1",
+  laser: "col-span-1 lg:col-span-2",
+  scanners: "col-span-2 sm:col-span-3 lg:col-span-2",
+}
 
 export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictionary }) {
-  const tiles = [
-    {
-      key: dict.categories.printers,
-      href: "/catalog/printers",
-      image: "/brand/tile-printers.jpg?v=4",
-      tag: "FDM & SLA",
-    },
-    {
-      key: dict.categories.resins,
-      href: "/catalog/resins",
-      image: "/brand/tile-resins.jpg?v=8",
-      tag: "8K / 12K / Tough",
-    },
-    {
-      key: dict.categories.filaments,
-      href: "/catalog/filaments",
-      image: "/brand/tile-filaments.jpg?v=4",
-      tag: "PLA · PETG · ABS · CF",
-    },
-    {
-      key: dict.categories.accessories,
-      href: "/catalog/accessories",
-      image: "/brand/tile-accessories.jpg?v=7",
-      tag: "AMS · Dryers · Plates",
-    },
-    {
-      key: dict.categories.laserEngravers,
-      href: "/catalog/laser-engravers",
-      image: "/brand/tile-laser.jpg?v=5",
-      tag: "Diode & CO2",
-    },
-    {
-      key: dict.categories.scanners,
-      href: "/catalog/scanners",
-      image: "/brand/tile-scanners.jpg?v=8",
-      tag: "Blue Laser & NIR",
-    },
-  ]
+  const tiles = getHomeCategories(dict)
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-8 sm:py-12">
+    <section className="mx-auto max-w-7xl px-4 py-10 sm:py-16">
       <SectionHeading
+        eyebrow={dict.nav.catalog}
         title={dict.home.shopByCategory}
         viewAllHref={localizedPath(locale, "/catalog")}
         viewAllLabel={dict.home.viewAll}
       />
-      <div className="grid grid-cols-2 gap-2.5 sm:gap-3.5 md:grid-cols-3 md:gap-5">
-        {tiles.map((tile) => (
-          <Link
-            key={tile.href}
-            href={localizedPath(locale, tile.href)}
-            className="group flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-[0_4px_12px_rgba(0,0,0,0.18),0_20px_50px_-12px_rgba(0,0,0,0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_8px_20px_rgba(0,0,0,0.25),0_28px_60px_-12px_rgba(0,0,0,0.65)]"
-          >
-            <div className="relative aspect-4/3 overflow-hidden bg-white">
+      <div className="grid auto-rows-[11rem] grid-cols-2 gap-3 sm:auto-rows-[13rem] sm:grid-cols-3 sm:gap-4 lg:auto-rows-[14rem] lg:grid-cols-4">
+        {tiles.map((tile) => {
+          const hero = tile.id === "printers"
+          return (
+            <Link
+              key={tile.id}
+              href={localizedPath(locale, tile.href)}
+              className={cn(
+                "group relative flex overflow-hidden rounded-3xl border border-border/90 bg-photo text-ink shadow-[var(--shadow-float-md)] transition-all duration-300 hover:-translate-y-1.5 hover:border-primary hover:shadow-[var(--shadow-float-md-hover)]",
+                LAYOUT[tile.id],
+              )}
+            >
               <Image
                 src={tile.image || "/placeholder.svg"}
-                alt={tile.key}
+                alt=""
                 fill
-                sizes="(max-width: 1024px) 50vw, 33vw"
-                className="object-contain p-3 transition-transform duration-300 group-hover:scale-105 sm:p-4"
+                sizes={hero ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"}
+                className={cn(
+                  "object-contain transition-transform duration-500 ease-out group-hover:scale-105",
+                  hero ? "p-4 pb-12 sm:p-6 sm:pb-14 lg:p-12 lg:pb-20" : "p-4 pb-12 sm:p-6 sm:pb-14",
+                )}
               />
-              <span className="absolute top-2 left-2 rounded-md border border-neutral-200 bg-white/95 px-1.5 py-0.5 text-[9px] font-bold tracking-wide text-neutral-700 uppercase shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 group-hover:-translate-y-0.5 sm:top-2.5 sm:left-2.5 sm:px-2 sm:text-[10px]">
-                {tile.tag}
+              <span className="absolute top-3 right-3 flex size-9 items-center justify-center rounded-full bg-ink text-ink-foreground transition-all duration-300 group-hover:rotate-45 group-hover:bg-primary group-hover:text-primary-foreground">
+                <ArrowUpRight className="size-4" aria-hidden="true" />
               </span>
-            </div>
-            <div className="flex flex-1 items-center justify-between gap-1.5 border-t border-border px-3 py-2.5 sm:px-4 sm:py-3.5">
-              <h3 className="font-heading text-sm font-bold leading-tight text-balance text-card-foreground transition-colors group-hover:text-primary sm:text-base md:text-lg">
-                {tile.key}
-              </h3>
-              <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-secondary text-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 group-hover:-translate-y-0.5 group-hover:bg-primary group-hover:text-primary-foreground sm:size-7">
-                <ArrowUpRight className="size-3.5 sm:size-4" />
-              </span>
-            </div>
-          </Link>
-        ))}
+              <div className="absolute inset-x-3 bottom-3 flex flex-col gap-1 sm:inset-x-4 sm:bottom-4">
+                <span className="w-fit rounded-full bg-secondary px-2 py-0.5 font-mono text-[9px] tracking-wider text-secondary-foreground uppercase sm:text-[10px]">
+                  {tile.tag}
+                </span>
+                <h3
+                  className={cn(
+                    "font-heading leading-none font-bold text-balance text-ink",
+                    hero ? "text-3xl sm:text-5xl" : "text-lg sm:text-2xl",
+                  )}
+                >
+                  {tile.label}
+                </h3>
+              </div>
+            </Link>
+          )
+        })}
       </div>
     </section>
   )

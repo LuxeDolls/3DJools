@@ -1,6 +1,6 @@
 import "server-only"
 
-import { desc, eq, ilike, inArray, or, sql } from "drizzle-orm"
+import { and, desc, eq, ilike, inArray, isNull, or, sql } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { orders, shipmentEvents, type OrderRow, type ShipmentEventRow } from "@/lib/db/schema"
 import {
@@ -138,7 +138,7 @@ export async function listShipmentOrders(query = ""): Promise<OrderRow[]> {
     return db
       .select()
       .from(orders)
-      .where(inArray(orders.status, [...OPEN_SHIPMENT_STATUSES]))
+      .where(and(inArray(orders.status, [...OPEN_SHIPMENT_STATUSES]), isNull(orders.archivedAt)))
       .orderBy(desc(orders.updatedAt))
       .limit(40)
   }
@@ -147,11 +147,14 @@ export async function listShipmentOrders(query = ""): Promise<OrderRow[]> {
     .select()
     .from(orders)
     .where(
-      or(
-        ilike(orders.orderNumber, pattern),
-        ilike(orders.trackingNumber, pattern),
-        ilike(orders.email, pattern),
-        ilike(orders.shippingName, pattern),
+      and(
+        isNull(orders.archivedAt),
+        or(
+          ilike(orders.orderNumber, pattern),
+          ilike(orders.trackingNumber, pattern),
+          ilike(orders.email, pattern),
+          ilike(orders.shippingName, pattern),
+        ),
       ),
     )
     .orderBy(desc(orders.updatedAt))

@@ -14,6 +14,11 @@ const nextConfig = {
       beforeFiles: [
         {
           source: "/products/:path*",
+          has: [{ type: "host", value: "images.3deureka.com" }],
+          destination: "/media/products/:path*",
+        },
+        {
+          source: "/products/:path*",
           has: [{ type: "host", value: "images.dnd3d.com" }],
           destination: "/media/products/:path*",
         },

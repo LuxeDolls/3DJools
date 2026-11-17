@@ -39,7 +39,7 @@ import {
   touchConversation,
 } from "@/lib/chat/queries"
 import type { ChatMode } from "@/lib/db/schema"
-import { desc, eq } from "drizzle-orm"
+import { desc, eq, isNull } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export async function adminLogin(password: string): Promise<{ ok: boolean; error?: string }> {
@@ -77,6 +77,7 @@ export async function listApplications() {
       createdAt: installmentApplications.createdAt,
     })
     .from(installmentApplications)
+    .where(isNull(installmentApplications.archivedAt))
     .orderBy(desc(installmentApplications.createdAt))
 }
 
@@ -324,15 +325,26 @@ async function uniqueSlug(base: string): Promise<string> {
   return `${root}-${n}`
 }
 
+async function nextNumericProductId(): Promise<string> {
+  const existing = await db.select({ productId: products.productId }).from(products)
+  let maxId = 100000
+  for (const row of existing) {
+    const n = Number.parseInt(row.productId, 10)
+    if (Number.isFinite(n) && n > maxId) maxId = n
+  }
+  return String(maxId + 1)
+}
+
 export async function createProduct(
   input: ProductDetailsInput,
 ): Promise<{ ok: boolean; error?: string; slug?: string }> {
   await assertAdmin()
   const err = validateProduct(input)
   if (err) return { ok: false, error: err }
-  const slug = await uniqueSlug(input.name)
+  const [slug, productId] = await Promise.all([uniqueSlug(input.name), nextNumericProductId()])
   await db.insert(products).values({
-    id: crypto.randomUUID(),
+    id: productId,
+    productId,
     slug,
     ...toProductValues(input),
     archived: false,

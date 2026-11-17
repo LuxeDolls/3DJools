@@ -26,9 +26,9 @@ function escapeHtml(value: string): string {
 }
 
 export async function notifyNewLiveChatVisitor(input: NewLiveChatVisitor): Promise<void> {
-  const subject = "New DnD3D live chat visitor"
+  const subject = "New 3DEureka live chat visitor"
   const text = [
-    "A new visitor started a live chat on DnD3D.",
+    "A new visitor started a live chat on 3DEureka.",
     `Conversation: ${input.conversationId}`,
     `Name: ${input.visitorName || "—"}`,
     `Email: ${input.visitorEmail || "—"}`,
@@ -40,7 +40,7 @@ export async function notifyNewLiveChatVisitor(input: NewLiveChatVisitor): Promi
   const html = `<h1 style="font-family:Arial,sans-serif">New live chat visitor</h1><div style="font-family:Arial,sans-serif;line-height:1.5"><p>Conversation: ${escapeHtml(input.conversationId)}</p><p>Name: ${escapeHtml(input.visitorName || "—")}</p><p>Email: ${escapeHtml(input.visitorEmail || "—")}</p><p>Locale: ${escapeHtml(input.locale)}</p><p><strong>First message:</strong></p><p style="white-space:pre-wrap">${escapeHtml(input.message)}</p></div>`
 
   await Promise.allSettled([
-    sendEmail({ to: "info@dnd3d.com", subject, text, html }),
+    sendEmail({ to: "info@3deureka.com", subject, text, html }),
     sendTelegramNotification(text),
   ])
 }

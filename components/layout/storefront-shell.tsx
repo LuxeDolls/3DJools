@@ -7,7 +7,9 @@ import { I18nProvider } from "@/components/i18n-provider"
 import { CartProvider } from "@/components/cart/cart-provider"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 import { ChatWidget } from "@/components/chat/chat-widget"
-import { Header, MobileCategoryStrip } from "@/components/layout/header"
+import { Header, MobileCategoryStrip, MobileTabBar } from "@/components/layout/header"
+import { ParallaxBackground } from "@/components/layout/parallax-background"
+import { SearchProvider } from "@/components/layout/search-provider"
 import { GatewayNotice } from "@/components/layout/gateway-notice"
 import { SaleBanner } from "@/components/home/sale-banner"
 import { Toaster } from "@/components/ui/sonner"
@@ -26,15 +28,21 @@ export function StorefrontShell({
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <I18nProvider locale={locale} dict={dict}>
         <CartProvider>
-          <GatewayNotice locale={locale} dict={dict} />
-          <SaleBanner locale={locale} dict={dict} />
-          <Header />
-          <MobileCategoryStrip />
-          <main className="min-h-[60vh]">{children}</main>
-          <CartDrawer />
-          <ChatWidget />
-          <CookieConsent />
-          <Toaster position="top-center" />
+          <SearchProvider>
+            <ParallaxBackground />
+            <div className="relative z-10">
+              <GatewayNotice locale={locale} dict={dict} />
+              <SaleBanner locale={locale} dict={dict} />
+              <Header />
+              <MobileCategoryStrip />
+              <main className="min-h-[60vh] pb-24 md:pb-0">{children}</main>
+              <MobileTabBar />
+            </div>
+            <CartDrawer />
+            <ChatWidget />
+            <CookieConsent />
+            <Toaster position="top-center" />
+          </SearchProvider>
         </CartProvider>
       </I18nProvider>
     </ThemeProvider>

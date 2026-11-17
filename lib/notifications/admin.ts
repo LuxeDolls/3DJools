@@ -13,7 +13,7 @@ type AdminNotification = {
 
 const telegramConnector = "api.telegram.org/3djools-live-chat-alerts"
 const telegramChatId = process.env.TELEGRAM_CHAT_ID
-const adminEmail = "info@dnd3d.com"
+const adminEmail = "info@3deureka.com"
 
 function escapeHtml(value: string): string {
   return value.replace(/[&<>"']/g, (character) => {
@@ -82,7 +82,7 @@ export async function notifyNewCustomer(user: {
   createdAt: Date
 }): Promise<void> {
   const lines = [
-    "A new customer account was registered on DnD3D.",
+    "A new customer account was registered on 3DEureka.",
     `Name: ${user.name}`,
     `Email: ${user.email}`,
     `Customer ID: ${user.id}`,
@@ -129,7 +129,7 @@ function orderLines(order: OrderWithItems): string[] {
 }
 
 export async function notifyNewOrder(order: OrderWithItems): Promise<void> {
-  const lines = ["A new order was created on DnD3D.", "", ...orderLines(order)]
+  const lines = ["A new order was created on 3DEureka.", "", ...orderLines(order)]
   await notifyAdmin({
     subject: `New order ${order.orderNumber} — ${euros(order.totalCents)}`,
     title: "New order",

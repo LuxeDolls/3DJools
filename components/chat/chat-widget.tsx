@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils"
 import { getChatMessages, initChat, sendChatMessage } from "@/lib/actions/chat"
 import type { ChatMessageRow } from "@/lib/db/schema"
 
-const VISITOR_ID_KEY = "dnd3d-chat-visitor-id"
+const VISITOR_ID_KEY = "3deureka-chat-visitor-id"
+const PREVIOUS_VISITOR_ID_KEY = "dnd3d-chat-visitor-id"
 const LEGACY_VISITOR_ID_KEY = "voltika-chat-visitor-id"
 const POLL_INTERVAL_MS = 4000
 
@@ -17,8 +18,11 @@ function getVisitorId(): string {
   if (typeof window === "undefined") return ""
   let id = window.localStorage.getItem(VISITOR_ID_KEY)
   if (!id) {
-    id = window.localStorage.getItem(LEGACY_VISITOR_ID_KEY)
-    if (id) window.localStorage.removeItem(LEGACY_VISITOR_ID_KEY)
+    id = window.localStorage.getItem(PREVIOUS_VISITOR_ID_KEY) ?? window.localStorage.getItem(LEGACY_VISITOR_ID_KEY)
+    if (id) {
+      window.localStorage.removeItem(PREVIOUS_VISITOR_ID_KEY)
+      window.localStorage.removeItem(LEGACY_VISITOR_ID_KEY)
+    }
   }
   if (!id) id = crypto.randomUUID()
   window.localStorage.setItem(VISITOR_ID_KEY, id)
@@ -120,7 +124,7 @@ export function ChatWidget() {
         onClick={() => setOpen((v) => !v)}
         className={cn(
           "fixed right-3.5 z-40 flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/30 transition-all duration-200 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:right-5 sm:size-13",
-          stickyBarActive ? "bottom-19 sm:bottom-22" : "bottom-3.5 sm:bottom-5",
+          stickyBarActive ? "bottom-19 sm:bottom-22" : "bottom-24 md:bottom-5",
         )}
         aria-label={dict.chat.open}
       >
@@ -130,7 +134,7 @@ export function ChatWidget() {
       <div
         className={cn(
           "fixed inset-x-3 z-50 flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-2xl transition-all duration-200 sm:left-auto sm:right-5 sm:w-88",
-          stickyBarActive ? "bottom-32 sm:bottom-38" : "bottom-16 sm:bottom-21",
+          stickyBarActive ? "bottom-32 sm:bottom-38" : "bottom-37 md:bottom-21",
           open
             ? "pointer-events-auto h-[min(26rem,calc(100dvh-6rem))] translate-y-0 opacity-100"
             : "pointer-events-none h-0 translate-y-4 opacity-0",

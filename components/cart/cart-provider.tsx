@@ -27,17 +27,19 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | null>(null)
 
-const STORAGE_KEY = "dnd3d-cart-v1"
+const STORAGE_KEY = "3deureka-cart-v1"
+const PREVIOUS_STORAGE_KEY = "dnd3d-cart-v1"
 const LEGACY_STORAGE_KEY = "voltika-cart-v1"
 
 function readStoredCart(): string | null {
   const current = localStorage.getItem(STORAGE_KEY)
   if (current) return current
-  const legacy = localStorage.getItem(LEGACY_STORAGE_KEY)
-  if (!legacy) return null
-  localStorage.setItem(STORAGE_KEY, legacy)
+  const previous = localStorage.getItem(PREVIOUS_STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY)
+  if (!previous) return null
+  localStorage.setItem(STORAGE_KEY, previous)
+  localStorage.removeItem(PREVIOUS_STORAGE_KEY)
   localStorage.removeItem(LEGACY_STORAGE_KEY)
-  return legacy
+  return previous
 }
 const MAX_QTY = 20
 

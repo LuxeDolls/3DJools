@@ -6,7 +6,7 @@ import { Cookie } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { applyAnalyticsConsent, CONSENT_KEY, hasStoredConsent, readConsent } from "./consent"
 
-export const OPEN_COOKIE_SETTINGS_EVENT = "dnd3d:open-cookie-settings"
+export const OPEN_COOKIE_SETTINGS_EVENT = "3deureka:open-cookie-settings"
 
 export function CookieConsent() {
   const { dict } = useI18n()

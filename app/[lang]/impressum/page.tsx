@@ -12,19 +12,19 @@ type ImpressumCopy = {
   legalForm: string
   incorporatedLabel: string
   incorporated: string
+  capitalLabel: string
+  capital: string
   activitiesHeading: string
   activities: string
   managementHeading: string
   management: string
-  shareholderHeading: string
-  shareholder: string
+  partnersHeading: string
+  partners: string
   contactHeading: string
   emailLabel: string
   phoneLabel: string
   registrationHeading: string
   companyNumberLabel: string
-  establishmentLabel: string
-  rsinLabel: string
   vatLabel: string
   accounts: string
   odrHeading: string
@@ -33,166 +33,196 @@ type ImpressumCopy = {
 
 const COPY: Record<Locale, ImpressumCopy> = {
   en: {
-    companyHeading: "Company details",
-    tradingName: "DnD3D (trading name)",
-    visitAddressLabel: "Visit address",
-    legalFormHeading: "Legal form & incorporation",
-    legalFormLabel: "Legal form",
-    legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Incorporated",
-    incorporated: "15 December 2020, by deed of incorporation. First entry in the Dutch Trade Register on the same date. Statutory seat: Amsterdam.",
-    activitiesHeading: "Registered activities",
-    activities: "SBI 46180 — wholesale intermediation in other goods. SBI 47120 — other non-specialised retail. The establishment imports goods and sells them to customers in the EU.",
-    managementHeading: "Directors",
-    management: "Thomas Hamish Mckenzie, born 25 January 1967, and Angela Min Zhang, born 5 July 1966. Each was appointed on 15 December 2020 and is independently authorised to represent the company.",
-    shareholderHeading: "Sole shareholder",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, United Kingdom, registered in England and Wales under number 07547438. Sole shareholder since 15 December 2020.",
-    contactHeading: "Contact",
-    emailLabel: "Email",
-    phoneLabel: "Phone",
-    registrationHeading: "Registration & VAT",
-    companyNumberLabel: "KvK number",
-    establishmentLabel: "Establishment number",
-    rsinLabel: "RSIN",
-    vatLabel: "VAT identification number",
-    accounts: "The annual accounts for financial year 2025 were filed on 19 June 2026.",
-    odrHeading: "Online dispute resolution",
-    odr: "The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr. We are neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration board.",
+    companyHeading: "Corporate identity & office address",
+    tradingName: "3DEureka (commercial trading name)",
+    visitAddressLabel: "Registered office & visiting address",
+    legalFormHeading: "Corporate structure, formation & capital",
+    legalFormLabel: "Entity type",
+    legalForm: "Commanditaire vennootschap (CommV / SComm)",
+    incorporatedLabel: "Date of formation",
+    incorporated:
+      "Incorporated in Antwerp on 1 February 2024, filed with the Enterprise Court Registry on 8 February 2024, and published in the Annexes to the Belgian Official Gazette (Bijlagen bij het Belgisch Staatsblad, ref. 24357554) on 12 February 2024. Registered as an active entity in the Crossroads Bank for Enterprises (KBO/BCE) since 8 February 2024. Statutory seat: Flemish Region (Turnhoutsebaan 243, 2100 Deurne / Antwerpen).",
+    capitalLabel: "Contributed capital",
+    capital: "EUR 2,000.00, paid in full in cash and represented by 200 registered shares without nominal value.",
+    activitiesHeading: "Registered business classifications",
+    activities:
+      "NACE-BEL 62.100 — computer programming activities. NACE-BEL 62.200 — computer consultancy and management of computer facilities. Under Article 4 of the articles of association, the company's corporate purpose also encompasses wholesale, retail, and intermediary trade in ICT and technical hardware products as well as commercial transactions in movable goods.",
+    managementHeading: "Managing director (Zaakvoerder)",
+    management:
+      "Adam El Fikri (born 7 December 1986), appointed as sole manager (zaakvoerder) for an indefinite term on 1 February 2024, holding sole and independent authority to represent the company in and out of court.",
+    partnersHeading: "Partners (Vennoten)",
+    partners:
+      "General / managing partner (gecommanditeerde vennoot): Adam El Fikri (born 7 December 1986, holding 199 shares). Limited partner (commanditaire vennoot): Bouchra Dahmani (born 14 November 1987, holding 1 share).",
+    contactHeading: "Direct communication channels",
+    emailLabel: "Electronic mail",
+    phoneLabel: "Telephone",
+    registrationHeading: "Enterprise Register (KBO/BCE) & tax identifiers",
+    companyNumberLabel: "KBO / BCE enterprise number",
+    vatLabel: "EU VAT identification number",
+    accounts:
+      "The company's financial year runs from 1 January to 31 December each year (with the first extended financial year ending on 31 December 2025). The annual general meeting of partners is held each June.",
+    odrHeading: "EU Online Dispute Resolution",
+    odr: "The European Commission hosts an Online Dispute Resolution (ODR) portal at https://ec.europa.eu/consumers/odr. We are neither legally required nor willing to take part in dispute settlement proceedings before a consumer arbitration body.",
   },
   de: {
-    companyHeading: "Unternehmensangaben",
-    tradingName: "DnD3D (Handelsname)",
-    visitAddressLabel: "Besuchsadresse",
-    legalFormHeading: "Rechtsform & Gründung",
+    companyHeading: "Unternehmensidentität & Anschrift",
+    tradingName: "3DEureka (Geschäftsbezeichnung / Handelsname)",
+    visitAddressLabel: "Eingetragener Sitz & Besuchsadresse",
+    legalFormHeading: "Gesellschaftsform, Gründung & Kapital",
     legalFormLabel: "Rechtsform",
-    legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Gegründet",
-    incorporated: "15. Dezember 2020 durch Gründungsurkunde. Ersteintragung im niederländischen Handelsregister am selben Tag. Satzungssitz: Amsterdam.",
-    activitiesHeading: "Eingetragene Tätigkeiten",
-    activities: "SBI 46180 — Handelsvermittlung im Großhandel mit sonstigen Waren. SBI 47120 — sonstiger nicht spezialisierter Einzelhandel. Die Niederlassung importiert Waren und verkauft sie an Kunden in der EU.",
-    managementHeading: "Geschäftsführung",
-    management: "Thomas Hamish Mckenzie, geboren am 25. Januar 1967, und Angela Min Zhang, geboren am 5. Juli 1966. Beide sind seit dem 15. Dezember 2020 als bestuurder bestellt und jeweils allein vertretungsberechtigt.",
-    shareholderHeading: "Einziger Gesellschafter",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Vereinigtes Königreich, eingetragen in England und Wales unter der Nummer 07547438. Einziger Gesellschafter seit dem 15. Dezember 2020.",
-    contactHeading: "Kontakt",
+    legalForm: "Commanditaire vennootschap (CommV — belgische Kommanditgesellschaft)",
+    incorporatedLabel: "Gründungsdatum",
+    incorporated:
+      "Errichtet durch Gründungsurkunde in Antwerpen am 1. Februar 2024, hinterlegt bei der Kanzlei des Unternehmensgerichts am 8. Februar 2024 und veröffentlicht in den Anlagen zum Belgischen Staatsblatt (Bijlagen bij het Belgisch Staatsblad, Nr. 24357554) am 12. Februar 2024. Seit dem 8. Februar 2024 aktiv in der Zentralen Datenbank der Unternehmen (KBO/BCE) eingetragen. Satzungssitz: Flämische Region (Turnhoutsebaan 243, 2100 Deurne / Antwerpen).",
+    capitalLabel: "Gesellschaftskapital / Einlagen",
+    capital: "2.000,00 EUR, vollständig bar eingezahlt und eingeteilt in 200 Namensanteile ohne Nennwert.",
+    activitiesHeading: "Eingetragene Geschäftstätigkeiten",
+    activities:
+      "NACE-BEL 62.100 — Programmierungstätigkeiten. NACE-BEL 62.200 — Erbringung von Beratungsleistungen auf dem Gebiet der Informationstechnologie und Betrieb von Datenverarbeitungseinrichtungen. Gemäß Artikel 4 der Satzung umfasst der Unternehmensgegenstand darüber hinaus den Groß-, Einzel- und Zwischenhandel mit IKT- und Technikprodukten sowie Handelsgeschäfte mit beweglichen Gütern.",
+    managementHeading: "Vertretungsberechtigter Geschäftsführer (Zaakvoerder)",
+    management:
+      "Adam El Fikri (geb. 7. Dezember 1986), am 1. Februar 2024 auf unbestimmte Zeit zum alleinigen Geschäftsführer bestellt und einzeln sowie selbstständig zur gerichtlichen und außergerichtlichen Vertretung der Gesellschaft befugt.",
+    partnersHeading: "Gesellschafter (Vennoten)",
+    partners:
+      "Komplementär (gecommanditeerde vennoot): Adam El Fikri (geb. 7. Dezember 1986, 199 Anteile). Kommanditistin (commanditaire vennoot): Bouchra Dahmani (geb. 14. November 1987, 1 Anteil).",
+    contactHeading: "Direkte Kontaktwege",
     emailLabel: "E-Mail",
     phoneLabel: "Telefon",
-    registrationHeading: "Registrierung & USt-IdNr.",
-    companyNumberLabel: "KvK-Nummer",
-    establishmentLabel: "Niederlassungsnummer",
-    rsinLabel: "RSIN",
+    registrationHeading: "Unternehmensregister (KBO/BCE) & Steuerkennnummern",
+    companyNumberLabel: "KBO-/BCE-Unternehmensnummer",
     vatLabel: "Umsatzsteuer-Identifikationsnummer",
-    accounts: "Der Jahresabschluss für das Geschäftsjahr 2025 wurde am 19. Juni 2026 hinterlegt.",
-    odrHeading: "Online-Streitbeilegung",
-    odr: "Die Europäische Kommission stellt eine Plattform für Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr. Wir sind weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
+    accounts:
+      "Das Geschäftsjahr läuft vom 1. Januar bis zum 31. Dezember (erstes verlängertes Geschäftsjahr bis zum 31. Dezember 2025). Die ordentliche Gesellschafterversammlung findet jährlich im Juni statt.",
+    odrHeading: "EU-Online-Streitbeilegung",
+    odr: "Die Europäische Kommission betreibt unter https://ec.europa.eu/consumers/odr eine Plattform zur Online-Streitbeilegung (OS). Zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle sind wir weder verpflichtet noch bereit.",
   },
   fr: {
-    companyHeading: "Informations sur l'entreprise",
-    tradingName: "DnD3D (nom commercial)",
-    visitAddressLabel: "Adresse de visite",
-    legalFormHeading: "Forme juridique & constitution",
-    legalFormLabel: "Forme juridique",
-    legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Constituée le",
-    incorporated: "15 décembre 2020, par acte de constitution. Première inscription au registre du commerce néerlandais le même jour. Siège statutaire : Amsterdam.",
-    activitiesHeading: "Activités enregistrées",
-    activities: "SBI 46180 — intermédiation en gros d'autres marchandises. SBI 47120 — autre commerce de détail non spécialisé. L'établissement importe des marchandises et les vend à des clients dans l'UE.",
-    managementHeading: "Administrateurs",
-    management: "Thomas Hamish Mckenzie, né le 25 janvier 1967, et Angela Min Zhang, née le 5 juillet 1966. Chacun est administrateur depuis le 15 décembre 2020 et peut représenter seul la société.",
-    shareholderHeading: "Actionnaire unique",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Royaume-Uni, immatriculée en Angleterre et au pays de Galles sous le numéro 07547438. Actionnaire unique depuis le 15 décembre 2020.",
-    contactHeading: "Contact",
-    emailLabel: "E-mail",
+    companyHeading: "Identité de l'entreprise & siège social",
+    tradingName: "3DEureka (enseigne commerciale)",
+    visitAddressLabel: "Siège social et adresse de visite",
+    legalFormHeading: "Statut juridique, constitution & capital",
+    legalFormLabel: "Forme sociale",
+    legalForm: "Société en commandite / Commanditaire vennootschap (SComm / CommV)",
+    incorporatedLabel: "Date de constitution",
+    incorporated:
+      "Société constituée à Anvers le 1er février 2024, déposée au greffe du tribunal de l'entreprise le 8 février 2024 et publiée aux Annexes du Moniteur belge (Bijlagen bij het Belgisch Staatsblad, réf. 24357554) le 12 février 2024. Immatriculée à la Banque-Carrefour des Entreprises (BCE/KBO) depuis le 8 février 2024. Siège statutaire : Région flamande (Turnhoutsebaan 243, 2100 Deurne / Anvers).",
+    capitalLabel: "Apports / fonds propres",
+    capital: "2 000,00 EUR intégralement libérés en numéraire, représentés par 200 parts nominatives sans mention de valeur nominale.",
+    activitiesHeading: "Activités déclarées au registre",
+    activities:
+      "NACE-BEL 62.100 — programmation informatique. NACE-BEL 62.200 — conseil informatique et gestion d'installations informatiques. Conformément à l'article 4 des statuts, l'objet social couvre également le commerce de gros, de détail et d'intermédiaire en produits TIC et équipements techniques ainsi que toutes opérations commerciales portant sur des biens mobiliers.",
+    managementHeading: "Gérance (Zaakvoerder)",
+    management:
+      "Adam El Fikri (né le 7 décembre 1986), nommé gérant unique pour une durée indéterminée le 1er février 2024, disposant du pouvoir individuel d'engager et de représenter seul la société tant en justice qu'en dehors.",
+    partnersHeading: "Associés (Vennoten)",
+    partners:
+      "Associé commandité (gecommanditeerde vennoot) : Adam El Fikri (né le 7 décembre 1986, 199 parts). Associée commanditaire (commanditaire vennoot) : Bouchra Dahmani (née le 14 novembre 1987, 1 part).",
+    contactHeading: "Coordonnées de contact",
+    emailLabel: "Courrier électronique",
     phoneLabel: "Téléphone",
-    registrationHeading: "Immatriculation & TVA",
-    companyNumberLabel: "Numéro KvK",
-    establishmentLabel: "Numéro d'établissement",
-    rsinLabel: "RSIN",
+    registrationHeading: "Immatriculation BCE/KBO & numéro de TVA",
+    companyNumberLabel: "Numéro d'entreprise (BCE / KBO)",
     vatLabel: "Numéro de TVA intracommunautaire",
-    accounts: "Les comptes annuels de l'exercice 2025 ont été déposés le 19 juin 2026.",
-    odrHeading: "Règlement en ligne des litiges",
-    odr: "La Commission européenne met à disposition une plateforme de règlement en ligne des litiges (RLL) : https://ec.europa.eu/consumers/odr. Nous ne sommes ni tenus ni disposés à participer à une procédure de règlement des litiges devant un organe de médiation à la consommation.",
+    accounts:
+      "L'exercice social commence le 1er janvier et se clôture le 31 décembre de chaque année (premier exercice prolongé jusqu'au 31 décembre 2025). L'assemblée générale annuelle se tient au mois de juin.",
+    odrHeading: "Médiation et règlement en ligne des litiges",
+    odr: "La Commission européenne met à disposition un portail de règlement en ligne des litiges (RLL) accessible sur https://ec.europa.eu/consumers/odr. Nous ne sommes ni tenus ni disposés à prendre part à une procédure devant un organisme d'arbitrage de la consommation.",
   },
   it: {
-    companyHeading: "Dati aziendali",
-    tradingName: "DnD3D (nome commerciale)",
-    visitAddressLabel: "Indirizzo di visita",
-    legalFormHeading: "Forma giuridica e costituzione",
-    legalFormLabel: "Forma giuridica",
-    legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Costituita il",
-    incorporated: "15 dicembre 2020, con atto costitutivo. Prima iscrizione nel registro delle imprese olandese lo stesso giorno. Sede legale: Amsterdam.",
-    activitiesHeading: "Attività registrate",
-    activities: "SBI 46180 — intermediazione all'ingrosso di altri beni. SBI 47120 — altro commercio al dettaglio non specializzato. La sede importa beni e li vende a clienti nell'UE.",
-    managementHeading: "Amministratori",
-    management: "Thomas Hamish Mckenzie, nato il 25 gennaio 1967, e Angela Min Zhang, nata il 5 luglio 1966. Ciascuno è amministratore dal 15 dicembre 2020 ed è autorizzato a rappresentare la società da solo.",
-    shareholderHeading: "Socio unico",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Regno Unito, iscritta in Inghilterra e Galles al numero 07547438. Socio unico dal 15 dicembre 2020.",
-    contactHeading: "Contatto",
-    emailLabel: "E-mail",
+    companyHeading: "Identità societaria & sede legale",
+    tradingName: "3DEureka (denominazione commerciale)",
+    visitAddressLabel: "Sede legale e indirizzo di visita",
+    legalFormHeading: "Natura giuridica, costituzione & capitale",
+    legalFormLabel: "Forma societaria",
+    legalForm: "Commanditaire vennootschap (CommV — società in accomandita di diritto belga)",
+    incorporatedLabel: "Data di costituzione",
+    incorporated:
+      "Costituita ad Anversa il 1° febbraio 2024, depositata presso la cancelleria del tribunale delle imprese l'8 febbraio 2024 e pubblicata negli Allegati della Gazzetta ufficiale belga (Bijlagen bij het Belgisch Staatsblad, rif. 24357554) il 12 febbraio 2024. Iscritta nella Banca-Crocevia delle Imprese (KBO/BCE) dall'8 febbraio 2024. Sede statutaria: Regione fiamminga (Turnhoutsebaan 243, 2100 Deurne / Anversa).",
+    capitalLabel: "Capitale conferito",
+    capital: "2.000,00 EUR interamente versati in contanti e rappresentati da 200 quote nominative prive di valore nominale.",
+    activitiesHeading: "Attività economiche registrate",
+    activities:
+      "NACE-BEL 62.100 — progettazione di programmi informatici. NACE-BEL 62.200 — consulenza informatica e gestione di strutture informatiche. Ai sensi dell'articolo 4 dello statuto, l'oggetto sociale comprende inoltre il commercio all'ingrosso, al dettaglio e l'intermediazione di prodotti ICT e apparecchiature tecniche, nonché qualsiasi operazione commerciale su beni mobili.",
+    managementHeading: "Amministratore / Gerente (Zaakvoerder)",
+    management:
+      "Adam El Fikri (nato il 7 dicembre 1986), nominato amministratore unico a tempo indeterminato il 1° febbraio 2024 con potere di rappresentanza individuale e autonomo in giudizio e stragiudizialmente.",
+    partnersHeading: "Soci (Vennoten)",
+    partners:
+      "Socio accomandatario (gecommanditeerde vennoot): Adam El Fikri (nato il 7 dicembre 1986, 199 quote). Socia accomandante (commanditaire vennoot): Bouchra Dahmani (nata il 14 novembre 1987, 1 quota).",
+    contactHeading: "Recapiti diretti",
+    emailLabel: "Posta elettronica",
     phoneLabel: "Telefono",
-    registrationHeading: "Registrazione e IVA",
-    companyNumberLabel: "Numero KvK",
-    establishmentLabel: "Numero di stabilimento",
-    rsinLabel: "RSIN",
-    vatLabel: "Numero identificativo IVA",
-    accounts: "Il bilancio dell'esercizio 2025 è stato depositato il 19 giugno 2026.",
-    odrHeading: "Risoluzione delle controversie online",
-    odr: "La Commissione europea offre una piattaforma per la risoluzione delle controversie online (ODR): https://ec.europa.eu/consumers/odr. Non siamo obbligati né disposti a partecipare a procedure di risoluzione delle controversie dinanzi a un organismo di conciliazione dei consumatori.",
+    registrationHeading: "Estremi di iscrizione KBO/BCE & partita IVA",
+    companyNumberLabel: "Numero d'impresa (KBO / BCE)",
+    vatLabel: "Partita IVA comunitaria",
+    accounts:
+      "L'esercizio finanziario decorre dal 1° gennaio al 31 dicembre di ogni anno (primo esercizio prolungato fino al 31 dicembre 2025). L'assemblea generale annuale si riunisce nel mese di giugno.",
+    odrHeading: "Risoluzione online delle controversie (ODR)",
+    odr: "La Commissione europea mette a disposizione la piattaforma ODR per la risoluzione online delle controversie all'indirizzo https://ec.europa.eu/consumers/odr. Non siamo obbligati né intenzionati a partecipare a procedure dinanzi a organismi di conciliazione dei consumatori.",
   },
   es: {
-    companyHeading: "Datos de la empresa",
-    tradingName: "DnD3D (nombre comercial)",
-    visitAddressLabel: "Dirección de visita",
-    legalFormHeading: "Forma jurídica y constitución",
-    legalFormLabel: "Forma jurídica",
-    legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Constituida el",
-    incorporated: "15 de diciembre de 2020, por escritura de constitución. Primera inscripción en el registro mercantil neerlandés el mismo día. Domicilio social: Ámsterdam.",
-    activitiesHeading: "Actividades registradas",
-    activities: "SBI 46180 — intermediación mayorista de otros bienes. SBI 47120 — otro comercio minorista no especializado. El establecimiento importa bienes y los vende a clientes de la UE.",
-    managementHeading: "Administradores",
-    management: "Thomas Hamish Mckenzie, nacido el 25 de enero de 1967, y Angela Min Zhang, nacida el 5 de julio de 1966. Cada uno es administrador desde el 15 de diciembre de 2020 y puede representar a la sociedad por sí solo.",
-    shareholderHeading: "Accionista único",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Reino Unido, inscrita en Inglaterra y Gales con el número 07547438. Accionista único desde el 15 de diciembre de 2020.",
-    contactHeading: "Contacto",
+    companyHeading: "Identidad corporativa y domicilio social",
+    tradingName: "3DEureka (marca comercial)",
+    visitAddressLabel: "Domicilio social y dirección de visita",
+    legalFormHeading: "Naturaleza jurídica, constitución y capital",
+    legalFormLabel: "Forma societaria",
+    legalForm: "Commanditaire vennootschap (CommV — sociedad comanditaria de derecho belga)",
+    incorporatedLabel: "Fecha de constitución",
+    incorporated:
+      "Constituida en Amberes el 1 de febrero de 2024, depositada en la secretaría del tribunal de empresa el 8 de febrero de 2024 y publicada en los Anexos del Boletín Oficial de Bélgica (Bijlagen bij het Belgisch Staatsblad, ref. 24357554) el 12 de febrero de 2024. Inscrita y activa en el Banco-Encrucijada de Empresas (KBO/BCE) desde el 8 de febrero de 2024. Sede estatutaria: Región Flamenca (Turnhoutsebaan 243, 2100 Deurne / Amberes).",
+    capitalLabel: "Aportaciones / recursos propios",
+    capital: "2.000,00 EUR íntegramente desembolsados en efectivo y representados por 200 participaciones nominativas sin valor nominal.",
+    activitiesHeading: "Actividades económicas inscritas",
+    activities:
+      "NACE-BEL 62.100 — actividades de programación informática. NACE-BEL 62.200 — consultoría informática y gestión de instalaciones informáticas. Conforme al artículo 4 de los estatutos, el objeto social abarca igualmente el comercio mayorista, minorista y la intermediación de productos TIC y equipos técnicos, así como toda clase de operaciones comerciales sobre bienes muebles.",
+    managementHeading: "Administración (Zaakvoerder)",
+    management:
+      "Adam El Fikri (nacido el 7 de diciembre de 1986), nombrado administrador único por tiempo indefinido el 1 de febrero de 2024, con facultades individuales y plenas para representar a la sociedad judicial y extrajudicialmente.",
+    partnersHeading: "Socios (Vennoten)",
+    partners:
+      "Socio colectivo (gecommanditeerde vennoot): Adam El Fikri (nacido el 7 de diciembre de 1986, 199 participaciones). Socia comanditaria (commanditaire vennoot): Bouchra Dahmani (nacida el 14 de noviembre de 1987, 1 participación).",
+    contactHeading: "Canales de contacto",
     emailLabel: "Correo electrónico",
     phoneLabel: "Teléfono",
-    registrationHeading: "Registro e IVA",
-    companyNumberLabel: "Número KvK",
-    establishmentLabel: "Número de establecimiento",
-    rsinLabel: "RSIN",
-    vatLabel: "Número de identificación fiscal (IVA)",
-    accounts: "Las cuentas anuales del ejercicio 2025 se depositaron el 19 de junio de 2026.",
-    odrHeading: "Resolución de litigios en línea",
-    odr: "La Comisión Europea ofrece una plataforma de resolución de litigios en línea (RLL): https://ec.europa.eu/consumers/odr. No estamos obligados ni dispuestos a participar en procedimientos de resolución de litigios ante un órgano de arbitraje de consumo.",
+    registrationHeading: "Datos registrales KBO/BCE e identificación fiscal",
+    companyNumberLabel: "Número de empresa (KBO / BCE)",
+    vatLabel: "Número de IVA intracomunitario",
+    accounts:
+      "El ejercicio económico transcurre del 1 de enero al 31 de diciembre de cada año (primer ejercicio prolongado hasta el 31 de diciembre de 2025). La junta general ordinaria se celebra anualmente en junio.",
+    odrHeading: "Plataforma europea de resolución de litigios",
+    odr: "La Comisión Europea facilita una plataforma de resolución de litigios en línea (RLL) disponible en https://ec.europa.eu/consumers/odr. No estamos obligados ni dispuestos a intervenir en procedimientos ante juntas arbitrales de consumo.",
   },
   nl: {
-    companyHeading: "Bedrijfsgegevens",
-    tradingName: "DnD3D (handelsnaam)",
-    visitAddressLabel: "Bezoekadres",
-    legalFormHeading: "Rechtsvorm en oprichting",
+    companyHeading: "Bedrijfsidentiteit & maatschappelijke zetel",
+    tradingName: "3DEureka (handelsnaam)",
+    visitAddressLabel: "Maatschappelijke zetel & bezoekadres",
+    legalFormHeading: "Rechtsvorm, oprichting & inbreng",
     legalFormLabel: "Rechtsvorm",
-    legalForm: "Besloten vennootschap",
-    incorporatedLabel: "Opgericht",
-    incorporated: "15 december 2020, bij akte van oprichting. Eerste inschrijving in het Handelsregister op dezelfde datum. Statutaire zetel: Amsterdam.",
-    activitiesHeading: "Geregistreerde activiteiten",
-    activities: "SBI-code 46180 — handelsbemiddeling in de groothandel in overige goederen. SBI-code 47120 — overige niet-gespecialiseerde detailhandel. De vestiging importeert goederen en verkoopt deze aan EU-klanten.",
-    managementHeading: "Bestuurders",
-    management: "Thomas Hamish Mckenzie, geboren 25 januari 1967, en Angela Min Zhang, geboren 5 juli 1966. Beiden zijn sinds 15 december 2020 bestuurder en ieder alleen/zelfstandig bevoegd.",
-    shareholderHeading: "Enig aandeelhouder",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Verenigd Koninkrijk, ingeschreven bij Companies House (England and Wales) onder nummer 07547438. Enig aandeelhouder sinds 15 december 2020.",
-    contactHeading: "Contact",
-    emailLabel: "E-mail",
-    phoneLabel: "Telefoon",
-    registrationHeading: "Registratie en btw",
-    companyNumberLabel: "KvK-nummer",
-    establishmentLabel: "Vestigingsnummer",
-    rsinLabel: "RSIN",
+    legalForm: "Commanditaire vennootschap (CommV)",
+    incorporatedLabel: "Datum van oprichting",
+    incorporated:
+      "Opgericht te Antwerpen op 1 februari 2024, neergelegd ter griffie op 8 februari 2024 en bekendgemaakt in de Bijlagen bij het Belgisch Staatsblad (ref. 24357554) op 12 februari 2024. Ingeschreven in de Kruispuntbank van Ondernemingen (KBO) met ingang van 8 februari 2024. Zetel gevestigd in het Vlaams Gewest (Turnhoutsebaan 243, 2100 Deurne / Antwerpen).",
+    capitalLabel: "Eigen middelen / inbrengen",
+    capital: "2.000,00 EUR, volledig volgestort in geld en vertegenwoordigd door 200 aandelen op naam zonder vermelding van nominale waarde.",
+    activitiesHeading: "Geregistreerde bedrijfsactiviteiten",
+    activities:
+      "NACE-BEL 62.100 — ontwerpen van computerprogramma's. NACE-BEL 62.200 — activiteiten op het gebied van computerconsultancy en beheer van computerfaciliteiten. Overeenkomstig artikel 4 van de statuten omvat het voorwerp tevens de handel in ICT-producten (zowel groothandel, kleinhandel als tussenpersoon) en alle commerciële verrichtingen van roerende aard.",
+    managementHeading: "Zaakvoerder",
+    management:
+      "Adam El Fikri (geboren op 7 december 1986), benoemd tot enige zaakvoerder voor onbepaalde duur op 1 februari 2024 en alleen bevoegd om de vennootschap in en buiten rechte te vertegenwoordigen.",
+    partnersHeading: "Vennoten",
+    partners:
+      "Gecommanditeerde vennoot: Adam El Fikri (geboren op 7 december 1986, 199 aandelen). Commanditaire vennoot: Bouchra Dahmani (geboren op 14 november 1987, 1 aandeel).",
+    contactHeading: "Directe contactgegevens",
+    emailLabel: "E-mailadres",
+    phoneLabel: "Telefoonnummer",
+    registrationHeading: "KBO-inschrijving & btw-identificatie",
+    companyNumberLabel: "Ondernemingsnummer (KBO)",
     vatLabel: "Btw-identificatienummer",
-    accounts: "De jaarrekening over boekjaar 2025 is gedeponeerd op 19 juni 2026.",
-    odrHeading: "Online geschillenbeslechting",
-    odr: "De Europese Commissie biedt een platform voor online geschillenbeslechting (ODR): https://ec.europa.eu/consumers/odr. Wij zijn niet verplicht en ook niet bereid deel te nemen aan geschillenbeslechtingsprocedures voor een consumentenarbitrage-instantie.",
+    accounts:
+      "Het boekjaar loopt telkens van 1 januari tot en met 31 december (eerste verlengd boekjaar tot en met 31 december 2025). De jaarvergadering vindt plaats in juni.",
+    odrHeading: "Online geschillenbeslechting (ODR)",
+    odr: "De Europese Commissie biedt via https://ec.europa.eu/consumers/odr een platform voor online geschillenbeslechting aan. Wij zijn noch wettelijk verplicht, noch bereid om deel te nemen aan geschillenprocedures bij een consumentenarbitragecommissie.",
   },
 }
 
@@ -227,21 +257,32 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
           {COMPANY.postalCode} {COMPANY.city}, {COMPANY.country}
         </p>
       </ProseSection>
+      <ProseSection heading={t.registrationHeading}>
+        <p>
+          {t.companyNumberLabel}: {COMPANY.companyNumber}
+          <br />
+          {t.vatLabel}: {COMPANY.vat}
+          <br />
+          {t.accounts}
+        </p>
+      </ProseSection>
       <ProseSection heading={t.legalFormHeading}>
         <p>
           {t.legalFormLabel}: {t.legalForm}
           <br />
           {t.incorporatedLabel}: {t.incorporated}
+          <br />
+          {t.capitalLabel}: {t.capital}
         </p>
-      </ProseSection>
-      <ProseSection heading={t.activitiesHeading}>
-        <p>{t.activities}</p>
       </ProseSection>
       <ProseSection heading={t.managementHeading}>
         <p>{t.management}</p>
       </ProseSection>
-      <ProseSection heading={t.shareholderHeading}>
-        <p>{t.shareholder}</p>
+      <ProseSection heading={t.partnersHeading}>
+        <p>{t.partners}</p>
+      </ProseSection>
+      <ProseSection heading={t.activitiesHeading}>
+        <p>{t.activities}</p>
       </ProseSection>
       <ProseSection heading={t.contactHeading}>
         <p>
@@ -249,26 +290,6 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
           <a href={`mailto:${COMPANY.email}`} className="underline underline-offset-2 hover:text-foreground">
             {COMPANY.email}
           </a>
-          <br />
-          {t.phoneLabel}: <a href={`tel:${COMPANY.phoneTel}`} className="underline underline-offset-2 hover:text-foreground">{COMPANY.phoneDisplay}</a>
-          <br />
-          WhatsApp:{" "}
-          <a href={COMPANY.whatsappUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
-            {COMPANY.whatsappDisplay}
-          </a>
-        </p>
-      </ProseSection>
-      <ProseSection heading={t.registrationHeading}>
-        <p>
-          {t.companyNumberLabel}: {COMPANY.companyNumber}
-          <br />
-          {t.establishmentLabel}: {COMPANY.establishmentNumber}
-          <br />
-          {t.rsinLabel}: {COMPANY.rsin}
-          <br />
-          {t.vatLabel}: {COMPANY.vat}
-          <br />
-          {t.accounts}
         </p>
       </ProseSection>
       <ProseSection heading={t.odrHeading}>

@@ -52,7 +52,7 @@ export async function GET() {
 
   const body = JSON.stringify(
     {
-      format: "dnd3d-postgres-json",
+      format: "3deureka-postgres-json",
       version: 1,
       generatedAt: new Date().toISOString(),
       warning: "This backup contains sensitive authentication records. Store it encrypted and do not share it.",
@@ -65,7 +65,7 @@ export async function GET() {
   return new NextResponse(body, {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Content-Disposition": `attachment; filename="dnd3d-database-${new Date().toISOString().slice(0, 10)}.json"`,
+      "Content-Disposition": `attachment; filename="3deureka-database-${new Date().toISOString().slice(0, 10)}.json"`,
       "Cache-Control": "no-store",
     },
   })

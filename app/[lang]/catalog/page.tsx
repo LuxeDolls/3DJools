@@ -3,6 +3,7 @@ import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { getAllProducts, allCategorySlugs } from "@/lib/catalog"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { CatalogSections } from "@/components/catalog/catalog-sections"
+import { CategoryStrip } from "@/components/catalog/category-strip"
 
 export default async function CatalogPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -25,7 +26,10 @@ export default async function CatalogPage({ params }: { params: Promise<{ lang: 
         {dict.nav.all}
       </h1>
       <p className="mt-1.5 max-w-2xl text-xs text-muted-foreground sm:mt-2 sm:text-sm">{dict.footer.companyBlurb}</p>
-      <div className="mt-6 sm:mt-10">
+      <div className="mt-5 sm:mt-8">
+        <CategoryStrip locale={locale} dict={dict} />
+      </div>
+      <div className="mt-8 sm:mt-12">
         <CatalogSections locale={locale} dict={dict} sections={sections} />
       </div>
     </div>

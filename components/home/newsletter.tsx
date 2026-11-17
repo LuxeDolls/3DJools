@@ -1,10 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Mail, Check } from "lucide-react"
+import { ArrowRight, Check } from "lucide-react"
 import { toast } from "sonner"
 import { useI18n } from "@/components/i18n-provider"
-import { Button } from "@/components/ui/button"
 
 export function Newsletter() {
   const { dict } = useI18n()
@@ -21,34 +20,42 @@ export function Newsletter() {
   }
 
   return (
-    <section className="relative z-10 border-y border-border bg-secondary shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)]">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-14 text-center">
-        <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)]">
-          <Mail className="size-6" />
+    <section className="mx-auto max-w-7xl px-4 py-10 sm:py-16">
+      <div className="relative overflow-hidden rounded-[2rem] bg-primary p-6 text-primary-foreground sm:rounded-[2.5rem] sm:p-10 lg:p-14">
+        <div className="bg-dots pointer-events-none absolute inset-0 opacity-50" aria-hidden="true" />
+        <div className="relative grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-12">
+          <div className="flex flex-col gap-3">
+            <h2 className="font-heading text-3xl leading-[0.95] font-extrabold text-balance sm:text-5xl">
+              {dict.home.newsletterTitle}
+            </h2>
+            <p className="max-w-md text-pretty text-sm leading-relaxed text-primary-foreground/80">
+              {dict.home.newsletterText}
+            </p>
+          </div>
+          <form
+            onSubmit={submit}
+            className="flex w-full items-center gap-1.5 rounded-full bg-card p-1.5 text-card-foreground"
+          >
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder={dict.home.newsletterPlaceholder}
+              aria-label={dict.home.newsletterPlaceholder}
+              className="h-11 min-w-0 flex-1 bg-transparent px-4 text-sm outline-none placeholder:text-muted-foreground sm:h-12"
+            />
+            <button
+              type="submit"
+              className="inline-flex h-11 shrink-0 items-center gap-2 rounded-full bg-signal px-4 text-sm font-bold text-signal-foreground transition-transform hover:scale-[1.03] sm:h-12 sm:px-6"
+            >
+              {done ? <Check className="size-4" aria-hidden="true" /> : null}
+              <span className="hidden sm:inline">{dict.home.newsletterCta}</span>
+              <ArrowRight className="size-4 sm:hidden" aria-hidden="true" />
+              <span className="sr-only sm:hidden">{dict.home.newsletterCta}</span>
+            </button>
+          </form>
         </div>
-        <div>
-          <h2 className="text-balance font-heading text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-            {dict.home.newsletterTitle}
-          </h2>
-          <p className="mx-auto mt-2 max-w-md text-pretty text-sm text-muted-foreground">
-            {dict.home.newsletterText}
-          </p>
-        </div>
-        <form onSubmit={submit} className="flex w-full max-w-md flex-col gap-2 sm:flex-row">
-          <input
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder={dict.home.newsletterPlaceholder}
-            aria-label={dict.home.newsletterPlaceholder}
-            className="h-11 flex-1 rounded-md border border-input bg-background px-4 text-sm outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40"
-          />
-          <Button type="submit" size="lg" className="shrink-0">
-            {done ? <Check className="size-4" /> : null}
-            {dict.home.newsletterCta}
-          </Button>
-        </form>
       </div>
     </section>
   )

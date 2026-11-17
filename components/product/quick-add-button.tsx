@@ -31,9 +31,10 @@ export function QuickAddButton({ product, label }: { product: Product; label: st
       onClick={handleAdd}
       disabled={disabled}
       aria-label={`${label} — ${product.name}`}
-      className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-0.5 hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-40 sm:size-9 sm:rounded-md"
+      className="flex size-9 shrink-0 items-center justify-center rounded-full bg-foreground text-background transition-all duration-200 hover:scale-105 hover:bg-primary hover:text-primary-foreground disabled:cursor-not-allowed disabled:opacity-40 data-[added=true]:bg-signal data-[added=true]:text-signal-foreground sm:size-10"
+      data-added={added}
     >
-      {added ? <Check className="size-3.5 sm:size-4" /> : <Plus className="size-3.5 sm:size-4" />}
+      {added ? <Check className="size-4" /> : <Plus className="size-4" />}
     </button>
   )
 }

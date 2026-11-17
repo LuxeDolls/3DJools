@@ -20,10 +20,11 @@ export function ProductJsonLd({ product, url }: { product: Product; url: string 
   const json = {
     "@context": "https://schema.org/",
     "@type": "Product",
+    productID: product.productId,
     name: product.name,
     image: product.images.map((i) => i),
     description: product.shortDescription,
-    sku: product.mpn,
+    sku: product.mpn || product.productId,
     mpn: product.mpn,
     ...(product.ean ?? product.gtin ? { gtin13: product.ean ?? product.gtin } : {}),
     brand: { "@type": "Brand", name: product.brandName ?? product.brandSlug },

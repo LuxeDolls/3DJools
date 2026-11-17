@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ShoppingCart, User, Truck, PackageSearch } from "lucide-react"
+import { ShoppingBag, User, PackageSearch, Search, Home, LayoutGrid } from "lucide-react"
 import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { useCart } from "@/components/cart/cart-provider"
 import {
@@ -12,73 +12,86 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Logo } from "./logo"
-import { SearchBar } from "./search-bar"
 import { LocaleSwitcher } from "./locale-switcher"
 import { ThemeToggle } from "./theme-toggle"
 import { MobileNav } from "./mobile-nav"
 import { getNavItems } from "./nav-items"
+import { useSearch } from "./search-provider"
 import { cn } from "@/lib/utils"
+
+const iconButton =
+  "relative flex size-10 items-center justify-center rounded-full text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 
 export function Header() {
   const { dict } = useI18n()
   const lp = useLocalizedPath()
+  const pathname = usePathname()
   const { count, openCart } = useCart()
+  const { openSearch } = useSearch()
   const navItems = getNavItems(dict)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-background/95 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] backdrop-blur">
-      {/* Announcement strip */}
-      <div className="border-b border-border bg-secondary text-secondary-foreground">
-        <div className="mx-auto flex h-8 max-w-7xl items-center justify-between gap-2 px-3 text-[11px] sm:h-9 sm:gap-4 sm:px-4 sm:text-xs">
-          <p className="flex min-w-0 items-center gap-1.5 truncate font-medium">
-            <Truck className="size-3.5 shrink-0 text-primary" />
-            <span className="truncate">{dict.home.heroEyebrow}</span>
-          </p>
-          <div className="flex shrink-0 items-center gap-2 sm:gap-4">
-            <nav aria-label="Utility" className="hidden items-center gap-4 md:flex">
-              <Link href={lp("/about")} className="whitespace-nowrap transition-colors hover:text-primary">
-                {dict.footer.about}
-              </Link>
-              <Link href={lp("/contact")} className="whitespace-nowrap transition-colors hover:text-primary">
-                {dict.footer.contact}
-              </Link>
-              <Link href={lp("/faq")} className="whitespace-nowrap transition-colors hover:text-primary">
-                {dict.footer.faq}
-              </Link>
-            </nav>
-            <div className="flex items-center gap-0.5 sm:gap-1">
-              <div className="sm:hidden">
-                <LocaleSwitcher compact />
-              </div>
-              <div className="hidden sm:flex sm:items-center sm:gap-1">
-                <LocaleSwitcher />
-                <ThemeToggle />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main bar */}
-      <div className="mx-auto flex h-13 max-w-7xl items-center gap-2.5 px-3 sm:h-16 sm:gap-4 sm:px-4">
-        <div className="flex items-center gap-1.5 lg:hidden">
+    <header className="sticky top-0 z-40 px-2 pt-2 sm:px-4 sm:pt-3">
+      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 rounded-full border border-border/90 bg-card/85 pr-1.5 pl-2 shadow-[var(--shadow-float-md)] backdrop-blur-xl supports-[backdrop-filter]:bg-card/75 sm:h-16 sm:gap-3 sm:pr-2 sm:pl-3">
+        <div className="xl:hidden">
           <MobileNav navItems={navItems} />
         </div>
 
-        <Link href={lp("/")} className="shrink-0" aria-label={dict.brandName}>
-          <Logo />
+        <Link href={lp("/")} className="no-float shrink-0 rounded-full" aria-label={dict.brandName}>
+          <Logo markClassName="size-8 sm:size-9" className="text-base sm:text-lg" />
         </Link>
 
-        <div className="hidden flex-1 md:block">
-          <SearchBar className="mx-auto max-w-xl" />
-        </div>
+        <nav aria-label="Primary" className="mx-auto hidden items-center gap-0.5 xl:flex">
+          {navItems.map((item) => {
+            const target = lp(item.href)
+            const active = pathname === target
+            const isDeals = item.href === "/deals"
+            return (
+              <Link
+                key={item.href}
+                href={target}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "rounded-full px-3 py-2 text-[13px] font-semibold whitespace-nowrap transition-colors",
+                  active
+                    ? "bg-foreground text-background"
+                    : isDeals
+                      ? "bg-signal text-signal-foreground hover:brightness-95"
+                      : "text-foreground/75 hover:bg-secondary hover:text-foreground",
+                )}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
+        </nav>
 
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex items-center gap-0.5 xl:ml-0">
+          <button
+            type="button"
+            onClick={openSearch}
+            className="hidden h-10 items-center gap-2 rounded-full border border-border bg-background px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-foreground md:flex xl:w-10 xl:justify-center xl:px-0 2xl:w-auto 2xl:justify-start 2xl:px-3.5"
+            aria-label={dict.common.search}
+          >
+            <Search className="size-4 shrink-0" aria-hidden="true" />
+            <span className="xl:hidden 2xl:inline">{dict.common.search}</span>
+            <kbd className="rounded-md bg-secondary px-1.5 font-mono text-[10px] xl:hidden 2xl:inline">
+              /
+            </kbd>
+          </button>
+
+          <div className="hidden items-center lg:flex xl:hidden 2xl:flex">
+            <LocaleSwitcher />
+          </div>
+          <div className="lg:hidden xl:block 2xl:hidden">
+            <LocaleSwitcher compact />
+          </div>
+          <div className="hidden md:block">
+            <ThemeToggle />
+          </div>
+
           <DropdownMenu>
-            <DropdownMenuTrigger
-              className="flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              aria-label={dict.common.account}
-            >
+            <DropdownMenuTrigger className={cn(iconButton, "hidden md:flex")} aria-label={dict.common.account}>
               <User className="size-5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
@@ -92,42 +105,26 @@ export function Header() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
           <button
             type="button"
             onClick={openCart}
-            className="relative flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="relative flex h-10 items-center gap-2 rounded-full bg-primary px-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:px-4"
             aria-label={`${dict.common.cart} (${count})`}
           >
-            <ShoppingCart className="size-5" />
-            {count > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex size-4.5 min-w-4.5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-primary-foreground">
-                {count}
-              </span>
-            )}
+            <ShoppingBag className="size-4.5" aria-hidden="true" />
+            <span className="hidden sm:inline xl:hidden 2xl:inline">{dict.common.cart}</span>
+            <span
+              className={cn(
+                "flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[11px] font-bold tabular-nums",
+                count > 0 ? "bg-signal text-signal-foreground" : "bg-primary-foreground/20",
+              )}
+            >
+              {count}
+            </span>
           </button>
         </div>
       </div>
-
-      {/* Search on mobile */}
-      <div className="border-t border-border px-3 py-1.5 md:hidden">
-        <SearchBar />
-      </div>
-
-      {/* Desktop nav */}
-      <nav className="hidden border-t border-border lg:block" aria-label="Primary">
-        <div className="mx-auto flex max-w-7xl items-center gap-1 px-4">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={lp(item.href)}
-              className="relative px-3 py-2.5 text-sm font-semibold tracking-tight text-foreground/75 transition-colors hover:text-foreground after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:bg-primary after:transition-transform hover:after:scale-x-100 data-[deal=true]:text-primary"
-              data-deal={item.href === "/deals"}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-      </nav>
     </header>
   )
 }
@@ -139,11 +136,8 @@ export function MobileCategoryStrip() {
   const navItems = getNavItems(dict)
 
   return (
-    <nav
-      aria-label="Categories"
-      className="border-b border-border bg-card/80 lg:hidden"
-    >
-      <div className="mx-auto flex max-w-7xl items-center gap-1.5 overflow-x-auto px-3 py-2 [scrollbar-width:none] sm:px-4">
+    <nav aria-label="Categories" className="xl:hidden">
+      <div className="no-scrollbar mx-auto flex max-w-7xl items-center gap-2 overflow-x-auto px-3 py-3 sm:px-4">
         {navItems.map((item) => {
           const target = lp(item.href)
           const isActive = pathname === target
@@ -152,19 +146,78 @@ export function MobileCategoryStrip() {
             <Link
               key={item.href}
               href={target}
+              aria-current={isActive ? "page" : undefined}
               className={cn(
-                "shrink-0 rounded-full border px-3 py-1 text-xs font-semibold shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] transition-all duration-200 hover:-translate-y-0.5",
+                "shrink-0 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors",
                 isActive
-                  ? "border-primary bg-primary text-primary-foreground"
+                  ? "bg-foreground text-background"
                   : isDeals
-                    ? "border-primary/40 bg-primary/10 text-primary hover:bg-primary/15"
-                    : "border-border bg-background text-foreground/85 hover:border-primary/40 hover:text-foreground",
+                    ? "bg-signal text-signal-foreground"
+                    : "border border-border bg-card text-foreground/80 hover:border-primary hover:text-foreground",
               )}
             >
               {item.label}
             </Link>
           )
         })}
+      </div>
+    </nav>
+  )
+}
+
+export function MobileTabBar() {
+  const { dict } = useI18n()
+  const lp = useLocalizedPath()
+  const pathname = usePathname()
+  const { count, openCart } = useCart()
+  const { openSearch } = useSearch()
+
+  const homeHref = lp("/")
+  const catalogHref = lp("/catalog")
+  const accountHref = lp("/account")
+
+  const item =
+    "flex flex-1 flex-col items-center justify-center gap-0.5 rounded-2xl py-1.5 text-[10px] font-semibold transition-colors"
+  const idle = "text-muted-foreground hover:text-foreground"
+  const active = "bg-primary/12 text-primary"
+
+  return (
+    <nav
+      aria-label="Shortcuts"
+      className="mobile-tabbar fixed inset-x-2 bottom-2 z-40 md:hidden"
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+    >
+      <div className="flex items-stretch gap-1 rounded-3xl border border-border bg-card/90 p-1.5 shadow-lg backdrop-blur-xl supports-[backdrop-filter]:bg-card/75">
+        <Link href={homeHref} className={cn(item, pathname === homeHref ? active : idle)}>
+          <Home className="size-5" aria-hidden="true" />
+          {dict.brandName}
+        </Link>
+        <Link
+          href={catalogHref}
+          className={cn(item, pathname.startsWith(catalogHref) ? active : idle)}
+        >
+          <LayoutGrid className="size-5" aria-hidden="true" />
+          {dict.nav.catalog}
+        </Link>
+        <button type="button" onClick={openSearch} className={cn(item, idle)}>
+          <Search className="size-5" aria-hidden="true" />
+          {dict.common.search}
+        </button>
+        <Link href={accountHref} className={cn(item, pathname.startsWith(accountHref) ? active : idle)}>
+          <User className="size-5" aria-hidden="true" />
+          {dict.common.account}
+        </Link>
+        <button type="button" onClick={openCart} className={cn(item, idle, "relative")}>
+          <span className="relative">
+            <ShoppingBag className="size-5" aria-hidden="true" />
+            {count > 0 && (
+              <span className="absolute -top-1.5 -right-2.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-signal px-1 text-[9px] font-bold text-signal-foreground tabular-nums">
+                {count}
+              </span>
+            )}
+          </span>
+          {dict.common.cart}
+        </button>
       </div>
     </nav>
   )

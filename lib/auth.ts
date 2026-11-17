@@ -3,7 +3,7 @@ import { pool } from "@/lib/db"
 import { notifyNewCustomer } from "@/lib/notifications/admin"
 import { sendWelcomeEmail } from "@/lib/email/auth-emails"
 
-const shareStoreCookies = process.env.BETTER_AUTH_URL?.includes("dnd3d.com") ?? false
+const shareStoreCookies = process.env.BETTER_AUTH_URL?.includes("3deureka.com") ?? false
 
 export const auth = betterAuth({
   database: pool,
@@ -28,7 +28,7 @@ export const auth = betterAuth({
     },
   },
   ...(shareStoreCookies
-    ? { onAPIError: { errorURL: "https://dnd3d.com/en/sign-in" } }
+    ? { onAPIError: { errorURL: "https://3deureka.com/en/sign-in" } }
     : {}),
   socialProviders: {
     ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
@@ -72,8 +72,8 @@ export const auth = betterAuth({
       : []),
     ...(process.env.NODE_ENV === "production"
       ? [
-          "https://dnd3d.com",
-          "https://www.dnd3d.com",
+          "https://3deureka.com",
+          "https://www.3deureka.com",
           ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
           ...(process.env.VERCEL_PROJECT_PRODUCTION_URL
             ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`]
@@ -103,7 +103,7 @@ export const auth = betterAuth({
             // One parent-domain cookie keeps the session on both hosts.
             crossSubDomainCookies: {
               enabled: true,
-              domain: "dnd3d.com",
+              domain: "3deureka.com",
             },
           },
         }

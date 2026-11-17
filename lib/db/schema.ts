@@ -69,8 +69,8 @@ export type ApplicationCartItem = {
 }
 
 /**
- * One scheduled installment. `amountCents` for the 4 payments always sums
- * to the order total; the first entry is the 25% down payment (due now).
+ * One scheduled installment. `amountCents` for the 3 payments always sums
+ * to the order total; the first entry is the 1/3 down payment (due now).
  * `status` tracks the customer/admin payment-confirmation cycle for this
  * entry: "unpaid" until the customer clicks "I've paid", then "reviewing"
  * until an admin confirms receipt, then "paid".
@@ -127,6 +127,7 @@ export const installmentApplications = pgTable("installment_applications", {
   dataConsent: boolean("data_consent").notNull().default(false),
 
   adminNotes: text("admin_notes"),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
@@ -163,6 +164,7 @@ export const categories = pgTable("categories", {
 
 export const products = pgTable("products", {
   id: text("id").primaryKey(),
+  productId: text("product_id").notNull().unique(),
   slug: text("slug").notNull().unique(),
   name: text("name").notNull(),
   brandSlug: text("brand_slug").notNull(),

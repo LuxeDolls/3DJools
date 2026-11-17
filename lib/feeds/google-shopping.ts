@@ -5,9 +5,9 @@ import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
 import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNATIONAL_RATE_CENTS } from "@/lib/shipping/rates"
 
 const BASE_URL = SITE_ORIGIN
-const STORE_NAME = "DnD3D"
+const STORE_NAME = "3DEureka"
 
-// The Black Friday discount is baked directly into every product's price_cents
+// The 5% catalog-wide discount is baked directly into every product's price_cents
 // (see the catalog migration), so the feed just reports that single price —
 // it already matches what every customer pays on the site.
 
@@ -30,7 +30,7 @@ const GOOGLE_CATEGORY = {
   accessories: "499682",
 } as const
 
-const PCB_PRINTER_SLUG = "voltera-voltera-v1-pcb-printer"
+const PCB_PRINTER_SLUG = "voltera-v1-pcb-printer"
 const PCB_CATEGORY = "3889"
 
 const FEED_DESCRIPTION: Record<Locale, string> = {
@@ -162,11 +162,12 @@ function hashForGoogleId(value: string): string {
   return `${first.toString(16).padStart(8, "0")}${second.toString(16).padStart(8, "0")}`
 }
 
-function googleProductId(product: { id: string; slug: string }): string {
-  if (product.id.length <= 50) return product.id
+function googleProductId(product: { id: string; productId?: string; slug: string }): string {
+  const rawId = product.productId || product.id
+  if (rawId.length <= 50) return rawId
 
   const readableSlug = product.slug.replace(/[^a-zA-Z0-9-]/g, "-").slice(0, 31)
-  return `p-${hashForGoogleId(product.id)}-${readableSlug}`.slice(0, 50)
+  return `p-${hashForGoogleId(rawId)}-${readableSlug}`.slice(0, 50)
 }
 
 function wordCount(value: string): number {

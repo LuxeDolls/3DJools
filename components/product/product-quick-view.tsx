@@ -39,7 +39,7 @@ export function ProductQuickView({
   const brand = product.brandName ?? product.brandSlug
   const href = localizedPath(locale, `/product/${product.slug}`)
   const installmentsEligible = qualifiesForInstallments(product.priceCents)
-  const installmentCents = Math.round(product.priceCents / 4)
+  const installmentCents = Math.round(product.priceCents / 3)
   const topSpecs = product.specs.slice(0, 4)
   const topHighlights = product.highlights.slice(0, 3)
 
@@ -50,7 +50,7 @@ export function ProductQuickView({
           <button
             type="button"
             aria-label={`${dict.common.viewDetails}: ${product.name}`}
-            className="flex size-8 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-[0_10px_25px_-5px_rgba(0,0,0,0.6)] backdrop-blur-xs transition-transform duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="flex size-8 items-center justify-center rounded-full border border-border/80 bg-background/90 text-foreground shadow-xs backdrop-blur-xs transition-transform duration-200 hover:-translate-y-0.5 hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <Eye className="size-4" />
           </button>
@@ -133,7 +133,7 @@ export function ProductQuickView({
                     <span>
                       {dict.checkout.payInstallments}:{" "}
                       <strong className="font-semibold text-foreground">
-                        4 × {formatPrice(installmentCents, locale)}
+                        3 × {formatPrice(installmentCents, locale)}
                       </strong>
                     </span>
                   </p>
