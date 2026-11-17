@@ -118,25 +118,20 @@
 
   /* Floating elevation shadows (Light mode) */
   --shadow-float-sm:
-    0 8px 18px -4px oklch(0.18 0.06 263 / 0.15),
-    0 3px 7px -2px oklch(0.18 0.05 263 / 0.10),
-    inset 0 1px 0 0 oklch(1 0 0 / 0.92);
+    0 6px 16px -4px oklch(0.18 0.06 263 / 0.12),
+    0 2px 6px -2px oklch(0.18 0.05 263 / 0.08);
   --shadow-float-sm-hover:
-    0 14px 26px -5px oklch(0.18 0.08 263 / 0.22),
-    0 6px 12px -3px oklch(0.18 0.06 263 / 0.13),
-    inset 0 1px 0 0 oklch(1 0 0 / 0.98);
+    0 12px 24px -5px oklch(0.18 0.08 263 / 0.18),
+    0 4px 10px -3px oklch(0.18 0.06 263 / 0.11);
   --shadow-float-md:
-    0 16px 36px -8px oklch(0.18 0.07 263 / 0.17),
-    0 6px 14px -3px oklch(0.18 0.05 263 / 0.11),
-    inset 0 1px 0 0 oklch(1 0 0 / 0.9);
+    0 14px 32px -8px oklch(0.18 0.07 263 / 0.14),
+    0 5px 12px -3px oklch(0.18 0.05 263 / 0.09);
   --shadow-float-md-hover:
-    0 24px 48px -10px oklch(0.18 0.09 263 / 0.24),
-    0 10px 20px -4px oklch(0.18 0.06 263 / 0.14),
-    inset 0 1px 0 0 oklch(1 0 0 / 0.96);
+    0 22px 44px -10px oklch(0.18 0.09 263 / 0.20),
+    0 8px 18px -4px oklch(0.18 0.06 263 / 0.12);
   --shadow-float-lg:
-    0 26px 58px -12px oklch(0.16 0.08 263 / 0.24),
-    0 12px 24px -6px oklch(0.16 0.06 263 / 0.14),
-    inset 0 1px 0 0 oklch(1 0 0 / 0.45);
+    0 24px 54px -12px oklch(0.16 0.08 263 / 0.22),
+    0 10px 22px -6px oklch(0.16 0.06 263 / 0.12);
 }
 
 .dark {
@@ -180,30 +175,20 @@
 
   /* Floating elevation shadows (Dark mode) */
   --shadow-float-sm:
-    0 10px 22px -4px rgb(2 4 14 / 0.72),
-    0 4px 10px -2px rgb(2 4 14 / 0.55),
-    0 12px 24px -10px oklch(0.55 0.2 263 / 0.18),
-    inset 0 1px 0 0 rgb(255 255 255 / 0.16);
+    0 8px 18px -4px rgb(2 4 14 / 0.55),
+    0 3px 8px -2px rgb(2 4 14 / 0.40);
   --shadow-float-sm-hover:
-    0 16px 32px -4px rgb(2 4 14 / 0.85),
-    0 6px 14px -2px rgb(2 4 14 / 0.65),
-    0 16px 32px -8px oklch(0.6 0.2 263 / 0.30),
-    inset 0 1px 0 0 rgb(255 255 255 / 0.24);
+    0 14px 28px -4px rgb(2 4 14 / 0.70),
+    0 5px 12px -2px rgb(2 4 14 / 0.50);
   --shadow-float-md:
-    0 18px 40px -8px rgb(2 4 14 / 0.78),
-    0 8px 18px -4px rgb(2 4 14 / 0.60),
-    0 18px 36px -14px oklch(0.55 0.2 263 / 0.16),
-    inset 0 1px 0 0 rgb(255 255 255 / 0.14);
+    0 16px 36px -8px rgb(2 4 14 / 0.65),
+    0 6px 16px -4px rgb(2 4 14 / 0.48);
   --shadow-float-md-hover:
-    0 26px 54px -8px rgb(2 4 14 / 0.88),
-    0 12px 24px -4px rgb(2 4 14 / 0.70),
-    0 22px 44px -12px oklch(0.6 0.2 263 / 0.28),
-    inset 0 1px 0 0 rgb(255 255 255 / 0.22);
+    0 24px 48px -8px rgb(2 4 14 / 0.78),
+    0 10px 22px -4px rgb(2 4 14 / 0.58);
   --shadow-float-lg:
-    0 30px 68px -12px rgb(1 3 10 / 0.88),
-    0 14px 30px -6px rgb(1 3 10 / 0.70),
-    0 24px 52px -16px oklch(0.58 0.2 263 / 0.24),
-    inset 0 1px 0 0 rgb(255 255 255 / 0.20);
+    0 28px 62px -12px rgb(1 3 10 / 0.80),
+    0 12px 28px -6px rgb(1 3 10 / 0.62);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -247,30 +232,20 @@
     --sidebar-ring: oklch(0.67 0.175 261);
 
     --shadow-float-sm:
-      0 10px 22px -4px rgb(2 4 14 / 0.72),
-      0 4px 10px -2px rgb(2 4 14 / 0.55),
-      0 12px 24px -10px oklch(0.55 0.2 263 / 0.18),
-      inset 0 1px 0 0 rgb(255 255 255 / 0.16);
+      0 8px 18px -4px rgb(2 4 14 / 0.55),
+      0 3px 8px -2px rgb(2 4 14 / 0.40);
     --shadow-float-sm-hover:
-      0 16px 32px -4px rgb(2 4 14 / 0.85),
-      0 6px 14px -2px rgb(2 4 14 / 0.65),
-      0 16px 32px -8px oklch(0.6 0.2 263 / 0.30),
-      inset 0 1px 0 0 rgb(255 255 255 / 0.24);
+      0 14px 28px -4px rgb(2 4 14 / 0.70),
+      0 5px 12px -2px rgb(2 4 14 / 0.50);
     --shadow-float-md:
-      0 18px 40px -8px rgb(2 4 14 / 0.78),
-      0 8px 18px -4px rgb(2 4 14 / 0.60),
-      0 18px 36px -14px oklch(0.55 0.2 263 / 0.16),
-      inset 0 1px 0 0 rgb(255 255 255 / 0.14);
+      0 16px 36px -8px rgb(2 4 14 / 0.65),
+      0 6px 16px -4px rgb(2 4 14 / 0.48);
     --shadow-float-md-hover:
-      0 26px 54px -8px rgb(2 4 14 / 0.88),
-      0 12px 24px -4px rgb(2 4 14 / 0.70),
-      0 22px 44px -12px oklch(0.6 0.2 263 / 0.28),
-      inset 0 1px 0 0 rgb(255 255 255 / 0.22);
+      0 24px 48px -8px rgb(2 4 14 / 0.78),
+      0 10px 22px -4px rgb(2 4 14 / 0.58);
     --shadow-float-lg:
-      0 30px 68px -12px rgb(1 3 10 / 0.88),
-      0 14px 30px -6px rgb(1 3 10 / 0.70),
-      0 24px 52px -16px oklch(0.58 0.2 263 / 0.24),
-      inset 0 1px 0 0 rgb(255 255 255 / 0.20);
+      0 28px 62px -12px rgb(1 3 10 / 0.80),
+      0 12px 28px -6px rgb(1 3 10 / 0.62);
   }
 }
 
@@ -342,32 +317,49 @@
       background-color 0.2s ease;
   }
 
-  /* Interactive cards and tiles lift smoothly on hover */
+  /* Interactive cards and tiles with visible surfaces lift smoothly on hover */
   :is(a, button, li.group, div.group):is(
+      .bg-card,
+      .bg-photo,
+      .bg-secondary,
+      .bg-ink,
+      .bg-primary,
+      .bg-signal,
+      .bg-popover,
+      .bg-white
+    ):is(
       .rounded-xl,
       .rounded-2xl,
       .rounded-3xl,
       .rounded-\[1\.5rem\]
-    ):hover {
-    translate: 0 -4px;
+    ):not(.no-float):hover {
+    translate: 0 -3px;
     box-shadow: var(--shadow-float-md-hover);
   }
 
-  /* All buttons, pill links, badges, inputs, and select triggers float in the air */
+  /* Standalone buttons, pills, badges, and inputs with explicit rounded corners & opaque surfaces */
   :is(
-      button:not([role="switch"]):not(.no-float),
-      [data-slot="button"],
-      [data-slot="badge"],
-      [data-slot="input"],
-      [data-slot="select-trigger"],
-      a.rounded-full:not(.no-float),
-      a.rounded-xl:not(.no-float),
-      a.rounded-2xl:not(.no-float),
-      input[type="search"],
-      input[type="email"],
-      input[type="text"],
-      input[type="password"],
-      textarea
+      [data-slot="button"]:not(.shadow-none):not(.no-float),
+      [data-slot="select-trigger"]:not(.bg-transparent):not(.no-float),
+      [data-slot="input"]:not(.bg-transparent):not(.no-float),
+      :is(button, a):is(.rounded-full, .rounded-xl, .rounded-2xl, .rounded-lg):is(
+          .bg-primary,
+          .bg-signal,
+          .bg-foreground,
+          .bg-card,
+          .bg-secondary,
+          .bg-background,
+          .bg-ink,
+          .bg-photo,
+          .bg-white
+        ):not([role="switch"]):not(.bg-transparent):not(.sm\:bg-transparent):not(.no-float),
+      :is(input[type="search"], input[type="email"], input[type="text"], input[type="password"], textarea):is(
+          .rounded-full,
+          .rounded-xl,
+          .rounded-2xl,
+          .rounded-lg,
+          .rounded-md
+        ):not(.bg-transparent):not(.no-float)
     ) {
     box-shadow: var(--shadow-float-sm);
     transition:
@@ -380,20 +372,36 @@
   }
 
   :is(
-      button:not(:disabled):not([role="switch"]):not(.no-float),
-      [data-slot="button"]:not(:disabled),
-      a.rounded-full:not(.no-float),
-      a.rounded-xl:not(.no-float),
-      a.rounded-2xl:not(.no-float)
+      [data-slot="button"]:not(:disabled):not(.shadow-none):not(.no-float),
+      :is(button:not(:disabled), a):is(.rounded-full, .rounded-xl, .rounded-2xl, .rounded-lg):is(
+          .bg-primary,
+          .bg-signal,
+          .bg-foreground,
+          .bg-card,
+          .bg-secondary,
+          .bg-background,
+          .bg-ink,
+          .bg-photo,
+          .bg-white
+        ):not([role="switch"]):not(.bg-transparent):not(.sm\:bg-transparent):not(.no-float)
     ):hover {
     translate: 0 -2px;
     box-shadow: var(--shadow-float-sm-hover);
   }
 
   :is(
-      button:not(:disabled):not([role="switch"]):not(.no-float),
-      [data-slot="button"]:not(:disabled),
-      a.rounded-full
+      [data-slot="button"]:not(:disabled):not(.shadow-none):not(.no-float),
+      :is(button:not(:disabled), a):is(.rounded-full, .rounded-xl, .rounded-2xl, .rounded-lg):is(
+          .bg-primary,
+          .bg-signal,
+          .bg-foreground,
+          .bg-card,
+          .bg-secondary,
+          .bg-background,
+          .bg-ink,
+          .bg-photo,
+          .bg-white
+        ):not([role="switch"]):not(.bg-transparent):not(.sm\:bg-transparent):not(.no-float)
     ):active {
     translate: 0 0;
   }

@@ -58,10 +58,10 @@ export function CartPageView({ locale }: { locale: Locale }) {
                 {line.name}
               </Link>
               <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-2.5 sm:gap-3 sm:pt-3">
-                <div className="flex items-center rounded-md border border-border bg-background">
+                <div className="flex items-center overflow-hidden rounded-full border border-border bg-background">
                   <button
                     onClick={() => updateQuantity(line.id, line.quantity - 1)}
-                    className="flex size-8 items-center justify-center text-muted-foreground hover:text-foreground sm:size-9"
+                    className="no-float flex size-8 items-center justify-center text-muted-foreground transition-colors hover:bg-secondary/70 hover:text-foreground sm:size-9"
                     aria-label={dict.common.remove}
                   >
                     <Minus className="size-3.5 sm:size-4" />
@@ -71,7 +71,7 @@ export function CartPageView({ locale }: { locale: Locale }) {
                   </span>
                   <button
                     onClick={() => updateQuantity(line.id, line.quantity + 1)}
-                    className="flex size-8 items-center justify-center text-muted-foreground hover:text-foreground sm:size-9"
+                    className="no-float flex size-8 items-center justify-center text-muted-foreground transition-colors hover:bg-secondary/70 hover:text-foreground sm:size-9"
                     aria-label={dict.common.addToCart}
                   >
                     <Plus className="size-3.5 sm:size-4" />
@@ -84,7 +84,7 @@ export function CartPageView({ locale }: { locale: Locale }) {
             </div>
             <button
               onClick={() => removeItem(line.id)}
-              className="self-start p-1 text-muted-foreground transition-colors hover:text-destructive"
+              className="no-float self-start rounded-full p-1 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
               aria-label={dict.common.remove}
             >
               <Trash2 className="size-4" />

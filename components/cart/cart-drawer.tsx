@@ -65,10 +65,10 @@ export function CartDrawer() {
                       {line.name}
                     </Link>
                     <div className="mt-auto flex items-center justify-between pt-2">
-                      <div className="flex items-center rounded-md border border-border">
+                      <div className="flex items-center overflow-hidden rounded-full border border-border bg-card">
                         <button
                           onClick={() => updateQuantity(line.id, line.quantity - 1)}
-                          className="flex size-7 items-center justify-center text-muted-foreground hover:text-foreground"
+                          className="no-float flex size-7 items-center justify-center text-muted-foreground transition-colors hover:bg-secondary/70 hover:text-foreground"
                           aria-label={dict.common.remove}
                         >
                           <Minus className="size-3.5" />
@@ -76,7 +76,7 @@ export function CartDrawer() {
                         <span className="w-7 text-center text-sm font-medium tabular-nums">{line.quantity}</span>
                         <button
                           onClick={() => updateQuantity(line.id, line.quantity + 1)}
-                          className="flex size-7 items-center justify-center text-muted-foreground hover:text-foreground"
+                          className="no-float flex size-7 items-center justify-center text-muted-foreground transition-colors hover:bg-secondary/70 hover:text-foreground"
                           aria-label={dict.common.addToCart}
                         >
                           <Plus className="size-3.5" />
@@ -89,7 +89,7 @@ export function CartDrawer() {
                   </div>
                   <button
                     onClick={() => removeItem(line.id)}
-                    className="self-start text-muted-foreground transition-colors hover:text-destructive"
+                    className="no-float self-start rounded-full p-1 text-muted-foreground transition-colors hover:bg-destructive/10 hover:text-destructive"
                     aria-label={dict.common.remove}
                   >
                     <Trash2 className="size-4" />
