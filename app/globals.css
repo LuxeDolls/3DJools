@@ -240,9 +240,178 @@ body[data-sticky-cta='true'] .mobile-tabbar {
   display: none;
 }
 
+/* Interactive site logo: layer-by-layer build on load, exploded cube + tilt on hover. */
+.eureka-mark {
+  --logo-rx: 0deg;
+  --logo-ry: 0deg;
+  --logo-mx: 50%;
+  --logo-my: 30%;
+  transform: perspective(160px) rotateX(var(--logo-rx)) rotateY(var(--logo-ry));
+  transition:
+    transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s ease;
+  will-change: transform;
+}
+.eureka-mark-grid {
+  background-image: radial-gradient(rgb(255 255 255 / 0.5) 0.6px, transparent 0.7px);
+  background-size: 4px 4px;
+  opacity: 0.12;
+  transition: opacity 0.35s ease;
+}
+.eureka-mark-shine {
+  background: radial-gradient(
+    circle at var(--logo-mx) var(--logo-my),
+    rgb(255 255 255 / 0.35),
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.eureka-face,
+.eureka-spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.eureka-face-left {
+  animation: eureka-layer 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) 0.05s backwards;
+}
+.eureka-face-right {
+  animation: eureka-layer 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s backwards;
+}
+.eureka-cap {
+  animation: eureka-cap-drop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s backwards;
+}
+.eureka-spark {
+  animation: eureka-twinkle 7s ease-in-out 1.2s infinite;
+}
+.eureka-nozzle {
+  opacity: 0;
+  animation: eureka-nozzle 0.95s cubic-bezier(0.4, 0, 0.2, 1) 0.05s both;
+}
+.eureka-chip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 0.55) 50%, transparent 70%);
+  transform: translateX(-120%);
+}
+.eureka-dot-ping {
+  opacity: 0;
+}
+
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo, .eureka-mark:hover) .eureka-mark,
+.eureka-mark:hover {
+  box-shadow: 0 6px 18px -6px color-mix(in oklab, var(--primary) 80%, transparent);
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo, .eureka-mark:hover) .eureka-mark-grid {
+  opacity: 0.3;
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo, .eureka-mark:hover) .eureka-mark-shine {
+  opacity: 1;
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo, .eureka-mark:hover) .eureka-cap {
+  transform: translateY(-2.4px);
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo, .eureka-mark:hover) .eureka-face-left {
+  transform: translate(-1.3px, 0.5px);
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo, .eureka-mark:hover) .eureka-face-right {
+  transform: translate(1.3px, 0.5px);
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo, .eureka-mark:hover) .eureka-spark {
+  animation: none;
+  transform: rotate(90deg) scale(1.4);
+  filter: drop-shadow(0 0 1.5px #fff6c2);
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo) .eureka-chip::after {
+  transform: translateX(120%);
+  transition: transform 0.7s ease;
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo) .eureka-letter {
+  animation: eureka-wave 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) calc(var(--i) * 45ms) both;
+}
+:is(.eureka-logo:hover, a:focus-visible .eureka-logo) .eureka-dot-ping {
+  animation: eureka-ping 0.9s cubic-bezier(0, 0, 0.2, 1) 0.25s;
+}
+
+@keyframes eureka-layer {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes eureka-cap-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-7px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes eureka-nozzle {
+  0% {
+    opacity: 0;
+    transform: translateY(27px);
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+}
+@keyframes eureka-twinkle {
+  0%,
+  88%,
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
+  93% {
+    transform: rotate(45deg) scale(1.35);
+  }
+}
+@keyframes eureka-wave {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes eureka-ping {
+  from {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(3.2);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
-  .animate-rise {
+  .animate-rise,
+  .eureka-face,
+  .eureka-spark,
+  .eureka-nozzle,
+  .eureka-letter,
+  .eureka-dot-ping {
     animation: none !important;
+  }
+  .eureka-mark {
+    transform: none !important;
   }
 }
