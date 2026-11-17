@@ -74,14 +74,14 @@ export async function BrandMarquee({ locale, dict }: { locale: Locale; dict: Dic
           {dict.common.allBrands}
         </Link>
       </div>
-      <div className="group relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+      <div className="group relative overflow-hidden py-3 [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
         <ul className="animate-marquee flex w-max items-center gap-3 group-hover:[animation-play-state:paused] sm:gap-4">
           {loop.map((b, i) => (
             <li key={`${b.slug}-${i}`} aria-hidden={i >= brands.length ? true : undefined}>
               <Link
                 href={localizedPath(locale, `/brands/${b.slug}`)}
                 tabIndex={i >= brands.length ? -1 : undefined}
-                className="group/brand flex h-14 items-center gap-3 rounded-full border border-border bg-card pr-6 pl-2.5 font-heading text-lg font-bold whitespace-nowrap text-foreground/75 transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground sm:h-16 sm:pr-8 sm:pl-3 sm:text-2xl has-[[data-wordmark]]:pl-6 sm:has-[[data-wordmark]]:pl-8"
+                className="group/brand flex h-14 items-center gap-3 rounded-full border border-border/90 bg-card/90 pr-6 pl-2.5 font-heading text-lg font-bold whitespace-nowrap text-foreground/80 shadow-[var(--shadow-float-sm)] backdrop-blur-md transition-all duration-250 hover:-translate-y-1 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-[var(--shadow-float-sm-hover)] sm:h-16 sm:pr-8 sm:pl-3 sm:text-2xl has-[[data-wordmark]]:pl-6 sm:has-[[data-wordmark]]:pl-8"
               >
                 <BrandBadge slug={b.slug} name={b.name} />
               </Link>

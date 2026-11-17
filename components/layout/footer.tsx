@@ -107,8 +107,8 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   ]
 
   return (
-    <footer className="mt-10 px-2 pb-2 sm:mt-16 sm:px-4 sm:pb-4">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-border bg-card sm:rounded-[2.5rem]">
+    <footer className="mt-10 px-2 pb-4 sm:mt-16 sm:px-4 sm:pb-6">
+      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] border border-border/90 bg-card/90 shadow-[var(--shadow-float-lg)] backdrop-blur-xl sm:rounded-[2.5rem]">
       <div className="grid gap-8 px-5 py-10 sm:gap-10 sm:px-8 sm:py-12 lg:grid-cols-5 lg:px-12">
         <div className="lg:col-span-2">
           <Logo showTagline />

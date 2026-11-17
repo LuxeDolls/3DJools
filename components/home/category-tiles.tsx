@@ -28,7 +28,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
         viewAllHref={localizedPath(locale, "/catalog")}
         viewAllLabel={dict.home.viewAll}
       />
-      <div className="grid auto-rows-[11rem] grid-cols-2 gap-2.5 sm:auto-rows-[13rem] sm:grid-cols-3 sm:gap-3 lg:auto-rows-[14rem] lg:grid-cols-4">
+      <div className="grid auto-rows-[11rem] grid-cols-2 gap-3 sm:auto-rows-[13rem] sm:grid-cols-3 sm:gap-4 lg:auto-rows-[14rem] lg:grid-cols-4">
         {tiles.map((tile) => {
           const hero = tile.id === "printers"
           return (
@@ -36,7 +36,7 @@ export function CategoryTiles({ locale, dict }: { locale: Locale; dict: Dictiona
               key={tile.id}
               href={localizedPath(locale, tile.href)}
               className={cn(
-                "group relative flex overflow-hidden rounded-3xl border border-border bg-photo text-ink transition-colors hover:border-primary",
+                "group relative flex overflow-hidden rounded-3xl border border-border/90 bg-photo text-ink shadow-[var(--shadow-float-md)] transition-all duration-300 hover:-translate-y-1.5 hover:border-primary hover:shadow-[var(--shadow-float-md-hover)]",
                 LAYOUT[tile.id],
               )}
             >

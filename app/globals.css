@@ -115,6 +115,28 @@
   --sidebar-accent-foreground: oklch(0.3 0.12 264);
   --sidebar-border: oklch(0.885 0.016 256);
   --sidebar-ring: oklch(0.52 0.215 264);
+
+  /* Floating elevation shadows (Light mode) */
+  --shadow-float-sm:
+    0 8px 18px -4px oklch(0.18 0.06 263 / 0.15),
+    0 3px 7px -2px oklch(0.18 0.05 263 / 0.10),
+    inset 0 1px 0 0 oklch(1 0 0 / 0.92);
+  --shadow-float-sm-hover:
+    0 14px 26px -5px oklch(0.18 0.08 263 / 0.22),
+    0 6px 12px -3px oklch(0.18 0.06 263 / 0.13),
+    inset 0 1px 0 0 oklch(1 0 0 / 0.98);
+  --shadow-float-md:
+    0 16px 36px -8px oklch(0.18 0.07 263 / 0.17),
+    0 6px 14px -3px oklch(0.18 0.05 263 / 0.11),
+    inset 0 1px 0 0 oklch(1 0 0 / 0.9);
+  --shadow-float-md-hover:
+    0 24px 48px -10px oklch(0.18 0.09 263 / 0.24),
+    0 10px 20px -4px oklch(0.18 0.06 263 / 0.14),
+    inset 0 1px 0 0 oklch(1 0 0 / 0.96);
+  --shadow-float-lg:
+    0 26px 58px -12px oklch(0.16 0.08 263 / 0.24),
+    0 12px 24px -6px oklch(0.16 0.06 263 / 0.14),
+    inset 0 1px 0 0 oklch(1 0 0 / 0.45);
 }
 
 .dark {
@@ -155,6 +177,33 @@
   --sidebar-accent-foreground: oklch(0.95 0.02 255);
   --sidebar-border: oklch(1 0 0 / 11%);
   --sidebar-ring: oklch(0.67 0.175 261);
+
+  /* Floating elevation shadows (Dark mode) */
+  --shadow-float-sm:
+    0 10px 22px -4px rgb(2 4 14 / 0.72),
+    0 4px 10px -2px rgb(2 4 14 / 0.55),
+    0 12px 24px -10px oklch(0.55 0.2 263 / 0.18),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.16);
+  --shadow-float-sm-hover:
+    0 16px 32px -4px rgb(2 4 14 / 0.85),
+    0 6px 14px -2px rgb(2 4 14 / 0.65),
+    0 16px 32px -8px oklch(0.6 0.2 263 / 0.30),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.24);
+  --shadow-float-md:
+    0 18px 40px -8px rgb(2 4 14 / 0.78),
+    0 8px 18px -4px rgb(2 4 14 / 0.60),
+    0 18px 36px -14px oklch(0.55 0.2 263 / 0.16),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.14);
+  --shadow-float-md-hover:
+    0 26px 54px -8px rgb(2 4 14 / 0.88),
+    0 12px 24px -4px rgb(2 4 14 / 0.70),
+    0 22px 44px -12px oklch(0.6 0.2 263 / 0.28),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.22);
+  --shadow-float-lg:
+    0 30px 68px -12px rgb(1 3 10 / 0.88),
+    0 14px 30px -6px rgb(1 3 10 / 0.70),
+    0 24px 52px -16px oklch(0.58 0.2 263 / 0.24),
+    inset 0 1px 0 0 rgb(255 255 255 / 0.20);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -196,6 +245,32 @@
     --sidebar-accent-foreground: oklch(0.95 0.02 255);
     --sidebar-border: oklch(1 0 0 / 11%);
     --sidebar-ring: oklch(0.67 0.175 261);
+
+    --shadow-float-sm:
+      0 10px 22px -4px rgb(2 4 14 / 0.72),
+      0 4px 10px -2px rgb(2 4 14 / 0.55),
+      0 12px 24px -10px oklch(0.55 0.2 263 / 0.18),
+      inset 0 1px 0 0 rgb(255 255 255 / 0.16);
+    --shadow-float-sm-hover:
+      0 16px 32px -4px rgb(2 4 14 / 0.85),
+      0 6px 14px -2px rgb(2 4 14 / 0.65),
+      0 16px 32px -8px oklch(0.6 0.2 263 / 0.30),
+      inset 0 1px 0 0 rgb(255 255 255 / 0.24);
+    --shadow-float-md:
+      0 18px 40px -8px rgb(2 4 14 / 0.78),
+      0 8px 18px -4px rgb(2 4 14 / 0.60),
+      0 18px 36px -14px oklch(0.55 0.2 263 / 0.16),
+      inset 0 1px 0 0 rgb(255 255 255 / 0.14);
+    --shadow-float-md-hover:
+      0 26px 54px -8px rgb(2 4 14 / 0.88),
+      0 12px 24px -4px rgb(2 4 14 / 0.70),
+      0 22px 44px -12px oklch(0.6 0.2 263 / 0.28),
+      inset 0 1px 0 0 rgb(255 255 255 / 0.22);
+    --shadow-float-lg:
+      0 30px 68px -12px rgb(1 3 10 / 0.88),
+      0 14px 30px -6px rgb(1 3 10 / 0.70),
+      0 24px 52px -16px oklch(0.58 0.2 263 / 0.24),
+      inset 0 1px 0 0 rgb(255 255 255 / 0.20);
   }
 }
 
@@ -217,6 +292,110 @@
   ::selection {
     background: color-mix(in oklab, var(--signal) 70%, transparent);
     color: var(--signal-foreground);
+  }
+}
+
+/* Wet condensation droplet on the blurred parallax glass */
+.wet-droplet {
+  border-radius: 52% 48% 58% 42% / 42% 45% 55% 58%;
+  background: radial-gradient(
+    ellipse at 32% 24%,
+    rgb(255 255 255 / 0.55) 0%,
+    rgb(255 255 255 / 0.14) 26%,
+    color-mix(in oklab, var(--primary) 18%, transparent) 64%,
+    rgb(255 255 255 / 0.22) 92%,
+    transparent 100%
+  );
+  box-shadow:
+    inset 1px 1.5px 2.5px rgb(255 255 255 / 0.62),
+    inset -1px -2px 3px color-mix(in oklab, var(--primary) 35%, rgb(0 0 0 / 0.35)),
+    0 6px 12px -2px rgb(0 0 0 / 0.28),
+    0 2px 4px rgb(255 255 255 / 0.14);
+}
+
+/* Global floating levitation system: every block, card, button, pill, and input casts a soft shadow and hovers in air */
+@layer components {
+  /* Large section blocks & hero containers */
+  :is(.rounded-\[2rem\], .rounded-\[2\.5rem\]) {
+    box-shadow: var(--shadow-float-lg);
+    transition:
+      transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  /* Medium cards, panels, tiles, product cards, dialogs, drawers, inner photo frames */
+  :is(.bg-card, .bg-photo, .bg-secondary, .bg-ink, .bg-primary, .bg-signal, .bg-popover):is(
+      .rounded-xl,
+      .rounded-2xl,
+      .rounded-3xl,
+      .rounded-\[1\.15rem\],
+      .rounded-\[1\.5rem\]
+    ) {
+    box-shadow: var(--shadow-float-md);
+    transition:
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      translate 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  /* Interactive cards and tiles lift smoothly on hover */
+  :is(a, button, li.group, div.group):is(
+      .rounded-xl,
+      .rounded-2xl,
+      .rounded-3xl,
+      .rounded-\[1\.5rem\]
+    ):hover {
+    translate: 0 -4px;
+    box-shadow: var(--shadow-float-md-hover);
+  }
+
+  /* All buttons, pill links, badges, inputs, and select triggers float in the air */
+  :is(
+      button:not([role="switch"]):not(.no-float),
+      [data-slot="button"],
+      [data-slot="badge"],
+      [data-slot="input"],
+      [data-slot="select-trigger"],
+      a.rounded-full:not(.no-float),
+      a.rounded-xl:not(.no-float),
+      a.rounded-2xl:not(.no-float),
+      input[type="search"],
+      input[type="email"],
+      input[type="text"],
+      input[type="password"],
+      textarea
+    ) {
+    box-shadow: var(--shadow-float-sm);
+    transition:
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      translate 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.2s ease,
+      background-color 0.2s ease,
+      color 0.2s ease;
+  }
+
+  :is(
+      button:not(:disabled):not([role="switch"]):not(.no-float),
+      [data-slot="button"]:not(:disabled),
+      a.rounded-full:not(.no-float),
+      a.rounded-xl:not(.no-float),
+      a.rounded-2xl:not(.no-float)
+    ):hover {
+    translate: 0 -2px;
+    box-shadow: var(--shadow-float-sm-hover);
+  }
+
+  :is(
+      button:not(:disabled):not([role="switch"]):not(.no-float),
+      [data-slot="button"]:not(:disabled),
+      a.rounded-full
+    ):active {
+    translate: 0 0;
   }
 }
 

@@ -105,7 +105,7 @@ export function ProductRail({
         }}
         onDragStart={(e) => e.preventDefault()}
         className={cn(
-          "no-scrollbar -mx-4 flex gap-2 overflow-x-auto scroll-px-4 px-4 pb-2 focus-visible:outline-none sm:gap-4 [&>*]:w-[68%] [&>*]:shrink-0 [&>*]:snap-start sm:[&>*]:w-[38%] lg:[&>*]:w-[calc((100%-3rem)/4)]",
+          "no-scrollbar -mx-4 -my-3 flex gap-2.5 overflow-x-auto scroll-px-4 px-4 py-4 focus-visible:outline-none sm:gap-4 [&>*]:w-[68%] [&>*]:shrink-0 [&>*]:snap-start sm:[&>*]:w-[38%] lg:[&>*]:w-[calc((100%-3rem)/4)]",
           dragging ? "cursor-grabbing select-none" : "snap-x snap-mandatory sm:cursor-grab",
         )}
       >

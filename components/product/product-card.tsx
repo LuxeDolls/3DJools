@@ -45,9 +45,9 @@ export function ProductCard({
     <div
       data-product-id={product.productId}
       data-product-sku={product.mpn || product.slug}
-      className="group relative flex h-full flex-col gap-2 rounded-3xl border border-border bg-card p-1.5 transition-colors duration-200 hover:border-primary/60 sm:gap-3 sm:p-2"
+      className="group relative flex h-full flex-col gap-2 rounded-3xl border border-border/90 bg-card/92 p-1.5 shadow-[var(--shadow-float-md)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-primary/60 hover:shadow-[var(--shadow-float-md-hover)] sm:gap-3 sm:p-2"
     >
-      <div className="relative aspect-square overflow-hidden rounded-[1.15rem] bg-photo">
+      <div className="relative aspect-square overflow-hidden rounded-[1.15rem] bg-photo shadow-sm">
         <Link href={href} className="relative block size-full" aria-label={product.name}>
           <Image
             src={primaryImage}

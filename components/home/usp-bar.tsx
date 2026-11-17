@@ -24,13 +24,13 @@ export function UspBar({ dict, locale }: { dict: Dictionary; locale: Locale }) {
 
   return (
     <section className="mx-auto max-w-7xl px-4 pt-10 sm:pt-16">
-      <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3 lg:grid-cols-4">
+      <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
         {items.map((item) => (
           <li
             key={item.title}
-            className="group flex gap-4 rounded-3xl border border-border bg-card p-4 transition-colors hover:border-primary sm:flex-col sm:p-6"
+            className="group flex gap-4 rounded-3xl border border-border/90 bg-card/90 p-4 shadow-[var(--shadow-float-md)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1.5 hover:border-primary hover:shadow-[var(--shadow-float-md-hover)] sm:flex-col sm:p-6"
           >
-            <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground transition-transform duration-300 group-hover:-rotate-6 sm:size-12">
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-[var(--shadow-float-sm)] transition-transform duration-300 group-hover:-rotate-6 sm:size-12">
               <item.icon className="size-5" aria-hidden="true" />
             </span>
             <div className="flex flex-col gap-1">

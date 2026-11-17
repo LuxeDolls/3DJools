@@ -8,6 +8,7 @@ import { CartProvider } from "@/components/cart/cart-provider"
 import { CartDrawer } from "@/components/cart/cart-drawer"
 import { ChatWidget } from "@/components/chat/chat-widget"
 import { Header, MobileCategoryStrip, MobileTabBar } from "@/components/layout/header"
+import { ParallaxBackground } from "@/components/layout/parallax-background"
 import { SearchProvider } from "@/components/layout/search-provider"
 import { GatewayNotice } from "@/components/layout/gateway-notice"
 import { SaleBanner } from "@/components/home/sale-banner"
@@ -28,12 +29,15 @@ export function StorefrontShell({
       <I18nProvider locale={locale} dict={dict}>
         <CartProvider>
           <SearchProvider>
-            <GatewayNotice locale={locale} dict={dict} />
-            <SaleBanner locale={locale} dict={dict} />
-            <Header />
-            <MobileCategoryStrip />
-            <main className="min-h-[60vh] pb-24 md:pb-0">{children}</main>
-            <MobileTabBar />
+            <ParallaxBackground />
+            <div className="relative z-10">
+              <GatewayNotice locale={locale} dict={dict} />
+              <SaleBanner locale={locale} dict={dict} />
+              <Header />
+              <MobileCategoryStrip />
+              <main className="min-h-[60vh] pb-24 md:pb-0">{children}</main>
+              <MobileTabBar />
+            </div>
             <CartDrawer />
             <ChatWidget />
             <CookieConsent />

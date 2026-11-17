@@ -32,12 +32,12 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 px-2 pt-2 sm:px-4 sm:pt-3">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 rounded-full border border-border bg-card/85 pr-1.5 pl-2 shadow-sm backdrop-blur-xl supports-[backdrop-filter]:bg-card/70 sm:h-16 sm:gap-3 sm:pr-2 sm:pl-3">
+      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 rounded-full border border-border/90 bg-card/85 pr-1.5 pl-2 shadow-[var(--shadow-float-md)] backdrop-blur-xl supports-[backdrop-filter]:bg-card/75 sm:h-16 sm:gap-3 sm:pr-2 sm:pl-3">
         <div className="xl:hidden">
           <MobileNav navItems={navItems} />
         </div>
 
-        <Link href={lp("/")} className="shrink-0 rounded-full" aria-label={dict.brandName}>
+        <Link href={lp("/")} className="no-float shrink-0 rounded-full" aria-label={dict.brandName}>
           <Logo markClassName="size-8 sm:size-9" className="text-base sm:text-lg" />
         </Link>
 
@@ -137,7 +137,7 @@ export function MobileCategoryStrip() {
 
   return (
     <nav aria-label="Categories" className="xl:hidden">
-      <div className="no-scrollbar mx-auto flex max-w-7xl items-center gap-1.5 overflow-x-auto px-3 pt-2.5 pb-1 sm:px-4">
+      <div className="no-scrollbar mx-auto flex max-w-7xl items-center gap-2 overflow-x-auto px-3 py-3 sm:px-4">
         {navItems.map((item) => {
           const target = lp(item.href)
           const isActive = pathname === target
