@@ -32,8 +32,8 @@ export function renderEmail({ preheader, body }: { preheader: string; body: stri
             <td style="padding:4px 8px 18px;">
               <table role="presentation" cellpadding="0" cellspacing="0">
                 <tr>
-                  <td width="36" height="36" align="center" valign="middle" style="width:36px;height:36px;background:${ORANGE};border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:800;color:${INK};line-height:36px;">D</td>
-                  <td style="padding-left:10px;font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.4px;line-height:1;color:#ffffff;"><span style="color:${ORANGE}">DnD</span>3D</td>
+                  <td width="36" height="36" align="center" valign="middle" style="width:36px;height:36px;background:${ORANGE};border-radius:8px;font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:800;color:${INK};line-height:36px;">E</td>
+                  <td style="padding-left:10px;font-family:Arial,Helvetica,sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.4px;line-height:1;color:#ffffff;"><span style="color:${ORANGE}">3D</span>Eureka</td>
                 </tr>
               </table>
               <p style="margin:10px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:#a3a3a3;">Serious 3D tools. Honest prices.</p>

@@ -29,7 +29,7 @@ function generateOrderNumber(): string {
     now.getDate(),
   ).padStart(2, "0")}`
   const rand = Math.random().toString(36).slice(2, 7).toUpperCase()
-  return `DND-${ymd}-${rand}`
+  return `3DE-${ymd}-${rand}`
 }
 
 export type CreateOrderInput = {

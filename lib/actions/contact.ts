@@ -92,9 +92,9 @@ export async function submitContactMessage(input: ContactInput): Promise<Contact
   })
 
   await sendEmail({
-    to: "info@dnd3d.com",
+    to: "info@3deureka.com",
     replyTo: storedEmail,
-    subject: `[DnD3D] ${normalizedSubject}`,
+    subject: `[3DEureka] ${normalizedSubject}`,
     text: `New contact form message\n\nFrom: ${storedName} <${storedEmail}>\nSubject: ${normalizedSubject}\n\n${storedMessage}`,
     html: `<h1>New contact form message</h1><p><strong>From:</strong> ${escapeHtml(storedName)} &lt;${escapeHtml(storedEmail)}&gt;</p><p><strong>Subject:</strong> ${escapeHtml(normalizedSubject)}</p><p>${escapeHtml(storedMessage).replace(/\n/g, "<br>")}</p>`,
   })

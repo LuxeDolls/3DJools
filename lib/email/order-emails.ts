@@ -81,7 +81,7 @@ export async function sendOrderConfirmationEmail(order: OrderWithItems): Promise
     order.shippingCountry,
   ].filter((line) => line && line.trim())
 
-  const subject = `Your DnD3D order confirmation — ${order.orderNumber}`
+  const subject = `Your 3DEureka order confirmation — ${order.orderNumber}`
 
   const itemsText = order.items
     .map((i) => `- ${i.productName} × ${i.quantity} — ${euros(i.lineTotalCents)}`)
@@ -227,7 +227,7 @@ export async function sendOrderStatusUpdateEmail(
   const orderLink = base ? `${base}/en/order/${order.orderNumber}` : ""
   const previousLabel = ORDER_STATUS_LABELS[previousStatus] ?? previousStatus
   const statusLabel = ORDER_STATUS_LABELS[order.status] ?? order.status
-  const subject = `Your DnD3D order ${order.orderNumber} is now ${statusLabel}`
+  const subject = `Your 3DEureka order ${order.orderNumber} is now ${statusLabel}`
   const text = [
     `Your order ${order.orderNumber} has been updated.`,
     `Status: ${previousLabel} → ${statusLabel}`,
@@ -259,7 +259,7 @@ export async function sendOrderShippedEmail(order: OrderWithItems): Promise<Send
   const trackingNumber = order.trackingNumber?.trim()
   const trackingUrl = order.trackingUrl?.trim()
 
-  const subject = `Your DnD3D order ${order.orderNumber} has shipped`
+  const subject = `Your 3DEureka order ${order.orderNumber} has shipped`
 
   const itemsText = order.items
     .map((i) => `- ${i.productName} × ${i.quantity} — ${euros(i.lineTotalCents)}`)
@@ -390,7 +390,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
   const text = [
     `Hi ${firstName || "there"},`,
     "",
-    `Welcome to DnD3D, and thank you for your order — we're delighted to have you with us!`,
+    `Welcome to 3DEureka, and thank you for your order — we're delighted to have you with us!`,
     `We noticed your order ${order.orderNumber} is still marked as awaiting payment, so we wanted to check in and make sure everything is on track.`,
     "",
     "Your order:",
@@ -457,7 +457,7 @@ export async function sendPaymentReminderEmail(order: OrderWithItems): Promise<S
 
   const html = renderEmail({
     preheader: `Order ${order.orderNumber} is still awaiting payment`,
-    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">Welcome to DnD3D${firstName ? `, ${firstName}` : ""}!</h1>
+    body: `<h1 style="margin:0 0 8px;font-size:26px;line-height:1.2;color:#111">Welcome to 3DEureka${firstName ? `, ${firstName}` : ""}!</h1>
     <p style="margin:0 0 20px;color:#555;font-size:14px;line-height:1.6">Thank you for your order — we're delighted to have you with us. We noticed order <strong>${order.orderNumber}</strong> is still marked as <strong>awaiting payment</strong>, so we wanted to check in and make sure everything is on track.</p>
     ${sepaHtml}
     ${cryptoHtml}
