@@ -23,6 +23,7 @@ type FaqItem = {
 type FaqCopy = {
   intro: string
   description: string
+  policiesHeading: string
   groups: { heading: string; items: FaqItem[] }[]
 }
 
@@ -32,33 +33,33 @@ function answerText(item: FaqItem) {
 }
 
 const CARD_OFF_FAQ: Record<Locale, string> = {
-  en: "SEPA bank transfer and interest-free instalments. Card payment is temporarily unavailable. Details are on our ",
-  de: "SEPA-Überweisung und zinsfreie Ratenzahlung. Kartenzahlung ist vorübergehend nicht verfügbar. Einzelheiten stehen auf unserer Seite ",
-  fr: "Virement SEPA et paiement en plusieurs fois sans intérêt. Le paiement par carte est temporairement indisponible. Les détails figurent sur notre ",
-  it: "Bonifico SEPA e rate senza interessi. Il pagamento con carta è temporaneamente non disponibile. I dettagli sono sulla nostra ",
-  es: "Transferencia SEPA y plazos sin intereses. El pago con tarjeta no está disponible temporalmente. Los detalles están en nuestra ",
-  nl: "SEPA-overschrijving en renteloze termijnen. Betalen met kaart is tijdelijk niet beschikbaar. De details staan op onze ",
+  en: "You can pay by SEPA bank transfer or split your purchase into 4 interest-free instalments. Card checkout is temporarily offline. Full information is listed on our ",
+  de: "Sie können per SEPA-Banküberweisung bezahlen oder den Kaufbetrag in 4 zinsfreie Raten aufteilen. Die Kartenzahlung ist derzeit vorübergehend deaktiviert. Alle Einzelheiten finden Sie auf unserer Seite ",
+  fr: "Vous pouvez régler par virement bancaire SEPA ou étaler votre achat en 4 échéances sans frais. Le paiement par carte est momentanément indisponible. Retrouvez toutes les précisions sur notre ",
+  it: "Puoi saldare tramite bonifico bancario SEPA oppure suddividere l'acquisto in 4 rate a tasso zero. Il pagamento con carta è temporaneamente sospeso. Tutti i dettagli sono disponibili nella ",
+  es: "Puedes abonar tu pedido mediante transferencia bancaria SEPA o fraccionarlo en 4 cuotas sin intereses. El pago con tarjeta está temporalmente inactivo. Consulta toda la información en nuestra ",
+  nl: "U kunt afrekenen via een SEPA-bankoverschrijving of uw aankoop spreiden over 4 rentevrije termijnen. Kaartbetalingen zijn tijdelijk buiten gebruik. Alle informatie vindt u op onze ",
 }
 
 const CARD_FAQ: Record<Locale, string> = {
   en: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, Open Banking (instant payment from your bank account), SEPA bank transfer and interest-free instalments. Details are on our "
-    : "Visa, Mastercard, Open Banking (instant payment from your bank account) and interest-free instalments. Details are on our ",
+    ? "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), SEPA bank transfers, and 4× interest-free instalments. Read the full breakdown on our "
+    : "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), and 4× interest-free instalments. Read the full breakdown on our ",
   de: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, Open Banking (Direktzahlung vom Bankkonto), SEPA-Überweisung und zinsfreie Ratenzahlung. Einzelheiten stehen auf unserer Seite "
-    : "Visa, Mastercard, Open Banking (Direktzahlung vom Bankkonto) und zinsfreie Ratenzahlung. Einzelheiten stehen auf unserer Seite ",
+    ? "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN), SEPA-Banküberweisungen sowie die 4× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite "
+    : "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN) sowie die 4× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite ",
   fr: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, Open Banking (paiement direct depuis votre compte bancaire), virement SEPA et paiement en plusieurs fois sans intérêt. Les détails figurent sur notre "
-    : "Visa, Mastercard, Open Banking (paiement direct depuis votre compte bancaire) et paiement en plusieurs fois sans intérêt. Les détails figurent sur notre ",
+    ? "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN), le virement SEPA ainsi que le règlement en 4× sans intérêt. Consultez le récapitulatif sur notre "
+    : "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN) ainsi que le règlement en 4× sans intérêt. Consultez le récapitulatif sur notre ",
   it: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, Open Banking (pagamento diretto dal conto bancario), bonifico SEPA e rate senza interessi. I dettagli sono sulla nostra "
-    : "Visa, Mastercard, Open Banking (pagamento diretto dal conto bancario) e rate senza interessi. I dettagli sono sulla nostra ",
+    ? "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN), bonifico SEPA e dilazione in 4 rate senza interessi. Scopri tutti i dettagli nella "
+    : "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN) e dilazione in 4 rate senza interessi. Scopri tutti i dettagli nella ",
   es: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, Open Banking (pago directo desde cuenta bancaria), transferencia SEPA y plazos sin intereses. Los detalles están en nuestra "
-    : "Visa, Mastercard, Open Banking (pago directo desde cuenta bancaria) y plazos sin intereses. Los detalles están en nuestra ",
+    ? "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN), transferencia SEPA y financiación en 4 plazos sin intereses. Revisa el detalle completo en nuestra "
+    : "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN) y financiación en 4 plazos sin intereses. Revisa el detalle completo en nuestra ",
   nl: BANK_TRANSFER_CHECKOUT_ENABLED
-    ? "Visa, Mastercard, Open Banking (direct betalen vanaf uw bankrekening), SEPA-overschrijving en renteloze termijnen. De details staan op onze "
-    : "Visa, Mastercard, Open Banking (direct betalen vanaf uw bankrekening) en renteloze termijnen. De details staan op onze ",
+    ? "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN), SEPA-overschrijvingen en gespreide betaling in 4 rentevrije termijnen. Bekijk het volledige overzicht op onze "
+    : "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN) en gespreide betaling in 4 rentevrije termijnen. Bekijk het volledige overzicht op onze ",
 }
 
 function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {
@@ -78,588 +79,606 @@ function withoutCard(locale: Locale, copy: FaqCopy): FaqCopy {
 
 const COPY: Record<Locale, FaqCopy> = {
   en: {
-    intro: "Answers to the questions we get asked most about orders, shipping, returns and payments.",
-    description: "Answers to common questions about orders, shipping, returns, warranty and payments at DnD3D.",
+    intro: "Quick, clear answers covering payment options, European parcel delivery, our 30-day return window, warranty coverage, and customer care.",
+    description: "Frequently asked questions about payments, delivery times, 30-day returns, EU warranty, and support at DnD3D.",
+    policiesHeading: "Store policies & legal documents",
     groups: [
       {
-        heading: "Orders & shipping",
+        heading: "Payment options & pricing",
         items: [
           {
-            question: "How long does delivery take, and how much does it cost?",
-            answer:
-              "Standard shipping takes 3–7 business days in total and is completely free on every order, to every destination we deliver to — no minimum spend required. Handling takes 0–2 business days and transit takes 3–5 business days. Orders placed by 15:00 CET Monday to Friday enter the handling window that day.",
-          },
-          {
-            question: "What are your business hours?",
-            answer:
-              "Our team is available Monday to Friday, 9:00–18:00 CET, excluding Dutch public holidays. Orders and messages received outside these hours are handled on the next business day.",
-          },
-          {
-            question: "Which countries do you ship to?",
-            answer:
-              "We deliver to the Netherlands and to the rest of the European Union plus a few neighbouring countries (Switzerland, Norway, United Kingdom) with our own courier service, DnD3D Courier. If our courier cannot cover the route, we use DHL or DPD. Shipping is free to every one of these destinations.",
-          },
-          {
-            question: "Can I track my order?",
-            link: {
-              href: "/track-order",
-              before:
-                "Yes. You'll receive an email with a tracking number once your order ships, and you can follow every order from payment to delivery on our ",
-              label: "order tracking page",
-              after: ".",
-            },
-          },
-        ],
-      },
-      {
-        heading: "Returns & warranty",
-        items: [
-          {
-            question: "What is your return policy?",
-            answer:
-              "As a consumer in the EU you have a statutory right to withdraw within 14 days of receiving the goods, without giving a reason. We voluntarily extend this to 30 days. We accept returns of both non-defective and defective products. Items must be new and returned in their original condition and packaging. Exchanges are not accepted. Once we receive and inspect the return, we refund your original payment method within 7 working days.",
-          },
-          {
-            question: "Who pays for return shipping?",
-            answer:
-              "Return shipping is free for accepted returns, including non-defective and defective products. We provide a return label to download and print, and there is no restocking fee. If an item arrives damaged or faulty, contact us within 48 hours with photos and we will arrange a free replacement or return.",
-          },
-          {
-            question: "Do you offer a warranty?",
-            answer:
-              "Every machine we sell is covered by the EU statutory 2-year consumer guarantee against defects. Many manufacturers also provide their own additional warranty. Our support team helps arrange any repair or replacement.",
-          },
-        ],
-      },
-      {
-        heading: "Payments",
-        items: [
-          {
-            question: "What payment methods do you accept?",
+            question: "Which ways to pay are available at checkout?",
             link: {
               href: "/payment-methods",
               before:
-                "Card (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA bank transfer and interest-free instalments. Card, Apple Pay, Link and Bancontact open a secure Stripe page. Details are on our ",
+                "We accept Visa and Mastercard, instant bank payments via Open Banking (directly through your banking app or IBAN), SEPA bank transfers, and 4× interest-free instalments. Read the full breakdown on our ",
               label: "payment methods page",
               after: ".",
             },
           },
           {
-            question: "How do interest-free instalments work?",
-            answer: "For orders of €1,000 or more, the order is split into four equal payments over two months, with no interest and no fees.",
+            question: "Do listed prices already include VAT?",
+            answer:
+              "Yes. Every price displayed across our catalogue is denominated in euro (EUR) and already includes applicable statutory VAT.",
           },
           {
-            question: "Are prices shown with VAT?",
-            answer: "Yes. All prices are shown in euro (EUR) and include statutory VAT where applicable.",
+            question: "How does the 4× interest-free instalment plan work?",
+            answer:
+              "Orders worth €1,000 or above can be divided into four equal 25% payments spread over two months (an initial 25% payment upon approval followed by three fortnightly instalments) at 0% APR and with zero extra charges.",
           },
         ],
       },
       {
-        heading: "Products & support",
+        heading: "Returns, refunds & warranty",
         items: [
           {
-            question: "Do your printers come fully assembled?",
+            question: "How does your 30-day return and refund policy work?",
             answer:
-              "It depends on the model — most Bambu Lab and Prusa machines ship fully assembled, while some kits require light assembly. Each product page states exactly what's included.",
+              "Under EU consumer law you are entitled to a 14-day cooling-off period without stating a reason, which we voluntarily extend to a full 30 days from the date of delivery. Both defective and non-defective items qualify, provided they are unused and sent back in their original condition and factory packaging. Direct product exchanges are not offered. Once your parcel reaches us and passes inspection, your refund is credited back to the original payment method within 7 working days.",
           },
           {
-            question: "How can I contact support?",
+            question: "Are return labels free, and what if a parcel arrives damaged?",
+            answer:
+              "Yes — we cover return postage on all approved returns (both faulty and non-faulty goods), supply a printable prepaid return label, and never charge restocking fees. Should your shipment arrive with transit damage or a defect, please notify us with photos within 48 hours of receipt so we can arrange a free replacement or return right away.",
+          },
+          {
+            question: "What warranty protection comes with my hardware?",
+            answer:
+              "All equipment purchased from DnD3D is protected by the mandatory 2-year EU statutory warranty against manufacturing defects, alongside any additional commercial warranty offered by the brand. Our support specialists assist you with troubleshooting, repairs, or replacements.",
+          },
+        ],
+      },
+      {
+        heading: "Delivery & order tracking",
+        items: [
+          {
+            question: "How can I follow the status of my shipment?",
+            link: {
+              href: "/track-order",
+              before:
+                "As soon as your parcel leaves our warehouse, we email you a tracking code. You can also monitor every stage from payment confirmation to doorstep delivery on our ",
+              label: "order tracking page",
+              after: ".",
+            },
+          },
+          {
+            question: "Where do you deliver and which couriers handle the parcels?",
+            answer:
+              "We ship across the Netherlands, all other European Union member states, and selected nearby countries (United Kingdom, Switzerland, and Norway). Deliveries are carried out by our dedicated fleet, DnD3D Courier, or handed over to DHL or DPD on routes outside our direct network — always free of charge.",
+          },
+          {
+            question: "What are the shipping costs and total delivery times?",
+            answer:
+              "Delivery is 100% free on every order with no minimum basket value. Warehouse preparation takes 0–2 business days (orders placed before 15:00 CET Monday–Friday enter preparation the same day) and courier transit takes 3–5 business days, resulting in an overall delivery window of 3–7 business days.",
+          },
+          {
+            question: "When does your team process orders and messages?",
+            answer:
+              "Our operations and customer care teams work Monday through Friday from 9:00 to 18:00 CET, excluding official Dutch public holidays. Enquiries and orders submitted outside those hours are picked up on the next working day.",
+          },
+        ],
+      },
+      {
+        heading: "Hardware & customer care",
+        items: [
+          {
+            question: "How do I get in touch with customer support?",
             link: {
               href: "/contact",
-              before: "Use our ",
+              before: "Send us a message through our ",
               label: "contact form",
-              after: " or live chat — we reply within 48 hours, Monday to Friday, 9:00–18:00 CET.",
+              after: " or start a live chat session — our specialists respond within 48 hours on business days (Mon–Fri, 9:00–18:00 CET).",
             },
+          },
+          {
+            question: "Are the 3D printers delivered pre-assembled?",
+            answer:
+              "That depends on the specific machine: most Bambu Lab and Prusa units arrive ready to print out of the box, whereas certain DIY or kit models need minor assembly. You can check the exact box contents and setup format on each product page.",
           },
         ],
       },
     ],
   },
   de: {
-    intro: "Antworten auf die Fragen, die uns zu Bestellungen, Versand, Rückgabe und Zahlung am häufigsten gestellt werden.",
-    description: "Antworten auf häufige Fragen zu Bestellungen, Versand, Rückgabe, Garantie und Zahlung bei DnD3D.",
+    intro: "Klare Antworten auf die wichtigsten Fragen rund um Zahlungsmethoden, kostenlose EU-Lieferung, unser 30-tägiges Rückgaberecht, Gewährleistung und Kundenservice.",
+    description: "Häufig gestellte Fragen zu Zahlung, Lieferzeiten, 30 Tagen Rückgabe, EU-Gewährleistung und Support bei DnD3D.",
+    policiesHeading: "Richtlinien & Rechtliches",
     groups: [
       {
-        heading: "Bestellungen und Versand",
+        heading: "Zahlungsarten & Preise",
         items: [
           {
-            question: "Wie lange dauert die Lieferung und was kostet sie?",
-            answer:
-              "Der Standardversand dauert insgesamt 3–7 Werktage und ist bei jeder Bestellung und in jedes Lieferland vollständig kostenlos — ohne Mindestbestellwert. Die Bearbeitung dauert 0–2 Werktage, der Transport 3–5 Werktage. Bestellungen, die montags bis freitags bis 15:00 Uhr MEZ eingehen, werden noch am selben Tag bearbeitet.",
-          },
-          {
-            question: "Wann sind Sie erreichbar?",
-            answer:
-              "Unser Team ist montags bis freitags von 9:00 bis 18:00 Uhr MEZ erreichbar, ausgenommen niederländische Feiertage. Bestellungen und Nachrichten außerhalb dieser Zeiten bearbeiten wir am nächsten Werktag.",
-          },
-          {
-            question: "In welche Länder liefern Sie?",
-            answer:
-              "Wir liefern in die Niederlande und in die übrige Europäische Union sowie in einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) mit unserem eigenen Kurierdienst, DnD3D Courier. Wenn unser Kurier die Strecke nicht abdecken kann, nutzen wir DHL oder DPD. Der Versand ist in jedes dieser Länder kostenlos.",
-          },
-          {
-            question: "Kann ich meine Bestellung verfolgen?",
-            link: {
-              href: "/track-order",
-              before:
-                "Ja. Sobald Ihre Bestellung versendet wird, erhalten Sie eine E-Mail mit einer Sendungsnummer. Jede Bestellung können Sie von der Zahlung bis zur Lieferung auf unserer ",
-              label: "Sendungsverfolgung",
-              after: " verfolgen.",
-            },
-          },
-        ],
-      },
-      {
-        heading: "Rückgabe und Garantie",
-        items: [
-          {
-            question: "Wie lauten Ihre Rückgabebedingungen?",
-            answer:
-              "Als Verbraucher in der EU haben Sie das gesetzliche Recht, den Kauf innerhalb von 14 Tagen nach Erhalt der Ware ohne Angabe von Gründen zu widerrufen. Wir verlängern diese Frist freiwillig auf 30 Tage. Wir nehmen sowohl mangelfreie als auch mangelhafte Produkte zurück. Die Artikel müssen neu sein und im ursprünglichen Zustand sowie in der Originalverpackung zurückgesendet werden. Ein Umtausch ist nicht möglich. Nach Erhalt und Prüfung erstatten wir den Betrag innerhalb von 7 Werktagen auf Ihre ursprüngliche Zahlungsmethode.",
-          },
-          {
-            question: "Wer trägt die Kosten der Rücksendung?",
-            answer:
-              "Die Rücksendung ist bei angenommenen Rückgaben kostenlos, sowohl bei mangelfreien als auch bei mangelhaften Produkten. Wir stellen ein Rücksendeetikett zum Herunterladen und Ausdrucken bereit, und es fällt keine Wiedereinlagerungsgebühr an. Wenn ein Artikel beschädigt oder fehlerhaft ankommt, kontaktieren Sie uns innerhalb von 48 Stunden mit Fotos. Wir organisieren dann einen kostenlosen Ersatz oder eine Rückgabe.",
-          },
-          {
-            question: "Gibt es eine Garantie?",
-            answer:
-              "Jede von uns verkaufte Maschine ist durch die gesetzliche zweijährige EU-Verbrauchergarantie gegen Mängel abgedeckt. Viele Hersteller gewähren zusätzlich eine eigene Garantie. Unser Support hilft bei Reparatur oder Ersatz.",
-          },
-        ],
-      },
-      {
-        heading: "Zahlungen",
-        items: [
-          {
-            question: "Welche Zahlungsarten akzeptieren Sie?",
+            question: "Welche Zahlungsmethoden stehen im Checkout zur Verfügung?",
             link: {
               href: "/payment-methods",
               before:
-                "Karte (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-Überweisung und zinsfreie Ratenzahlung. Karte, Apple Pay, Link und Bancontact öffnen eine sichere Stripe-Seite. Einzelheiten stehen auf unserer Seite ",
+                "Wir unterstützen Visa und Mastercard, Sofortzahlungen über Open Banking (direkt per Banking-App oder IBAN), SEPA-Banküberweisungen sowie die 4× zinsfreie Ratenzahlung. Eine Übersicht finden Sie auf unserer Seite ",
               label: "Zahlungsarten",
               after: ".",
             },
           },
           {
-            question: "Wie funktioniert die zinsfreie Ratenzahlung?",
-            answer: "Ab einem Bestellwert von 1.000 € wird die Bestellung in vier gleiche Zahlungen über zwei Monate aufgeteilt, ohne Zinsen und ohne Gebühren.",
+            question: "Verstehen sich die angezeigten Preise inklusive Mehrwertsteuer?",
+            answer:
+              "Ja. Sämtliche Preise im Shop sind in Euro (EUR) ausgewiesen und enthalten bereits die gesetzlich vorgeschriebene Mehrwertsteuer, sofern anwendbar.",
           },
           {
-            question: "Sind die Preise inklusive MwSt.?",
-            answer: "Ja. Alle Preise werden in Euro (EUR) angezeigt und enthalten die gesetzliche Mehrwertsteuer, soweit sie anfällt.",
+            question: "Wie läuft die zinsfreie 4×-Ratenzahlung ab?",
+            answer:
+              "Ab einem Warenkorbwert von 1.000 € lässt sich der Gesamtbetrag in vier gleich hohe Raten zu je 25 % über zwei Monate aufteilen (25 % Anzahlung bei Freigabe und drei weitere Raten im Zwei-Wochen-Takt) — bei 0 % Zinsen und ohne Zusatzgebühren.",
           },
         ],
       },
       {
-        heading: "Produkte und Support",
+        heading: "Rückgabe, Erstattung & Gewährleistung",
         items: [
           {
-            question: "Werden die Drucker fertig montiert geliefert?",
+            question: "Welche Regeln gelten für die 30-tägige Rückgabe und Rückerstattung?",
             answer:
-              "Das hängt vom Modell ab. Die meisten Geräte von Bambu Lab und Prusa werden fertig montiert geliefert, einige Bausätze erfordern eine leichte Montage. Auf jeder Produktseite steht genau, was enthalten ist.",
+              "Über das gesetzliche 14-tägige EU-Widerrufsrecht hinaus gewähren wir Ihnen freiwillig 30 Tage ab Warenerhalt für die Rückgabe ohne Angabe von Gründen. Sowohl defekte als auch einwandfreie Artikel können zurückgegeben werden, sofern sie unbenutzt, im Originalzustand und in der Originalverpackung sind. Ein direkter Warenumtausch wird nicht angeboten. Nach Eingang und Prüfung der Retoure erstatten wir den Kaufbetrag innerhalb von 7 Werktagen auf Ihr ursprüngliches Zahlungsmittel.",
           },
           {
-            question: "Wie erreiche ich den Support?",
+            question: "Ist der Rückversand kostenlos und was gilt bei Transportschäden?",
+            answer:
+              "Ja — bei allen genehmigten Rücksendungen (egal ob mangelfrei oder defekt) übernehmen wir die Rücksendekosten, stellen ein druckfertiges Rücksendeetikett bereit und berechnen keinerlei Wiedereinlagerungsgebühren. Falls ein Paket beschädigt oder fehlerhaft bei Ihnen eintrifft, senden Sie uns bitte innerhalb von 48 Stunden Fotos, damit wir kostenfrei Ersatz oder eine Rückholung veranlassen.",
+          },
+          {
+            question: "Welche Garantie oder Gewährleistung habe ich auf Geräte?",
+            answer:
+              "Alle bei uns gekauften Geräte unterliegen der gesetzlichen zweijährigen EU-Gewährleistung bei Mängeln sowie etwaigen zusätzlichen Herstellergarantien. Unser Support-Team begleitet Sie bei Diagnose, Reparatur oder Austausch.",
+          },
+        ],
+      },
+      {
+        heading: "Versand & Sendungsverfolgung",
+        items: [
+          {
+            question: "Wie kann ich den Lieferstatus meiner Bestellung einsehen?",
+            link: {
+              href: "/track-order",
+              before:
+                "Direkt nach dem Versand senden wir Ihnen die Sendungsnummer per E-Mail zu. Zusätzlich lässt sich jeder Schritt vom Zahlungseingang bis zur Zustellung über unsere ",
+              label: "Sendungsverfolgung",
+              after: " abrufen.",
+            },
+          },
+          {
+            question: "In welche Länder versenden Sie und mit welchen Paketdiensten?",
+            answer:
+              "Wir beliefern die Niederlande, alle weiteren Mitgliedstaaten der Europäischen Union sowie ausgewählte Nachbarstaaten (Schweiz, Norwegen, Vereinigtes Königreich). Die Zustellung erfolgt durch unseren eigenen Dienst DnD3D Courier oder — falls die Route außerhalb unseres Direktnetzes liegt — über DHL bzw. DPD, jeweils komplett versandkostenfrei.",
+          },
+          {
+            question: "Wie hoch sind die Versandkosten und wie lange dauert die Zustellung?",
+            answer:
+              "Der Standardversand ist bei jeder Bestellung kostenlos, unabhängig vom Bestellwert. Die Lagerabfertigung benötigt 0–2 Werktage (Bestellungen werktags bis 15:00 Uhr MEZ starten noch am selben Tag in die Abfertigung), die reine Transportzeit liegt bei 3–5 Werktagen — insgesamt also 3–7 Werktage.",
+          },
+          {
+            question: "Zu welchen Geschäftszeiten arbeitet Ihr Team?",
+            answer:
+              "Unser Team ist montags bis freitags von 9:00 bis 18:00 Uhr MEZ im Einsatz (ausgenommen gesetzliche Feiertage in den Niederlanden). Außerhalb dieser Zeiten eingehende Bestellungen und Nachrichten bearbeiten wir am darauffolgenden Werktag.",
+          },
+        ],
+      },
+      {
+        heading: "Geräte & Kundenbetreuung",
+        items: [
+          {
+            question: "Wie nehme ich am besten Kontakt mit dem Support auf?",
             link: {
               href: "/contact",
-              before: "Nutzen Sie unser ",
+              before: "Schreiben Sie uns über das ",
               label: "Kontaktformular",
-              after: " oder den Live-Chat. Wir antworten innerhalb von 48 Stunden, montags bis freitags von 9:00 bis 18:00 Uhr MEZ.",
+              after: " oder nutzen Sie den Live-Chat — wir melden uns innerhalb von 48 Stunden zu unseren Geschäftszeiten (Mo–Fr, 9:00–18:00 Uhr MEZ).",
             },
+          },
+          {
+            question: "Kommen die 3D-Drucker bereits vormontiert an?",
+            answer:
+              "Das richtet sich nach dem jeweiligen Modell: Die meisten Systeme von Bambu Lab und Prusa werden betriebsbereit vormontiert ausgeliefert, während einzelne Bausatz-Modelle wenige Montageschritte erfordern. Den genauen Lieferzustand finden Sie auf der jeweiligen Produktseite.",
           },
         ],
       },
     ],
   },
   fr: {
-    intro: "Réponses aux questions que l'on nous pose le plus souvent sur les commandes, la livraison, les retours et le paiement.",
-    description: "Réponses aux questions fréquentes sur les commandes, la livraison, les retours, la garantie et le paiement chez DnD3D.",
+    intro: "Des réponses claires et directes concernant nos moyens de paiement, la livraison gratuite en Europe, notre délai de retour de 30 jours, la garantie légale et l'assistance client.",
+    description: "Questions fréquentes sur les paiements, les délais d'expédition, les retours sous 30 jours, la garantie UE et le support chez DnD3D.",
+    policiesHeading: "Politiques de la boutique & documents légaux",
     groups: [
       {
-        heading: "Commandes et livraison",
+        heading: "Options de paiement & tarification",
         items: [
           {
-            question: "Combien de temps prend la livraison et combien coûte-t-elle ?",
-            answer:
-              "La livraison standard prend 3 à 7 jours ouvrables au total et est entièrement gratuite pour chaque commande, vers toutes les destinations que nous desservons, sans montant minimum. Le traitement prend 0 à 2 jours ouvrables et le transport 3 à 5 jours ouvrables. Les commandes passées avant 15:00 CET du lundi au vendredi entrent dans le délai de traitement le jour même.",
-          },
-          {
-            question: "Quels sont vos horaires ?",
-            answer:
-              "Notre équipe est disponible du lundi au vendredi, de 9:00 à 18:00 CET, hors jours fériés néerlandais. Les commandes et messages reçus en dehors de ces horaires sont traités le jour ouvrable suivant.",
-          },
-          {
-            question: "Vers quels pays livrez-vous ?",
-            answer:
-              "Nous livrons aux Pays-Bas et dans le reste de l'Union européenne, ainsi que dans quelques pays voisins (Suisse, Norvège, Royaume-Uni), avec notre propre service de coursier, DnD3D Courier. Si notre coursier ne peut pas couvrir le trajet, nous utilisons DHL ou DPD. La livraison est gratuite vers chacune de ces destinations.",
-          },
-          {
-            question: "Puis-je suivre ma commande ?",
-            link: {
-              href: "/track-order",
-              before:
-                "Oui. Vous recevrez un e-mail avec un numéro de suivi dès l'expédition. Vous pouvez suivre chaque commande, du paiement à la livraison, sur notre ",
-              label: "page de suivi de commande",
-              after: ".",
-            },
-          },
-        ],
-      },
-      {
-        heading: "Retours et garantie",
-        items: [
-          {
-            question: "Quelle est votre politique de retour ?",
-            answer:
-              "En tant que consommateur dans l'UE, vous disposez d'un droit légal de rétractation de 14 jours après la réception des marchandises, sans avoir à justifier de motif. Nous prolongeons volontairement ce délai à 30 jours. Nous acceptons les retours de produits non défectueux et défectueux. Les articles doivent être neufs et renvoyés dans leur état et leur emballage d'origine. Les échanges ne sont pas acceptés. Dès réception et contrôle du retour, nous remboursons votre moyen de paiement d'origine sous 7 jours ouvrés.",
-          },
-          {
-            question: "Qui paie les frais de retour ?",
-            answer:
-              "Le retour est gratuit pour les retours acceptés, qu'il s'agisse de produits non défectueux ou défectueux. Nous fournissons une étiquette de retour à télécharger et à imprimer, et aucun frais de restockage n'est facturé. Si un article arrive endommagé ou défectueux, contactez-nous dans les 48 heures avec des photos et nous organiserons un remplacement ou un retour gratuit.",
-          },
-          {
-            question: "Proposez-vous une garantie ?",
-            answer:
-              "Chaque machine que nous vendons est couverte par la garantie légale européenne de 2 ans contre les défauts. De nombreux fabricants ajoutent leur propre garantie. Notre équipe d'assistance organise toute réparation ou tout remplacement.",
-          },
-        ],
-      },
-      {
-        heading: "Paiements",
-        items: [
-          {
-            question: "Quels moyens de paiement acceptez-vous ?",
+            question: "Quels sont les modes de règlement proposés lors du paiement ?",
             link: {
               href: "/payment-methods",
               before:
-                "Carte (Visa, Mastercard), Apple Pay, Link, Bancontact, virement SEPA et paiement en plusieurs fois sans intérêt. La carte, Apple Pay, Link et Bancontact ouvrent une page Stripe sécurisée. Les détails figurent sur notre ",
+                "Nous prenons en charge Visa et Mastercard, le paiement bancaire instantané via Open Banking (depuis votre application bancaire ou par IBAN), le virement SEPA ainsi que le règlement en 4× sans intérêt. Consultez le récapitulatif sur notre ",
               label: "page des moyens de paiement",
               after: ".",
             },
           },
           {
-            question: "Comment fonctionne le paiement en plusieurs fois sans intérêt ?",
-            answer: "Pour les commandes de 1 000 € ou plus, la commande est répartie en quatre versements égaux sur deux mois, sans intérêt et sans frais.",
+            question: "Les tarifs affichés comprennent-ils la TVA ?",
+            answer:
+              "Oui. Tous les prix figurant sur la boutique sont libellés en euros (EUR) et incluent la TVA légale applicable.",
           },
           {
-            question: "Les prix incluent-ils la TVA ?",
-            answer: "Oui. Tous les prix sont indiqués en euros (EUR) et incluent la TVA légale lorsqu'elle s'applique.",
+            question: "Comment fonctionne l'échelonnement en 4× sans frais ?",
+            answer:
+              "Dès 1 000 € d'achat, le total peut être divisé en quatre versements égaux de 25 % répartis sur deux mois (un premier versement de 25 % à la validation, suivi de trois échéances toutes les deux semaines), à 0 % d'intérêt et sans aucuns frais de dossier.",
           },
         ],
       },
       {
-        heading: "Produits et assistance",
+        heading: "Retours, remboursements & garantie",
         items: [
           {
-            question: "Les imprimantes sont-elles livrées entièrement montées ?",
+            question: "Comment s'applique votre politique de retour sous 30 jours ?",
             answer:
-              "Cela dépend du modèle. La plupart des machines Bambu Lab et Prusa sont livrées entièrement montées, tandis que certains kits demandent un montage léger. Chaque fiche produit indique exactement ce qui est inclus.",
+              "Au-delà du délai légal européen de rétractation de 14 jours sans motif, nous portons volontairement votre période de retour à 30 jours après réception. Les produits défectueux comme non défectueux sont éligibles, à condition d'être neufs, dans leur état et leur emballage d'origine. Nous n'effectuons pas d'échanges directs. Une fois le colis réceptionné et contrôlé, le remboursement est crédité sur votre mode de paiement initial sous 7 jours ouvrés.",
           },
           {
-            question: "Comment contacter l'assistance ?",
+            question: "L'étiquette de retour est-elle gratuite, et que faire en cas de colis endommagé ?",
+            answer:
+              "Oui — les frais de retour sont intégralement pris en charge pour tout retour validé (article défectueux ou non), avec fourniture d'une étiquette prépayée à imprimer et zéro frais de restockage. Si un article arrive abîmé ou défaillant, envoyez-nous des photos dans les 48 heures suivant la livraison afin que nous organisions gratuitement un remplacement ou une reprise.",
+          },
+          {
+            question: "De quelle garantie bénéficient les équipements vendus ?",
+            answer:
+              "Toutes nos machines bénéficient de la garantie légale européenne de conformité de 2 ans contre les défauts, complétée le cas échéant par la garantie commerciale du fabricant. Notre équipe technique vous accompagne pour toute réparation ou remplacement.",
+          },
+        ],
+      },
+      {
+        heading: "Expédition & suivi de colis",
+        items: [
+          {
+            question: "Comment suivre l'acheminement de ma commande ?",
+            link: {
+              href: "/track-order",
+              before:
+                "Dès le départ de votre colis, un e-mail contenant votre numéro de suivi vous est adressé. Vous pouvez également consulter chaque étape, du paiement jusqu'à la livraison finale, sur notre ",
+              label: "page de suivi de commande",
+              after: ".",
+            },
+          },
+          {
+            question: "Quels pays desservez-vous et avec quels transporteurs ?",
+            answer:
+              "Nous expédions aux Pays-Bas, dans l'ensemble de l'Union européenne ainsi que vers certains pays limitrophes (Royaume-Uni, Suisse et Norvège). L'acheminement est assuré par notre propre flotte DnD3D Courier, ou confié à DHL ou DPD lorsque l'itinéraire sort de notre réseau direct — toujours gratuitement.",
+          },
+          {
+            question: "Quels sont les délais et les frais de livraison ?",
+            answer:
+              "La livraison standard est totalement gratuite sur chaque commande, sans minimum d'achat. La préparation logistique demande 0 à 2 jours ouvrables (toute commande passée avant 15:00 CET du lundi au vendredi entre en préparation le jour même) et l'acheminement prend 3 à 5 jours ouvrables, soit 3 à 7 jours ouvrables au total.",
+          },
+          {
+            question: "Quels sont vos horaires de traitement et d'ouverture ?",
+            answer:
+              "Nos équipes sont mobilisées du lundi au vendredi de 9:00 à 18:00 CET, hors jours fériés néerlandais. Les commandes et demandes reçues en dehors de ces plages horaires sont prises en charge dès le jour ouvrable suivant.",
+          },
+        ],
+      },
+      {
+        heading: "Matériel & service client",
+        items: [
+          {
+            question: "Comment joindre votre équipe d'assistance ?",
             link: {
               href: "/contact",
-              before: "Utilisez notre ",
+              before: "Écrivez-nous via notre ",
               label: "formulaire de contact",
-              after: " ou le chat en direct. Nous répondons sous 48 heures, du lundi au vendredi, de 9:00 à 18:00 CET.",
+              after: " ou directement par chat en direct — nous répondons sous 48 heures du lundi au vendredi (9:00–18:00 CET).",
             },
+          },
+          {
+            question: "Les imprimantes 3D sont-elles expédiées déjà assemblées ?",
+            answer:
+              "Cela varie selon la machine : la majorité des imprimantes Bambu Lab et Prusa sont livrées prêtes à l'emploi, tandis que certains modèles en kit demandent un assemblage rapide. Le contenu exact du carton est précisé sur chaque fiche produit.",
           },
         ],
       },
     ],
   },
   it: {
-    intro: "Risposte alle domande che ci vengono poste più spesso su ordini, spedizione, resi e pagamenti.",
-    description: "Risposte alle domande frequenti su ordini, spedizione, resi, garanzia e pagamenti su DnD3D.",
+    intro: "Risposte chiare e immediate su opzioni di pagamento, consegna gratuita in Europa, reso esteso a 30 giorni, garanzia legale e assistenza clienti.",
+    description: "Domande frequenti su metodi di pagamento, tempi di spedizione, resi entro 30 giorni, garanzia UE e supporto su DnD3D.",
+    policiesHeading: "Condizioni del negozio & documenti legali",
     groups: [
       {
-        heading: "Ordini e spedizione",
+        heading: "Metodi di pagamento & prezzi",
         items: [
           {
-            question: "Quanto tempo richiede la consegna e quanto costa?",
-            answer:
-              "La spedizione standard richiede in totale 3–7 giorni lavorativi ed è completamente gratuita per ogni ordine, verso ogni destinazione che serviamo, senza importo minimo. La preparazione richiede 0–2 giorni lavorativi e il trasporto 3–5 giorni lavorativi. Gli ordini effettuati entro le 15:00 CET dal lunedì al venerdì entrano nella finestra di preparazione lo stesso giorno.",
-          },
-          {
-            question: "Quali sono gli orari?",
-            answer:
-              "Il nostro team è disponibile dal lunedì al venerdì, dalle 9:00 alle 18:00 CET, esclusi i giorni festivi olandesi. Ordini e messaggi ricevuti fuori da questi orari vengono gestiti il giorno lavorativo successivo.",
-          },
-          {
-            question: "In quali Paesi spedite?",
-            answer:
-              "Consegniamo nei Paesi Bassi e nel resto dell'Unione europea, oltre ad alcuni Paesi vicini (Svizzera, Norvegia, Regno Unito), con il nostro servizio di corriere, DnD3D Courier. Se il nostro corriere non può coprire il percorso, usiamo DHL o DPD. La spedizione è gratuita verso ciascuna di queste destinazioni.",
-          },
-          {
-            question: "Posso tracciare il mio ordine?",
-            link: {
-              href: "/track-order",
-              before:
-                "Sì. Riceverai un'e-mail con un numero di tracciamento appena l'ordine viene spedito e puoi seguire ogni ordine, dal pagamento alla consegna, sulla nostra ",
-              label: "pagina di tracciamento ordine",
-              after: ".",
-            },
-          },
-        ],
-      },
-      {
-        heading: "Resi e garanzia",
-        items: [
-          {
-            question: "Qual è la vostra politica di reso?",
-            answer:
-              "Come consumatore nell'UE hai il diritto legale di recedere entro 14 giorni dalla ricezione della merce, senza fornire alcuna motivazione. Estendiamo volontariamente questo termine a 30 giorni. Accettiamo resi sia di prodotti non difettosi sia di prodotti difettosi. Gli articoli devono essere nuovi e restituiti nelle condizioni e nella confezione originali. I cambi non sono accettati. Dopo aver ricevuto e controllato il reso, rimborsiamo il metodo di pagamento originale entro 7 giorni lavorativi.",
-          },
-          {
-            question: "Chi paga la spedizione di reso?",
-            answer:
-              "La spedizione di reso è gratuita per i resi accettati, sia per prodotti non difettosi sia per prodotti difettosi. Forniamo un'etichetta di reso da scaricare e stampare e non applichiamo costi di ricarico. Se un articolo arriva danneggiato o difettoso, contattaci entro 48 ore con delle foto e organizzeremo una sostituzione o un reso gratuito.",
-          },
-          {
-            question: "Offrite una garanzia?",
-            answer:
-              "Ogni macchina che vendiamo è coperta dalla garanzia legale UE di 2 anni contro i difetti. Molti produttori aggiungono una propria garanzia. Il nostro supporto aiuta a organizzare riparazione o sostituzione.",
-          },
-        ],
-      },
-      {
-        heading: "Pagamenti",
-        items: [
-          {
-            question: "Quali metodi di pagamento accettate?",
+            question: "Quali soluzioni di pagamento sono disponibili alla cassa?",
             link: {
               href: "/payment-methods",
               before:
-                "Carta (Visa, Mastercard), Apple Pay, Link, Bancontact, bonifico SEPA e rate senza interessi. Carta, Apple Pay, Link e Bancontact aprono una pagina Stripe sicura. I dettagli sono sulla nostra ",
+                "Accettiamo circuiti Visa e Mastercard, pagamento bancario istantaneo tramite Open Banking (direttamente da app bancaria o IBAN), bonifico SEPA e dilazione in 4 rate senza interessi. Scopri tutti i dettagli nella ",
               label: "pagina dei metodi di pagamento",
               after: ".",
             },
           },
           {
-            question: "Come funzionano le rate senza interessi?",
-            answer: "Per ordini da 1.000 € in su, l'ordine viene suddiviso in quattro pagamenti uguali nell'arco di due mesi, senza interessi e senza commissioni.",
+            question: "I prezzi indicati nel catalogo sono comprensivi di IVA?",
+            answer:
+              "Sì. Tutti gli importi presenti sul sito sono espressi in euro (EUR) e includono già l'IVA prevista dalla legge, ove applicabile.",
           },
           {
-            question: "I prezzi includono l'IVA?",
-            answer: "Sì. Tutti i prezzi sono indicati in euro (EUR) e includono l'IVA di legge, ove applicabile.",
+            question: "Come funziona la rateizzazione in 4 quote a tasso zero?",
+            answer:
+              "Per gli ordini a partire da 1.000 €, l'importo complessivo viene ripartito in quattro pagamenti uguali del 25% nell'arco di due mesi (25% all'approvazione e tre rate successive ogni due settimane), senza interessi (TAEG 0%) e senza costi aggiuntivi.",
           },
         ],
       },
       {
-        heading: "Prodotti e assistenza",
+        heading: "Resi, rimborsi & garanzia",
         items: [
           {
-            question: "Le stampanti arrivano già montate?",
+            question: "Come funziona il diritto di reso esteso a 30 giorni?",
             answer:
-              "Dipende dal modello. La maggior parte delle macchine Bambu Lab e Prusa viene spedita già montata, mentre alcuni kit richiedono un montaggio leggero. Ogni scheda prodotto indica esattamente cosa è incluso.",
+              "Oltre ai 14 giorni di recesso legale previsti dalle norme UE senza obbligo di motivazione, estendiamo volontariamente la finestra di restituzione a 30 giorni dalla consegna. Accettiamo resi sia di articoli non difettosi sia di articoli difettosi, purché nuovi, integri e nella confezione originale. Non effettuiamo cambi merce diretti. Una volta ricevuto e verificato il reso, accreditiamo il rimborso sul metodo di pagamento originario entro 7 giorni lavorativi.",
           },
           {
-            question: "Come posso contattare l'assistenza?",
+            question: "La spedizione di rientro è gratuita? Cosa succede se il pacco arriva danneggiato?",
+            answer:
+              "Sì — per tutti i resi autorizzati (prodotti difettosi o meno) il rientro è gratuito: forniamo un'etichetta prepagata da scaricare e stampare e non applichiamo alcuna commissione di riassortimento. Se un articolo arriva danneggiato o guasto, inviaci delle foto entro 48 ore dalla ricezione per attivare subito la sostituzione o il ritiro gratuito.",
+          },
+          {
+            question: "Quale copertura di garanzia accompagna le macchine?",
+            answer:
+              "Ogni apparecchio venduto da DnD3D gode della garanzia legale europea di 2 anni contro i difetti di conformità, a cui si aggiunge l'eventuale garanzia commerciale del produttore. Il nostro servizio tecnico ti assiste per qualsiasi riparazione o sostituzione.",
+          },
+        ],
+      },
+      {
+        heading: "Spedizioni & tracciamento",
+        items: [
+          {
+            question: "Dove posso controllare lo stato di avanzamento del mio ordine?",
+            link: {
+              href: "/track-order",
+              before:
+                "Non appena la spedizione parte dal magazzino ricevi un'e-mail con il codice di tracciamento, e puoi monitorare ogni passaggio dal pagamento alla consegna sulla nostra ",
+              label: "pagina di tracciamento ordine",
+              after: ".",
+            },
+          },
+          {
+            question: "In quali Paesi consegnate e a quali corrieri vi affidate?",
+            answer:
+              "Consegniamo nei Paesi Bassi, in tutti gli altri Paesi dell'Unione Europea e in alcune nazioni limitrofe (Svizzera, Norvegia e Regno Unito). Le spedizioni viaggiano con il nostro corriere interno DnD3D Courier oppure tramite DHL o DPD sulle tratte non coperte direttamente — sempre a costo zero.",
+          },
+          {
+            question: "Quali sono i tempi di consegna complessivi e i costi di spedizione?",
+            answer:
+              "La spedizione standard è sempre gratuita su ogni ordine, senza soglia minima. La preparazione richiede 0–2 giorni lavorativi (gli ordini ricevuti entro le 15:00 CET dal lunedì al venerdì entrano in lavorazione in giornata) e il trasporto impiega 3–5 giorni lavorativi, per un totale di 3–7 giorni lavorativi.",
+          },
+          {
+            question: "Quali sono i vostri orari operativi?",
+            answer:
+              "Il nostro team è operativo dal lunedì al venerdì dalle 9:00 alle 18:00 CET, escluse le festività nazionali olandesi. Gli ordini e i messaggi inviati fuori orario vengono presi in carico il giorno lavorativo successivo.",
+          },
+        ],
+      },
+      {
+        heading: "Prodotti & assistenza clienti",
+        items: [
+          {
+            question: "Come posso mettermi in contatto con il supporto?",
             link: {
               href: "/contact",
-              before: "Usa il nostro ",
+              before: "Scrivici tramite il ",
               label: "modulo di contatto",
-              after: " o la chat dal vivo. Rispondiamo entro 48 ore, dal lunedì al venerdì, dalle 9:00 alle 18:00 CET.",
+              after: " oppure avvia una conversazione in live chat: rispondiamo entro 48 ore dal lunedì al venerdì (9:00–18:00 CET).",
             },
+          },
+          {
+            question: "Le stampanti 3D vengono consegnate già assemblate?",
+            answer:
+              "Dipende dal modello scelto: la maggior parte delle unità Bambu Lab e Prusa arriva già assemblata e pronta all'uso, mentre alcuni kit richiedono un montaggio leggero. Nella scheda di ciascun prodotto trovi specificato il contenuto esatto della confezione.",
           },
         ],
       },
     ],
   },
   es: {
-    intro: "Respuestas a las preguntas que más nos hacen sobre pedidos, envío, devoluciones y pagos.",
-    description: "Respuestas a preguntas frecuentes sobre pedidos, envío, devoluciones, garantía y pagos en DnD3D.",
+    intro: "Respuestas directas sobre formas de pago, envío gratuito en Europa, nuestro plazo de devolución de 30 días, garantía legal y atención al cliente.",
+    description: "Preguntas frecuentes sobre pagos, plazos de entrega, devoluciones en 30 días, garantía de la UE y soporte en DnD3D.",
+    policiesHeading: "Políticas de la tienda y textos legales",
     groups: [
       {
-        heading: "Pedidos y envío",
+        heading: "Formas de pago y precios",
         items: [
           {
-            question: "¿Cuánto tarda la entrega y cuánto cuesta?",
-            answer:
-              "El envío estándar tarda de 3 a 7 días laborables en total y es completamente gratuito en todos los pedidos y a todos los destinos a los que enviamos, sin pedido mínimo. La preparación tarda de 0 a 2 días laborables y el tránsito de 3 a 5 días laborables. Los pedidos realizados antes de las 15:00 CET de lunes a viernes entran en la ventana de preparación ese mismo día.",
-          },
-          {
-            question: "¿Cuál es vuestro horario?",
-            answer:
-              "Nuestro equipo está disponible de lunes a viernes, de 9:00 a 18:00 CET, excepto festivos neerlandeses. Los pedidos y mensajes recibidos fuera de este horario se atienden el siguiente día laborable.",
-          },
-          {
-            question: "¿A qué países enviáis?",
-            answer:
-              "Entregamos en los Países Bajos y en el resto de la Unión Europea, además de en algunos países vecinos (Suiza, Noruega y Reino Unido), con nuestro propio servicio de mensajería, DnD3D Courier. Si nuestro mensajero no puede cubrir la ruta, usamos DHL o DPD. El envío es gratuito a todos estos destinos.",
-          },
-          {
-            question: "¿Puedo seguir mi pedido?",
-            link: {
-              href: "/track-order",
-              before:
-                "Sí. Recibirás un correo con un número de seguimiento cuando se envíe el pedido, y puedes seguir cada pedido, desde el pago hasta la entrega, en nuestra ",
-              label: "página de seguimiento de pedidos",
-              after: ".",
-            },
-          },
-        ],
-      },
-      {
-        heading: "Devoluciones y garantía",
-        items: [
-          {
-            question: "¿Cuál es vuestra política de devoluciones?",
-            answer:
-              "Como consumidor en la UE tiene el derecho legal de desistir en los 14 días siguientes a la recepción de los bienes, sin necesidad de justificar el motivo. Ampliamos voluntariamente este plazo a 30 días. Aceptamos devoluciones de productos no defectuosos y defectuosos. Los artículos deben ser nuevos y devolverse en su estado y embalaje originales. No aceptamos cambios. Una vez recibida y revisada la devolución, reembolsamos su método de pago original en un plazo de 7 días laborables.",
-          },
-          {
-            question: "¿Quién paga el envío de la devolución?",
-            answer:
-              "El envío de devolución es gratuito para las devoluciones aceptadas, tanto de productos no defectuosos como defectuosos. Facilitamos una etiqueta de devolución para descargar e imprimir, y no hay coste de reposición. Si un artículo llega dañado o defectuoso, contáctanos en un plazo de 48 horas con fotos y organizaremos un reemplazo o una devolución gratuitos.",
-          },
-          {
-            question: "¿Ofrecéis garantía?",
-            answer:
-              "Cada máquina que vendemos está cubierta por la garantía legal de la UE de 2 años contra defectos. Muchos fabricantes añaden su propia garantía. Nuestro equipo de soporte ayuda a gestionar cualquier reparación o reemplazo.",
-          },
-        ],
-      },
-      {
-        heading: "Pagos",
-        items: [
-          {
-            question: "¿Qué métodos de pago aceptáis?",
+            question: "¿Qué opciones de pago puedo utilizar al finalizar la compra?",
             link: {
               href: "/payment-methods",
               before:
-                "Tarjeta (Visa, Mastercard), Apple Pay, Link, Bancontact, transferencia SEPA y plazos sin intereses. La tarjeta, Apple Pay, Link y Bancontact abren una página segura de Stripe. Los detalles están en nuestra ",
+                "Admitimos tarjetas Visa y Mastercard, pago bancario instantáneo mediante Open Banking (desde tu app bancaria o con IBAN), transferencia SEPA y financiación en 4 plazos sin intereses. Revisa el detalle completo en nuestra ",
               label: "página de métodos de pago",
               after: ".",
             },
           },
           {
-            question: "¿Cómo funcionan los plazos sin intereses?",
-            answer: "Para pedidos de 1.000 € o más, el pedido se divide en cuatro pagos iguales a lo largo de dos meses, sin intereses y sin comisiones.",
+            question: "¿Los precios del catálogo ya llevan el IVA incluido?",
+            answer:
+              "Sí. Todos los importes se muestran en euros (EUR) e incluyen el IVA legal correspondiente.",
           },
           {
-            question: "¿Los precios incluyen el IVA?",
-            answer: "Sí. Todos los precios se muestran en euros (EUR) e incluyen el IVA legal cuando corresponde.",
+            question: "¿En qué consiste el pago fraccionado en 4 cuotas sin intereses?",
+            answer:
+              "En compras a partir de 1.000 €, el importe se reparte en cuatro pagos iguales del 25 % durante dos meses (un 25 % inicial al aprobarse la solicitud y tres cuotas quincenales posteriores), con un 0 % TAE y sin comisiones.",
           },
         ],
       },
       {
-        heading: "Productos y asistencia",
+        heading: "Devoluciones, reembolsos y garantía",
         items: [
           {
-            question: "¿Las impresoras llegan montadas?",
+            question: "¿Cómo funciona vuestra política de devolución de 30 días?",
             answer:
-              "Depende del modelo. La mayoría de las máquinas Bambu Lab y Prusa se envían montadas, mientras que algunos kits requieren un montaje sencillo. Cada ficha de producto indica exactamente qué incluye.",
+              "Además del derecho legal europeo de desistimiento de 14 días sin necesidad de justificación, ampliamos voluntariamente el plazo hasta los 30 días desde la recepción del pedido. Admitimos devoluciones tanto de artículos defectuosos como no defectuosos, siempre que estén sin usar y se envíen en su estado y embalaje originales. No realizamos cambios directos. Una vez recibido e inspeccionado el paquete, reembolsamos el importe en tu método de pago original en un máximo de 7 días laborables.",
           },
           {
-            question: "¿Cómo puedo contactar con el soporte?",
+            question: "¿El envío de devolución tiene algún coste? ¿Qué hago si llega dañado?",
+            answer:
+              "Las devoluciones autorizadas (tanto por defecto como por desistimiento) tienen envío de retorno gratuito: te facilitamos una etiqueta prepagada lista para descargar e imprimir y no cobramos gastos de reposición. Si tu pedido llega con daños de transporte o averiado, escríbenos adjuntando fotos en las primeras 48 horas tras la entrega para gestionar sin coste un reemplazo o devolución.",
+          },
+          {
+            question: "¿Qué garantía cubre a las máquinas que vendéis?",
+            answer:
+              "Todos nuestros equipos cuentan con la garantía legal europea de 2 años frente a defectos de conformidad, además de la garantía comercial adicional que ofrezca cada fabricante. Nuestro equipo técnico te ayudará a tramitar cualquier reparación o sustitución.",
+          },
+        ],
+      },
+      {
+        heading: "Envíos y seguimiento de pedidos",
+        items: [
+          {
+            question: "¿Cómo puedo consultar el estado y seguimiento de mi pedido?",
+            link: {
+              href: "/track-order",
+              before:
+                "En cuanto tu paquete sale del almacén te enviamos por correo el código de seguimiento, y puedes consultar cada etapa desde el pago hasta la entrega en nuestra ",
+              label: "página de seguimiento de pedidos",
+              after: ".",
+            },
+          },
+          {
+            question: "¿A qué países realizáis envíos y con qué empresas de transporte?",
+            answer:
+              "Repartimos en los Países Bajos, en el resto de la Unión Europea y en varios países vecinos (Suiza, Noruega y Reino Unido). Operamos con nuestra propia red de reparto, DnD3D Courier, y nos apoyamos en DHL o DPD cuando la ruta queda fuera de nuestra cobertura directa, siempre con envío gratuito.",
+          },
+          {
+            question: "¿Cuánto cuesta el envío y cuántos días tarda en llegar?",
+            answer:
+              "El envío estándar es totalmente gratuito en todos los pedidos, sin compra mínima. La preparación en almacén toma de 0 a 2 días laborables (los pedidos confirmados antes de las 15:00 CET de lunes a viernes entran en preparación ese mismo día) y el tránsito dura de 3 a 5 días laborables, sumando un total de 3 a 7 días laborables.",
+          },
+          {
+            question: "¿Cuál es vuestro horario de atención al público?",
+            answer:
+              "Trabajamos de lunes a viernes de 9:00 a 18:00 CET, salvo los festivos oficiales de los Países Bajos. Las consultas y pedidos recibidos fuera de ese horario se gestionan el siguiente día laborable.",
+          },
+        ],
+      },
+      {
+        heading: "Equipos y soporte técnico",
+        items: [
+          {
+            question: "¿Cómo puedo comunicarme con el equipo de soporte?",
             link: {
               href: "/contact",
-              before: "Usa nuestro ",
+              before: "Escríbenos a través de nuestro ",
               label: "formulario de contacto",
-              after: " o el chat en directo. Respondemos en un plazo de 48 horas, de lunes a viernes, de 9:00 a 18:00 CET.",
+              after: " o abre el chat en directo: respondemos en menos de 48 horas de lunes a viernes (9:00–18:00 CET).",
             },
+          },
+          {
+            question: "¿Las impresoras 3D se entregan ya ensambladas?",
+            answer:
+              "Depende del modelo: la mayoría de las impresoras Bambu Lab y Prusa vienen completamente montadas de fábrica, mientras que algunos kits requieren un montaje sencillo. En la página de cada producto detallamos qué incluye la caja.",
           },
         ],
       },
     ],
   },
   nl: {
-    intro: "Antwoorden op de vragen die we het vaakst krijgen over bestellingen, verzending, retourneren en betaling.",
-    description: "Antwoorden op veelgestelde vragen over bestellingen, verzending, retourneren, garantie en betaling bij DnD3D.",
+    intro: "Duidelijke antwoorden op veelgestelde vragen over betaalopties, gratis Europese levering, onze retourtermijn van 30 dagen, wettelijke garantie en klantenservice.",
+    description: "Veelgestelde vragen over betalingen, levertijden, 30 dagen retourneren, EU-garantie en support bij DnD3D.",
+    policiesHeading: "Winkelbeleid & juridische documenten",
     groups: [
       {
-        heading: "Bestellingen en verzending",
+        heading: "Betaalopties & prijzen",
         items: [
           {
-            question: "Hoe lang duurt de levering en wat kost die?",
-            answer:
-              "De standaardverzending duurt in totaal 3–7 werkdagen en is volledig gratis bij elke bestelling, naar elke bestemming die we bedienen, zonder minimumbedrag. De verwerking duurt 0–2 werkdagen en het transport 3–5 werkdagen. Bestellingen die maandag tot vrijdag vóór 15:00 CET worden geplaatst, vallen die dag nog binnen het verwerkingstijdvenster.",
-          },
-          {
-            question: "Wat zijn jullie openingstijden?",
-            answer:
-              "Ons team is bereikbaar van maandag tot vrijdag, van 9:00 tot 18:00 CET, met uitzondering van Nederlandse feestdagen. Bestellingen en berichten buiten deze uren worden de volgende werkdag behandeld.",
-          },
-          {
-            question: "Naar welke landen verzenden jullie?",
-            answer:
-              "We leveren in Nederland en de rest van de Europese Unie, plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk), met onze eigen koeriersdienst, DnD3D Courier. Als onze koerier de route niet kan dekken, gebruiken we DHL of DPD. Verzending is gratis naar elk van deze bestemmingen.",
-          },
-          {
-            question: "Kan ik mijn bestelling volgen?",
-            link: {
-              href: "/track-order",
-              before:
-                "Ja. Zodra je bestelling is verzonden, ontvang je een e-mail met een trackingnummer. Je kunt elke bestelling van betaling tot levering volgen op onze ",
-              label: "pagina voor het volgen van bestellingen",
-              after: ".",
-            },
-          },
-        ],
-      },
-      {
-        heading: "Retourneren en garantie",
-        items: [
-          {
-            question: "Wat is jullie retourbeleid?",
-            answer:
-              "Als consument in de EU heeft u het wettelijke recht om binnen 14 dagen na ontvangst van de goederen te herroepen, zonder opgave van reden. Wij verlengen deze termijn vrijwillig tot 30 dagen. We aanvaarden retouren van zowel niet-defecte als defecte producten. Artikelen moeten nieuw zijn en in de oorspronkelijke staat en verpakking worden teruggestuurd. Ruilen is niet mogelijk. Zodra we de retour hebben ontvangen en gecontroleerd, betalen we binnen 7 werkdagen terug op uw oorspronkelijke betaalmethode.",
-          },
-          {
-            question: "Wie betaalt de retourzending?",
-            answer:
-              "Retourzending is gratis voor aanvaarde retouren, zowel voor niet-defecte als defecte producten. We bieden een retouretiket om te downloaden en af te drukken, en er zijn geen herinvoerkosten. Als een artikel beschadigd of defect aankomt, neem dan binnen 48 uur contact met ons op met foto's. We regelen dan een gratis vervanging of retour.",
-          },
-          {
-            question: "Bieden jullie garantie?",
-            answer:
-              "Elke machine die wij verkopen valt onder de wettelijke EU-consumentengarantie van 2 jaar tegen gebreken. Veel fabrikanten voegen daar een eigen garantie aan toe. Onze support helpt bij reparatie of vervanging.",
-          },
-        ],
-      },
-      {
-        heading: "Betalingen",
-        items: [
-          {
-            question: "Welke betaalmethoden accepteren jullie?",
+            question: "Met welke betaalmethoden kan ik bij het afrekenen betalen?",
             link: {
               href: "/payment-methods",
               before:
-                "Kaart (Visa, Mastercard), Apple Pay, Link, Bancontact, SEPA-overschrijving en renteloze termijnen. Kaart, Apple Pay, Link en Bancontact openen een beveiligde Stripe-pagina. De details staan op onze ",
+                "Wij accepteren Visa en Mastercard, directe bankbetalingen via Open Banking (via uw bank-app of IBAN), SEPA-overschrijvingen en gespreide betaling in 4 rentevrije termijnen. Bekijk het volledige overzicht op onze ",
               label: "pagina met betaalmethoden",
               after: ".",
             },
           },
           {
-            question: "Hoe werken de renteloze termijnen?",
-            answer: "Voor bestellingen vanaf € 1.000 wordt de bestelling verdeeld in vier gelijke betalingen over twee maanden, zonder rente en zonder kosten.",
+            question: "Zijn alle vermelde prijzen inclusief btw?",
+            answer:
+              "Ja. Alle prijzen in onze webshop worden weergegeven in euro (EUR) en zijn inclusief de wettelijk verschuldigde btw.",
           },
           {
-            question: "Zijn de prijzen inclusief btw?",
-            answer: "Ja. Alle prijzen worden in euro (EUR) getoond en zijn inclusief de wettelijke btw waar die van toepassing is.",
+            question: "Hoe werkt gespreid betalen in 4 rentevrije termijnen?",
+            answer:
+              "Bij bestellingen vanaf € 1.000 wordt het totaalbedrag verdeeld over vier gelijke termijnen van 25% binnen twee maanden (25% aanbetaling bij goedkeuring en daarna drie tweewekelijkse termijnen), tegen 0% rente en zonder extra kosten.",
           },
         ],
       },
       {
-        heading: "Producten en support",
+        heading: "Retourneren, terugbetaling & garantie",
         items: [
           {
-            question: "Worden de printers volledig gemonteerd geleverd?",
+            question: "Hoe werkt jullie retourbeleid van 30 dagen?",
             answer:
-              "Dat hangt van het model af. De meeste machines van Bambu Lab en Prusa worden volledig gemonteerd verzonden, terwijl sommige kits een lichte montage vragen. Op elke productpagina staat precies wat is inbegrepen.",
+              "Naast het wettelijke EU-herroepingsrecht van 14 dagen zonder opgave van reden, verruimen wij de retourtermijn vrijwillig naar 30 dagen na ontvangst. Zowel defecte als niet-defecte artikelen komen in aanmerking, mits ze ongebruikt zijn en in de originele staat en fabrieksverpakking worden teruggestuurd. Direct omruilen is niet mogelijk. Na ontvangst en controle van de retourzending storten wij het bedrag binnen 7 werkdagen terug via uw oorspronkelijke betaalmethode.",
           },
           {
-            question: "Hoe kan ik support bereiken?",
+            question: "Is retourverzending gratis en wat als mijn pakket beschadigd aankomt?",
+            answer:
+              "Ja — voor alle goedgekeurde retouren (zowel defecte als niet-defecte producten) is de retourzending kosteloos: u ontvangt een downloadbaar retourlabel en wij rekenen geen herbevoorradingskosten. Komt een zending beschadigd of defect aan, stuur ons dan binnen 48 uur na levering foto's zodat wij direct een gratis vervanging of retourzending regelen.",
+          },
+          {
+            question: "Welke garantie zit er op de geleverde machines?",
+            answer:
+              "Op elk apparaat dat wij leveren rust de wettelijke Europese consumentengarantie van 2 jaar tegen gebreken, aangevuld met eventuele fabrieksgarantie van het merk. Ons supportteam helpt u bij het regelen van reparatie of vervanging.",
+          },
+        ],
+      },
+      {
+        heading: "Levering & pakket volgen",
+        items: [
+          {
+            question: "Hoe kan ik de status van mijn bestelling volgen?",
+            link: {
+              href: "/track-order",
+              before:
+                "Zodra uw pakket ons magazijn verlaat, ontvangt u per e-mail een trackingcode. Daarnaast volgt u elke stap van betaling tot bezorging op onze ",
+              label: "pagina voor het volgen van bestellingen",
+              after: ".",
+            },
+          },
+          {
+            question: "Naar welke landen leveren jullie en met welke vervoerders?",
+            answer:
+              "Wij bezorgen in Nederland, de overige lidstaten van de Europese Unie en enkele omliggende landen (Verenigd Koninkrijk, Zwitserland en Noorwegen). Het vervoer gebeurt met onze eigen koeriersdienst DnD3D Courier, of via DHL en DPD wanneer een route buiten ons eigen netwerk valt — altijd volledig gratis.",
+          },
+          {
+            question: "Wat zijn de verzendkosten en de totale levertijd?",
+            answer:
+              "Standaardverzending is bij elke bestelling gratis, zonder minimumbestelbedrag. De magazijnverwerking duurt 0–2 werkdagen (bestellingen op werkdagen vóór 15:00 CET gaan dezelfde dag nog in verwerking) en het transport duurt 3–5 werkdagen, wat neerkomt op een totale levertijd van 3–7 werkdagen.",
+          },
+          {
+            question: "Wat zijn jullie bereikbaarheids- en verwerkingstijden?",
+            answer:
+              "Ons team werkt van maandag tot en met vrijdag van 9:00 tot 18:00 CET, met uitzondering van officiële Nederlandse feestdagen. Bestellingen en berichten buiten deze uren worden op de eerstvolgende werkdag opgepakt.",
+          },
+        ],
+      },
+      {
+        heading: "Apparatuur & klantenservice",
+        items: [
+          {
+            question: "Hoe neem ik contact op met de klantenservice?",
             link: {
               href: "/contact",
-              before: "Gebruik ons ",
+              before: "Stuur ons een bericht via het ",
               label: "contactformulier",
-              after: " of de livechat. We antwoorden binnen 48 uur, van maandag tot vrijdag, van 9:00 tot 18:00 CET.",
+              after: " of open de livechat — wij reageren binnen 48 uur op werkdagen (ma–vr, 9:00–18:00 CET).",
             },
+          },
+          {
+            question: "Worden de 3D-printers kant-en-klaar gemonteerd geleverd?",
+            answer:
+              "Dat verschilt per toestel: de meeste printers van Bambu Lab en Prusa worden volledig voorgemonteerd geleverd, terwijl bepaalde bouwpakketten een lichte eindmontage vragen. Op iedere productpagina staat precies vermeld wat er in de doos zit.",
           },
         ],
       },
@@ -682,6 +701,17 @@ export default async function FaqPage({ params }: { params: Promise<{ lang: stri
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const copy = withoutCard(locale, COPY[locale])
+
+  const policyButtons = [
+    { label: dict.footer.privacy, href: "/privacy" },
+    { label: dict.footer.cookies, href: "/cookie-policy" },
+    { label: dict.footer.terms, href: "/terms" },
+    { label: dict.footer.instalmentAgreement, href: "/instalment-agreement" },
+    { label: dict.footer.returns, href: "/returns" },
+    { label: dict.footer.shipping, href: "/shipping" },
+    { label: dict.footer.paymentMethods, href: "/payment-methods" },
+    { label: dict.footer.impressum, href: "/impressum" },
+  ]
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -738,7 +768,24 @@ export default async function FaqPage({ params }: { params: Promise<{ lang: stri
         ))}
       </div>
 
-      <p className="mt-10 border-t border-border pt-6 text-sm text-muted-foreground">
+      <section className="mt-10 rounded-lg border border-border bg-card p-5">
+        <h2 className="font-heading text-sm font-semibold uppercase tracking-wide text-foreground">
+          {copy.policiesHeading}
+        </h2>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {policyButtons.map((btn) => (
+            <Link
+              key={btn.href}
+              href={localizedPath(locale, btn.href)}
+              className="rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary sm:text-sm"
+            >
+              {btn.label}
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <p className="mt-8 border-t border-border pt-6 text-sm text-muted-foreground">
         {dict.legal.contactPrompt}{" "}
         <Link href={localizedPath(locale, "/contact")} className="underline underline-offset-2 hover:text-foreground">
           {dict.legal.contactLink}

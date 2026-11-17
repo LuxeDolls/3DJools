@@ -33,166 +33,166 @@ type ImpressumCopy = {
 
 const COPY: Record<Locale, ImpressumCopy> = {
   en: {
-    companyHeading: "Company details",
-    tradingName: "DnD3D (trading name)",
-    visitAddressLabel: "Visit address",
-    legalFormHeading: "Legal form & incorporation",
-    legalFormLabel: "Legal form",
+    companyHeading: "Corporate identity & office address",
+    tradingName: "DnD3D (commercial trading name)",
+    visitAddressLabel: "Registered office & visiting address",
+    legalFormHeading: "Corporate structure & date of formation",
+    legalFormLabel: "Entity type",
     legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Incorporated",
-    incorporated: "15 December 2020, by deed of incorporation. First entry in the Dutch Trade Register on the same date. Statutory seat: Amsterdam.",
-    activitiesHeading: "Registered activities",
-    activities: "SBI 46180 — wholesale intermediation in other goods. SBI 47120 — other non-specialised retail. The establishment imports goods and sells them to customers in the EU.",
-    managementHeading: "Directors",
-    management: "Thomas Hamish Mckenzie, born 25 January 1967, and Angela Min Zhang, born 5 July 1966. Each was appointed on 15 December 2020 and is independently authorised to represent the company.",
+    incorporatedLabel: "Date of incorporation",
+    incorporated: "Formed by notarial deed on 15 December 2020 and entered into the Dutch Trade Register on the same date. Statutory seat: Amsterdam.",
+    activitiesHeading: "Registered business classifications",
+    activities: "SBI 46180 — wholesale trade intermediation in miscellaneous goods. SBI 47120 — non-specialised retail trade. The company imports merchandise and distributes it to customers across the European Union.",
+    managementHeading: "Managing directors (Bestuurders)",
+    management: "Thomas Hamish Mckenzie (born 25 January 1967) and Angela Min Zhang (born 5 July 1966). Both directors took office on 15 December 2020 and each holds sole, independent authority to represent the company.",
     shareholderHeading: "Sole shareholder",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, United Kingdom, registered in England and Wales under number 07547438. Sole shareholder since 15 December 2020.",
-    contactHeading: "Contact",
-    emailLabel: "Email",
-    phoneLabel: "Phone",
-    registrationHeading: "Registration & VAT",
-    companyNumberLabel: "KvK number",
-    establishmentLabel: "Establishment number",
+    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, United Kingdom (registered with Companies House for England and Wales under number 07547438), acting as sole shareholder since 15 December 2020.",
+    contactHeading: "Direct communication channels",
+    emailLabel: "Electronic mail",
+    phoneLabel: "Telephone",
+    registrationHeading: "Trade Register & tax identifiers",
+    companyNumberLabel: "KvK registration number",
+    establishmentLabel: "Establishment number (Vestigingsnummer)",
     rsinLabel: "RSIN",
-    vatLabel: "VAT identification number",
-    accounts: "The annual accounts for financial year 2025 were filed on 19 June 2026.",
-    odrHeading: "Online dispute resolution",
-    odr: "The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr. We are neither obliged nor willing to participate in dispute resolution proceedings before a consumer arbitration board.",
+    vatLabel: "EU VAT identification number",
+    accounts: "Annual financial statements for the 2025 fiscal year were filed on 19 June 2026.",
+    odrHeading: "EU Online Dispute Resolution",
+    odr: "The European Commission hosts an Online Dispute Resolution (ODR) portal at https://ec.europa.eu/consumers/odr. We are neither legally required nor willing to take part in dispute settlement proceedings before a consumer arbitration body.",
   },
   de: {
-    companyHeading: "Unternehmensangaben",
-    tradingName: "DnD3D (Handelsname)",
-    visitAddressLabel: "Besuchsadresse",
-    legalFormHeading: "Rechtsform & Gründung",
+    companyHeading: "Unternehmensidentität & Anschrift",
+    tradingName: "DnD3D (Geschäftsbezeichnung / Handelsname)",
+    visitAddressLabel: "Geschäfts- und Besuchsadresse",
+    legalFormHeading: "Gesellschaftsform & Gründung",
     legalFormLabel: "Rechtsform",
     legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Gegründet",
-    incorporated: "15. Dezember 2020 durch Gründungsurkunde. Ersteintragung im niederländischen Handelsregister am selben Tag. Satzungssitz: Amsterdam.",
-    activitiesHeading: "Eingetragene Tätigkeiten",
-    activities: "SBI 46180 — Handelsvermittlung im Großhandel mit sonstigen Waren. SBI 47120 — sonstiger nicht spezialisierter Einzelhandel. Die Niederlassung importiert Waren und verkauft sie an Kunden in der EU.",
-    managementHeading: "Geschäftsführung",
-    management: "Thomas Hamish Mckenzie, geboren am 25. Januar 1967, und Angela Min Zhang, geboren am 5. Juli 1966. Beide sind seit dem 15. Dezember 2020 als bestuurder bestellt und jeweils allein vertretungsberechtigt.",
-    shareholderHeading: "Einziger Gesellschafter",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Vereinigtes Königreich, eingetragen in England und Wales unter der Nummer 07547438. Einziger Gesellschafter seit dem 15. Dezember 2020.",
-    contactHeading: "Kontakt",
+    incorporatedLabel: "Gründungsdatum",
+    incorporated: "Errichtet durch notarielle Gründungsurkunde am 15. Dezember 2020 und am selben Tag im niederländischen Handelsregister eingetragen. Satzungssitz: Amsterdam.",
+    activitiesHeading: "Eingetragene Geschäftstätigkeiten",
+    activities: "SBI 46180 — Handelsvermittlung im Großhandel mit sonstigen Waren. SBI 47120 — sonstiger nicht spezialisierter Einzelhandel. Das Unternehmen importiert Waren und vertreibt sie an Kunden in der Europäischen Union.",
+    managementHeading: "Vertretungsberechtigte Geschäftsführer",
+    management: "Thomas Hamish Mckenzie (geb. 25. Januar 1967) und Angela Min Zhang (geb. 5. Juli 1966). Beide wurden am 15. Dezember 2020 bestellt und sind jeweils einzeln und selbstständig zur Vertretung der Gesellschaft befugt.",
+    shareholderHeading: "Alleingesellschafter",
+    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Vereinigtes Königreich (eingetragen beim Companies House für England und Wales unter der Nummer 07547438), Alleingesellschafterin seit dem 15. Dezember 2020.",
+    contactHeading: "Direkte Kontaktwege",
     emailLabel: "E-Mail",
     phoneLabel: "Telefon",
-    registrationHeading: "Registrierung & USt-IdNr.",
-    companyNumberLabel: "KvK-Nummer",
+    registrationHeading: "Handelsregister- & Steuerkennnummern",
+    companyNumberLabel: "KvK-Registernummer",
     establishmentLabel: "Niederlassungsnummer",
     rsinLabel: "RSIN",
     vatLabel: "Umsatzsteuer-Identifikationsnummer",
     accounts: "Der Jahresabschluss für das Geschäftsjahr 2025 wurde am 19. Juni 2026 hinterlegt.",
-    odrHeading: "Online-Streitbeilegung",
-    odr: "Die Europäische Kommission stellt eine Plattform für Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr. Wir sind weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
+    odrHeading: "EU-Online-Streitbeilegung",
+    odr: "Die Europäische Kommission betreibt unter https://ec.europa.eu/consumers/odr eine Plattform zur Online-Streitbeilegung (OS). Zur Teilnahme an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle sind wir weder verpflichtet noch bereit.",
   },
   fr: {
-    companyHeading: "Informations sur l'entreprise",
-    tradingName: "DnD3D (nom commercial)",
-    visitAddressLabel: "Adresse de visite",
-    legalFormHeading: "Forme juridique & constitution",
-    legalFormLabel: "Forme juridique",
+    companyHeading: "Identité de l'entreprise & siège",
+    tradingName: "DnD3D (enseigne commerciale)",
+    visitAddressLabel: "Adresse professionnelle et de visite",
+    legalFormHeading: "Statut juridique & constitution",
+    legalFormLabel: "Forme sociale",
     legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Constituée le",
-    incorporated: "15 décembre 2020, par acte de constitution. Première inscription au registre du commerce néerlandais le même jour. Siège statutaire : Amsterdam.",
-    activitiesHeading: "Activités enregistrées",
-    activities: "SBI 46180 — intermédiation en gros d'autres marchandises. SBI 47120 — autre commerce de détail non spécialisé. L'établissement importe des marchandises et les vend à des clients dans l'UE.",
-    managementHeading: "Administrateurs",
-    management: "Thomas Hamish Mckenzie, né le 25 janvier 1967, et Angela Min Zhang, née le 5 juillet 1966. Chacun est administrateur depuis le 15 décembre 2020 et peut représenter seul la société.",
-    shareholderHeading: "Actionnaire unique",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Royaume-Uni, immatriculée en Angleterre et au pays de Galles sous le numéro 07547438. Actionnaire unique depuis le 15 décembre 2020.",
-    contactHeading: "Contact",
-    emailLabel: "E-mail",
+    incorporatedLabel: "Date de constitution",
+    incorporated: "Société constituée par acte notarié le 15 décembre 2020 et immatriculée le même jour au registre du commerce néerlandais. Siège statutaire : Amsterdam.",
+    activitiesHeading: "Activités déclarées au registre",
+    activities: "SBI 46180 — intermédiation du commerce de gros en produits divers. SBI 47120 — autre commerce de détail non spécialisé. L'établissement importe des équipements et les commercialise auprès des clients de l'Union européenne.",
+    managementHeading: "Direction générale (Bestuurders)",
+    management: "Thomas Hamish Mckenzie (né le 25 janvier 1967) et Angela Min Zhang (née le 5 juillet 1966). Nommés le 15 décembre 2020, chacun dispose du pouvoir individuel et autonome d'engager la société.",
+    shareholderHeading: "Associé unique",
+    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Royaume-Uni (enregistrée au Companies House d'Angleterre et du pays de Galles sous le numéro 07547438), actionnaire unique depuis le 15 décembre 2020.",
+    contactHeading: "Coordonnées de contact",
+    emailLabel: "Courrier électronique",
     phoneLabel: "Téléphone",
-    registrationHeading: "Immatriculation & TVA",
+    registrationHeading: "Immatriculations & numéro de TVA",
     companyNumberLabel: "Numéro KvK",
     establishmentLabel: "Numéro d'établissement",
     rsinLabel: "RSIN",
     vatLabel: "Numéro de TVA intracommunautaire",
-    accounts: "Les comptes annuels de l'exercice 2025 ont été déposés le 19 juin 2026.",
-    odrHeading: "Règlement en ligne des litiges",
-    odr: "La Commission européenne met à disposition une plateforme de règlement en ligne des litiges (RLL) : https://ec.europa.eu/consumers/odr. Nous ne sommes ni tenus ni disposés à participer à une procédure de règlement des litiges devant un organe de médiation à la consommation.",
+    accounts: "Les comptes annuels relatifs à l'exercice 2025 ont été déposés le 19 juin 2026.",
+    odrHeading: "Médiation et règlement en ligne des litiges",
+    odr: "La Commission européenne met à disposition un portail de règlement en ligne des litiges (RLL) accessible sur https://ec.europa.eu/consumers/odr. Nous ne sommes ni tenus ni disposés à prendre part à une procédure devant un organisme d'arbitrage de la consommation.",
   },
   it: {
-    companyHeading: "Dati aziendali",
-    tradingName: "DnD3D (nome commerciale)",
-    visitAddressLabel: "Indirizzo di visita",
-    legalFormHeading: "Forma giuridica e costituzione",
-    legalFormLabel: "Forma giuridica",
+    companyHeading: "Identità societaria & sede",
+    tradingName: "DnD3D (denominazione commerciale)",
+    visitAddressLabel: "Sede operativa e indirizzo di visita",
+    legalFormHeading: "Natura giuridica & costituzione",
+    legalFormLabel: "Forma societaria",
     legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Costituita il",
-    incorporated: "15 dicembre 2020, con atto costitutivo. Prima iscrizione nel registro delle imprese olandese lo stesso giorno. Sede legale: Amsterdam.",
-    activitiesHeading: "Attività registrate",
-    activities: "SBI 46180 — intermediazione all'ingrosso di altri beni. SBI 47120 — altro commercio al dettaglio non specializzato. La sede importa beni e li vende a clienti nell'UE.",
-    managementHeading: "Amministratori",
-    management: "Thomas Hamish Mckenzie, nato il 25 gennaio 1967, e Angela Min Zhang, nata il 5 luglio 1966. Ciascuno è amministratore dal 15 dicembre 2020 ed è autorizzato a rappresentare la società da solo.",
+    incorporatedLabel: "Data di costituzione",
+    incorporated: "Costituita con atto notarile il 15 dicembre 2020 e iscritta in pari data nel registro delle imprese dei Paesi Bassi. Sede statutaria: Amsterdam.",
+    activitiesHeading: "Attività economiche registrate",
+    activities: "SBI 46180 — intermediazione nel commercio all'ingrosso di altri prodotti. SBI 47120 — altro commercio al dettaglio non specializzato. L'azienda importa merci e le distribuisce ai clienti nell'Unione Europea.",
+    managementHeading: "Consiglio di amministrazione",
+    management: "Thomas Hamish Mckenzie (nato il 25 gennaio 1967) e Angela Min Zhang (nata il 5 luglio 1966). Entrambi in carica dal 15 dicembre 2020 con potere di firma e rappresentanza disgiunta e autonoma.",
     shareholderHeading: "Socio unico",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Regno Unito, iscritta in Inghilterra e Galles al numero 07547438. Socio unico dal 15 dicembre 2020.",
-    contactHeading: "Contatto",
-    emailLabel: "E-mail",
+    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Regno Unito (iscritta presso la Companies House per l'Inghilterra e il Galles al n. 07547438), socio unico dal 15 dicembre 2020.",
+    contactHeading: "Recapiti diretti",
+    emailLabel: "Posta elettronica",
     phoneLabel: "Telefono",
-    registrationHeading: "Registrazione e IVA",
+    registrationHeading: "Estremi di iscrizione & partita IVA",
     companyNumberLabel: "Numero KvK",
-    establishmentLabel: "Numero di stabilimento",
+    establishmentLabel: "Numero di unità locale",
     rsinLabel: "RSIN",
-    vatLabel: "Numero identificativo IVA",
-    accounts: "Il bilancio dell'esercizio 2025 è stato depositato il 19 giugno 2026.",
-    odrHeading: "Risoluzione delle controversie online",
-    odr: "La Commissione europea offre una piattaforma per la risoluzione delle controversie online (ODR): https://ec.europa.eu/consumers/odr. Non siamo obbligati né disposti a partecipare a procedure di risoluzione delle controversie dinanzi a un organismo di conciliazione dei consumatori.",
+    vatLabel: "Partita IVA comunitaria",
+    accounts: "Il bilancio d'esercizio relativo all'anno finanziario 2025 è stato depositato il 19 giugno 2026.",
+    odrHeading: "Risoluzione online delle controversie (ODR)",
+    odr: "La Commissione europea mette a disposizione la piattaforma ODR per la risoluzione online delle controversie all'indirizzo https://ec.europa.eu/consumers/odr. Non siamo obbligati né intenzionati a partecipare a procedure dinanzi a organismi di conciliazione dei consumatori.",
   },
   es: {
-    companyHeading: "Datos de la empresa",
-    tradingName: "DnD3D (nombre comercial)",
-    visitAddressLabel: "Dirección de visita",
-    legalFormHeading: "Forma jurídica y constitución",
-    legalFormLabel: "Forma jurídica",
+    companyHeading: "Identidad corporativa y domicilio",
+    tradingName: "DnD3D (marca comercial)",
+    visitAddressLabel: "Dirección comercial y de visita",
+    legalFormHeading: "Naturaleza jurídica y constitución",
+    legalFormLabel: "Forma societaria",
     legalForm: "Besloten vennootschap (B.V.)",
-    incorporatedLabel: "Constituida el",
-    incorporated: "15 de diciembre de 2020, por escritura de constitución. Primera inscripción en el registro mercantil neerlandés el mismo día. Domicilio social: Ámsterdam.",
-    activitiesHeading: "Actividades registradas",
-    activities: "SBI 46180 — intermediación mayorista de otros bienes. SBI 47120 — otro comercio minorista no especializado. El establecimiento importa bienes y los vende a clientes de la UE.",
-    managementHeading: "Administradores",
-    management: "Thomas Hamish Mckenzie, nacido el 25 de enero de 1967, y Angela Min Zhang, nacida el 5 de julio de 1966. Cada uno es administrador desde el 15 de diciembre de 2020 y puede representar a la sociedad por sí solo.",
-    shareholderHeading: "Accionista único",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Reino Unido, inscrita en Inglaterra y Gales con el número 07547438. Accionista único desde el 15 de diciembre de 2020.",
-    contactHeading: "Contacto",
+    incorporatedLabel: "Fecha de constitución",
+    incorporated: "Constituida mediante escritura pública el 15 de diciembre de 2020 e inscrita ese mismo día en el Registro Mercantil de los Países Bajos. Domicilio estatutario: Ámsterdam.",
+    activitiesHeading: "Actividades económicas inscritas",
+    activities: "SBI 46180 — intermediación en el comercio mayorista de mercancías diversas. SBI 47120 — otro comercio minorista no especializado. La sociedad importa bienes y los comercializa a clientes dentro de la Unión Europea.",
+    managementHeading: "Órgano de administración",
+    management: "Thomas Hamish Mckenzie (nacido el 25 de enero de 1967) y Angela Min Zhang (nacida el 5 de julio de 1966). Ambos nombrados el 15 de diciembre de 2020, ostentando cada uno facultades plenas e independientes de representación.",
+    shareholderHeading: "Socio único",
+    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Reino Unido (inscrita en el Registro Mercantil de Inglaterra y Gales con el número 07547438), accionista único desde el 15 de diciembre de 2020.",
+    contactHeading: "Canales de contacto",
     emailLabel: "Correo electrónico",
     phoneLabel: "Teléfono",
-    registrationHeading: "Registro e IVA",
+    registrationHeading: "Datos registrales e identificación fiscal",
     companyNumberLabel: "Número KvK",
     establishmentLabel: "Número de establecimiento",
     rsinLabel: "RSIN",
-    vatLabel: "Número de identificación fiscal (IVA)",
-    accounts: "Las cuentas anuales del ejercicio 2025 se depositaron el 19 de junio de 2026.",
-    odrHeading: "Resolución de litigios en línea",
-    odr: "La Comisión Europea ofrece una plataforma de resolución de litigios en línea (RLL): https://ec.europa.eu/consumers/odr. No estamos obligados ni dispuestos a participar en procedimientos de resolución de litigios ante un órgano de arbitraje de consumo.",
+    vatLabel: "Número de IVA intracomunitario",
+    accounts: "Las cuentas anuales correspondientes al ejercicio 2025 quedaron depositadas el 19 de junio de 2026.",
+    odrHeading: "Plataforma europea de resolución de litigios",
+    odr: "La Comisión Europea facilita una plataforma de resolución de litigios en línea (RLL) disponible en https://ec.europa.eu/consumers/odr. No estamos obligados ni dispuestos a intervenir en procedimientos ante juntas arbitrales de consumo.",
   },
   nl: {
-    companyHeading: "Bedrijfsgegevens",
+    companyHeading: "Bedrijfsidentiteit & kantooradres",
     tradingName: "DnD3D (handelsnaam)",
-    visitAddressLabel: "Bezoekadres",
-    legalFormHeading: "Rechtsvorm en oprichting",
+    visitAddressLabel: "Bezoek- en vestigingsadres",
+    legalFormHeading: "Rechtsvorm & oprichtingsdatum",
     legalFormLabel: "Rechtsvorm",
-    legalForm: "Besloten vennootschap",
-    incorporatedLabel: "Opgericht",
-    incorporated: "15 december 2020, bij akte van oprichting. Eerste inschrijving in het Handelsregister op dezelfde datum. Statutaire zetel: Amsterdam.",
-    activitiesHeading: "Geregistreerde activiteiten",
-    activities: "SBI-code 46180 — handelsbemiddeling in de groothandel in overige goederen. SBI-code 47120 — overige niet-gespecialiseerde detailhandel. De vestiging importeert goederen en verkoopt deze aan EU-klanten.",
+    legalForm: "Besloten vennootschap (B.V.)",
+    incorporatedLabel: "Datum van oprichting",
+    incorporated: "Opgericht bij notariële akte op 15 december 2020 en op dezelfde dag ingeschreven in het Nederlandse Handelsregister. Statutaire zetel: Amsterdam.",
+    activitiesHeading: "Geregistreerde bedrijfsactiviteiten",
+    activities: "SBI-code 46180 — handelsbemiddeling in de groothandel in overige goederen. SBI-code 47120 — overige niet-gespecialiseerde detailhandel. De onderneming importeert goederen en levert deze aan afnemers binnen de Europese Unie.",
     managementHeading: "Bestuurders",
-    management: "Thomas Hamish Mckenzie, geboren 25 januari 1967, en Angela Min Zhang, geboren 5 juli 1966. Beiden zijn sinds 15 december 2020 bestuurder en ieder alleen/zelfstandig bevoegd.",
+    management: "Thomas Hamish Mckenzie (geboren 25 januari 1967) en Angela Min Zhang (geboren 5 juli 1966). Beiden zijn op 15 december 2020 aangesteld als bestuurder en ieder is alleen en zelfstandig bevoegd om de vennootschap te vertegenwoordigen.",
     shareholderHeading: "Enig aandeelhouder",
-    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Verenigd Koninkrijk, ingeschreven bij Companies House (England and Wales) onder nummer 07547438. Enig aandeelhouder sinds 15 december 2020.",
-    contactHeading: "Contact",
-    emailLabel: "E-mail",
-    phoneLabel: "Telefoon",
-    registrationHeading: "Registratie en btw",
+    shareholder: "BJX BUSINESS GROUP LIMITED, 17 St. Peters Place, Fleetwood, Lancashire FY7 6EB, Verenigd Koninkrijk (ingeschreven bij Companies House voor England and Wales onder nummer 07547438), enig aandeelhouder sinds 15 december 2020.",
+    contactHeading: "Directe contactgegevens",
+    emailLabel: "E-mailadres",
+    phoneLabel: "Telefoonnummer",
+    registrationHeading: "Handelsregister- & btw-gegevens",
     companyNumberLabel: "KvK-nummer",
     establishmentLabel: "Vestigingsnummer",
     rsinLabel: "RSIN",
     vatLabel: "Btw-identificatienummer",
-    accounts: "De jaarrekening over boekjaar 2025 is gedeponeerd op 19 juni 2026.",
-    odrHeading: "Online geschillenbeslechting",
-    odr: "De Europese Commissie biedt een platform voor online geschillenbeslechting (ODR): https://ec.europa.eu/consumers/odr. Wij zijn niet verplicht en ook niet bereid deel te nemen aan geschillenbeslechtingsprocedures voor een consumentenarbitrage-instantie.",
+    accounts: "De jaarrekening over het boekjaar 2025 is gedeponeerd op 19 juni 2026.",
+    odrHeading: "Online geschillenbeslechting (ODR)",
+    odr: "De Europese Commissie biedt via https://ec.europa.eu/consumers/odr een platform voor online geschillenbeslechting aan. Wij zijn noch wettelijk verplicht, noch bereid om deel te nemen aan geschillenprocedures bij een consumentenarbitragecommissie.",
   },
 }
 
@@ -227,6 +227,19 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
           {COMPANY.postalCode} {COMPANY.city}, {COMPANY.country}
         </p>
       </ProseSection>
+      <ProseSection heading={t.registrationHeading}>
+        <p>
+          {t.companyNumberLabel}: {COMPANY.companyNumber}
+          <br />
+          {t.establishmentLabel}: {COMPANY.establishmentNumber}
+          <br />
+          {t.rsinLabel}: {COMPANY.rsin}
+          <br />
+          {t.vatLabel}: {COMPANY.vat}
+          <br />
+          {t.accounts}
+        </p>
+      </ProseSection>
       <ProseSection heading={t.legalFormHeading}>
         <p>
           {t.legalFormLabel}: {t.legalForm}
@@ -234,14 +247,14 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
           {t.incorporatedLabel}: {t.incorporated}
         </p>
       </ProseSection>
-      <ProseSection heading={t.activitiesHeading}>
-        <p>{t.activities}</p>
-      </ProseSection>
       <ProseSection heading={t.managementHeading}>
         <p>{t.management}</p>
       </ProseSection>
       <ProseSection heading={t.shareholderHeading}>
         <p>{t.shareholder}</p>
+      </ProseSection>
+      <ProseSection heading={t.activitiesHeading}>
+        <p>{t.activities}</p>
       </ProseSection>
       <ProseSection heading={t.contactHeading}>
         <p>
@@ -256,19 +269,6 @@ export default async function ImpressumPage({ params }: { params: Promise<{ lang
           <a href={COMPANY.whatsappUrl} target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:text-foreground">
             {COMPANY.whatsappDisplay}
           </a>
-        </p>
-      </ProseSection>
-      <ProseSection heading={t.registrationHeading}>
-        <p>
-          {t.companyNumberLabel}: {COMPANY.companyNumber}
-          <br />
-          {t.establishmentLabel}: {COMPANY.establishmentNumber}
-          <br />
-          {t.rsinLabel}: {COMPANY.rsin}
-          <br />
-          {t.vatLabel}: {COMPANY.vat}
-          <br />
-          {t.accounts}
         </p>
       </ProseSection>
       <ProseSection heading={t.odrHeading}>

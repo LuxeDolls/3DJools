@@ -185,7 +185,7 @@ export const it: Dictionary = {
     shippingFree: "Spedizione standard gratuita",
     shippingFreeDesc: "3–7 giorni lavorativi · gratuita su ogni ordine",
     payCard: "Visa / Mastercard",
-    payCardDesc: "Pagamento sicuro con carta",
+    payCardDesc: "Transazione crittografata per carte Visa e Mastercard",
     payCardUnavailable: "Il pagamento con carta non è al momento disponibile",
     payCardGatewayNotice:
       "A causa di problemi tecnici con il nostro gateway di pagamento, i pagamenti con carta sono temporaneamente disabilitati. Utilizza il bonifico bancario SEPA o il pagamento in 4× senza interessi.",
@@ -193,7 +193,7 @@ export const it: Dictionary = {
     payCardNote:
       "Dopo aver effettuato l'ordine, verrai reindirizzato a una pagina di pagamento sicura per pagare con Visa o Mastercard. Non vediamo mai il numero della tua carta. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     payOpenBanking: "Pagamento da conto bancario (Open Banking)",
-    payOpenBankingDesc: "Pagamento istantaneo dalla tua app bancaria o tramite IBAN — senza carta",
+    payOpenBankingDesc: "Trasferimento immediato da app bancaria o IBAN — senza carta",
     payOpenBankingUnavailable: "Il pagamento da conto bancario (Open Banking) non è al momento disponibile",
     payOpenBankingFailed: "Il pagamento bancario non è andato a buon fine. Puoi riprovare.",
     payOpenBankingNote:
@@ -253,7 +253,7 @@ export const it: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponibile sulla pagina Stripe sicura quando paghi con carta.",
     payMethodsNote:
-      "Tutti i prezzi sono in euro (EUR) e includono l'IVA, se applicabile. I pagamenti con carta (Visa, Mastercard) vengono addebitati in euro su una pagina di pagamento sicura e non vediamo mai il numero della carta. Con l'Open Banking puoi pagare direttamente dal tuo conto bancario (app bancaria o IBAN). Il pagamento a rate divide l'ordine in quattro rate uguali, senza interessi, in due mesi. Gli ordini con bonifico SEPA vengono riservati e spediti quando il pagamento arriva sul nostro IBAN, indicato al checkout e nella conferma d'ordine.",
+      "Tutti i prezzi su DnD3D sono espressi in euro (EUR) e comprendono l'IVA di legge, ove applicabile. I pagamenti con carta (Visa, Mastercard) vengono elaborati in euro su una pagina protetta, senza che il numero della carta sia mai visibile a noi. Con l'Open Banking autorizzi un pagamento immediato direttamente dal tuo conto bancario (tramite app bancaria o IBAN). Il piano rateale 4× ripartisce gli ordini idonei in quattro quote uguali a tasso zero nell'arco di due mesi. Gli ordini saldati con bonifico SEPA vengono prenotati e spediti non appena l'importo viene accreditato sul nostro IBAN (mostrato al checkout e nell'e-mail di riepilogo).",
     payPaypal: "PayPal",
     payPaypalDesc: "Paga con saldo PayPal, conto bancario o carta",
     payPaypalUnavailable: "PayPal non è al momento disponibile",
@@ -262,7 +262,7 @@ export const it: Dictionary = {
     payPaypalNote:
       "Verrai reindirizzato su PayPal per approvare il pagamento. Non vediamo mai il tuo accesso PayPal. Se hai già pagato, attendi l'aggiornamento dello stato e non pagare due volte.",
     paySepa: "Bonifico bancario (SEPA)",
-    paySepaDesc: "Paga con bonifico IBAN sul nostro conto",
+    paySepaDesc: "Bonifico SEPA diretto sul nostro IBAN aziendale",
     paySepaUnavailable: "Il bonifico bancario (SEPA) è temporaneamente non disponibile.",
     payCrypto: "Criptovaluta",
     payCryptoDesc: "Bitcoin, Ethereum, USDT e altro",
@@ -276,8 +276,8 @@ export const it: Dictionary = {
     changePaymentMethodHint: "Puoi scegliere un altro modo per pagare questo ordine.",
     changePaymentMethodError: "Impossibile cambiare metodo di pagamento. Riprova.",
     payInstallments: "Rate — 4× in 2 mesi",
-    payInstallmentsDesc: "Diviso in 4 pagamenti, senza interessi",
-    payInstallmentsMinNote: "Disponibile per ordini da 1.000 € in su",
+    payInstallmentsDesc: "4 quote quindicinali uguali a TAEG 0%",
+    payInstallmentsMinNote: "Attivabile su ordini a partire da 1.000 €",
     processing: "Invio dell'ordine…",
     orderError: "Impossibile completare l'ordine. Riprova.",
   },
@@ -445,8 +445,8 @@ export const it: Dictionary = {
     contactLink: "Contattaci",
   },
   cookies: {
-    title: "Teniamo alla tua privacy",
-    text: "Usiamo i cookie per far funzionare il sito, ricordare le tue preferenze e capire come viene utilizzato. Puoi accettare tutti i cookie o mantenere solo quelli essenziali.",
+    title: "La tua privacy e le scelte sui cookie",
+    text: "Utilizziamo cookie tecnici necessari per carrello e sessione, oltre a cookie analitici facoltativi (conservati fino a 14 mesi) per comprendere l'utilizzo dello store. Scegli se abilitare tutti i cookie o mantenere solo quelli essenziali.",
     acceptAll: "Accetta tutti",
     essentialOnly: "Solo essenziali",
     learnMore: "Politica sui cookie",
@@ -454,26 +454,26 @@ export const it: Dictionary = {
   },
   cookiePolicy: {
     title: "Politica sui cookie",
-    intro: "Questa Politica sui cookie spiega come DnD3D utilizza i cookie e tecnologie simili quando visiti il nostro negozio online.",
+    intro: "Questa informativa descrive come DnD3D impiega i cookie e tecnologie analoghe durante la navigazione sul nostro store online.",
     sections: [
       {
-        heading: "Cosa sono i cookie?",
-        body: "I cookie sono piccoli file di testo memorizzati sul tuo dispositivo quando visiti un sito. Aiutano il sito a ricordare le tue azioni e preferenze nel tempo.",
+        heading: "Come funzionano i cookie",
+        body: "I cookie sono piccoli file di testo salvati dal browser sul tuo dispositivo. Permettono al sito di mantenere attiva la sessione, conservare gli articoli nel carrello e ricordare le tue impostazioni di visualizzazione.",
       },
       {
-        heading: "Cookie strettamente necessari",
-        body: "Necessari per funzioni essenziali come il carrello, la sessione di accesso e la sicurezza. Non possono essere disattivati.",
+        heading: "Cookie tecnici strettamente necessari",
+        body: "Indispensabili per le funzioni base dello store: gestione del carrello, autenticazione, sicurezza dei pagamenti e salvataggio del consenso. Poiché il sito non può funzionare senza di essi, sono sempre attivi.",
       },
       {
-        heading: "Cookie di preferenza",
-        body: "Ricordano scelte come la lingua e il tema, così il negozio resta coerente a ogni visita.",
+        heading: "Cookie di interfaccia e lingua",
+        body: "Memorizzano la lingua selezionata e il tema chiaro/scuro, offrendoti un'esperienza coerente a ogni visita.",
       },
       {
-        heading: "Cookie analitici",
-        body: "Ci aiutano a capire quali pagine e prodotti sono popolari per migliorare il negozio. Questi cookie vengono usati solo se accetti tutti i cookie.",
+        heading: "Cookie analitici facoltativi",
+        body: "Ci aiutano ad analizzare in forma aggregata le pagine più visitate per migliorare il catalogo. Restano disattivati per impostazione predefinita (Consent Mode denied) e vengono attivati solo con il tuo consenso, con conservazione massima di 14 mesi.",
       },
     ],
-    manageHeading: "Gestire i tuoi cookie",
-    manageText: "Puoi cambiare la tua scelta in qualsiasi momento. Usa il pulsante qui sotto per riaprire le impostazioni dei cookie, o cancella i cookie nelle impostazioni del browser.",
+    manageHeading: "Modificare le preferenze sui cookie",
+    manageText: "Puoi aggiornare o revocare la tua scelta in qualsiasi momento. Premi il pulsante qui sotto per riaprire il pannello dei cookie oppure cancella i cookie dalle impostazioni del browser.",
   },
 }

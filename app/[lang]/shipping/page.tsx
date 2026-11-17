@@ -26,130 +26,130 @@ type ShippingCopy = {
 
 const COPY: Record<Locale, ShippingCopy> = {
   en: {
-    sectionDelivery: "Delivery options & pricing",
-    colDestination: "Destination",
-    colDeliveryTime: "Delivery time",
-    colCost: "Cost",
+    sectionDelivery: "Shipping rates & transit schedule",
+    colDestination: "Delivery region",
+    colDeliveryTime: "Total delivery window",
+    colCost: "Shipping fee",
     home: "Netherlands",
-    restOfEu: "Rest of the EU & neighbouring countries",
-    deliveryTime: (min, max) => `${min}–${max} working days`,
-    free: "Free",
+    restOfEu: "All other EU countries & neighbouring territories",
+    deliveryTime: (min, max) => `${min}–${max} business days`,
+    free: "Free (0 €)",
     deliveryParagraph:
-      "Shipping is completely free on every order, to every destination we deliver to — no minimum spend required. We deliver with our own courier service, DnD3D Courier. If our courier cannot cover the route, we hand the parcel to DHL or DPD. Orders are handled within 0–2 business days Monday to Friday, and transit takes 3–5 business days. Orders placed by 15:00 CET on a working day enter the handling window that day.",
-    sectionHours: "Business hours",
+      "Every order placed on DnD3D ships completely free of charge to all supported destinations, with no minimum order threshold. Parcels are carried by our dedicated logistics service, DnD3D Courier; where a delivery address falls outside our direct fleet coverage, we hand the shipment over to DHL or DPD. Warehouse handling takes 0–2 business days (Monday to Friday) and road/air transit takes 3–5 business days. Orders submitted before 15:00 CET on a business day enter the handling queue that same day.",
+    sectionHours: "Dispatch schedule & operating hours",
     hoursParagraph:
-      "Our team works Monday to Friday, 9:00–18:00 CET (excluding Dutch public holidays). The total estimated delivery time is 3–7 business days: 0–2 business days handling plus 3–5 business days in transit. Orders placed by 15:00 CET are processed within the stated handling window.",
-    sectionZones: "Shipping zones",
+      "Our warehouse and support teams operate Monday through Friday from 9:00 to 18:00 CET, excluding official Dutch public holidays. Across all routes, the total estimated delivery timeframe is 3–7 business days — combining 0–2 business days for order preparation with 3–5 business days in transit. Orders confirmed by 15:00 CET are queued within the stated preparation window.",
+    sectionZones: "Countries we deliver to",
     zonesParagraph:
-      "We ship to the Netherlands and to the rest of the European Union plus a handful of neighbouring countries (Switzerland, Norway, United Kingdom) — shipping is free to every one of these destinations.",
-    sectionTracking: "Tracking your order",
+      "We deliver throughout the Netherlands, across every member state of the European Union, and to selected neighbouring countries (Switzerland, Norway, and the United Kingdom) — always with complimentary shipping.",
+    sectionTracking: "Live parcel tracking",
     trackingParagraph:
-      "Once your order ships you receive an email with a tracking number and a link to follow it on this site. You also receive an email each time the delivery status changes, including a handover to DHL or DPD when our own courier cannot complete the route. Registered customers can open an order in their account to see the full history.",
+      "As soon as your parcel is dispatched, we send you an email with your tracking reference and a direct link to follow the shipment on our website. Automatic email updates are sent whenever the delivery milestone changes, including any handover to DHL or DPD. Customers with an account can also review the complete delivery timeline under their order history.",
   },
   de: {
-    sectionDelivery: "Versandoptionen & Preise",
-    colDestination: "Ziel",
-    colDeliveryTime: "Lieferzeit",
-    colCost: "Kosten",
+    sectionDelivery: "Versandtarife & Laufzeiten",
+    colDestination: "Liefergebiet",
+    colDeliveryTime: "Gesamtlieferzeit",
+    colCost: "Versandkosten",
     home: "Niederlande",
-    restOfEu: "Restliche EU & Nachbarländer",
+    restOfEu: "Übrige EU-Staaten & Nachbarländer",
     deliveryTime: (min, max) => `${min}–${max} Werktage`,
-    free: "Kostenlos",
+    free: "Kostenlos (0 €)",
     deliveryParagraph:
-      "Der Versand ist bei jeder Bestellung und zu jedem Lieferziel völlig kostenlos — kein Mindestbestellwert erforderlich. Wir liefern mit unserem eigenen Kurierdienst, DnD3D Courier. Wenn unser Kurier die Strecke nicht abdecken kann, übergeben wir das Paket an DHL oder DPD. Bestellungen werden von Montag bis Freitag innerhalb von 0–2 Werktagen bearbeitet; der Transport dauert 3–5 Werktage. Bestellungen, die bis 15:00 Uhr MEZ an einem Werktag eingehen, werden an diesem Tag in das Bearbeitungsfenster aufgenommen.",
-    sectionHours: "Geschäftszeiten",
+      "Jede Bestellung bei DnD3D wird ohne Mindestbestellwert komplett versandkostenfrei an alle unterstützten Zielorte geliefert. Den Transport übernimmt unser eigener Zustelldienst DnD3D Courier; liegt eine Zieladresse außerhalb unseres direkten Streckennetzes, übergeben wir die Sendung an DHL oder DPD. Die Lagerbearbeitung dauert montags bis freitags 0–2 Werktage, die anschließende Transportlaufzeit beträgt 3–5 Werktage. Bestellungen, die werktags vor 15:00 Uhr MEZ eingehen, starten noch am selben Tag in das Bearbeitungsfenster.",
+    sectionHours: "Abfertigungs- & Geschäftszeiten",
     hoursParagraph:
-      "Unser Team arbeitet Montag bis Freitag von 9:00 bis 18:00 Uhr MEZ (außer an niederländischen Feiertagen). Die voraussichtliche Gesamtlieferzeit beträgt 3–7 Werktage: 0–2 Werktage Bearbeitung plus 3–5 Werktage Transport. Bestellungen bis 15:00 Uhr MEZ werden innerhalb des angegebenen Bearbeitungsfensters bearbeitet.",
-    sectionZones: "Versandzonen",
+      "Unser Logistik- und Serviceteam ist von Montag bis Freitag zwischen 9:00 und 18:00 Uhr MEZ im Einsatz (ausgenommen gesetzliche Feiertage in den Niederlanden). Die voraussichtliche Gesamtlieferdauer beläuft sich auf 3–7 Werktage, bestehend aus 0–2 Werktagen Vorbereitung und 3–5 Werktagen Beförderung. Bestellungen bis 15:00 Uhr MEZ werden innerhalb des genannten Bearbeitungszeitraums abgefertigt.",
+    sectionZones: "Lieferländer",
     zonesParagraph:
-      "Wir versenden in die Niederlande sowie in die übrige Europäische Union und einige Nachbarländer (Schweiz, Norwegen, Vereinigtes Königreich) — der Versand ist zu jedem dieser Ziele kostenlos.",
-    sectionTracking: "Sendungsverfolgung",
+      "Wir beliefern die gesamten Niederlande, sämtliche weiteren Mitgliedstaaten der Europäischen Union sowie ausgewählte Nachbarstaaten (Schweiz, Norwegen und Vereinigtes Königreich) — in jedes dieser Länder liefern wir versandkostenfrei.",
+    sectionTracking: "Sendungsverfolgung in Echtzeit",
     trackingParagraph:
-      "Sobald Ihre Bestellung versandt wurde, erhalten Sie eine E-Mail mit einer Sendungsnummer und einem Link zur Sendungsverfolgung auf dieser Website. Bei jeder Statusänderung erhalten Sie eine weitere E-Mail, auch wenn das Paket an DHL oder DPD übergeben wird. Registrierte Kunden sehen den vollständigen Verlauf in ihrem Konto.",
+      "Unmittelbar nach dem Versand erhalten Sie per E-Mail Ihre Sendungsnummer sowie einen Direktlink zur Online-Verfolgung. Bei jedem neuen Zustellstatus — einschließlich einer Übergabe an DHL oder DPD — informieren wir Sie automatisch per E-Mail. Mit einem Kundenkonto können Sie den gesamten Sendungsverlauf jederzeit in Ihrer Bestellübersicht einsehen.",
   },
   fr: {
-    sectionDelivery: "Options et tarifs de livraison",
-    colDestination: "Destination",
-    colDeliveryTime: "Délai de livraison",
-    colCost: "Coût",
+    sectionDelivery: "Tarifs d'expédition & délais d'acheminement",
+    colDestination: "Zone de livraison",
+    colDeliveryTime: "Délai global",
+    colCost: "Frais de port",
     home: "Pays-Bas",
-    restOfEu: "Reste de l'UE & pays voisins",
+    restOfEu: "Autres pays de l'UE & pays voisins",
     deliveryTime: (min, max) => `${min}–${max} jours ouvrés`,
-    free: "Gratuit",
+    free: "Gratuit (0 €)",
     deliveryParagraph:
-      "La livraison est entièrement gratuite pour toute commande, vers toutes les destinations que nous livrons — aucun montant minimum requis. Nous livrons avec notre propre service de coursier, DnD3D Courier. Si notre coursier ne peut pas couvrir le trajet, nous remettons le colis à DHL ou DPD. Les commandes sont traitées sous 0 à 2 jours ouvrés du lundi au vendredi ; le transport prend 3 à 5 jours ouvrés. Les commandes passées avant 15h00 CET un jour ouvré entrent dans le délai de traitement du jour.",
-    sectionHours: "Horaires d'ouverture",
+      "Toutes les commandes passées sur DnD3D bénéficient de la livraison gratuite vers l'ensemble des destinations desservies, sans montant minimum d'achat. L'acheminement est assuré par notre propre flotte, DnD3D Courier ; lorsqu'un trajet sort de notre couverture directe, nous confions le colis à DHL ou DPD. La préparation en entrepôt prend 0 à 2 jours ouvrés (du lundi au vendredi) et le transport dure 3 à 5 jours ouvrés. Toute commande validée avant 15h00 CET un jour ouvré intègre le créneau de préparation le jour même.",
+    sectionHours: "Horaires de préparation & d'ouverture",
     hoursParagraph:
-      "Notre équipe travaille du lundi au vendredi, de 9h00 à 18h00 CET (hors jours fériés néerlandais). Le délai total estimé est de 3 à 7 jours ouvrés : 0 à 2 jours ouvrés de traitement, puis 3 à 5 jours ouvrés de transport. Les commandes passées avant 15h00 CET sont traitées dans le délai indiqué.",
-    sectionZones: "Zones de livraison",
+      "Nos équipes logistiques et support travaillent du lundi au vendredi de 9h00 à 18h00 CET (hors jours fériés aux Pays-Bas). Le délai global estimé est de 3 à 7 jours ouvrés, comprenant 0 à 2 jours ouvrés de préparation et 3 à 5 jours ouvrés de transit. Les commandes enregistrées avant 15h00 CET sont traitées dans le créneau annoncé.",
+    sectionZones: "Pays desservis",
     zonesParagraph:
-      "Nous livrons aux Pays-Bas ainsi que dans le reste de l'Union européenne et quelques pays voisins (Suisse, Norvège, Royaume-Uni) — la livraison est gratuite vers chacune de ces destinations.",
-    sectionTracking: "Suivi de votre commande",
+      "Nous expédions aux Pays-Bas, dans tous les autres États membres de l'Union européenne ainsi que vers plusieurs pays voisins (Suisse, Norvège et Royaume-Uni) — toujours sans frais de livraison.",
+    sectionTracking: "Suivi de colis en direct",
     trackingParagraph:
-      "Une fois votre commande expédiée, vous recevez un e-mail avec un numéro de suivi et un lien pour la suivre sur ce site. Vous recevez aussi un e-mail à chaque changement de statut, y compris en cas de remise à DHL ou DPD. Les clients inscrits voient tout l'historique dans leur compte.",
+      "Dès la remise en expédition de votre commande, vous recevez un e-mail contenant votre numéro de suivi et un lien direct pour suivre son avancement sur notre site. Une notification vous est également envoyée à chaque étape clé, y compris lors d'un relais par DHL ou DPD. Les clients disposant d'un compte retrouvent l'historique complet dans leur espace personnel.",
   },
   it: {
-    sectionDelivery: "Opzioni e tariffe di spedizione",
-    colDestination: "Destinazione",
-    colDeliveryTime: "Tempi di consegna",
-    colCost: "Costo",
+    sectionDelivery: "Tariffe di spedizione & tempi di percorrenza",
+    colDestination: "Area di consegna",
+    colDeliveryTime: "Tempistica totale",
+    colCost: "Costo di spedizione",
     home: "Paesi Bassi",
-    restOfEu: "Resto dell'UE e paesi limitrofi",
+    restOfEu: "Altri Paesi UE & nazioni limitrofe",
     deliveryTime: (min, max) => `${min}–${max} giorni lavorativi`,
-    free: "Gratuita",
+    free: "Gratuita (0 €)",
     deliveryParagraph:
-      "La spedizione è sempre completamente gratuita, per qualsiasi ordine e verso tutte le destinazioni servite — nessun importo minimo richiesto. Consegniamo con il nostro servizio di corriere, DnD3D Courier. Se il nostro corriere non può coprire il percorso, affidiamo il pacco a DHL o DPD. Ogni ordine viene elaborato entro 0–2 giorni lavorativi dal lunedì al venerdì; il trasporto richiede 3–5 giorni lavorativi. Gli ordini effettuati entro le 15:00 CET di un giorno lavorativo entrano nel periodo di gestione della giornata.",
-    sectionHours: "Orari di apertura",
+      "Ogni ordine effettuato su DnD3D viaggia con spedizione completamente gratuita verso tutte le destinazioni servite, senza alcun ordine minimo. Consegniamo tramite la nostra flotta proprietaria, DnD3D Courier; qualora una tratta non sia coperta direttamente dal nostro corriere, affidiamo la spedizione a DHL o DPD. La preparazione in magazzino richiede 0–2 giorni lavorativi (dal lunedì al venerdì), mentre il transito impiega 3–5 giorni lavorativi. Gli ordini confermati entro le 15:00 CET di un giorno lavorativo entrano nella finestra di preparazione lo stesso giorno.",
+    sectionHours: "Orari operativi & gestione ordini",
     hoursParagraph:
-      "Il nostro team lavora dal lunedì al venerdì, dalle 9:00 alle 18:00 CET (escluse le festività olandesi). Il tempo totale stimato di consegna è di 3–7 giorni lavorativi: 0–2 giorni lavorativi di gestione più 3–5 giorni lavorativi di trasporto. Gli ordini effettuati entro le 15:00 CET vengono elaborati entro il periodo indicato.",
-    sectionZones: "Zone di spedizione",
+      "Il nostro reparto logistico e l'assistenza clienti sono attivi dal lunedì al venerdì, dalle 9:00 alle 18:00 CET (escluse le festività nazionali olandesi). Il tempo complessivo stimato per la consegna è di 3–7 giorni lavorativi: 0–2 giorni lavorativi per l'allestimento più 3–5 giorni lavorativi di viaggio. Gli ordini ricevuti entro le 15:00 CET vengono gestiti entro la finestra indicata.",
+    sectionZones: "Aree geografiche coperte",
     zonesParagraph:
-      "Spediamo nei Paesi Bassi e nel resto dell'Unione Europea, oltre ad alcuni paesi limitrofi (Svizzera, Norvegia, Regno Unito) — la spedizione è gratuita verso ciascuna di queste destinazioni.",
-    sectionTracking: "Tracciamento dell'ordine",
+      "Effettuiamo consegne nei Paesi Bassi, in tutti gli altri Stati membri dell'Unione Europea e in alcuni Paesi limitrofi (Svizzera, Norvegia e Regno Unito), sempre con spedizione gratuita.",
+    sectionTracking: "Monitoraggio della spedizione",
     trackingParagraph:
-      "Una volta spedito l'ordine, riceverai un'e-mail con un numero di tracciamento e un link per seguirlo su questo sito. Riceverai un'e-mail a ogni aggiornamento di stato, anche quando il pacco passa a DHL o DPD. I clienti registrati vedono l'intera cronologia nel proprio account.",
+      "Alla partenza del pacco ti inviamo un'e-mail con il codice di tracciamento e il link diretto per controllare la spedizione su questo sito. Riceverai aggiornamenti automatici via e-mail a ogni cambio di stato, incluso l'eventuale affidamento a DHL o DPD. Gli utenti registrati possono consultare l'intero storico anche dal proprio profilo.",
   },
   es: {
-    sectionDelivery: "Opciones y tarifas de envío",
-    colDestination: "Destino",
-    colDeliveryTime: "Tiempo de entrega",
-    colCost: "Coste",
+    sectionDelivery: "Tarifas de transporte y plazos de entrega",
+    colDestination: "Región de destino",
+    colDeliveryTime: "Plazo total estimado",
+    colCost: "Coste de envío",
     home: "Países Bajos",
-    restOfEu: "Resto de la UE y países vecinos",
+    restOfEu: "Resto de la Unión Europea y países vecinos",
     deliveryTime: (min, max) => `${min}–${max} días laborables`,
-    free: "Gratis",
+    free: "Gratis (0 €)",
     deliveryParagraph:
-      "El envío es siempre completamente gratuito, en cualquier pedido y hacia todos los destinos a los que entregamos, sin importe mínimo. Entregamos con nuestro propio servicio de mensajería, DnD3D Courier. Si nuestro mensajero no puede cubrir la ruta, entregamos el paquete a DHL o DPD. Cada pedido se procesa en un plazo de 0–2 días laborables de lunes a viernes; el transporte tarda 3–5 días laborables. Los pedidos realizados antes de las 15:00 CET en un día laborable entran en el plazo de gestión de ese día.",
-    sectionHours: "Horario de atención",
+      "Todos los pedidos realizados en DnD3D cuentan con envío totalmente gratuito hacia cualquier destino habilitado, sin exigencia de compra mínima. El reparto se realiza con nuestro propio servicio logístico, DnD3D Courier; cuando una ruta queda fuera de nuestra cobertura directa, cedemos el paquete a DHL o DPD. La preparación en almacén lleva de 0 a 2 días laborables (de lunes a viernes) y el transporte en ruta tarda de 3 a 5 días laborables. Los pedidos registrados antes de las 15:00 CET en día laborable entran en preparación ese mismo día.",
+    sectionHours: "Horario operativo y de expedición",
     hoursParagraph:
-      "Nuestro equipo trabaja de lunes a viernes, de 9:00 a 18:00 CET (excepto festivos neerlandeses). El plazo total estimado de entrega es de 3–7 días laborables: 0–2 días laborables de gestión más 3–5 días laborables de transporte. Los pedidos realizados antes de las 15:00 CET se procesan dentro del plazo indicado.",
-    sectionZones: "Zonas de envío",
+      "Nuestro equipo trabaja de lunes a viernes entre las 9:00 y las 18:00 CET (exceptuando los días festivos en los Países Bajos). El tiempo total estimado de entrega es de 3 a 7 días laborables: de 0 a 2 días laborables de preparación más de 3 a 5 días laborables de tránsito. Los pedidos recibidos antes de las 15:00 CET se tramitan dentro del margen de preparación indicado.",
+    sectionZones: "Países a los que enviamos",
     zonesParagraph:
-      "Enviamos a los Países Bajos y al resto de la Unión Europea, además de algunos países vecinos (Suiza, Noruega, Reino Unido) — el envío es gratuito a cada uno de estos destinos.",
-    sectionTracking: "Seguimiento de tu pedido",
+      "Realizamos entregas en los Países Bajos, en todos los demás países de la Unión Europea y en varios estados vecinos (Suiza, Noruega y Reino Unido) — siempre con envío sin coste.",
+    sectionTracking: "Seguimiento en tiempo real",
     trackingParagraph:
-      "Cuando el pedido se envía, recibes un correo con el número de seguimiento y un enlace para seguirlo en este sitio. También recibes un correo en cada cambio de estado, incluso si el paquete pasa a DHL o DPD. Los clientes registrados ven el historial completo en su cuenta.",
+      "Tan pronto como tu pedido sale de nuestras instalaciones, te enviamos un correo electrónico con el código de seguimiento y un enlace para consultar su avance en esta web. Además, recibirás avisos por correo en cada cambio de estado, incluida la entrega a DHL o DPD cuando corresponda. Los clientes con cuenta pueden revisar todo el historial desde su panel.",
   },
   nl: {
-    sectionDelivery: "Verzendopties & tarieven",
-    colDestination: "Bestemming",
-    colDeliveryTime: "Levertijd",
-    colCost: "Kosten",
+    sectionDelivery: "Verzendkosten & levertijden",
+    colDestination: "Leveringsgebied",
+    colDeliveryTime: "Totale levertijd",
+    colCost: "Verzendtarief",
     home: "Nederland",
-    restOfEu: "Rest van de EU & buurlanden",
+    restOfEu: "Overige EU-landen & omliggende landen",
     deliveryTime: (min, max) => `${min}–${max} werkdagen`,
-    free: "Gratis",
+    free: "Gratis (0 €)",
     deliveryParagraph:
-      "De verzending is altijd volledig gratis, voor elke bestelling en naar elke bestemming die wij bedienen — geen minimumbedrag vereist. Wij leveren met onze eigen koeriersdienst, DnD3D Courier. Als onze koerier de route niet kan dekken, geven wij het pakket door aan DHL of DPD. Elke bestelling wordt van maandag tot vrijdag binnen 0–2 werkdagen verwerkt; het transport duurt 3–5 werkdagen. Bestellingen die vóór 15:00 CET op een werkdag worden geplaatst, vallen die dag binnen het verwerkingstijdvenster.",
-    sectionHours: "Openingstijden",
+      "Elke bestelling bij DnD3D wordt volledig gratis verzonden naar alle ondersteunde bestemmingen, zonder minimumbestelbedrag. Wij bezorgen met onze eigen vervoersdienst, DnD3D Courier; valt een adres buiten onze directe route, dan dragen wij het pakket over aan DHL of DPD. De magazijnverwerking duurt van maandag tot en met vrijdag 0–2 werkdagen en het transport neemt 3–5 werkdagen in beslag. Bestellingen die op een werkdag vóór 15:00 CET binnenkomen, gaan diezelfde dag nog het verwerkingsproces in.",
+    sectionHours: "Verwerkings- en openingstijden",
     hoursParagraph:
-      "Ons team werkt van maandag tot vrijdag, 9:00–18:00 CET (met uitzondering van Nederlandse feestdagen). De totale geschatte levertijd bedraagt 3–7 werkdagen: 0–2 werkdagen verwerking plus 3–5 werkdagen transport. Bestellingen vóór 15:00 CET worden binnen het vermelde verwerkingstijdvenster verwerkt.",
-    sectionZones: "Verzendzones",
+      "Ons magazijn- en supportteam is bereikbaar van maandag tot en met vrijdag van 9:00 tot 18:00 CET (met uitzondering van Nederlandse feestdagen). De totale geschatte levertijd bedraagt 3–7 werkdagen: 0–2 werkdagen voorbereiding plus 3–5 werkdagen onderweg. Bestellingen vóór 15:00 CET worden binnen het aangegeven tijdvenster verwerkt.",
+    sectionZones: "Landen waar wij bezorgen",
     zonesParagraph:
-      "Wij verzenden naar Nederland en de rest van de Europese Unie plus enkele buurlanden (Zwitserland, Noorwegen, Verenigd Koninkrijk) — de verzending is gratis naar elk van deze bestemmingen.",
-    sectionTracking: "Uw bestelling volgen",
+      "Wij leveren in heel Nederland, in alle andere lidstaten van de Europese Unie en in enkele buurlanden (Zwitserland, Noorwegen en het Verenigd Koninkrijk) — altijd met gratis verzending.",
+    sectionTracking: "Live pakkettracking",
     trackingParagraph:
-      "Zodra uw bestelling is verzonden, ontvangt u een e-mail met een trackingnummer en een link om de zending op deze site te volgen. Bij elke statuswijziging ontvangt u opnieuw een e-mail, ook als het pakket naar DHL of DPD gaat. Geregistreerde klanten zien de volledige geschiedenis in hun account.",
+      "Zodra uw pakket ons magazijn verlaat, sturen wij u een e-mail met uw trackingnummer en een directe link om de zending op deze website te volgen. Bij elke nieuwe status — inclusief een eventuele overdracht aan DHL of DPD — ontvangt u automatisch een bericht. Geregistreerde klanten kunnen de volledige verzendhistorie ook in hun account bekijken.",
   },
 }
 
@@ -200,12 +200,12 @@ export default async function ShippingPage({ params }: { params: Promise<{ lang:
         <p>{c.deliveryParagraph}</p>
       </ProseSection>
 
-      <ProseSection heading={c.sectionHours}>
-        <p>{c.hoursParagraph}</p>
-      </ProseSection>
-
       <ProseSection heading={c.sectionZones}>
         <p>{c.zonesParagraph}</p>
+      </ProseSection>
+
+      <ProseSection heading={c.sectionHours}>
+        <p>{c.hoursParagraph}</p>
       </ProseSection>
 
       <ProseSection heading={c.sectionTracking}>

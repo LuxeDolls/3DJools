@@ -185,7 +185,7 @@ export const fr: Dictionary = {
     shippingFree: "Livraison standard gratuite",
     shippingFreeDesc: "3–7 jours ouvrés · gratuit pour toute commande",
     payCard: "Visa / Mastercard",
-    payCardDesc: "Paiement sécurisé par carte",
+    payCardDesc: "Règlement chiffré par carte Visa ou Mastercard",
     payCardUnavailable: "Le paiement par carte est temporairement indisponible",
     payCardGatewayNotice:
       "En raison de problèmes techniques avec notre passerelle de paiement, le paiement par carte est temporairement désactivé. Veuillez utiliser le virement bancaire SEPA ou le paiement en 4× sans frais.",
@@ -193,7 +193,7 @@ export const fr: Dictionary = {
     payCardNote:
       "Après avoir passé la commande, vous êtes redirigé vers une page de paiement sécurisée pour payer par Visa ou Mastercard. Nous ne voyons jamais votre numéro de carte. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     payOpenBanking: "Paiement par compte bancaire (Open Banking)",
-    payOpenBankingDesc: "Paiement instantané depuis votre application bancaire ou par IBAN — sans carte",
+    payOpenBankingDesc: "Virement immédiat en un clic via votre app bancaire ou IBAN — sans carte",
     payOpenBankingUnavailable: "Le paiement par compte bancaire (Open Banking) est temporairement indisponible",
     payOpenBankingFailed: "Le paiement bancaire n'a pas abouti. Vous pouvez réessayer.",
     payOpenBankingNote:
@@ -253,7 +253,7 @@ export const fr: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponible sur la page Stripe sécurisée lorsque vous payez par carte.",
     payMethodsNote:
-      "Tous les prix sont affichés en euros (EUR) et incluent la TVA lorsqu'elle s'applique. Les paiements par carte (Visa, Mastercard) sont débités en euros sur une page de paiement sécurisée et nous ne voyons jamais votre numéro de carte. Avec l'Open Banking, vous pouvez payer directement depuis votre compte bancaire (application bancaire ou IBAN). Le paiement en plusieurs fois divise la commande en quatre versements égaux, sans intérêt, sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception du paiement sur notre IBAN, indiqué lors du paiement et dans la confirmation de commande.",
+      "Tous les tarifs sur DnD3D sont indiqués en euros (EUR) et comprennent la TVA légale applicable. Les règlements par carte (Visa, Mastercard) sont traités en euros sur une page de paiement chiffrée, sans que nous n'ayons jamais accès à votre numéro de carte. Grâce à l'Open Banking, vous validez un paiement instantané directement depuis votre compte bancaire (application bancaire ou IBAN). Notre formule en 4× répartit les commandes éligibles en quatre échéances égales sans intérêt sur deux mois. Les commandes par virement SEPA sont réservées et expédiées dès réception des fonds sur notre IBAN (affiché au paiement et dans l'e-mail de confirmation).",
     payPaypal: "PayPal",
     payPaypalDesc: "Payez avec votre solde PayPal, votre compte bancaire ou votre carte",
     payPaypalUnavailable: "PayPal est temporairement indisponible",
@@ -262,7 +262,7 @@ export const fr: Dictionary = {
     payPaypalNote:
       "Vous serez redirigé vers PayPal pour approuver le paiement. Nous ne voyons jamais votre identifiant PayPal. Si vous avez déjà payé, attendez la mise à jour du statut et ne payez pas deux fois.",
     paySepa: "Virement bancaire (SEPA)",
-    paySepaDesc: "Paiement par virement IBAN sur notre compte",
+    paySepaDesc: "Virement SEPA direct vers notre IBAN professionnel",
     paySepaUnavailable: "Le virement bancaire (SEPA) est temporairement indisponible.",
     payCrypto: "Cryptomonnaie",
     payCryptoDesc: "Bitcoin, Ethereum, USDT et plus",
@@ -276,8 +276,8 @@ export const fr: Dictionary = {
     changePaymentMethodHint: "Vous pouvez choisir un autre moyen de paiement pour cette commande.",
     changePaymentMethodError: "Impossible de changer de moyen de paiement. Veuillez réessayer.",
     payInstallments: "Paiement en 4× sur 2 mois",
-    payInstallmentsDesc: "Réparti en 4 paiements, sans frais",
-    payInstallmentsMinNote: "Disponible pour les commandes de 1 000 € ou plus",
+    payInstallmentsDesc: "4 échéances égales toutes les deux semaines à TAEG 0 %",
+    payInstallmentsMinNote: "Accessible dès 1 000 € de commande",
     processing: "Commande en cours…",
     orderError: "Impossible de passer votre commande. Veuillez réessayer.",
   },
@@ -445,8 +445,8 @@ export const fr: Dictionary = {
     contactLink: "Contactez-nous",
   },
   cookies: {
-    title: "Nous respectons votre vie privée",
-    text: "Nous utilisons des cookies pour faire fonctionner le site, mémoriser vos préférences et comprendre son utilisation. Vous pouvez accepter tous les cookies ou ne garder que les cookies essentiels.",
+    title: "Vos choix en matière de cookies",
+    text: "Nous déposons des cookies indispensables au fonctionnement du panier et de la session, ainsi que des cookies analytiques optionnels (conservés jusqu'à 14 mois) pour mesurer l'audience. Choisissez d'accepter tous les cookies ou uniquement les essentiels.",
     acceptAll: "Tout accepter",
     essentialOnly: "Essentiels uniquement",
     learnMore: "Politique de cookies",
@@ -454,26 +454,26 @@ export const fr: Dictionary = {
   },
   cookiePolicy: {
     title: "Politique de cookies",
-    intro: "Cette politique de cookies explique comment DnD3D utilise les cookies et technologies similaires lorsque vous visitez notre boutique en ligne.",
+    intro: "Cette notice précise comment DnD3D utilise des cookies et technologies de stockage similaires lorsque vous consultez notre boutique en ligne.",
     sections: [
       {
-        heading: "Que sont les cookies ?",
-        body: "Les cookies sont de petits fichiers texte stockés sur votre appareil lorsque vous visitez un site. Ils aident le site à mémoriser vos actions et préférences.",
+        heading: "Rôle des cookies",
+        body: "Un cookie est un petit fichier texte enregistré par votre navigateur sur votre terminal. Il permet au site de reconnaître votre session, de conserver le contenu de votre panier et de retenir vos préférences d'affichage.",
       },
       {
-        heading: "Cookies strictement nécessaires",
-        body: "Requis pour les fonctions essentielles comme le panier, la session de connexion et la sécurité. Ils ne peuvent pas être désactivés.",
+        heading: "Cookies techniques indispensables",
+        body: "Nécessaires aux fonctions centrales de la boutique : maintien du panier, connexion au compte, sécurité du paiement et mémorisation de votre choix de consentement. Le site ne pouvant fonctionner sans eux, ils restent toujours actifs.",
       },
       {
-        heading: "Cookies de préférences",
-        body: "Mémorisent des choix comme votre langue et votre thème pour une expérience cohérente à chaque visite.",
+        heading: "Cookies d'interface et de langue",
+        body: "Retiennent la langue choisie et le thème clair ou sombre afin de vous offrir un affichage cohérent à chaque visite.",
       },
       {
-        heading: "Cookies analytiques",
-        body: "Nous aident à comprendre quelles pages et produits sont populaires afin d'améliorer la boutique. Ces cookies ne sont utilisés que si vous acceptez tous les cookies.",
+        heading: "Cookies de mesure d'audience (optionnels)",
+        body: "Nous permettent d'analyser la fréquentation de manière agrégée pour améliorer le catalogue. Désactivés par défaut (Consent Mode denied), ils ne sont déposés qu'après votre accord explicite et pour une durée maximale de 14 mois.",
       },
     ],
-    manageHeading: "Gérer vos cookies",
-    manageText: "Vous pouvez modifier votre choix à tout moment. Utilisez le bouton ci-dessous pour rouvrir les paramètres des cookies, ou effacez les cookies dans les réglages de votre navigateur.",
+    manageHeading: "Modifier vos préférences de cookies",
+    manageText: "Vous pouvez revenir sur votre décision à tout moment. Cliquez sur le bouton ci-dessous pour rouvrir le bandeau de réglage ou supprimez les cookies depuis votre navigateur.",
   },
 }

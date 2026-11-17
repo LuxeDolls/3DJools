@@ -185,7 +185,7 @@ export const nl: Dictionary = {
     shippingFree: "Gratis standaardverzending",
     shippingFreeDesc: "3–7 werkdagen · gratis bij elke bestelling",
     payCard: "Visa / Mastercard",
-    payCardDesc: "Veilige kaartbetaling",
+    payCardDesc: "Versleutelde betaling met Visa & Mastercard",
     payCardUnavailable: "Betalen met kaart is tijdelijk niet beschikbaar",
     payCardGatewayNotice:
       "Vanwege technische problemen met onze betaalgateway zijn kaartbetalingen tijdelijk uitgeschakeld. Gebruik een SEPA-bankoverschrijving of betaling in 4× rentevrije termijnen.",
@@ -193,7 +193,7 @@ export const nl: Dictionary = {
     payCardNote:
       "Na het plaatsen van de bestelling wordt u doorgestuurd naar een beveiligde betaalpagina om te betalen met Visa of Mastercard. Wij zien uw kaartnummer nooit. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
     payOpenBanking: "Betalen via bankrekening (Open Banking)",
-    payOpenBankingDesc: "Direct betalen vanuit je bank-app of via IBAN — geen kaart nodig",
+    payOpenBankingDesc: "Directe betaling in één klik via uw bank-app of IBAN — zonder kaart",
     payOpenBankingUnavailable: "Betalen via bankrekening (Open Banking) is tijdelijk niet beschikbaar",
     payOpenBankingFailed: "De bankbetaling is niet voltooid. U kunt het opnieuw proberen.",
     payOpenBankingNote:
@@ -253,7 +253,7 @@ export const nl: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Beschikbaar op de beveiligde Stripe-pagina wanneer u met kaart betaalt.",
     payMethodsNote:
-      "Alle prijzen staan in euro (EUR) en zijn inclusief btw waar van toepassing. Kaartbetalingen (Visa, Mastercard) worden in euro afgeschreven op een beveiligde betaalpagina en wij zien het kaartnummer nooit. Met Open Banking kunt u direct vanuit uw bankrekening (bank-app of IBAN) betalen. Gespreide betaling deelt de bestelling in vier gelijke, rentevrije betalingen over twee maanden. Bestellingen per SEPA-overschrijving worden gereserveerd en verzonden zodra de betaling op onze IBAN is ontvangen. De bankgegevens staan bij het afrekenen en in de orderbevestiging.",
+      "Alle prijzen bij DnD3D luiden in euro (EUR) en zijn inclusief de wettelijk verschuldigde btw. Betalingen met Visa en Mastercard worden in euro verwerkt op een versleutelde betaalpagina, waarbij wij uw kaartnummer nooit te zien krijgen. Met Open Banking bevestigt u met één klik een directe betaling vanaf uw bankrekening (via uw bank-app of IBAN). Ons 4×-termijnplan verdeelt geschikte bestellingen in vier gelijke, rentevrije termijnen over twee maanden. Bestellingen per SEPA-bankoverschrijving worden voor u gereserveerd en verzonden zodra het bedrag op onze IBAN (getoond bij het afrekenen en in uw bevestigingsmail) is bijgeschreven.",
     payPaypal: "PayPal",
     payPaypalDesc: "Betaal met uw PayPal-saldo, bankrekening of kaart",
     payPaypalUnavailable: "PayPal is tijdelijk niet beschikbaar",
@@ -262,7 +262,7 @@ export const nl: Dictionary = {
     payPaypalNote:
       "U wordt doorgestuurd naar PayPal om de betaling te bevestigen. Wij zien uw PayPal-login niet. Heeft u al betaald, wacht dan op de statusupdate en betaal niet twee keer.",
     paySepa: "Bankoverschrijving (SEPA)",
-    paySepaDesc: "Betaal via IBAN-overschrijving op onze rekening",
+    paySepaDesc: "Directe SEPA-overschrijving naar onze zakelijke IBAN",
     paySepaUnavailable: "Bankoverschrijving (SEPA) is tijdelijk niet beschikbaar.",
     payCrypto: "Cryptovaluta",
     payCryptoDesc: "Bitcoin, Ethereum, USDT en meer",
@@ -276,8 +276,8 @@ export const nl: Dictionary = {
     changePaymentMethodHint: "Je kunt een andere manier kiezen om deze bestelling te betalen.",
     changePaymentMethodError: "Kon de betaalmethode niet wijzigen. Probeer het opnieuw.",
     payInstallments: "In termijnen — 4× in 2 maanden",
-    payInstallmentsDesc: "Verdeeld over 4 betalingen, rentevrij",
-    payInstallmentsMinNote: "Beschikbaar voor bestellingen vanaf € 1.000",
+    payInstallmentsDesc: "4 gelijke tweewekelijkse termijnen tegen 0% JKP",
+    payInstallmentsMinNote: "Beschikbaar bij een bestelwaarde vanaf € 1.000",
     processing: "Bestelling plaatsen…",
     orderError: "We konden je bestelling niet plaatsen. Probeer het opnieuw.",
   },
@@ -445,8 +445,8 @@ export const nl: Dictionary = {
     contactLink: "Neem contact met ons op",
   },
   cookies: {
-    title: "We hechten waarde aan je privacy",
-    text: "We gebruiken cookies om de site te laten werken, je voorkeuren te onthouden en te begrijpen hoe de site wordt gebruikt. Je kunt alle cookies accepteren of alleen de essentiële behouden.",
+    title: "Uw privacy & cookievoorkeuren",
+    text: "Wij gebruiken noodzakelijke cookies voor uw winkelwagen en sessie, plus optionele analytische cookies (bewaard tot maximaal 14 maanden) om de webshop te verbeteren. Kies of u alle cookies accepteert of alleen de noodzakelijke behoudt.",
     acceptAll: "Alles accepteren",
     essentialOnly: "Alleen essentieel",
     learnMore: "Cookiebeleid",
@@ -454,26 +454,26 @@ export const nl: Dictionary = {
   },
   cookiePolicy: {
     title: "Cookiebeleid",
-    intro: "Dit cookiebeleid legt uit hoe DnD3D cookies en vergelijkbare technologieën gebruikt wanneer je onze webshop bezoekt.",
+    intro: "Deze verklaring legt uit hoe DnD3D cookies en vergelijkbare opslagtechnologieën inzet wanneer u onze online winkel bezoekt.",
     sections: [
       {
-        heading: "Wat zijn cookies?",
-        body: "Cookies zijn kleine tekstbestanden die op je apparaat worden opgeslagen wanneer je een website bezoekt. Ze helpen de site je acties en voorkeuren te onthouden.",
+        heading: "Hoe werken cookies?",
+        body: "Cookies zijn kleine tekstbestandjes die door uw browser op uw apparaat worden bewaard. Ze zorgen ervoor dat de webshop uw sessie herkent, uw winkelwagen onthoudt en uw weergavevoorkeuren toepast.",
       },
       {
-        heading: "Strikt noodzakelijke cookies",
-        body: "Vereist voor kernfuncties zoals je winkelwagen, inlogsessie en beveiliging. Deze kunnen niet worden uitgeschakeld.",
+        heading: "Essentiële functionele cookies",
+        body: "Onmisbaar voor kernfuncties zoals het winkelwagentje, inloggen, beveiliging bij het afrekenen en het opslaan van uw cookiekeuze. Omdat de webshop zonder deze cookies niet werkt, staan ze altijd aan.",
       },
       {
-        heading: "Voorkeurscookies",
-        body: "Onthouden keuzes zoals je taal en thema, zodat de shop bij elk bezoek consistent aanvoelt.",
+        heading: "Taal- en weergavecookies",
+        body: "Onthouden uw gekozen taal en het lichte of donkere thema, zodat de winkel bij elk bezoek direct goed wordt weergegeven.",
       },
       {
-        heading: "Analytische cookies",
-        body: "Helpen ons te begrijpen welke pagina's en producten populair zijn, zodat we de shop kunnen verbeteren. Deze cookies worden alleen gebruikt als je alle cookies accepteert.",
+        heading: "Optionele analytische cookies",
+        body: "Helpen ons om op geaggregeerd niveau te zien welke pagina's en producten veel worden bekeken. Deze cookies staan standaard uit (Consent Mode denied) en worden pas geplaatst nadat u alle cookies accepteert, met een bewaartermijn van maximaal 14 maanden.",
       },
     ],
-    manageHeading: "Je cookies beheren",
-    manageText: "Je kunt je keuze op elk moment wijzigen. Gebruik de knop hieronder om de cookie-instellingen opnieuw te openen, of wis cookies in je browserinstellingen.",
+    manageHeading: "Uw cookievoorkeuren aanpassen",
+    manageText: "U kunt uw toestemming op elk moment herzien of intrekken. Gebruik de onderstaande knop om het instellingenvenster opnieuw te openen, of verwijder cookies via uw browserinstellingen.",
   },
 }

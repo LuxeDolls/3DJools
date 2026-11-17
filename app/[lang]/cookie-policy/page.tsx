@@ -42,7 +42,7 @@ export default async function CookiePolicyPage({
       </div>
 
       <p className="mt-10 text-sm leading-relaxed text-muted-foreground">
-        Questions about cookies or your privacy? Contact us at{" "}
+        {dict.legal.contactPrompt}{" "}
         <a href="mailto:info@dnd3d.com" className="underline underline-offset-2 hover:text-foreground">
           info@dnd3d.com
         </a>.

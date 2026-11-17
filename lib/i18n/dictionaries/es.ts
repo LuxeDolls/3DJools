@@ -185,7 +185,7 @@ export const es: Dictionary = {
     shippingFree: "Envío estándar gratis",
     shippingFreeDesc: "3–7 días laborables · gratis en todos los pedidos",
     payCard: "Visa / Mastercard",
-    payCardDesc: "Pago seguro con tarjeta",
+    payCardDesc: "Pasarela cifrada para tarjetas Visa y Mastercard",
     payCardUnavailable: "El pago con tarjeta no está disponible temporalmente",
     payCardGatewayNotice:
       "Debido a problemas técnicos con nuestra pasarela de pago, los pagos con tarjeta están temporalmente deshabilitados. Utiliza la transferencia bancaria SEPA o el pago en 4× sin intereses.",
@@ -193,7 +193,7 @@ export const es: Dictionary = {
     payCardNote:
       "Después de realizar el pedido, serás redirigido a una página de pago segura para pagar con Visa o Mastercard. Nunca vemos el número de tu tarjeta. Si ya has pagado, espera a que se actualice el estado y no pagues dos veces.",
     payOpenBanking: "Pago desde cuenta bancaria (Open Banking)",
-    payOpenBankingDesc: "Pago instantáneo desde la app de tu banco o por IBAN — sin tarjeta",
+    payOpenBankingDesc: "Transferencia directa en un clic desde tu app bancaria o IBAN — sin tarjeta",
     payOpenBankingUnavailable: "El pago desde cuenta bancaria (Open Banking) no está disponible temporalmente",
     payOpenBankingFailed: "El pago bancario no se ha completado. Puedes intentarlo de nuevo.",
     payOpenBankingNote:
@@ -253,7 +253,7 @@ export const es: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Disponible en la página segura de Stripe cuando paga con tarjeta.",
     payMethodsNote:
-      "Todos los precios se muestran en euros (EUR) e incluyen el IVA cuando corresponde. Los pagos con tarjeta (Visa, Mastercard) se cargan en euros en una página de pago segura y nunca vemos el número de tarjeta. Con Open Banking puedes pagar directamente desde tu cuenta bancaria (app del banco o IBAN). El pago a plazos divide el pedido en cuatro pagos iguales, sin intereses, durante dos meses. Los pedidos por transferencia SEPA se reservan y se envían cuando recibimos el pago en nuestro IBAN, que se muestra en el pago y en la confirmación del pedido.",
+      "Todos los precios en DnD3D están expresados en euros (EUR) e incluyen el IVA legalmente aplicable. Los cobros con tarjeta (Visa, Mastercard) se procesan en euros en una pasarela cifrada sin que tengamos acceso al número de tu tarjeta. Mediante Open Banking autorizas un pago inmediato directamente desde tu cuenta bancaria (a través de la app de tu banco o por IBAN). Nuestro plan en 4× divide los pedidos elegibles en cuatro cuotas iguales sin intereses a lo largo de dos meses. Los pedidos por transferencia SEPA quedan reservados y se envían en cuanto recibimos el abono en nuestro IBAN (visible en el checkout y en la confirmación del pedido).",
     payPaypal: "PayPal",
     payPaypalDesc: "Pague con saldo de PayPal, cuenta bancaria o tarjeta",
     payPaypalUnavailable: "PayPal no está disponible temporalmente",
@@ -262,7 +262,7 @@ export const es: Dictionary = {
     payPaypalNote:
       "Se le redirigirá a PayPal para aprobar el pago. Nunca vemos su acceso a PayPal. Si ya ha pagado, espere a que se actualice el estado y no pague dos veces.",
     paySepa: "Transferencia bancaria (SEPA)",
-    paySepaDesc: "Paga por transferencia IBAN a nuestra cuenta",
+    paySepaDesc: "Transferencia SEPA directa a nuestro IBAN corporativo",
     paySepaUnavailable: "La transferencia bancaria (SEPA) no está disponible temporalmente.",
     payCrypto: "Criptomoneda",
     payCryptoDesc: "Bitcoin, Ethereum, USDT y más",
@@ -276,8 +276,8 @@ export const es: Dictionary = {
     changePaymentMethodHint: "Puedes elegir otra forma de pagar este pedido.",
     changePaymentMethodError: "No se pudo cambiar el método de pago. Inténtalo de nuevo.",
     payInstallments: "A plazos — 4× en 2 meses",
-    payInstallmentsDesc: "Dividido en 4 pagos, sin intereses",
-    payInstallmentsMinNote: "Disponible para pedidos de 1000 € o más",
+    payInstallmentsDesc: "4 pagos quincenales iguales al 0 % TAE",
+    payInstallmentsMinNote: "Disponible en carritos a partir de 1.000 €",
     processing: "Realizando el pedido…",
     orderError: "No pudimos realizar tu pedido. Inténtalo de nuevo.",
   },
@@ -445,8 +445,8 @@ export const es: Dictionary = {
     contactLink: "Contáctanos",
   },
   cookies: {
-    title: "Valoramos tu privacidad",
-    text: "Usamos cookies para que el sitio funcione, recordar tus preferencias y entender cómo se usa. Puedes aceptar todas las cookies o mantener solo las esenciales.",
+    title: "Tu privacidad y preferencias de cookies",
+    text: "Utilizamos cookies esenciales para que el carrito y tu sesión funcionen, además de cookies analíticas opcionales (conservadas hasta 14 meses) para mejorar la tienda. Elige si deseas aceptar todas las cookies o conservar únicamente las esenciales.",
     acceptAll: "Aceptar todas",
     essentialOnly: "Solo esenciales",
     learnMore: "Política de cookies",
@@ -454,26 +454,26 @@ export const es: Dictionary = {
   },
   cookiePolicy: {
     title: "Política de cookies",
-    intro: "Esta Política de cookies explica cómo DnD3D utiliza cookies y tecnologías similares cuando visitas nuestra tienda online.",
+    intro: "Este documento explica qué cookies y tecnologías de almacenamiento local emplea DnD3D cuando navegas o compras en nuestra tienda online.",
     sections: [
       {
-        heading: "¿Qué son las cookies?",
-        body: "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Ayudan al sitio a recordar tus acciones y preferencias con el tiempo.",
+        heading: "Cómo funcionan las cookies",
+        body: "Las cookies son pequeños archivos de texto que tu navegador guarda en tu dispositivo. Permiten mantener activa tu sesión, conservar los artículos del carrito y recordar tus ajustes visuales entre páginas.",
       },
       {
-        heading: "Cookies estrictamente necesarias",
-        body: "Necesarias para funciones esenciales como el carrito, la sesión de inicio y la seguridad. No se pueden desactivar.",
+        heading: "Cookies técnicas esenciales",
+        body: "Imprescindibles para las funciones básicas de la tienda: carrito de compra, inicio de sesión, seguridad en el pago y registro de tu elección de privacidad. Como la web no puede operar sin ellas, permanecen siempre activas.",
       },
       {
-        heading: "Cookies de preferencias",
-        body: "Recuerdan opciones como tu idioma y tema para que la tienda sea coherente en cada visita.",
+        heading: "Cookies de interfaz e idioma",
+        body: "Guardan el idioma seleccionado y el modo visual claro u oscuro para ofrecerte una experiencia uniforme en cada visita.",
       },
       {
-        heading: "Cookies analíticas",
-        body: "Nos ayudan a entender qué páginas y productos son populares para mejorar la tienda. Estas cookies solo se usan si aceptas todas las cookies.",
+        heading: "Cookies analíticas opcionales",
+        body: "Nos ayudan a medir de forma agregada qué secciones y productos despiertan mayor interés. Permanecen desactivadas por defecto (Consent Mode denied) y solo se habilitan si aceptas todas las cookies, con una conservación máxima de 14 meses.",
       },
     ],
-    manageHeading: "Gestionar tus cookies",
-    manageText: "Puedes cambiar tu elección en cualquier momento. Usa el botón de abajo para volver a abrir la configuración de cookies, o borra las cookies en los ajustes de tu navegador.",
+    manageHeading: "Cambiar tus preferencias de cookies",
+    manageText: "Puedes modificar o retirar tu consentimiento en cualquier momento. Pulsa el botón inferior para reabrir el panel de preferencias o elimina las cookies desde los ajustes de tu navegador.",
   },
 }

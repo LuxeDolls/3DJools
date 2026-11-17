@@ -20,9 +20,9 @@ export default async function SupportPage({ params }: { params: Promise<{ lang: 
   const dict = await getDictionary(locale)
 
   const links = [
-    { icon: Truck, label: dict.footer.shipping, href: "/shipping" },
-    { icon: RotateCcw, label: dict.footer.returns, href: "/returns" },
     { icon: CreditCard, label: dict.footer.paymentMethods, href: "/payment-methods" },
+    { icon: RotateCcw, label: dict.footer.returns, href: "/returns" },
+    { icon: Truck, label: dict.footer.shipping, href: "/shipping" },
     { icon: Mail, label: dict.footer.contact, href: "/contact" },
   ]
 

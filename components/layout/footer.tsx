@@ -30,23 +30,23 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     {
       title: dict.footer.support,
       links: [
-        { label: dict.footer.contact, href: "/contact" },
         { label: dict.footer.faq, href: "/faq" },
+        { label: dict.account.tracking, href: "/track-order" },
         { label: dict.footer.shipping, href: "/shipping" },
         { label: dict.footer.returns, href: "/returns" },
         { label: dict.footer.paymentMethods, href: "/payment-methods" },
-        { label: dict.account.tracking, href: "/track-order" },
+        { label: dict.footer.contact, href: "/contact" },
       ],
     },
     {
       title: dict.footer.legal,
       links: [
-        { label: dict.footer.about, href: "/about" },
-        { label: dict.footer.terms, href: "/terms" },
         { label: dict.footer.privacy, href: "/privacy" },
         { label: dict.footer.cookies, href: "/cookie-policy" },
-        { label: dict.footer.impressum, href: "/impressum" },
+        { label: dict.footer.terms, href: "/terms" },
         { label: dict.footer.instalmentAgreement, href: "/instalment-agreement" },
+        { label: dict.footer.impressum, href: "/impressum" },
+        { label: dict.footer.about, href: "/about" },
       ],
     },
   ]

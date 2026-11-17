@@ -183,7 +183,7 @@ export const en = {
     shippingFree: "Free standard shipping",
     shippingFreeDesc: "3–7 business days · free on every order",
     payCard: "Visa / Mastercard",
-    payCardDesc: "Secure card payment",
+    payCardDesc: "Encrypted checkout for Visa & Mastercard cards",
     payCardUnavailable: "Card payment is temporarily unavailable",
     payCardGatewayNotice:
       "Due to technical issues with our payment gateway, card payments are temporarily disabled. Please use SEPA bank transfer or 4× interest-free instalments.",
@@ -191,7 +191,7 @@ export const en = {
     payCardNote:
       "After placing your order, you are redirected to a secure payment page to pay by Visa or Mastercard. We never see your card number. If you have already paid, wait for the status to update and do not pay twice.",
     payOpenBanking: "Pay by bank account (Open Banking)",
-    payOpenBankingDesc: "Instant payment from your bank app or via IBAN — no card needed",
+    payOpenBankingDesc: "One-click transfer via your banking app or IBAN — no card required",
     payOpenBankingUnavailable: "Bank account payment (Open Banking) is temporarily unavailable",
     payOpenBankingFailed: "The bank payment was not completed. You can try again.",
     payOpenBankingNote:
@@ -251,7 +251,7 @@ export const en = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Available on the secure Stripe page when you pay by card.",
     payMethodsNote:
-      "All prices are shown in euro (EUR) and include VAT where applicable. Card payments (Visa, Mastercard) are charged in euros on a secure payment page, and we never see your card number. With Open Banking, you can pay in one click directly from your bank account (bank app or IBAN). Instalment plans split your order into four equal, interest-free payments over two months. Bank transfer (SEPA) orders are reserved and dispatched once payment is received on our IBAN, which is shown at checkout and on your order confirmation.",
+      "Every price on DnD3D is quoted in euro (EUR) and includes statutory VAT where applicable. Visa and Mastercard payments are processed in euros on an encrypted payment page, and your card number is never visible to us. Through Open Banking, you can authorise an immediate payment straight from your bank account (via your banking app or IBAN). Our 4× instalment plan divides eligible orders into four equal, interest-free payments over two months. Orders paid by SEPA bank transfer are allocated for you and dispatched as soon as the transfer reaches our IBAN (shown at checkout and in your confirmation email).",
     payPaypal: "PayPal",
     payPaypalDesc: "Pay with your PayPal balance, bank account or card",
     payPaypalUnavailable: "PayPal is temporarily unavailable",
@@ -260,7 +260,7 @@ export const en = {
     payPaypalNote:
       "You will be redirected to PayPal to approve the payment. We never see your PayPal login. If you have already paid, wait for the status to update and do not pay twice.",
     paySepa: "Bank transfer (SEPA)",
-    paySepaDesc: "Pay by IBAN transfer to our account",
+    paySepaDesc: "Direct SEPA transfer to our corporate IBAN",
     paySepaUnavailable: "Bank transfer (SEPA) is temporarily unavailable.",
     payCrypto: "Cryptocurrency",
     payCryptoDesc: "Bitcoin, Ethereum, USDT and more",
@@ -274,8 +274,8 @@ export const en = {
     changePaymentMethodHint: "You can switch to another way to pay for this order.",
     changePaymentMethodError: "Could not switch payment method. Please try again.",
   payInstallments: "Instalments — 4× over 2 months",
-  payInstallmentsDesc: "Split into 4 payments, interest-free",
-  payInstallmentsMinNote: "Available for orders of €1,000 or more",
+  payInstallmentsDesc: "4 equal fortnightly payments at 0% APR",
+  payInstallmentsMinNote: "Eligible on baskets of €1,000 and above",
     processing: "Placing your order…",
     orderError: "We couldn't place your order. Please try again.",
   },
@@ -443,8 +443,8 @@ export const en = {
     contactLink: "Contact us",
   },
   cookies: {
-    title: "We value your privacy",
-    text: "We use cookies to keep the site working, remember your preferences and understand how it's used. You can accept all cookies or keep only the essential ones.",
+    title: "Your privacy & cookie choices",
+    text: "We rely on essential cookies to keep your basket and session running, plus optional analytics cookies (retained for up to 14 months) to see how visitors use the store. Choose whether to enable all cookies or stick to the essentials.",
     acceptAll: "Accept all",
     essentialOnly: "Essential only",
     learnMore: "Cookie policy",
@@ -452,27 +452,27 @@ export const en = {
   },
   cookiePolicy: {
     title: "Cookie Policy",
-    intro: "This Cookie Policy explains how DnD3D uses cookies and similar technologies when you visit our online store.",
+    intro: "This notice describes how DnD3D uses cookies and related browser storage when you browse or shop on our platform.",
     sections: [
       {
-        heading: "What are cookies?",
-        body: "Cookies are small text files stored on your device when you visit a website. They help the site remember your actions and preferences over time.",
+        heading: "How cookies work",
+        body: "Cookies are tiny text records saved by your browser on your computer or phone. They allow a website to recognise your session, keep items in your basket, and honour your display settings across pages.",
       },
       {
-        heading: "Strictly necessary cookies",
-        body: "Required for core features like your shopping cart, sign-in session and security. These cannot be switched off.",
+        heading: "Essential operation cookies",
+        body: "These cookies are mandatory for core storefront tasks — including cart persistence, account authentication, checkout security, and consent storage. Because the store cannot function without them, they are always active.",
       },
       {
-        heading: "Preference cookies",
-        body: "Remember choices such as your language and theme so the store feels consistent on every visit.",
+        heading: "Interface & locale cookies",
+        body: "Used to remember your chosen language and light/dark appearance so you do not have to reconfigure the store each time you visit.",
       },
       {
-        heading: "Analytics cookies",
-        body: "Help us understand which pages and products are popular so we can improve the store. These cookies are used only after you accept all cookies.",
+        heading: "Optional analytics cookies",
+        body: "Help us measure aggregated traffic and identify which product categories perform best. Analytics cookies remain disabled by default (Consent Mode denied) and are only activated if you explicitly accept all cookies, with a maximum retention of 14 months.",
       },
     ],
-    manageHeading: "Managing your cookies",
-    manageText: "You can change your choice at any time. Use the button below to reopen the cookie settings, or clear cookies in your browser settings.",
+    manageHeading: "Updating your cookie preferences",
+    manageText: "You can review or withdraw your consent whenever you like. Click the button below to open the consent banner again, or clear stored cookies through your browser settings.",
   },
 } as const
 

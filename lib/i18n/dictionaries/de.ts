@@ -185,7 +185,7 @@ export const de: Dictionary = {
     shippingFree: "Kostenloser Standardversand",
     shippingFreeDesc: "3–7 Werktage · kostenlos bei jeder Bestellung",
     payCard: "Visa / Mastercard",
-    payCardDesc: "Sichere Kartenzahlung",
+    payCardDesc: "Verschlüsselte Zahlung mit Visa & Mastercard",
     payCardUnavailable: "Kartenzahlung ist vorübergehend nicht verfügbar",
     payCardGatewayNotice:
       "Aufgrund technischer Probleme mit unserem Zahlungsgateway ist die Kartenzahlung vorübergehend deaktiviert. Bitte nutzen Sie die SEPA-Banküberweisung oder die 4× zinsfreie Ratenzahlung.",
@@ -193,7 +193,7 @@ export const de: Dictionary = {
     payCardNote:
       "Nach der Bestellung werden Sie zu einer sicheren Zahlungsseite weitergeleitet, um mit Visa oder Mastercard zu bezahlen. Wir sehen Ihre Kartennummer nie. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     payOpenBanking: "Zahlung per Bankkonto (Open Banking)",
-    payOpenBankingDesc: "Direktzahlung über Ihre Banking-App oder per IBAN — ohne Karte",
+    payOpenBankingDesc: "Sofortüberweisung per Banking-App oder IBAN — ganz ohne Karte",
     payOpenBankingUnavailable: "Zahlung per Bankkonto (Open Banking) ist vorübergehend nicht verfügbar",
     payOpenBankingFailed: "Die Bankzahlung wurde nicht abgeschlossen. Sie können es erneut versuchen.",
     payOpenBankingNote:
@@ -253,7 +253,7 @@ export const de: Dictionary = {
     payKlarna: "Klarna",
     payStripeMethodDesc: "Verfügbar auf der sicheren Stripe-Seite, wenn Sie mit Karte zahlen.",
     payMethodsNote:
-      "Alle Preise werden in Euro (EUR) angezeigt und enthalten die Mehrwertsteuer, soweit anwendbar. Kartenzahlungen (Visa, Mastercard) werden in Euro auf einer sicheren Zahlungsseite belastet, und wir sehen Ihre Kartennummer nie. Mit Open Banking können Sie direkt von Ihrem Bankkonto (über Ihre Banking-App oder per IBAN) bezahlen. Die Ratenzahlung teilt die Bestellung in vier gleiche, zinsfreie Zahlungen über zwei Monate. Bestellungen per SEPA-Überweisung werden reserviert und versendet, sobald die Zahlung auf unserer IBAN eingegangen ist. Die Bankdaten sehen Sie an der Kasse und in der Bestellbestätigung.",
+      "Alle Preise bei DnD3D lauten auf Euro (EUR) und enthalten die gesetzliche Mehrwertsteuer, sofern anwendbar. Zahlungen mit Visa und Mastercard werden in Euro auf einer verschlüsselten Zahlungsseite abgewickelt, sodass wir Ihre Kartennummer niemals sehen. Über Open Banking autorisieren Sie mit einem Klick eine Direktzahlung von Ihrem Bankkonto (per Banking-App oder IBAN). Unser 4×-Ratenplan teilt berechtigte Bestellungen in vier gleich hohe, zinsfreie Raten über zwei Monate auf. Bei SEPA-Überweisung wird Ihre Ware reserviert und verschickt, sobald der Betrag auf unserer IBAN (angezeigt im Checkout und in Ihrer Bestellbestätigung) verbucht ist.",
     payPaypal: "PayPal",
     payPaypalDesc: "Mit PayPal-Guthaben, Bankkonto oder Karte zahlen",
     payPaypalUnavailable: "PayPal ist vorübergehend nicht verfügbar",
@@ -262,7 +262,7 @@ export const de: Dictionary = {
     payPaypalNote:
       "Sie werden zu PayPal weitergeleitet, um die Zahlung zu bestätigen. Wir sehen Ihre PayPal-Anmeldung nicht. Wenn Sie bereits bezahlt haben, warten Sie auf die Statusaktualisierung und zahlen Sie nicht zweimal.",
     paySepa: "Banküberweisung (SEPA)",
-    paySepaDesc: "Zahlung per IBAN-Überweisung auf unser Konto",
+    paySepaDesc: "Klassische SEPA-Überweisung auf unser Geschäftskonto",
     paySepaUnavailable: "Banküberweisung (SEPA) ist vorübergehend nicht verfügbar.",
     payCrypto: "Kryptowährung",
     payCryptoDesc: "Bitcoin, Ethereum, USDT und mehr",
@@ -276,8 +276,8 @@ export const de: Dictionary = {
     changePaymentMethodHint: "Sie können für diese Bestellung eine andere Zahlungsart wählen.",
     changePaymentMethodError: "Zahlungsmethode konnte nicht geändert werden. Bitte versuchen Sie es erneut.",
     payInstallments: "Raten — 4× über 2 Monate",
-    payInstallmentsDesc: "In 4 Zahlungen aufteilen, zinsfrei",
-    payInstallmentsMinNote: "Verfügbar ab einem Bestellwert von 1.000 €",
+    payInstallmentsDesc: "4 gleiche zweiwöchentliche Raten bei 0 % Zinsen",
+    payInstallmentsMinNote: "Für Warenkörbe ab 1.000 € verfügbar",
     processing: "Bestellung wird aufgegeben…",
     orderError: "Ihre Bestellung konnte nicht aufgegeben werden. Bitte versuchen Sie es erneut.",
   },
@@ -445,8 +445,8 @@ export const de: Dictionary = {
     contactLink: "Kontaktieren Sie uns",
   },
   cookies: {
-    title: "Wir schätzen deine Privatsphäre",
-    text: "Wir verwenden Cookies, damit die Website funktioniert, deine Einstellungen gespeichert werden und wir verstehen, wie sie genutzt wird. Du kannst alle Cookies akzeptieren oder nur die notwendigen behalten.",
+    title: "Ihre Privatsphäre & Cookie-Auswahl",
+    text: "Wir setzen technisch notwendige Cookies für Warenkorb und Sitzung sowie optionale Analyse-Cookies (Speicherdauer bis zu 14 Monate) ein, um unser Angebot zu verbessern. Entscheiden Sie selbst, ob Sie allen Cookies zustimmen oder nur die notwendigen zulassen.",
     acceptAll: "Alle akzeptieren",
     essentialOnly: "Nur notwendige",
     learnMore: "Cookie-Richtlinie",
@@ -454,26 +454,26 @@ export const de: Dictionary = {
   },
   cookiePolicy: {
     title: "Cookie-Richtlinie",
-    intro: "Diese Cookie-Richtlinie erklärt, wie DnD3D Cookies und ähnliche Technologien verwendet, wenn du unseren Onlineshop besuchst.",
+    intro: "Dieser Hinweis erläutert, wie DnD3D beim Besuch unseres Onlineshops Cookies und vergleichbare Browserspeicher-Technologien einsetzt.",
     sections: [
       {
-        heading: "Was sind Cookies?",
-        body: "Cookies sind kleine Textdateien, die beim Besuch einer Website auf deinem Gerät gespeichert werden. Sie helfen der Website, deine Aktionen und Einstellungen zu speichern.",
+        heading: "Funktionsweise von Cookies",
+        body: "Cookies sind kleine Textdateien, die Ihr Browser auf Ihrem Endgerät ablegt. Dadurch kann der Shop Ihre laufende Sitzung wiedererkennen, Artikel im Warenkorb behalten und Ihre Darstellungswünsche berücksichtigen.",
       },
       {
-        heading: "Unbedingt erforderliche Cookies",
-        body: "Erforderlich für Kernfunktionen wie den Warenkorb, die Anmeldesitzung und die Sicherheit. Sie können nicht deaktiviert werden.",
+        heading: "Technisch notwendige Cookies",
+        body: "Unverzichtbar für Basisfunktionen wie Warenkorb, Login-Sitzung, Checkout-Sicherheit und die Speicherung Ihrer Cookie-Auswahl. Da der Shop ohne sie nicht betrieben werden kann, sind sie dauerhaft aktiv.",
       },
       {
-        heading: "Präferenz-Cookies",
-        body: "Speichern Entscheidungen wie Sprache und Design, damit der Shop bei jedem Besuch konsistent bleibt.",
+        heading: "Komfort- & Darstellungscookies",
+        body: "Merken sich Ihre gewählte Sprache sowie das helle oder dunkle Farbschema, damit die Oberfläche bei jedem Aufruf wie gewünscht erscheint.",
       },
       {
-        heading: "Analyse-Cookies",
-        body: "Helfen uns zu verstehen, welche Seiten und Produkte beliebt sind, um den Shop zu verbessern. Diese Cookies werden nur verwendet, wenn du alle Cookies akzeptierst.",
+        heading: "Optionale Analyse-Cookies",
+        body: "Unterstützen uns dabei, Seitenaufrufe anonymisiert auszuwerten und das Sortiment weiterzuentwickeln. Analyse-Cookies bleiben standardmäßig deaktiviert (Consent Mode denied) und werden erst nach Ihrer aktiven Zustimmung für maximal 14 Monate gesetzt.",
       },
     ],
-    manageHeading: "Deine Cookies verwalten",
-    manageText: "Du kannst deine Wahl jederzeit ändern. Nutze die Schaltfläche unten, um die Cookie-Einstellungen erneut zu öffnen, oder lösche Cookies in deinen Browser-Einstellungen.",
+    manageHeading: "Cookie-Einstellungen jederzeit ändern",
+    manageText: "Sie können Ihre Entscheidung jederzeit widerrufen oder anpassen. Öffnen Sie über die Schaltfläche unten das Auswahlfenster erneut oder löschen Sie gespeicherte Cookies in Ihrem Browser.",
   },
 }

@@ -41,9 +41,11 @@ export default async function ContactPage({ params }: { params: Promise<{ lang: 
   ]
 
   const quickLinks = [
-    { label: dict.footer.faq, href: "/faq" },
-    { label: dict.footer.privacy, href: "/privacy" },
     { label: dict.footer.terms, href: "/terms" },
+    { label: dict.footer.privacy, href: "/privacy" },
+    { label: dict.footer.returns, href: "/returns" },
+    { label: dict.footer.shipping, href: "/shipping" },
+    { label: dict.footer.faq, href: "/faq" },
   ]
 
   return (
