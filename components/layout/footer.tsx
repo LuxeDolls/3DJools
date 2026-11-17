@@ -51,14 +51,59 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     },
   ]
 
-  const payments = [
-    ...(CARD_CHECKOUT_ENABLED ? [{ icon: CreditCard, label: dict.checkout.payCard }] : []),
-    ...(OPEN_BANKING_CHECKOUT_ENABLED ? [{ icon: Building2, label: dict.checkout.payOpenBanking }] : []),
-    ...(BANK_TRANSFER_CHECKOUT_ENABLED ? [{ icon: Landmark, label: dict.checkout.paySepa }] : []),
-    ...(isPaypalCheckoutEnabled()
-      ? [{ icon: CreditCard, label: dict.checkout.payPaypal, mark: "/payments/paypal.svg" }]
+  const payments: {
+    icon: typeof CreditCard
+    label: string
+    marks?: { src: string; width: number; height: number }[]
+  }[] = [
+    ...(CARD_CHECKOUT_ENABLED
+      ? [
+          {
+            icon: CreditCard,
+            label: dict.checkout.payCard,
+            marks: [
+              { src: "/payments/visa.svg", width: 32, height: 14 },
+              { src: "/payments/mastercard.svg", width: 24, height: 14 },
+            ],
+          },
+        ]
       : []),
-    ...(INSTALLMENTS_CHECKOUT_ENABLED ? [{ icon: CalendarClock, label: dict.checkout.payInstallments }] : []),
+    ...(OPEN_BANKING_CHECKOUT_ENABLED
+      ? [
+          {
+            icon: Building2,
+            label: dict.checkout.payOpenBanking,
+            marks: [{ src: "/payments/open-banking.svg", width: 32, height: 14 }],
+          },
+        ]
+      : []),
+    ...(BANK_TRANSFER_CHECKOUT_ENABLED
+      ? [
+          {
+            icon: Landmark,
+            label: dict.checkout.paySepa,
+            marks: [{ src: "/payments/sepa.svg", width: 36, height: 14 }],
+          },
+        ]
+      : []),
+    ...(isPaypalCheckoutEnabled()
+      ? [
+          {
+            icon: CreditCard,
+            label: dict.checkout.payPaypal,
+            marks: [{ src: "/payments/paypal.svg", width: 56, height: 14 }],
+          },
+        ]
+      : []),
+    ...(INSTALLMENTS_CHECKOUT_ENABLED
+      ? [
+          {
+            icon: CalendarClock,
+            label: dict.checkout.payInstallments,
+            marks: [{ src: "/payments/installments.svg", width: 34, height: 14 }],
+          },
+        ]
+      : []),
   ]
 
   return (
@@ -142,17 +187,32 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             {payments.map((p) => (
               <li
                 key={p.label}
-                className="flex items-center gap-1.5 rounded-md border border-border bg-background px-2.5 py-1.5 text-[11px] font-medium text-muted-foreground sm:text-xs"
+                className="flex items-center gap-2 rounded-lg border border-border bg-background/90 px-2.5 py-1.5 text-[11px] font-medium text-muted-foreground shadow-xs sm:text-xs"
                 title={p.label}
               >
-                {"mark" in p && p.mark ? (
-                  <span className="flex h-5 items-center rounded-sm bg-white px-1">
-                    <Image src={p.mark} alt="" width={56} height={14} className="h-3.5 w-auto" />
+                {p.marks && p.marks.length > 0 ? (
+                  <span className="flex items-center gap-1">
+                    {p.marks.map((m) => (
+                      <span
+                        key={m.src}
+                        className="flex h-5 items-center justify-center rounded-sm border border-neutral-200/80 bg-white px-1.5"
+                      >
+                        <Image
+                          src={m.src}
+                          alt=""
+                          width={m.width}
+                          height={m.height}
+                          className="h-3.5 w-auto object-contain"
+                        />
+                      </span>
+                    ))}
                   </span>
                 ) : (
-                  <p.icon className="size-3.5 shrink-0 text-foreground sm:size-4" />
+                  <span className="flex size-5 items-center justify-center rounded-sm bg-primary/15 text-primary">
+                    <p.icon className="size-3.5 shrink-0" />
+                  </span>
                 )}
-                <span>{p.label}</span>
+                <span className="text-foreground/90">{p.label}</span>
               </li>
             ))}
           </ul>

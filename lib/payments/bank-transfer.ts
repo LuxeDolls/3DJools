@@ -12,12 +12,12 @@ export function isBankTransferCheckoutEnabled(email?: string | null) {
 }
 
 export const BANK_TRANSFER_OFF_USP: Record<Locale, string> = {
-  en: "Visa, Mastercard or 4× interest-free instalments.",
-  de: "Visa, Mastercard oder 4× zinsfreie Raten.",
-  fr: "Visa, Mastercard ou 4× sans frais.",
-  it: "Visa, Mastercard o 4× senza interessi.",
-  es: "Visa, Mastercard o 4× sin intereses.",
-  nl: "Visa, Mastercard of 4× rentevrij.",
+  en: "Pay by Visa, Mastercard, Open Banking or 4× interest-free instalments.",
+  de: "Zahlung per Visa, Mastercard, Open Banking oder in 4× zinsfreien Raten.",
+  fr: "Règlement par Visa, Mastercard, Open Banking ou en 4× sans frais.",
+  it: "Paga con Visa, Mastercard, Open Banking o in 4× senza interessi.",
+  es: "Pago con Visa, Mastercard, Open Banking o en 4× sin intereses.",
+  nl: "Betaal met Visa, Mastercard, Open Banking of in 4× rentevrije termijnen.",
 }
 
 export const BANK_TRANSFER_OFF_METHODS_NOTE: Record<Locale, string> = {
