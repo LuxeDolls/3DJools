@@ -165,11 +165,11 @@ export function ProductInfo({ product }: { product: Product }) {
 
       {/* Quantity + add to cart — side-by-side on mobile & desktop */}
       <div ref={actionBoxRef} className="mt-5 flex items-center gap-2.5 sm:mt-6 sm:gap-3">
-        <div className="flex shrink-0 items-center rounded-lg border border-border bg-card shadow-xs">
+        <div className="flex shrink-0 items-center overflow-hidden rounded-full border border-border bg-card shadow-[var(--shadow-float-sm)]">
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-            className="flex size-11 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+            className="no-float flex size-11 items-center justify-center text-muted-foreground transition-colors hover:bg-secondary/70 hover:text-foreground"
             aria-label="Decrease quantity"
           >
             <Minus className="size-4" />
@@ -178,7 +178,7 @@ export function ProductInfo({ product }: { product: Product }) {
           <button
             type="button"
             onClick={() => setQuantity((q) => Math.min(20, q + 1))}
-            className="flex size-11 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+            className="no-float flex size-11 items-center justify-center text-muted-foreground transition-colors hover:bg-secondary/70 hover:text-foreground"
             aria-label="Increase quantity"
           >
             <Plus className="size-4" />

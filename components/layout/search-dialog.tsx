@@ -63,7 +63,7 @@ export function SearchDialog({
             onChange={(e) => setQuery(e.target.value)}
             placeholder={dict.common.searchPlaceholder}
             aria-label={dict.common.search}
-            className="h-14 w-full bg-transparent text-base outline-none placeholder:text-muted-foreground sm:h-16 sm:text-lg"
+            className="no-float h-14 w-full bg-transparent text-base outline-none placeholder:text-muted-foreground sm:h-16 sm:text-lg"
           />
           <kbd className="hidden shrink-0 items-center gap-1 rounded-md border border-border bg-secondary px-1.5 py-0.5 font-mono text-[11px] text-muted-foreground sm:inline-flex">
             <CornerDownLeft className="size-3" aria-hidden="true" />

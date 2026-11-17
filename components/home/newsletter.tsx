@@ -34,7 +34,7 @@ export function Newsletter() {
           </div>
           <form
             onSubmit={submit}
-            className="flex w-full items-center gap-1.5 rounded-full bg-card p-1.5 text-card-foreground"
+            className="flex w-full items-center gap-1.5 overflow-hidden rounded-full bg-card p-1.5 text-card-foreground shadow-[var(--shadow-float-md)]"
           >
             <input
               type="email"
@@ -43,7 +43,7 @@ export function Newsletter() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder={dict.home.newsletterPlaceholder}
               aria-label={dict.home.newsletterPlaceholder}
-              className="h-11 min-w-0 flex-1 bg-transparent px-4 text-sm outline-none placeholder:text-muted-foreground sm:h-12"
+              className="no-float h-11 min-w-0 flex-1 rounded-full bg-transparent px-4 text-sm outline-none placeholder:text-muted-foreground sm:h-12"
             />
             <button
               type="submit"
