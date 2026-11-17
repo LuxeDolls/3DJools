@@ -62,6 +62,7 @@ export function companyJsonLd() {
     name: COMPANY.tradingName,
     legalName: COMPANY.legalName,
     url: COMPANY.url,
+    logo: `${COMPANY.url}/icon-48.png`,
     email: COMPANY.email,
     telephone: COMPANY.phoneTel,
     contactPoint: [

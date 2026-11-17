@@ -110,7 +110,7 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
     <footer className="mt-12 border-t border-border bg-card sm:mt-16">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:gap-10 sm:py-12 lg:grid-cols-5">
         <div className="lg:col-span-2">
-          <Logo />
+          <Logo showTagline />
           <p className="mt-3 max-w-sm text-pretty text-xs leading-relaxed text-muted-foreground sm:mt-4 sm:text-sm">
             {dict.footer.companyBlurb}
           </p>

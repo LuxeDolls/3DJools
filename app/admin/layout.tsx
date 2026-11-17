@@ -4,6 +4,7 @@ import { isAdmin } from "@/lib/admin-auth"
 import { adminLogout } from "@/lib/actions/admin"
 import { AdminLogin } from "@/components/admin/admin-login"
 import { AdminNav } from "@/components/admin/admin-nav"
+import { Logo } from "@/components/layout/logo"
 import { Button } from "@/components/ui/button"
 import { Toaster } from "@/components/ui/sonner"
 import { LogOut } from "lucide-react"
@@ -23,8 +24,11 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-30 border-b border-border bg-background">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-3 py-3 sm:px-6 lg:px-8">
-          <Link href="/admin" className="truncate font-sans text-sm font-semibold">
-            3DEureka · Operations
+          <Link href="/admin" className="flex items-center gap-2.5 truncate">
+            <Logo markClassName="size-8" className="text-base" />
+            <span className="rounded-md bg-secondary px-2 py-0.5 font-sans text-xs font-medium text-muted-foreground">
+              Operations
+            </span>
           </Link>
           <form action={adminLogout} className="shrink-0">
             <Button variant="ghost" size="sm" type="submit" className="min-h-11 md:min-h-8">
