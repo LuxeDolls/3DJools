@@ -30,7 +30,7 @@ const GOOGLE_CATEGORY = {
   accessories: "499682",
 } as const
 
-const PCB_PRINTER_SLUG = "voltera-voltera-v1-pcb-printer"
+const PCB_PRINTER_SLUG = "voltera-v1-pcb-printer"
 const PCB_CATEGORY = "3889"
 
 const FEED_DESCRIPTION: Record<Locale, string> = {
