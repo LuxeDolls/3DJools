@@ -20,7 +20,7 @@ import { useSearch } from "./search-provider"
 import { cn } from "@/lib/utils"
 
 const iconButton =
-  "relative flex size-10 items-center justify-center rounded-full text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+  "relative flex size-9 items-center justify-center rounded-full text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 
 export function Header() {
   const { dict } = useI18n()
@@ -32,16 +32,21 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 px-2 pt-2 sm:px-4 sm:pt-3">
-      <div className="mx-auto flex h-14 max-w-7xl items-center gap-2 rounded-full border border-border/90 bg-card/85 pr-1.5 pl-2 shadow-[var(--shadow-float-md)] backdrop-blur-xl supports-[backdrop-filter]:bg-card/75 sm:h-16 sm:gap-3 sm:pr-2 sm:pl-3">
-        <div className="xl:hidden">
-          <MobileNav navItems={navItems} />
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-1.5 rounded-full border border-border/90 bg-card/85 px-2 shadow-[var(--shadow-float-md)] backdrop-blur-xl supports-[backdrop-filter]:bg-card/75 sm:h-15 sm:gap-2 sm:px-3">
+        <div className="flex shrink-0 items-center gap-1.5">
+          <div className="xl:hidden">
+            <MobileNav navItems={navItems} />
+          </div>
+
+          <Link href={lp("/")} className="no-float shrink-0 rounded-full" aria-label={dict.brandName}>
+            <Logo markClassName="size-8" className="text-base" />
+          </Link>
         </div>
 
-        <Link href={lp("/")} className="no-float shrink-0 rounded-full" aria-label={dict.brandName}>
-          <Logo markClassName="size-8 sm:size-9" className="text-base sm:text-lg" />
-        </Link>
-
-        <nav aria-label="Primary" className="mx-auto hidden items-center gap-0.5 xl:flex">
+        <nav
+          aria-label="Primary"
+          className="no-scrollbar mx-auto hidden min-w-0 items-center gap-0.5 overflow-x-auto py-1 xl:flex 2xl:gap-1"
+        >
           {navItems.map((item) => {
             const target = lp(item.href)
             const active = pathname === target
@@ -52,7 +57,7 @@ export function Header() {
                 href={target}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "rounded-full px-3 py-2 text-[13px] font-semibold whitespace-nowrap transition-colors",
+                  "shrink-0 rounded-full px-2.5 py-1.5 text-xs font-semibold whitespace-nowrap transition-colors 2xl:px-3",
                   active
                     ? "bg-foreground text-background"
                     : isDeals
@@ -66,24 +71,24 @@ export function Header() {
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-0.5 xl:ml-0">
+        <div className="ml-auto flex shrink-0 items-center gap-1 xl:ml-0">
           <button
             type="button"
             onClick={openSearch}
-            className="hidden h-10 items-center gap-2 rounded-full border border-border bg-background px-3.5 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-foreground md:flex xl:w-10 xl:justify-center xl:px-0 2xl:w-auto 2xl:justify-start 2xl:px-3.5"
+            className="hidden h-9 items-center gap-2 rounded-full border border-border bg-background px-3 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-foreground md:flex xl:size-9 xl:justify-center xl:px-0"
             aria-label={dict.common.search}
           >
             <Search className="size-4 shrink-0" aria-hidden="true" />
-            <span className="xl:hidden 2xl:inline">{dict.common.search}</span>
-            <kbd className="rounded-md bg-secondary px-1.5 font-mono text-[10px] xl:hidden 2xl:inline">
+            <span className="xl:hidden">{dict.common.search}</span>
+            <kbd className="rounded-md bg-secondary px-1.5 font-mono text-[10px] xl:hidden">
               /
             </kbd>
           </button>
 
-          <div className="hidden items-center lg:flex xl:hidden 2xl:flex">
+          <div className="hidden items-center lg:flex xl:hidden">
             <LocaleSwitcher />
           </div>
-          <div className="lg:hidden xl:block 2xl:hidden">
+          <div className="lg:hidden xl:block">
             <LocaleSwitcher compact />
           </div>
           <div className="hidden md:block">
@@ -92,7 +97,7 @@ export function Header() {
 
           <DropdownMenu>
             <DropdownMenuTrigger className={cn(iconButton, "hidden md:flex")} aria-label={dict.common.account}>
-              <User className="size-5" />
+              <User className="size-4.5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuItem render={<Link href={lp("/account")} />}>
@@ -109,11 +114,11 @@ export function Header() {
           <button
             type="button"
             onClick={openCart}
-            className="relative flex h-10 items-center gap-2 rounded-full bg-primary px-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:px-4"
+            className="relative flex h-9 shrink-0 items-center gap-1.5 rounded-full bg-primary px-3 text-xs font-semibold text-primary-foreground transition-transform hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             aria-label={`${dict.common.cart} (${count})`}
           >
-            <ShoppingBag className="size-4.5" aria-hidden="true" />
-            <span className="hidden sm:inline xl:hidden 2xl:inline">{dict.common.cart}</span>
+            <ShoppingBag className="size-4 shrink-0" aria-hidden="true" />
+            <span className="hidden sm:inline xl:hidden">{dict.common.cart}</span>
             <span
               className={cn(
                 "flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[11px] font-bold tabular-nums",
