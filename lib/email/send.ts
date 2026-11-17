@@ -23,7 +23,7 @@ const configuredUser = process.env.ZOHO_SMTP_USER?.trim()
 const smtpUser = configuredUser?.toLowerCase().endsWith("@3deureka.com") ? configuredUser : mailbox
 const smtpHost = process.env.ZOHO_SMTP_HOST ?? "smtp.zoho.eu"
 const smtpPort = Number(process.env.ZOHO_SMTP_PORT ?? "465")
-const smtpPassword = process.env.ZOHO_SMTP_PASSWORD
+const smtpPassword = process.env.ZOHO_3DEUREKA_PASSWORD?.trim() || process.env.ZOHO_SMTP_PASSWORD?.trim()
 
 const transporter = nodemailer.createTransport({
   host: smtpHost,
