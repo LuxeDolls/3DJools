@@ -7,7 +7,7 @@ import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNAT
 const BASE_URL = SITE_ORIGIN
 const STORE_NAME = "3DEureka"
 
-// The Black Friday discount is baked directly into every product's price_cents
+// The 5% catalog-wide discount is baked directly into every product's price_cents
 // (see the catalog migration), so the feed just reports that single price —
 // it already matches what every customer pays on the site.
 

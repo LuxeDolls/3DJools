@@ -108,7 +108,7 @@ export const fr: Dictionary = {
     newsletterText: "Nouveautés, réassorts et offres réservées aux membres. Pas de spam.",
     newsletterPlaceholder: "Votre adresse e-mail",
     newsletterCta: "S'abonner",
-  saleBannerTitle: "Black Friday : tous les prix incluent déjà 10 % de réduction",
+  saleBannerTitle: "5 % de réduction sur tout le catalogue jusqu'au 30 novembre — tous les prix incluent déjà la remise",
   saleBannerEndsPrefix: "Se termine le",
   saleBannerCta: "Voir les soldes",
     scamAdviserRating: "Très probablement sûr",

@@ -106,7 +106,7 @@ export const en = {
     newsletterText: "New drops, restocks and members-only offers. No spam.",
     newsletterPlaceholder: "Your email address",
     newsletterCta: "Subscribe",
-  saleBannerTitle: "Black Friday: every price already includes 10% off",
+  saleBannerTitle: "5% off the entire range until 30 November — every price already includes the discount",
   saleBannerEndsPrefix: "Ends",
   saleBannerCta: "Shop the sale",
     scamAdviserRating: "Very likely safe",

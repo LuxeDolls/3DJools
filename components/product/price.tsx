@@ -14,7 +14,7 @@ export function Price({
   size?: "sm" | "md" | "lg"
 }) {
   const oldCents =
-    compareAtCents && compareAtCents > cents ? compareAtCents : Math.round(cents / 0.9)
+    compareAtCents && compareAtCents > cents ? compareAtCents : Math.round(cents / 0.95)
   const priceClass =
     size === "lg" ? "text-xl sm:text-2xl" : size === "sm" ? "text-xs sm:text-sm" : "text-sm sm:text-lg"
   const compareClass =

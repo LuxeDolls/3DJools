@@ -74,7 +74,7 @@ export function ProductCard({
           )}
           {onSale && (
             <Badge className="px-1.5 py-0 text-[9px] font-bold tracking-wide uppercase sm:px-2 sm:py-0.5 sm:text-[10px]">
-              -10%
+              -5%
             </Badge>
           )}
           {product.availability === "preorder" && (

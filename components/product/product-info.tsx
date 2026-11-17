@@ -110,7 +110,7 @@ export function ProductInfo({ product }: { product: Product }) {
           <div className="flex flex-wrap items-baseline gap-2">
             <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} size="lg" />
             <Badge variant="secondary" className="text-[11px] font-semibold">
-              -10% Black Friday
+              -5%
             </Badge>
           </div>
           <span className="text-xs text-muted-foreground">{dict.cart.vatIncluded}</span>

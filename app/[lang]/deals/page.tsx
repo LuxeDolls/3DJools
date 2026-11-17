@@ -17,8 +17,8 @@ export default async function DealsPage({ params }: { params: Promise<{ lang: st
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
 
-  // The Black Friday promo code is auto-applied at checkout for every order, so
-  // every product storefront-wide qualifies for the current deal.
+  // The 5% catalog-wide discount (until 30 November) is baked into every product
+  // price, so every product storefront-wide qualifies for the current deal.
   const highlighted = await getAllProducts(locale)
 
   return (
