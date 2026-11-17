@@ -39,7 +39,7 @@ import {
   touchConversation,
 } from "@/lib/chat/queries"
 import type { ChatMode } from "@/lib/db/schema"
-import { desc, eq } from "drizzle-orm"
+import { desc, eq, isNull } from "drizzle-orm"
 import { revalidatePath } from "next/cache"
 
 export async function adminLogin(password: string): Promise<{ ok: boolean; error?: string }> {
@@ -77,6 +77,7 @@ export async function listApplications() {
       createdAt: installmentApplications.createdAt,
     })
     .from(installmentApplications)
+    .where(isNull(installmentApplications.archivedAt))
     .orderBy(desc(installmentApplications.createdAt))
 }
 

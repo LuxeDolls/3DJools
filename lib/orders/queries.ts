@@ -103,7 +103,11 @@ export async function createOrder(input: CreateOrderInput): Promise<OrderWithIte
 
 /** Customer-area read: only the signed-in user's own orders. */
 export async function getOrdersByUserId(userId: string): Promise<OrderWithItems[]> {
-  const rows = await db.select().from(orders).where(eq(orders.userId, userId)).orderBy(desc(orders.createdAt))
+  const rows = await db
+    .select()
+    .from(orders)
+    .where(and(eq(orders.userId, userId), isNull(orders.archivedAt)))
+    .orderBy(desc(orders.createdAt))
   return attachItems(rows)
 }
 

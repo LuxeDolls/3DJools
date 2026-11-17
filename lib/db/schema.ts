@@ -127,6 +127,7 @@ export const installmentApplications = pgTable("installment_applications", {
   dataConsent: boolean("data_consent").notNull().default(false),
 
   adminNotes: text("admin_notes"),
+  archivedAt: timestamp("archived_at", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
   reviewedAt: timestamp("reviewed_at", { withTimezone: true }),
