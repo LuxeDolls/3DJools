@@ -28,12 +28,6 @@ export function ProductCard({
   const installmentsEligible = qualifiesForInstallments(product.priceCents)
   const installmentCents = Math.round(product.priceCents / 3)
 
-  const techBadge = product.technology
-    ? dict.technology[product.technology]
-    : product.specs[0]?.value && product.specs[0].value.length <= 22
-      ? product.specs[0].value
-      : null
-
   const availabilityLabel =
     product.availability === "in_stock"
       ? dict.common.inStock
@@ -91,12 +85,6 @@ export function ProductCard({
         <div className="absolute top-2 right-2 z-10 transition-opacity sm:opacity-0 sm:group-hover:opacity-100 sm:focus-within:opacity-100">
           <ProductQuickView product={product} locale={locale} dict={dict} />
         </div>
-
-        {techBadge && (
-          <span className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-full bg-ink/85 px-2 py-0.5 font-mono text-[9px] text-ink-foreground backdrop-blur sm:text-[10px]">
-            {techBadge}
-          </span>
-        )}
       </div>
 
       <div className="flex flex-1 flex-col gap-1 px-1.5 pb-1 sm:px-2 sm:pb-1.5">
