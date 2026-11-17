@@ -4,7 +4,7 @@ import type { Locale } from "@/lib/i18n/config"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { getAllBrands } from "@/lib/catalog"
-import { brandInitials, getBrandLogo } from "@/lib/brands/logos"
+import { brandInitials, getBrandLogo, wordmarkHeight } from "@/lib/brands/logos"
 
 function maskStyle(src: string, extra?: CSSProperties): CSSProperties {
   const url = `url(${src})`
@@ -25,7 +25,7 @@ function BrandBadge({ slug, name }: { slug: string; name: string }) {
   const logo = getBrandLogo(slug)
 
   if (logo?.kind === "wordmark") {
-    const height = logo.aspect > 3 ? 18 : 40
+    const height = wordmarkHeight(logo.aspect)
     return (
       <>
         <span
