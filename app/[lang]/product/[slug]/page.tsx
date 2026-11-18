@@ -87,13 +87,13 @@ export default async function ProductPage({
         ]}
       />
 
-      <div className="mt-4 grid min-w-0 gap-6 sm:mt-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
+      <div className="mt-4 grid min-w-0 grid-cols-1 gap-6 sm:mt-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
         <ProductGallery images={product.images} alt={product.name} />
         <ProductInfo product={ratedProduct} />
       </div>
 
       {/* Details: highlights + description + specs */}
-      <div className="mt-10 grid gap-8 sm:mt-14 sm:gap-10 lg:grid-cols-3">
+      <div className="mt-10 grid grid-cols-1 gap-8 sm:mt-14 sm:gap-10 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <h2 className="font-heading text-lg font-bold text-foreground sm:text-xl">{dict.product.description}</h2>
           <p className="mt-3 text-pretty text-sm leading-relaxed text-muted-foreground sm:mt-4 sm:text-base">
