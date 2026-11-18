@@ -15,6 +15,7 @@ import { SectionHeading } from "@/components/section-heading"
 import { ProductReviews } from "@/components/reviews/product-reviews"
 import { getProductStampedReviews, summarizeReviews } from "@/lib/reviews/stamped-reviews"
 import { getStampedProductRating } from "@/lib/reviews/stamped-rating"
+import { localizeReviews } from "@/lib/reviews/translations"
 
 // Prices and stock are read live. Prerendering every product in every language
 // opens thousands of database connections during deploy, and one timeout fails
@@ -65,6 +66,7 @@ export default async function ProductPage({
   ])
   const url = `https://www.3deureka.com${localizedPath(locale, `/product/${product.slug}`)}`
   const reviewSummary = summarizeReviews(reviews)
+  const displayedReviews = await localizeReviews(reviews, locale)
   const ratedProduct =
     stampedRating.count > 0
       ? { ...product, rating: stampedRating.rating, reviewCount: stampedRating.count }
@@ -129,7 +131,7 @@ export default async function ProductPage({
         </div>
       </div>
 
-      {!isCardPaymentTest(product.slug) && <ProductReviews reviews={reviews} locale={locale} />}
+      {!isCardPaymentTest(product.slug) && <ProductReviews reviews={displayedReviews} locale={locale} />}
 
       {related.length > 0 && (
         <div className="mt-12 sm:mt-16">

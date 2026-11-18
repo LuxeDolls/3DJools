@@ -22,6 +22,10 @@ export interface ReviewsCopy {
   poweredBy: string
   footerLabel: string
   seeAllForProduct: string
+  translated: string
+  originalLanguage: string
+  showOriginal: string
+  hideOriginal: string
 }
 
 export const reviewsCopy: Record<Locale, ReviewsCopy> = {
@@ -48,6 +52,10 @@ export const reviewsCopy: Record<Locale, ReviewsCopy> = {
     poweredBy: "Reviews collected by",
     footerLabel: "Read all customer reviews",
     seeAllForProduct: "All store reviews",
+    translated: "Automatically translated into English",
+    originalLanguage: "Original",
+    showOriginal: "Show original",
+    hideOriginal: "Hide original",
   },
   de: {
     one: "Bewertung",
@@ -72,6 +80,10 @@ export const reviewsCopy: Record<Locale, ReviewsCopy> = {
     poweredBy: "Bewertungen gesammelt von",
     footerLabel: "Alle Kundenbewertungen lesen",
     seeAllForProduct: "Alle Shop-Bewertungen",
+    translated: "Automatisch ins Deutsche übersetzt",
+    originalLanguage: "Original",
+    showOriginal: "Original anzeigen",
+    hideOriginal: "Original ausblenden",
   },
   it: {
     one: "recensione",
@@ -96,6 +108,10 @@ export const reviewsCopy: Record<Locale, ReviewsCopy> = {
     poweredBy: "Recensioni raccolte da",
     footerLabel: "Leggi tutte le recensioni dei clienti",
     seeAllForProduct: "Tutte le recensioni del negozio",
+    translated: "Tradotto automaticamente in italiano",
+    originalLanguage: "Originale",
+    showOriginal: "Mostra originale",
+    hideOriginal: "Nascondi originale",
   },
   fr: {
     one: "avis",
@@ -120,6 +136,10 @@ export const reviewsCopy: Record<Locale, ReviewsCopy> = {
     poweredBy: "Avis recueillis par",
     footerLabel: "Lire tous les avis clients",
     seeAllForProduct: "Tous les avis de la boutique",
+    translated: "Traduit automatiquement en français",
+    originalLanguage: "Original",
+    showOriginal: "Voir l’original",
+    hideOriginal: "Masquer l’original",
   },
   nl: {
     one: "review",
@@ -144,6 +164,10 @@ export const reviewsCopy: Record<Locale, ReviewsCopy> = {
     poweredBy: "Reviews verzameld door",
     footerLabel: "Lees alle klantreviews",
     seeAllForProduct: "Alle winkelreviews",
+    translated: "Automatisch vertaald naar het Nederlands",
+    originalLanguage: "Origineel",
+    showOriginal: "Origineel tonen",
+    hideOriginal: "Origineel verbergen",
   },
   es: {
     one: "reseña",
@@ -168,6 +192,10 @@ export const reviewsCopy: Record<Locale, ReviewsCopy> = {
     poweredBy: "Reseñas recogidas por",
     footerLabel: "Leer todas las reseñas de clientes",
     seeAllForProduct: "Todas las reseñas de la tienda",
+    translated: "Traducido automáticamente al español",
+    originalLanguage: "Original",
+    showOriginal: "Ver original",
+    hideOriginal: "Ocultar original",
   },
 }
 
