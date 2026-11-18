@@ -1,10 +1,14 @@
 import type { OrderWithItems } from "@/lib/orders/queries"
 
 export const STAMPED_PUBLIC_API_KEY =
-  process.env.NEXT_PUBLIC_STAMPED_PUBLIC_KEY || "1b1500a0-8c0b-4c15-8338-1da52e8d7012"
+  process.env.STAMPED_PUBLIC_KEY ||
+  process.env.NEXT_PUBLIC_STAMPED_PUBLIC_KEY ||
+  "1b1500a0-8c0b-4c15-8338-1da52e8d7012"
 
 export const STAMPED_STORE_HASH =
-  process.env.NEXT_PUBLIC_STAMPED_STORE_HASH || "3deureka.com"
+  process.env.STAMPED_STORE_HASH ||
+  process.env.NEXT_PUBLIC_STAMPED_STORE_HASH ||
+  "3deureka.com"
 
 const STAMPED_PRIVATE_API_KEY =
   process.env.STAMPED_PRIVATE_KEY ||

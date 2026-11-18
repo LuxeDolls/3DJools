@@ -14,6 +14,7 @@ import { ProductGrid } from "@/components/product/product-grid"
 import { SectionHeading } from "@/components/section-heading"
 import { ProductReviews } from "@/components/reviews/product-reviews"
 import { getProductStampedReviews, summarizeReviews } from "@/lib/reviews/stamped-reviews"
+import { getStampedProductRating } from "@/lib/reviews/stamped-rating"
 
 // Prices and stock are read live. Prerendering every product in every language
 // opens thousands of database connections during deploy, and one timeout fails
@@ -57,20 +58,25 @@ export default async function ProductPage({
   const product = await getProductBySlug(slug, locale)
   if (!product) notFound()
 
-  const [related, reviews] = await Promise.all([
+  const [related, reviews, stampedRating] = await Promise.all([
     getRelatedProducts(product, 4, locale),
     getProductStampedReviews(product.productId),
+    getStampedProductRating(product.productId),
   ])
   const url = `https://www.3deureka.com${localizedPath(locale, `/product/${product.slug}`)}`
   const reviewSummary = summarizeReviews(reviews)
   const ratedProduct =
-    reviewSummary.count > 0
-      ? { ...product, rating: reviewSummary.average, reviewCount: reviewSummary.count }
-      : product
+    stampedRating.count > 0
+      ? { ...product, rating: stampedRating.rating, reviewCount: stampedRating.count }
+      : reviewSummary.count > 0
+        ? { ...product, rating: reviewSummary.average, reviewCount: reviewSummary.count }
+        : product
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
-      {isCardPaymentTest(product.slug) ? null : <ProductJsonLd product={ratedProduct} url={url} reviews={reviews} />}
+      {isCardPaymentTest(product.slug) ? null : (
+        <ProductJsonLd product={ratedProduct} url={url} reviews={reviews} rating={stampedRating} />
+      )}
 
       <Breadcrumb
         locale={locale}
