@@ -29,6 +29,7 @@ const staticPages: SitemapPath[] = [
   { path: "/contact", changeFrequency: "monthly", priority: 0.6 },
   { path: "/about", changeFrequency: "monthly", priority: 0.5 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.5 },
+  { path: "/reviews", changeFrequency: "daily", priority: 0.6 },
   { path: "/shipping", changeFrequency: "monthly", priority: 0.4 },
   { path: "/track", changeFrequency: "monthly", priority: 0.4 },
   { path: "/returns", changeFrequency: "yearly", priority: 0.3 },

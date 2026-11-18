@@ -9,7 +9,8 @@ import { qualifiesForInstallments } from "@/lib/installments"
 import { Price } from "./price"
 import { QuickAddButton } from "./quick-add-button"
 import { ProductQuickView } from "./product-quick-view"
-import { StampedStarBadge } from "@/components/reviews/stamped-widgets"
+import { StarRating } from "@/components/reviews/star-rating"
+import { reviewCountLabel, reviewsCopy } from "@/lib/i18n/reviews"
 import { cn } from "@/lib/utils"
 
 export function ProductCard({
@@ -115,12 +116,16 @@ export function ProductCard({
           </h3>
         </Link>
 
-        <StampedStarBadge
-          productId={product.productId}
-          productSku={product.mpn || product.slug}
-          productTitle={product.name}
-          className="text-xs empty:hidden"
-        />
+        {product.reviewCount > 0 && product.rating > 0 ? (
+          <Link
+            href={`${href}#reviews`}
+            className="inline-flex w-fit items-center gap-1.5 text-[11px] text-muted-foreground transition-colors hover:text-foreground"
+            aria-label={`${product.rating.toFixed(1)} ${reviewsCopy[locale].outOf} — ${reviewCountLabel(locale, product.reviewCount)}`}
+          >
+            <StarRating value={product.rating} size="xs" />
+            <span className="tabular-nums">({product.reviewCount})</span>
+          </Link>
+        ) : null}
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-2">
           <div className="min-w-0">

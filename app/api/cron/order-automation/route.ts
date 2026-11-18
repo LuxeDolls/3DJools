@@ -1,5 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server"
+import { revalidateTag } from "next/cache"
 import { runOrderAutomation } from "@/lib/orders/automation"
+import { STAMPED_REVIEWS_TAG } from "@/lib/reviews/stamped-reviews"
+import { syncStampedRatings } from "@/lib/reviews/sync-ratings"
 
 export const dynamic = "force-dynamic"
 export const maxDuration = 60
@@ -17,9 +20,19 @@ export async function GET(request: NextRequest) {
   }
 
   const result = await runOrderAutomation()
+
+  let reviewSync: { updated: number; cleared: number } | null = null
+  try {
+    reviewSync = await syncStampedRatings()
+    revalidateTag(STAMPED_REVIEWS_TAG, "max")
+  } catch (error) {
+    console.error("[stamped] Scheduled rating sync failed:", error)
+  }
+
   return NextResponse.json({
     ok: true,
     movedToProcessing: result.movedToProcessing.length,
     movedToShipped: result.movedToShipped.length,
+    reviewSync,
   })
 }

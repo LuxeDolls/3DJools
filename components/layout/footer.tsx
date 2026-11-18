@@ -11,6 +11,7 @@ import type { Dictionary } from "@/lib/i18n/dictionaries/en"
 import { localizedPath } from "@/lib/i18n/paths"
 import { Logo } from "./logo"
 import { ScamAdviserTrust } from "@/components/home/scamadviser-trust"
+import { StampedFooterBadge } from "@/components/reviews/stamped-footer-badge"
 
 export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const lp = (p: string) => localizedPath(locale, p)
@@ -134,7 +135,8 @@ export function Footer({ locale, dict }: { locale: Locale; dict: Dictionary }) {
             <br />
             {dict.footer.companyNumber} {COMPANY.companyNumber} · {dict.footer.vatId} {COMPANY.vat}
           </p>
-          <div className="mt-4 sm:mt-5">
+          <div className="mt-4 flex flex-wrap items-center gap-2 sm:mt-5">
+            <StampedFooterBadge locale={locale} />
             <ScamAdviserTrust dict={dict} compact />
           </div>
         </div>

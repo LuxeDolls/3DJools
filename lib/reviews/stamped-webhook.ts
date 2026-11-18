@@ -1,11 +1,13 @@
 import crypto from "crypto"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 import { NextResponse, type NextRequest } from "next/server"
 import { and, eq, or, sql } from "drizzle-orm"
 import { db } from "@/lib/db"
 import { products, stampedReviews } from "@/lib/db/schema"
 import { locales } from "@/lib/i18n/config"
 import { STAMPED_PUBLIC_API_KEY } from "@/lib/reviews/stamped"
+import { STAMPED_REVIEWS_TAG } from "@/lib/reviews/stamped-reviews"
+import { syncStampedRatings } from "@/lib/reviews/sync-ratings"
 
 const STAMPED_PRIVATE_API_KEY =
   process.env.STAMPED_PRIVATE_KEY ||
@@ -147,38 +149,6 @@ async function resolveCatalogProduct(
   return matched ?? null
 }
 
-async function recomputeProductRating(productId: string, productSlug: string): Promise<void> {
-  const [stats] = await db
-    .select({
-      count: sql<number>`count(*)::int`,
-      avg: sql<number>`coalesce(round(avg(${stampedReviews.rating})::numeric, 2), 0)::float`,
-    })
-    .from(stampedReviews)
-    .where(
-      and(
-        eq(stampedReviews.productId, productId),
-        eq(stampedReviews.published, true),
-        sql`${stampedReviews.rating} IS NOT NULL AND ${stampedReviews.rating} > 0`,
-      ),
-    )
-
-  const reviewCount = stats?.count ?? 0
-  const rating = reviewCount > 0 ? Number(stats?.avg ?? 0) : 0
-
-  await db
-    .update(products)
-    .set({
-      rating,
-      reviewCount,
-      updatedAt: new Date(),
-    })
-    .where(eq(products.productId, productId))
-
-  for (const locale of locales) {
-    revalidatePath(`/${locale}/product/${productSlug}`)
-  }
-}
-
 export async function handleStampedWebhook(
   request: NextRequest,
   routeToken?: string,
@@ -229,6 +199,7 @@ export async function handleStampedWebhook(
 
   const headerTopic = request.headers.get("x-stamped-topic")
   let processed = 0
+  const touchedSlugs = new Set<string>()
 
   for (const item of items) {
     if (Object.keys(item).length === 0) continue
@@ -298,11 +269,24 @@ export async function handleStampedWebhook(
         },
       })
 
-    if (matchedProduct && rating !== null) {
-      await recomputeProductRating(matchedProduct.productId, matchedProduct.slug)
-    }
+    if (matchedProduct) touchedSlugs.add(matchedProduct.slug)
 
     processed += 1
+  }
+
+  if (processed > 0) {
+    revalidateTag(STAMPED_REVIEWS_TAG, "max")
+    try {
+      await syncStampedRatings()
+    } catch (error) {
+      console.error("[stamped] Rating sync after webhook failed:", error)
+    }
+    revalidatePath(`/[lang]/reviews`, "page")
+    for (const slug of touchedSlugs) {
+      for (const locale of locales) {
+        revalidatePath(`/${locale}/product/${slug}`)
+      }
+    }
   }
 
   return NextResponse.json({

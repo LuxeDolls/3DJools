@@ -19,7 +19,8 @@ import { useI18n, useLocalizedPath } from "@/components/i18n-provider"
 import { Badge } from "@/components/ui/badge"
 import { AddToCartButton } from "./add-to-cart-button"
 import { Price } from "./price"
-import { StampedStarBadge } from "@/components/reviews/stamped-widgets"
+import { StarRating } from "@/components/reviews/star-rating"
+import { reviewCountLabel, reviewsCopy } from "@/lib/i18n/reviews"
 import type { Product } from "@/lib/catalog/types"
 import { formatPrice } from "@/lib/format"
 import { qualifiesForInstallments } from "@/lib/installments"
@@ -90,11 +91,17 @@ export function ProductInfo({ product }: { product: Product }) {
       </h1>
 
       <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground sm:mt-2.5">
-        <StampedStarBadge
-          productId={product.productId}
-          productSku={product.mpn || product.slug}
-          productTitle={product.name}
-        />
+        {product.reviewCount > 0 && product.rating > 0 ? (
+          <a
+            href="#reviews"
+            className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+            aria-label={`${product.rating.toFixed(1)} ${reviewsCopy[locale].outOf} — ${reviewCountLabel(locale, product.reviewCount)}`}
+          >
+            <StarRating value={product.rating} size="sm" />
+            <strong className="font-semibold text-foreground tabular-nums">{product.rating.toFixed(1)}</strong>
+            <span className="underline underline-offset-2">{reviewCountLabel(locale, product.reviewCount)}</span>
+          </a>
+        ) : null}
         <span>
           ID: <strong className="font-mono font-medium tabular-nums text-foreground">{product.productId}</strong>
         </span>

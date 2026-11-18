@@ -1,9 +1,12 @@
 import { ExternalLink } from "lucide-react"
 import type { Dictionary } from "@/lib/i18n/dictionaries/en"
+import { getScamAdviserScore, SCAMADVISER_DOMAIN, scamAdviserUrl } from "@/lib/trust/scamadviser"
 
-export const scamAdviserUrl = "https://www.scamadviser.com/check-website/3deureka.com"
+export { scamAdviserUrl }
 
-export function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; compact?: boolean }) {
+export async function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; compact?: boolean }) {
+  const score = await getScamAdviserScore()
+
   if (compact) {
     return (
       <a
@@ -11,17 +14,13 @@ export function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; 
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex items-center gap-2 rounded-md border border-border bg-background px-3 py-2 text-xs transition-colors hover:border-primary/50 hover:bg-muted"
-        aria-label={dict.footer.scamAdviserLink}
+        aria-label={`${dict.footer.scamAdviserLink} — Trust Score ${score}/100 (${SCAMADVISER_DOMAIN})`}
       >
         <span className="flex h-5 items-center rounded-sm bg-white px-1">
-          <img
-            src="https://www.scamadviser.com/images/static/logo/logo.svg"
-            alt=""
-            className="h-3.5 w-auto"
-          />
+          <img src="https://www.scamadviser.com/images/static/logo/logo.svg" alt="" className="h-3.5 w-auto" />
         </span>
-        <span className="font-semibold text-foreground">100/100</span>
-        <span className="text-muted-foreground">{dict.footer.scamAdviserBadge}</span>
+        <span className="font-semibold text-foreground tabular-nums">{score}/100</span>
+        <span className="font-mono text-[11px] text-muted-foreground">{SCAMADVISER_DOMAIN}</span>
       </a>
     )
   }
@@ -33,22 +32,18 @@ export function ScamAdviserTrust({ dict, compact = false }: { dict: Dictionary; 
         target="_blank"
         rel="noopener noreferrer"
         className="group flex flex-col gap-3.5 rounded-2xl border border-border bg-card p-4 shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/50 hover:shadow-xs sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-7 sm:py-5"
-        aria-label={`ScamAdviser Trust Score 100/100. ${dict.home.scamAdviserCta}`}
+        aria-label={`ScamAdviser Trust Score ${score}/100 (${SCAMADVISER_DOMAIN}). ${dict.home.scamAdviserCta}`}
       >
         <div className="flex items-start gap-3.5 sm:items-center sm:gap-4">
           <div className="flex size-12 shrink-0 items-center justify-center rounded-xl border border-border bg-white p-2 shadow-xs sm:size-14 sm:p-2.5">
-            <img
-              src="https://www.scamadviser.com/images/static/logo/logo.svg"
-              alt=""
-              className="h-auto w-full"
-            />
+            <img src="https://www.scamadviser.com/images/static/logo/logo.svg" alt="" className="h-auto w-full" />
           </div>
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-muted-foreground sm:text-xs">
-              ScamAdviser
+              ScamAdviser · {SCAMADVISER_DOMAIN}
             </p>
             <h2 id="scamadviser-trust-title" className="mt-0.5 text-balance font-heading text-lg font-semibold text-foreground sm:mt-1 sm:text-xl">
-              Trust Score <span className="text-primary">100/100</span>
+              Trust Score <span className="text-primary">{score}/100</span>
             </h2>
             <p className="mt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">{dict.home.scamAdviserText}</p>
           </div>

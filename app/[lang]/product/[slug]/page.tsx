@@ -12,7 +12,8 @@ import { ProductInfo } from "@/components/product/product-info"
 import { ProductJsonLd } from "@/components/product/product-jsonld"
 import { ProductGrid } from "@/components/product/product-grid"
 import { SectionHeading } from "@/components/section-heading"
-import { StampedMainWidget } from "@/components/reviews/stamped-widgets"
+import { ProductReviews } from "@/components/reviews/product-reviews"
+import { getProductStampedReviews, summarizeReviews } from "@/lib/reviews/stamped-reviews"
 
 // Prices and stock are read live. Prerendering every product in every language
 // opens thousands of database connections during deploy, and one timeout fails
@@ -56,12 +57,20 @@ export default async function ProductPage({
   const product = await getProductBySlug(slug, locale)
   if (!product) notFound()
 
-  const related = await getRelatedProducts(product, 4, locale)
+  const [related, reviews] = await Promise.all([
+    getRelatedProducts(product, 4, locale),
+    getProductStampedReviews(product.productId),
+  ])
   const url = `https://www.3deureka.com${localizedPath(locale, `/product/${product.slug}`)}`
+  const reviewSummary = summarizeReviews(reviews)
+  const ratedProduct =
+    reviewSummary.count > 0
+      ? { ...product, rating: reviewSummary.average, reviewCount: reviewSummary.count }
+      : product
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
-      {isCardPaymentTest(product.slug) ? null : <ProductJsonLd product={product} url={url} />}
+      {isCardPaymentTest(product.slug) ? null : <ProductJsonLd product={ratedProduct} url={url} reviews={reviews} />}
 
       <Breadcrumb
         locale={locale}
@@ -74,7 +83,7 @@ export default async function ProductPage({
 
       <div className="mt-4 grid min-w-0 gap-6 sm:mt-6 sm:gap-8 lg:grid-cols-2 lg:gap-12">
         <ProductGallery images={product.images} alt={product.name} />
-        <ProductInfo product={product} />
+        <ProductInfo product={ratedProduct} />
       </div>
 
       {/* Details: highlights + description + specs */}
@@ -114,16 +123,7 @@ export default async function ProductPage({
         </div>
       </div>
 
-      {!isCardPaymentTest(product.slug) && (
-        <StampedMainWidget
-          productId={product.productId}
-          name={product.name}
-          url={url}
-          imageUrl={product.images[0]}
-          description={product.shortDescription || product.description}
-          productSku={product.mpn || product.slug}
-        />
-      )}
+      {!isCardPaymentTest(product.slug) && <ProductReviews reviews={reviews} locale={locale} />}
 
       {related.length > 0 && (
         <div className="mt-12 sm:mt-16">

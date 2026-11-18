@@ -1,6 +1,5 @@
 import { OptionalAnalytics } from '@/components/legal/optional-analytics'
 import { OrganizationJsonLd } from '@/components/legal/organization-jsonld'
-import { StampedProvider } from '@/components/reviews/stamped-provider'
 import type { Metadata, Viewport } from 'next'
 import { Bricolage_Grotesque, Geist } from 'next/font/google'
 import './globals.css'
@@ -59,7 +58,6 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased">
         <OrganizationJsonLd />
-        <StampedProvider />
         {children}
         <OptionalAnalytics />
       </body>

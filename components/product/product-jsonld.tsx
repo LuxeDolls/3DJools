@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/catalog/types"
+import type { StampedReview } from "@/lib/reviews/stamped-reviews"
 import { ALL_SHIPPING_COUNTRIES, DELIVERY_MAX_DAYS, DELIVERY_MIN_DAYS, HANDLING_MAX_DAYS, HANDLING_MIN_DAYS } from "@/lib/shipping/rates"
 
 // Kept in sync with the returns policy page (app/[lang]/returns/page.tsx):
@@ -10,7 +11,15 @@ const SHIPPING_COUNTRY_CODES = ALL_SHIPPING_COUNTRIES.map((country) => country.c
  * Product structured data for Google Merchant Center / rich results.
  * Availability + condition + price are the fields GMC/Shopping validate against.
  */
-export function ProductJsonLd({ product, url }: { product: Product; url: string }) {
+export function ProductJsonLd({
+  product,
+  url,
+  reviews = [],
+}: {
+  product: Product
+  url: string
+  reviews?: StampedReview[]
+}) {
   const availabilityMap: Record<Product["availability"], string> = {
     in_stock: "https://schema.org/InStock",
     out_of_stock: "https://schema.org/OutOfStock",
@@ -36,6 +45,18 @@ export function ProductJsonLd({ product, url }: { product: Product; url: string 
             ratingValue: Number(product.rating.toFixed(2)),
             reviewCount: product.reviewCount,
           },
+        }
+      : {}),
+    ...(reviews.length > 0
+      ? {
+          review: reviews.slice(0, 10).map((r) => ({
+            "@type": "Review",
+            author: { "@type": "Person", name: r.author },
+            ...(r.date ? { datePublished: r.date.slice(0, 10) } : {}),
+            ...(r.title ? { name: r.title } : {}),
+            ...(r.message ? { reviewBody: r.message } : {}),
+            reviewRating: { "@type": "Rating", ratingValue: r.rating, bestRating: 5, worstRating: 1 },
+          })),
         }
       : {}),
     offers: {
