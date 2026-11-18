@@ -12,6 +12,7 @@ import { ProductInfo } from "@/components/product/product-info"
 import { ProductJsonLd } from "@/components/product/product-jsonld"
 import { ProductGrid } from "@/components/product/product-grid"
 import { SectionHeading } from "@/components/section-heading"
+import { StampedMainWidget } from "@/components/reviews/stamped-widgets"
 
 // Prices and stock are read live. Prerendering every product in every language
 // opens thousands of database connections during deploy, and one timeout fails
@@ -112,6 +113,17 @@ export default async function ProductPage({
           </dl>
         </div>
       </div>
+
+      {!isCardPaymentTest(product.slug) && (
+        <StampedMainWidget
+          productId={product.productId}
+          name={product.name}
+          url={url}
+          imageUrl={product.images[0]}
+          description={product.shortDescription || product.description}
+          productSku={product.mpn || product.slug}
+        />
+      )}
 
       {related.length > 0 && (
         <div className="mt-12 sm:mt-16">

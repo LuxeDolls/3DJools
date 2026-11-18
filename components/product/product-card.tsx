@@ -9,6 +9,7 @@ import { qualifiesForInstallments } from "@/lib/installments"
 import { Price } from "./price"
 import { QuickAddButton } from "./quick-add-button"
 import { ProductQuickView } from "./product-quick-view"
+import { StampedStarBadge } from "@/components/reviews/stamped-widgets"
 import { cn } from "@/lib/utils"
 
 export function ProductCard({
@@ -113,6 +114,13 @@ export function ProductCard({
             {product.name}
           </h3>
         </Link>
+
+        <StampedStarBadge
+          productId={product.productId}
+          productSku={product.mpn || product.slug}
+          productTitle={product.name}
+          className="text-xs empty:hidden"
+        />
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-2">
           <div className="min-w-0">

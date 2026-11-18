@@ -20,6 +20,7 @@ export function ProductJsonLd({ product, url }: { product: Product; url: string 
   const json = {
     "@context": "https://schema.org/",
     "@type": "Product",
+    "@id": `${url}#product`,
     productID: product.productId,
     name: product.name,
     image: product.images.map((i) => i),
