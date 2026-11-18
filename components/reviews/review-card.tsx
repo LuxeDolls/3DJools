@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { BadgeCheck, MapPin } from "lucide-react"
+import { BadgeCheck, Languages, MapPin } from "lucide-react"
 import type { Locale } from "@/lib/i18n/config"
 import { reviewsCopy } from "@/lib/i18n/reviews"
 import { localeToIntl } from "@/lib/format"
@@ -18,6 +18,14 @@ export function formatReviewDate(date: string, locale: Locale) {
   const parsed = new Date(date)
   if (Number.isNaN(parsed.getTime())) return ""
   return new Intl.DateTimeFormat(localeToIntl[locale], { day: "numeric", month: "short", year: "numeric" }).format(parsed)
+}
+
+function languageName(code: string, locale: Locale) {
+  try {
+    return new Intl.DisplayNames(localeToIntl[locale], { type: "language" }).of(code) ?? code.toUpperCase()
+  } catch {
+    return code.toUpperCase()
+  }
 }
 
 export function ReviewCard({
@@ -69,6 +77,41 @@ export function ReviewCard({
           <p className="mb-1 font-semibold text-foreground">{copy.storeReply}</p>
           {review.reply}
         </div>
+      ) : null}
+
+      {review.translation ? (
+        <details className="group text-xs text-muted-foreground">
+          <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-1.5 gap-y-0.5 rounded-md outline-none select-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+            <Languages className="size-3.5 shrink-0 text-primary" aria-hidden="true" />
+            <span>{copy.translated}</span>
+            <span aria-hidden="true">·</span>
+            <span>
+              {copy.originalLanguage}: {languageName(review.translation.from, locale)}
+            </span>
+            <span aria-hidden="true">·</span>
+            <span className="font-medium text-primary underline-offset-2 group-hover:underline group-open:hidden">
+              {copy.showOriginal}
+            </span>
+            <span className="hidden font-medium text-primary underline-offset-2 group-hover:underline group-open:inline">
+              {copy.hideOriginal}
+            </span>
+          </summary>
+          <div
+            lang={review.translation.from}
+            className="mt-2 flex flex-col gap-1.5 rounded-2xl border border-border bg-secondary/40 px-3 py-2.5 leading-relaxed"
+          >
+            {review.translation.original.title ? (
+              <p className="font-semibold text-foreground">{review.translation.original.title}</p>
+            ) : null}
+            {review.translation.original.message ? <p>{review.translation.original.message}</p> : null}
+            {review.translation.original.reply ? (
+              <p>
+                <span className="font-semibold text-foreground">{copy.storeReply}: </span>
+                {review.translation.original.reply}
+              </p>
+            ) : null}
+          </div>
+        </details>
       ) : null}
 
       <footer className="flex flex-col gap-3 border-t border-border/70 pt-3">

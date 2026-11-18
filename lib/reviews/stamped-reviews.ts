@@ -20,6 +20,11 @@ export interface StampedReview {
   location: string
   verified: boolean
   reply: string
+  /** Set when title/message/reply were replaced by a machine translation. */
+  translation?: {
+    from: string
+    original: { title: string; message: string; reply: string }
+  }
 }
 
 export interface ReviewSummary {

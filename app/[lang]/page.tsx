@@ -14,6 +14,7 @@ import { MemberPromo } from "@/components/home/member-promo"
 import { Newsletter } from "@/components/home/newsletter"
 import { ReviewsCarousel } from "@/components/home/reviews-carousel"
 import { getStampedReviews } from "@/lib/reviews/stamped-reviews"
+import { localizeReviews } from "@/lib/reviews/translations"
 import { SectionHeading } from "@/components/section-heading"
 import { ProductCard } from "@/components/product/product-card"
 import { ProductRail } from "@/components/product/product-rail"
@@ -31,7 +32,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
     getFeaturedProducts(locale),
     getBestsellers(locale),
     getAllProducts(locale),
-    getStampedReviews(),
+    getStampedReviews().then((list) => localizeReviews(list, locale)),
   ])
 
   return (

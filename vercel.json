@@ -3,6 +3,10 @@
     {
       "path": "/api/cron/order-automation",
       "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/review-translations",
+      "schedule": "20 * * * *"
     }
   ]
 }

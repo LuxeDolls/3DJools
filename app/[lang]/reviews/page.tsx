@@ -7,6 +7,7 @@ import { localizedPath } from "@/lib/i18n/paths"
 import { reviewsCopy } from "@/lib/i18n/reviews"
 import { getAllProducts } from "@/lib/catalog"
 import { getStampedReviews, summarizeReviews } from "@/lib/reviews/stamped-reviews"
+import { localizeReviews } from "@/lib/reviews/translations"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { RatingSummary } from "@/components/reviews/rating-summary"
 import { ReviewCard } from "@/components/reviews/review-card"
@@ -36,7 +37,7 @@ export default async function ReviewsPage({
   const [{ lang }, { page: pageParam }] = await Promise.all([params, searchParams])
   const locale: Locale = isLocale(lang) ? lang : "en"
   const copy = reviewsCopy[locale]
-  const [dict, reviews, products] = await Promise.all([getDictionary(locale), getStampedReviews(), getAllProducts(locale)])
+  const [dict, reviews, products] = await Promise.all([getDictionary(locale), getStampedReviews().then((list) => localizeReviews(list, locale)), getAllProducts(locale)])
 
   const summary = summarizeReviews(reviews)
   const totalPages = Math.max(1, Math.ceil(reviews.length / PER_PAGE))
