@@ -29,6 +29,15 @@ export function ProductJsonLd({ product, url }: { product: Product; url: string 
     mpn: product.mpn,
     ...(product.ean ?? product.gtin ? { gtin13: product.ean ?? product.gtin } : {}),
     brand: { "@type": "Brand", name: product.brandName ?? product.brandSlug },
+    ...(product.reviewCount > 0 && product.rating > 0
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: Number(product.rating.toFixed(2)),
+            reviewCount: product.reviewCount,
+          },
+        }
+      : {}),
     offers: {
       "@type": "Offer",
       url,
