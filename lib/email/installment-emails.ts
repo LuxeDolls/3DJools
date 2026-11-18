@@ -2,6 +2,13 @@ import "server-only"
 
 import { COMPANY } from "@/lib/company"
 import {
+  EMAIL_FONT,
+  EMAIL_PALETTE as P,
+  emailDetails,
+  emailNotice,
+  emailParagraph,
+  emailSectionTitle,
+  emailTone,
   escapeEmailHtml,
   renderEmail,
   renderEmailButton,
@@ -26,49 +33,43 @@ function statusLink(app: InstallmentApplication): string {
 
 function renderScheduleTable(app: InstallmentApplication, highlightIndex?: number): string {
   if (!app.schedule?.length) return ""
+  const cell = `font-family:${EMAIL_FONT};font-size:14px;line-height:1.45;`
   const rows = app.schedule
     .map((entry, idx) => {
-      const label =
-        entry.label === "down_payment"
-          ? "1/3 Down payment (activates order)"
-          : `Installment #${idx} (${idx * 2} weeks)`
-      const statusBadge =
+      const label = entry.label === "down_payment" ? "Down payment (1/3)" : `Payment ${idx + 1} of 3`
+      const when = entry.label === "down_payment" ? "After approval" : `${idx * 2} weeks later`
+      const status =
         entry.status === "paid"
-          ? `<span style="display:inline-block;padding:3px 9px;border-radius:999px;background:#ECFDF5;border:1px solid #A7F3D0;color:#065F46;font-size:11px;font-weight:800;">PAID</span>`
+          ? { text: "Paid", tone: emailTone("emerald") }
           : entry.status === "reviewing"
-            ? `<span style="display:inline-block;padding:3px 9px;border-radius:999px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1E40D8;font-size:11px;font-weight:800;">UNDER REVIEW</span>`
-            : `<span style="display:inline-block;padding:3px 9px;border-radius:999px;background:#FFFBEB;border:1px solid #FDE68A;color:#92400E;font-size:11px;font-weight:800;">DUE / UPCOMING</span>`
-      const rowBg = idx === highlightIndex ? "#EFF6FF" : "#FFFFFF"
-
-      return `<tr style="background:${rowBg};">
-        <td style="padding:10px 12px;border-bottom:1px solid #E2E8F0;font-size:13px;font-weight:${idx === highlightIndex ? "700" : "500"};color:#0F172A;">
-          ${escapeEmailHtml(label)}
+            ? { text: "Under review", tone: emailTone("cobalt") }
+            : { text: "Upcoming", tone: emailTone("slate") }
+      const highlighted = idx === highlightIndex
+      const border = idx === app.schedule.length - 1 ? "" : `border-bottom:1px solid ${P.border};`
+      return `<tr>
+        <td valign="top" style="padding:12px 0;${border}${cell}color:${P.text};text-align:left;">
+          <span style="font-weight:${highlighted ? "700" : "600"};">${escapeEmailHtml(label)}</span><br>
+          <span style="font-size:13px;color:${P.textSubtle};">${escapeEmailHtml(when)}</span>
+          <span style="display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;background:${status.tone.bg};color:${status.tone.fg};font-size:12px;font-weight:700;">${status.text}</span>
         </td>
-        <td align="center" style="padding:10px 8px;border-bottom:1px solid #E2E8F0;">
-          ${statusBadge}
-        </td>
-        <td align="right" style="padding:10px 12px;border-bottom:1px solid #E2E8F0;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;font-weight:700;color:#0F172A;">
-          ${euros(entry.amountCents)}
-        </td>
+        <td valign="top" align="right" style="padding:12px 0 12px 12px;${border}${cell}font-weight:${highlighted ? "700" : "600"};color:${P.text};white-space:nowrap;">${euros(entry.amountCents)}</td>
       </tr>`
     })
     .join("")
 
-  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px;border:1px solid #CBD5E1;border-radius:12px;overflow:hidden;background:#FFFFFF;">
-    <thead>
-      <tr style="background:#F1F5F9;">
-        <th align="left" style="padding:9px 12px;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#475569;border-bottom:1px solid #CBD5E1;">Payment Tranche (0% APR)</th>
-        <th align="center" style="padding:9px 8px;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#475569;border-bottom:1px solid #CBD5E1;">Status</th>
-        <th align="right" style="padding:9px 12px;font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#475569;border-bottom:1px solid #CBD5E1;">Amount</th>
-      </tr>
-    </thead>
-    <tbody>${rows}</tbody>
-  </table>`
+  return `${emailSectionTitle("Payment schedule · 0% interest")}
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px;border-top:1px solid ${P.border};border-bottom:1px solid ${P.border};">${rows}</table>`
 }
 
-/**
- * Form 7: KYC & 3× 0% Installment Application Dossier ("passport" layout)
- */
+function renderPlanSummary(app: InstallmentApplication): string {
+  return emailDetails([
+    { label: "Order total", value: euros(app.totalAmountCents), strong: true },
+    { label: "Down payment (1/3)", value: euros(app.downPaymentCents) },
+    { label: "Remaining (2 payments)", value: euros(app.remainingCents) },
+    { label: "Interest & fees", value: "None" },
+  ])
+}
+
 export async function sendInstallmentApplicationReceivedEmail(
   app: InstallmentApplication,
 ): Promise<SendResult> {
@@ -92,58 +93,24 @@ export async function sendInstallmentApplicationReceivedEmail(
   const html = renderEmail({
     variant: "passport",
     preheader: `We've received your 3× 0% installment application ${app.applicationRef}`,
-    eyebrow: "3× 0% APR FINANCING APPLICATION DOSSIER",
-    badgeText: "KYC UNDER REVIEW",
+    badgeText: "Under review",
     badgeTone: "cobalt",
     headerTitle: "We've received your application",
-    headerSubtitle: `Submitted by ${app.firstName} ${app.lastName} · 3 equal bi-weekly payments at 0% interest`,
-    referenceLabel: "APPLICATION REF",
+    headerSubtitle: "3 equal payments every 2 weeks, with no interest or fees.",
+    referenceLabel: "Application",
     referenceValue: app.applicationRef,
     body: `
-      ${renderStepTracker(["Application Submitted", "KYC & VAT Verification", "Down Payment (1/3)", "Order Dispatched"], 1)}
-
-      <p style="margin:0 0 18px;color:#334155;font-size:14px;line-height:1.65;">
-        Thanks, <strong style="color:#0F172A;">${escapeEmailHtml(app.firstName)}</strong> &mdash; we have received your 3&times; 0% installment application and identity documents. Our verification team is reviewing your file and will email you as soon as a decision is recorded.
-      </p>
-
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px;">
-        <tr>
-          <td width="33%" valign="top" style="padding-right:6px;">
-            <div style="background:#F8FAFC;border:1px solid #CBD5E1;border-radius:12px;padding:12px;">
-              <div style="font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#64748B;">Order Total</div>
-              <div style="margin-top:4px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:17px;font-weight:800;color:#0F172A;">${euros(app.totalAmountCents)}</div>
-              <div style="margin-top:2px;font-size:11px;color:#64748B;">0% APR &middot; No fees</div>
-            </div>
-          </td>
-          <td width="34%" valign="top" style="padding:0 3px;">
-            <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:12px;">
-              <div style="font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#1E40D8;">Down Payment (1/3)</div>
-              <div style="margin-top:4px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:17px;font-weight:800;color:#1E40D8;">${euros(app.downPaymentCents)}</div>
-              <div style="margin-top:2px;font-size:11px;color:#1E3A8A;">Due after approval</div>
-            </div>
-          </td>
-          <td width="33%" valign="top" style="padding-left:6px;">
-            <div style="background:#F8FAFC;border:1px solid #CBD5E1;border-radius:12px;padding:12px;">
-              <div style="font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#64748B;">Remaining (2/3)</div>
-              <div style="margin-top:4px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:17px;font-weight:800;color:#0F172A;">${euros(app.remainingCents)}</div>
-              <div style="margin-top:2px;font-size:11px;color:#64748B;">2 bi-weekly tranches</div>
-            </div>
-          </td>
-        </tr>
-      </table>
-
+      ${renderStepTracker(["Application sent", "Review", "Down payment", "Dispatch"], 1)}
+      ${emailParagraph(`Thanks, <strong>${escapeEmailHtml(app.firstName)}</strong>. We've received your application and documents. Our team is reviewing them and will email you as soon as there's a decision.`)}
+      ${renderPlanSummary(app)}
       ${renderScheduleTable(app)}
-
-      ${link ? renderEmailButton("Track your application", link, "cobalt") : ""}
+      ${renderEmailButton("Track your application", link)}
     `,
   })
 
   return sendEmail({ to: app.email, subject, html, text })
 }
 
-/**
- * Form 8: Approved 3× 0% Financing Contract & Down-Payment Invoice ("certificate" layout)
- */
 export async function sendInstallmentApplicationApprovedEmail(
   app: InstallmentApplication,
 ): Promise<SendResult> {
@@ -167,76 +134,34 @@ export async function sendInstallmentApplicationApprovedEmail(
 
   const html = renderEmail({
     variant: "certificate",
-    preheader: `Application ${app.applicationRef} approved — pay ${euros(app.downPaymentCents)} down payment to activate dispatch`,
-    eyebrow: "APPROVED 3× 0% INSTALLMENT AGREEMENT",
-    badgeText: "APPROVED · 0% APR",
+    preheader: `Application ${app.applicationRef} approved — pay the ${euros(app.downPaymentCents)} down payment to start your order`,
+    badgeText: "Approved",
     badgeTone: "emerald",
     headerTitle: "Your application was approved",
-    headerSubtitle: `Good news, ${app.firstName} — your 3× 0% installment plan is approved and ready to activate.`,
-    referenceLabel: "CONTRACT REF",
+    headerSubtitle: `Good news, ${app.firstName}. Pay the down payment and we'll ship your order.`,
+    referenceLabel: "Application",
     referenceValue: app.applicationRef,
     body: `
-      ${renderStepTracker(["Application Approved", "Pay 1/3 Down Payment", "Order Dispatched", "2 Bi-Weekly Tranches"], 1, "#059669")}
-
-      <p style="margin:0 0 18px;color:#334155;font-size:14px;line-height:1.65;">
-        Good news, <strong style="color:#0F172A;">${escapeEmailHtml(app.firstName)}</strong> &mdash; your installment application <strong style="color:#0F172A;">${escapeEmailHtml(app.applicationRef)}</strong> has been approved. Please transfer your 1/3 down payment of <strong>${euros(app.downPaymentCents)}</strong> using the SEPA details below and put <strong>${escapeEmailHtml(app.applicationRef)}</strong> in the payment description to release your order for dispatch.
-      </p>
-
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 22px;background:#ECFDF5;border:2px solid #10B981;border-radius:14px;overflow:hidden;">
-        <tr>
-          <td style="background:#065F46;padding:10px 16px;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>
-                <td style="font-size:11px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#D1FAE5;">
-                  DOWN PAYMENT SEPA TRANSFER INSTRUCTIONS
-                </td>
-                <td align="right" style="font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:13px;font-weight:800;color:#FACC15;">
-                  DUE NOW: ${euros(app.downPaymentCents)}
-                </td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-        <tr>
-          <td style="padding:14px 16px;">
-            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#FFFFFF;border:1px solid #A7F3D0;border-radius:10px;font-size:13px;">
-              <tr>
-                <td style="padding:8px 12px;border-bottom:1px solid #ECFDF5;color:#64748B;width:36%;">Account name</td>
-                <td style="padding:8px 12px;border-bottom:1px solid #ECFDF5;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-weight:700;color:#0F172A;">${escapeEmailHtml(BANK_TRANSFER_ACCOUNT.accountName)}</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 12px;border-bottom:1px solid #ECFDF5;color:#64748B;">IBAN</td>
-                <td style="padding:8px 12px;border-bottom:1px solid #ECFDF5;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-weight:700;color:#1E40D8;">${escapeEmailHtml(BANK_TRANSFER_ACCOUNT.iban)}</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 12px;border-bottom:1px solid #ECFDF5;color:#64748B;">BIC</td>
-                <td style="padding:8px 12px;border-bottom:1px solid #ECFDF5;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-weight:700;color:#0F172A;">${escapeEmailHtml(BANK_TRANSFER_ACCOUNT.bic)}</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 12px;border-bottom:1px solid #ECFDF5;color:#64748B;">Amount</td>
-                <td style="padding:8px 12px;border-bottom:1px solid #ECFDF5;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-weight:800;color:#065F46;">${euros(app.downPaymentCents)}</td>
-              </tr>
-              <tr>
-                <td style="padding:8px 12px;color:#64748B;">Reference</td>
-                <td style="padding:8px 12px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-weight:800;color:#0F172A;">${escapeEmailHtml(app.applicationRef)}</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-      </table>
-
+      ${renderStepTracker(["Approved", "Down payment", "Dispatch", "Remaining payments"], 1, P.success)}
+      ${emailParagraph(`Please transfer the down payment of <strong>${euros(app.downPaymentCents)}</strong> using the details below. Put <strong>${escapeEmailHtml(app.applicationRef)}</strong> in the payment description so we can match it to your order.`)}
+      ${emailDetails(
+        [
+          { label: "Beneficiary", value: escapeEmailHtml(BANK_TRANSFER_ACCOUNT.accountName) },
+          { label: "IBAN", value: escapeEmailHtml(BANK_TRANSFER_ACCOUNT.iban), mono: true },
+          { label: "BIC / SWIFT", value: escapeEmailHtml(BANK_TRANSFER_ACCOUNT.bic), mono: true },
+          { label: "Amount", value: euros(app.downPaymentCents), strong: true },
+          { label: "Payment reference", value: escapeEmailHtml(app.applicationRef), mono: true, strong: true },
+        ],
+        { title: "Bank transfer details" },
+      )}
       ${renderScheduleTable(app, 0)}
-
-      ${link ? renderEmailButton("Pay your down payment", link, "emerald") : ""}
+      ${renderEmailButton("Pay your down payment", link, "emerald")}
     `,
   })
 
   return sendEmail({ to: app.email, subject, html, text })
 }
 
-/**
- * Form 9: Installment Payment Ledger & Schedule Statement ("verification" layout)
- */
 export async function sendInstallmentPaymentStatusEmail(
   app: InstallmentApplication,
   scheduleIndex: number,
@@ -246,7 +171,7 @@ export async function sendInstallmentPaymentStatusEmail(
   if (!entry) return { sent: false, error: "Installment schedule entry not found" }
 
   const link = statusLink(app)
-  const paymentLabel = entry.label === "down_payment" ? "down payment" : `installment ${scheduleIndex}`
+  const paymentLabel = entry.label === "down_payment" ? "down payment" : `payment ${scheduleIndex + 1} of 3`
   const statusLabel =
     entry.status === "paid" ? "Paid" : entry.status === "reviewing" ? "Payment under review" : "Unpaid"
   const subject = `Payment update for your installment order — ${app.applicationRef}`
@@ -263,60 +188,46 @@ export async function sendInstallmentPaymentStatusEmail(
   const html = renderEmail({
     variant: entry.status === "paid" ? "certificate" : "verification",
     preheader: `Your ${paymentLabel} (${euros(entry.amountCents)}) is now ${statusLabel}`,
-    eyebrow: "INSTALLMENT SCHEDULE STATEMENT",
-    badgeText: statusLabel.toUpperCase(),
+    badgeText: statusLabel,
     badgeTone: entry.status === "paid" ? "emerald" : "cobalt",
     headerTitle: "Payment status update",
-    headerSubtitle: `Reference ${app.applicationRef} · Linked order status: ${orderStatus}`,
-    referenceLabel: "PLAN REF",
+    headerSubtitle: `Your ${paymentLabel} of ${euros(entry.amountCents)} is now: ${statusLabel}.`,
+    referenceLabel: "Application",
     referenceValue: app.applicationRef,
     body: `
-      <p style="margin:0 0 18px;color:#334155;font-size:14px;line-height:1.65;">
-        Hi <strong style="color:#0F172A;">${escapeEmailHtml(app.firstName)}</strong>, your <strong>${escapeEmailHtml(paymentLabel)}</strong> of <strong>${euros(entry.amountCents)}</strong> is now <strong>${escapeEmailHtml(statusLabel)}</strong>. Your overall order status is <strong>${escapeEmailHtml(orderStatus)}</strong>.
-      </p>
-
+      ${emailParagraph(`Hi <strong>${escapeEmailHtml(app.firstName)}</strong>, here's the latest on your installment plan. Your order status is <strong>${escapeEmailHtml(orderStatus)}</strong>.`)}
       ${renderScheduleTable(app, scheduleIndex)}
-
-      ${link ? renderEmailButton("View your installment plan", link, "cobalt") : ""}
+      ${renderEmailButton("View your installment plan", link)}
     `,
   })
 
   return sendEmail({ to: app.email, subject, html, text })
 }
 
-/**
- * Form 10: Formal Credit Decision Notice ("passport" layout)
- */
 export async function sendInstallmentApplicationRejectedEmail(
   app: InstallmentApplication,
 ): Promise<SendResult> {
-  const catalogUrl = `${siteUrl()}/en/checkout`
+  const checkoutUrl = `${siteUrl()}/en/checkout`
   const subject = `Update on your installment application — ${app.applicationRef}`
 
-  const text = `Hi ${app.firstName}, unfortunately we're unable to approve your installment application ${app.applicationRef} at this time. If you have questions, please contact our support team.`
+  const text = `Hi ${app.firstName}, unfortunately we're unable to approve your installment application ${app.applicationRef} at this time. You can still pay for your order by card, Open Banking or SEPA bank transfer. If you have questions, reply to this email.`
 
   const html = renderEmail({
     variant: "passport",
-    preheader: `Decision update for installment application ${app.applicationRef}`,
-    eyebrow: "CREDIT & KYC DECISION NOTICE",
-    badgeText: "NOT APPROVED",
+    preheader: `Decision on your installment application ${app.applicationRef}`,
+    badgeText: "Not approved",
     badgeTone: "rose",
     headerTitle: "Update on your application",
-    headerSubtitle: `Application reference ${app.applicationRef}`,
-    referenceLabel: "APPLICATION REF",
+    referenceLabel: "Application",
     referenceValue: app.applicationRef,
     body: `
-      <div style="background:#FFF1F2;border:1px solid #FECDD3;border-radius:12px;padding:16px;margin-bottom:20px;">
-        <p style="margin:0;color:#881337;font-size:14px;line-height:1.65;">
-          Hi <strong>${escapeEmailHtml(app.firstName)}</strong>, unfortunately we&apos;re unable to approve your installment application <strong>${escapeEmailHtml(app.applicationRef)}</strong> at this time.
-        </p>
-      </div>
-
-      <p style="margin:0 0 20px;color:#475569;font-size:14px;line-height:1.6;">
-        You can still place your order directly at checkout using Visa / Mastercard, instant Open Banking, or standard SEPA bank transfer. If you have questions about your application or would like assistance from our team, simply reply to this email.
-      </p>
-
-      ${renderEmailButton("Return to 3DEureka checkout", catalogUrl, "ink")}
+      ${emailParagraph(`Hi <strong>${escapeEmailHtml(app.firstName)}</strong>, unfortunately we&apos;re unable to approve your installment application at this time.`)}
+      ${emailNotice({
+        tone: "slate",
+        title: "You can still place your order",
+        html: "Pay at checkout by Visa / Mastercard, instant Open Banking, or SEPA bank transfer. If you have questions about the decision, just reply to this email.",
+      })}
+      ${renderEmailButton("Go to checkout", checkoutUrl, "ink")}
     `,
   })
 
