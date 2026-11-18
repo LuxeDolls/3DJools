@@ -31,13 +31,13 @@ export function ProductReviews({ reviews, locale }: { reviews: StampedReview[]; 
       </div>
 
       {summary.count > 0 ? (
-        <div className="grid gap-4 lg:grid-cols-3 lg:gap-6">
-          <div className="lg:sticky lg:top-24 lg:self-start">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
+          <div className="min-w-0 lg:sticky lg:top-24 lg:self-start">
             <RatingSummary summary={summary} locale={locale} />
           </div>
-          <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-2">
+          <ul className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-2">
             {reviews.map((review) => (
-              <li key={review.id}>
+              <li key={review.id} className="min-w-0">
                 <ReviewCard review={review} locale={locale} />
               </li>
             ))}

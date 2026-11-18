@@ -40,7 +40,7 @@ export function ReviewCard({
   return (
     <article
       className={cn(
-        "flex h-full flex-col gap-3 rounded-3xl border border-border/90 bg-card/92 p-4 shadow-[var(--shadow-float-md)] backdrop-blur-md sm:p-5",
+        "flex h-full min-w-0 flex-col gap-3 break-words rounded-3xl border border-border/90 bg-card/92 p-4 shadow-[var(--shadow-float-md)] backdrop-blur-md sm:p-5",
         className,
       )}
     >
@@ -101,7 +101,7 @@ export function ReviewCard({
         {product ? (
           <Link
             href={product.href}
-            className="group flex items-center gap-2.5 rounded-2xl border border-border bg-background/70 p-1.5 pr-3 transition-colors hover:border-primary/60"
+            className="group flex min-w-0 items-center gap-2.5 rounded-2xl border border-border bg-background/70 p-1.5 pr-3 transition-colors hover:border-primary/60"
           >
             {product.image ? (
               <span className="relative size-10 shrink-0 overflow-hidden rounded-xl bg-photo">

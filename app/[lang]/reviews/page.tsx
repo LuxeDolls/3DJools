@@ -69,11 +69,11 @@ export default async function ReviewsPage({
       </header>
 
       {visible.length > 0 ? (
-        <ul className="mt-8 grid gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-8 grid grid-cols-1 gap-4 sm:mt-10 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((review) => {
             const product = byId.get(review.productId)
             return (
-              <li key={review.id}>
+              <li key={review.id} className="min-w-0">
                 <ReviewCard
                   review={review}
                   locale={locale}
