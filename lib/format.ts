@@ -1,6 +1,6 @@
 import type { Locale } from "@/lib/i18n/config"
 
-const localeToIntl: Record<Locale, string> = {
+export const localeToIntl: Record<Locale, string> = {
   en: "en-IE",
   de: "de-DE",
   it: "it-IT",

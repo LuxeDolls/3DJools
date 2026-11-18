@@ -16,6 +16,7 @@ import { notifyNewOrder, notifyOrderStatusChange } from "@/lib/notifications/adm
 import { sendOrderShippedEmail, sendOrderStatusUpdateEmail } from "@/lib/email/order-emails"
 import { ensureShipmentOnShip } from "@/lib/shipping/events"
 import { buildOrderNotes, parseOrderNotes } from "@/lib/orders/notes"
+import { pushOrderToStamped } from "@/lib/reviews/stamped"
 
 export type OrderWithItems = OrderRow & { items: OrderItemRow[] }
 
@@ -207,6 +208,13 @@ export async function updateOrderStatus(orderId: string, status: OrderStatus): P
         console.error("[v0] Order-status customer email failed:", error)
       })
     })
+    if (status === "paid" || status === "shipped") {
+      after(() =>
+        pushOrderToStamped(updated).catch((error) => {
+          console.error("[v0] Stamped order sync failed:", error)
+        }),
+      )
+    }
   }
 }
 
@@ -240,6 +248,11 @@ export async function updateOrderTracking(orderId: string, tracking: TrackingInp
     after(() =>
       sendOrderShippedEmail(updated).catch((error) => {
         console.error("[v0] Shipment customer email failed:", error)
+      }),
+    )
+    after(() =>
+      pushOrderToStamped(updated).catch((error) => {
+        console.error("[v0] Stamped shipment order sync failed:", error)
       }),
     )
   }

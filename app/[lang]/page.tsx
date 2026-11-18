@@ -12,6 +12,8 @@ import { PrinterFinder } from "@/components/home/printer-finder"
 import { HelpStrip } from "@/components/home/help-strip"
 import { MemberPromo } from "@/components/home/member-promo"
 import { Newsletter } from "@/components/home/newsletter"
+import { ReviewsCarousel } from "@/components/home/reviews-carousel"
+import { getStampedReviews } from "@/lib/reviews/stamped-reviews"
 import { SectionHeading } from "@/components/section-heading"
 import { ProductCard } from "@/components/product/product-card"
 import { ProductRail } from "@/components/product/product-rail"
@@ -25,10 +27,11 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
 
-  const [featured, bestsellers, allProducts] = await Promise.all([
+  const [featured, bestsellers, allProducts, reviews] = await Promise.all([
     getFeaturedProducts(locale),
     getBestsellers(locale),
     getAllProducts(locale),
+    getStampedReviews(),
   ])
 
   return (
@@ -57,6 +60,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
       <MemberPromo />
 
       <FeaturedShowcase products={selectShowcaseProducts(allProducts)} locale={locale} dict={dict} />
+
+      <ReviewsCarousel reviews={reviews} products={allProducts} locale={locale} />
 
       <UspBar dict={dict} locale={locale} />
       <HelpStrip locale={locale} dict={dict} />

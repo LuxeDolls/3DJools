@@ -40,6 +40,7 @@
   --color-foreground: var(--foreground);
   --color-background: var(--background);
   --color-signal: var(--signal);
+  --color-star: var(--star);
   --color-signal-foreground: var(--signal-foreground);
   --color-ink: var(--ink);
   --color-ink-foreground: var(--ink-foreground);
@@ -97,6 +98,7 @@
   --input: oklch(0.86 0.018 256);
   --ring: oklch(0.52 0.215 264);
   --signal: oklch(0.89 0.165 98);
+  --star: oklch(0.74 0.17 70);
   --signal-foreground: oklch(0.22 0.045 263);
   --ink: oklch(0.21 0.045 263);
   --ink-foreground: oklch(0.97 0.006 250);
@@ -155,6 +157,7 @@
   --input: oklch(1 0 0 / 16%);
   --ring: oklch(0.6 0.2 263);
   --signal: oklch(0.87 0.16 98);
+  --star: oklch(0.84 0.16 85);
   --signal-foreground: oklch(0.2 0.04 264);
   --ink: oklch(0.12 0.03 264);
   --ink-foreground: oklch(0.96 0.008 250);
@@ -213,6 +216,7 @@
     --input: oklch(1 0 0 / 16%);
     --ring: oklch(0.6 0.2 263);
     --signal: oklch(0.87 0.16 98);
+    --star: oklch(0.84 0.16 85);
     --signal-foreground: oklch(0.2 0.04 264);
     --ink: oklch(0.12 0.03 264);
     --ink-foreground: oklch(0.96 0.008 250);

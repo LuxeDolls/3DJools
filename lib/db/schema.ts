@@ -395,3 +395,26 @@ export const alppayHolds = pgTable("alppay_holds", {
   holdUntil: timestamp("hold_until", { withTimezone: true }),
   updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 })
+
+/** Reviews and UGC events received from Stamped.io webhooks. */
+export const stampedReviews = pgTable("stamped_reviews", {
+  id: text("id").primaryKey(),
+  topic: text("topic").notNull().default("reviews"),
+  productId: text("product_id"),
+  productSlug: text("product_slug"),
+  author: text("author"),
+  customerEmail: text("customer_email"),
+  rating: integer("rating"),
+  title: text("title"),
+  message: text("message"),
+  verifiedType: integer("verified_type"),
+  reply: text("reply"),
+  published: boolean("published").notNull().default(true),
+  rawPayload: jsonb("raw_payload").$type<Record<string, unknown>>(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+})
+
+export type StampedReviewRow = typeof stampedReviews.$inferSelect
+export type NewStampedReviewRow = typeof stampedReviews.$inferInsert
+
