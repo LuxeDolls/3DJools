@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { isLocale, type Locale } from "@/lib/i18n/config"
+import { isLocale, locales, type Locale } from "@/lib/i18n/config"
+import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { getProductBySlug, getRelatedProducts } from "@/lib/catalog"
 import { isCardPaymentTest } from "@/lib/catalog/hidden-products"
@@ -31,12 +32,16 @@ export async function generateMetadata({
   const locale: Locale = isLocale(lang) ? lang : "en"
   const product = await getProductBySlug(slug, locale)
   if (!product) return {}
-  const canonical = `https://www.3deureka.com/${locale}/product/${product.slug}`
+  const canonical = `${SITE_ORIGIN}/${locale}/product/${product.slug}`
+  const languages: Record<string, string> = Object.fromEntries(
+    locales.map((l) => [l, `${SITE_ORIGIN}/${l}/product/${product.slug}`]),
+  )
+  languages["x-default"] = `${SITE_ORIGIN}/en/product/${product.slug}`
   return {
     title: product.name,
     description: product.shortDescription,
     robots: isCardPaymentTest(product.slug) ? { index: false, follow: false } : undefined,
-    alternates: { canonical },
+    alternates: { canonical, languages },
     openGraph: {
       title: product.name,
       description: product.shortDescription,
@@ -64,7 +69,7 @@ export default async function ProductPage({
     getProductStampedReviews(product.productId),
     getStampedProductRating(product.productId),
   ])
-  const url = `https://www.3deureka.com${localizedPath(locale, `/product/${product.slug}`)}`
+  const url = `${SITE_ORIGIN}${localizedPath(locale, `/product/${product.slug}`)}`
   const reviewSummary = summarizeReviews(reviews)
   const displayedReviews = await localizeReviews(reviews, locale)
   const ratedProduct =

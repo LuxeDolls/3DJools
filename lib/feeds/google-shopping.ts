@@ -7,9 +7,10 @@ import { ALL_SHIPPING_COUNTRIES, DOMESTIC_COUNTRY, DOMESTIC_RATE_CENTS, INTERNAT
 const BASE_URL = SITE_ORIGIN
 const STORE_NAME = "3DEureka"
 
-// The 5% catalog-wide discount is baked directly into every product's price_cents
-// (see the catalog migration), so the feed just reports that single price —
-// it already matches what every customer pays on the site.
+// Each item carries exactly one <g:price>: the price the shopper pays on the
+// site today. The November reduction is already inside price_cents, and after
+// the sale ends effectivePrice() returns the regular price. The feed never
+// sends sale_price, sale_price_effective_date or the old crossed-out price.
 
 function absoluteUrl(value: string | undefined): string {
   if (!value) return ""
@@ -18,9 +19,10 @@ function absoluteUrl(value: string | undefined): string {
 }
 const DESCRIPTION_LIMIT = 5000
 
-// Machines and accessories. Spare parts, filaments and resins stay on the site.
+// Every live product except filaments and resins. Spare parts are off the
+// storefront (their category page is 404), so they cannot be advertised either.
 // Russian is not a storefront language and must never appear in a feed.
-const FEED_CATEGORIES = new Set(["printers", "scanners", "laser-engravers", "accessories"])
+const EXCLUDED_CATEGORIES = new Set(["filaments", "resins", "spare-parts"])
 const CYRILLIC = /[\u0400-\u04FF]/
 
 const GOOGLE_CATEGORY = {
@@ -44,7 +46,21 @@ const FEED_DESCRIPTION: Record<Locale, string> = {
 
 // Imported accessory names start with a category label. That label is not the product.
 const TITLE_PREFIX = /^(?:3d print(?:ing)?|3d printer|3d-druck|3d-drucker|impression 3d|imprimante 3d|impresión 3d|impresora 3d|stampa 3d|stampante 3d|3d-printen|3d-printer|3d-print)\s*,\s*/i
-const PROMOTION = /\b(?:\d+\s*%|autumn sale|herbst(?:aktion|sale|-sale)|promotion d'automne|descuento de otoño|sconto d'autunno|herfstkorting|rabatt|soldes|korting)\b/i
+// Sentences about the sale, a discount or a price cut. Technical percentages
+// ("95% pre-assembled", "±0.15%") are product facts and stay.
+const PROMOTION = new RegExp(
+  [
+    String.raw`\b\d+\s*%\s*(?:off|rabatt|korting|de r[ée]duction|de descuento|di sconto)`,
+    String.raw`\b(?:black friday|cyber monday|november|novembre|noviembre|autumn sale|herbst\w*|herfst\w*|automne|oto[ñn]o|autunno)\b`,
+    String.raw`\b(?:discount\w*|on sale|sale price|limited[- ]time|special offer|promo\w*code|coupon|voucher)\b`,
+    String.raw`\b(?:rabatt\w*|sonderangebot|aktionspreis|preisnachlass|gutschein)\b`,
+    String.raw`\b(?:korting\w*|actieprijs|kortingscode)\b`,
+    String.raw`\b(?:remise\w*|soldes|prix barr[ée]|offre sp[ée]ciale|code promo)\b`,
+    String.raw`\b(?:descuento\w*|rebaja\w*|oferta especial|c[óo]digo promocional)\b`,
+    String.raw`\b(?:sconto|sconti|scontat\w*|saldi|offerta speciale|codice promozionale)\b`,
+  ].join("|"),
+  "i",
+)
 
 const PRODUCT_TYPE: Record<Locale, Record<string, string>> = {
   en: { printers: "3D printers", scanners: "3D scanners", "laser-engravers": "Laser engravers", accessories: "Accessories", pcb: "PCB printers" },
@@ -201,7 +217,7 @@ function withoutPromotion(value: string): string {
 }
 
 function feedDescription(product: Product, locale: Locale): string {
-  const highlights = product.highlights.filter(Boolean).join(" ")
+  const highlights = product.highlights.filter((line) => line && !PROMOTION.test(line)).join(" ")
   const base = withoutPromotion([product.description, highlights].filter(Boolean).join(" "))
   if (wordCount(base) >= 100) return clip(base)
 
@@ -234,9 +250,8 @@ function productContainsRussian(product: Product): boolean {
   ].some((value) => containsRussian(value))
 }
 
-function enoughImages(product: Product): boolean {
-  const minimum = product.category === "accessories" ? 1 : 2
-  return product.images.length >= minimum
+function hasImage(product: Product): boolean {
+  return product.images.length > 0
 }
 
 function googleCategory(product: Product): string {
@@ -258,9 +273,9 @@ function validGtin(value: string | undefined): string | undefined {
 export async function createGoogleShoppingFeed(locale: Locale): Promise<string> {
   const products = (await getAllProducts(locale)).filter(
     (product) =>
-      FEED_CATEGORIES.has(product.category) &&
+      !EXCLUDED_CATEGORIES.has(product.category) &&
       product.priceCents > 0 &&
-      enoughImages(product) &&
+      hasImage(product) &&
       !product.slug.startsWith("test-") &&
       !productContainsRussian(product),
   )

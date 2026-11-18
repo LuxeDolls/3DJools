@@ -58,7 +58,12 @@ export function middleware(request: NextRequest) {
   const hasLocale = locales.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   )
-  if (hasLocale) return NextResponse.next()
+  if (hasLocale) {
+    // The locale layout builds each page's canonical and hreflang links from this.
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set("x-pathname", pathname)
+    return NextResponse.next({ request: { headers: requestHeaders } })
+  }
 
   const locale = detectLocale(request)
   const url = request.nextUrl.clone()

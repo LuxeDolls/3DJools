@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { headers } from "next/headers"
 import { notFound } from "next/navigation"
 import { locales, isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
@@ -18,9 +19,12 @@ export async function generateMetadata({
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
 
+  const pathname = (await headers()).get("x-pathname") ?? `/${locale}`
+  const rest = pathname.replace(/^\/[^/]+/, "").replace(/\/+$/, "")
+
   const languages: Record<string, string> = {}
-  for (const l of locales) languages[l] = `/${l}`
-  languages["x-default"] = "/en"
+  for (const l of locales) languages[l] = `/${l}${rest}`
+  languages["x-default"] = `/en${rest}`
 
   return {
     title: {
@@ -29,7 +33,7 @@ export async function generateMetadata({
     },
     description: dict.footer.companyBlurb,
     alternates: {
-      canonical: `/${locale}`,
+      canonical: `/${locale}${rest}`,
       languages,
     },
     openGraph: {

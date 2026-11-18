@@ -18,6 +18,21 @@ type SitemapPath = {
   lastModified?: Date
   changeFrequency: ChangeFrequency
   priority: number
+  images?: string[]
+}
+
+const IMAGES_PER_PRODUCT = 10
+
+function absoluteImage(image: string): string {
+  return image.startsWith("http") ? image : `${BASE}${image.startsWith("/") ? "" : "/"}${image}`
+}
+
+function imageBlock(images: string[] | undefined): string {
+  if (!images?.length) return ""
+  return images
+    .slice(0, IMAGES_PER_PRODUCT)
+    .map((image) => `\n  <image:image>\n    <image:loc>${escapeXml(absoluteImage(image))}</image:loc>\n  </image:image>`)
+    .join("")
 }
 
 const staticPages: SitemapPath[] = [
@@ -76,7 +91,7 @@ function urlBlock(entry: SitemapPath): string {
       return `<url>
   <loc>${escapeXml(pageUrl(locale, entry.path))}</loc>${modified}
   <changefreq>${entry.changeFrequency}</changefreq>
-  <priority>${entry.priority.toFixed(1)}</priority>
+  <priority>${entry.priority.toFixed(1)}</priority>${imageBlock(entry.images)}
 ${alternates(entry.path)}
 </url>`
     })
@@ -85,7 +100,7 @@ ${alternates(entry.path)}
 
 function urlset(entries: SitemapPath[]): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${entries.map(urlBlock).join("\n")}
 </urlset>
 `
@@ -125,6 +140,7 @@ export async function productsSitemapXml(): Promise<{ xml: string; lastModified?
     lastModified: product.updatedAt,
     changeFrequency: "weekly" as const,
     priority: 0.7,
+    images: product.images,
   }))
   return { xml: urlset(entries), lastModified: newest }
 }
