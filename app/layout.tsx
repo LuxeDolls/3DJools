@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   description:
     'Top-tier 3D printers, filament and accessories at honest prices. Free shipping on every order across the EU. Bambu Lab, Prusa, Creality, Anycubic, Elegoo and more.',
   generator: 'v0.app',
-  metadataBase: new URL('https://www.3deureka.com'),
+  metadataBase: new URL('https://3deureka.com'),
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: '48x48' },

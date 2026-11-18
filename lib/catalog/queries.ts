@@ -200,17 +200,24 @@ const unlistedCategories = ["spare-parts"] as const
 
 /** Live products that should be indexed: not archived, and not in a removed category. */
 export async function getSitemapProducts(): Promise<
-  { slug: string; category: CategorySlug; brandSlug: string; updatedAt: Date }[]
+  { slug: string; name: string; category: CategorySlug; brandSlug: string; updatedAt: Date; images: string[] }[]
 > {
-  return db
+  const rows = await db
     .select({
       slug: productsTable.slug,
+      name: productsTable.name,
       category: productsTable.category,
       brandSlug: productsTable.brandSlug,
       updatedAt: productsTable.updatedAt,
+      images: productsTable.images,
     })
     .from(productsTable)
     .where(and(storefrontVisible(), notInArray(productsTable.category, [...unlistedCategories])))
+    .orderBy(asc(productsTable.category), asc(productsTable.slug))
+  return rows.map((row) => ({
+    ...row,
+    images: row.images.map((image) => storefrontImageUrl(image)).filter((image): image is string => Boolean(image)),
+  }))
 }
 
 export async function getAllBrandSlugs(): Promise<string[]> {

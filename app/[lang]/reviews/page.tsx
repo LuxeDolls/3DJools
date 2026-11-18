@@ -23,7 +23,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return {
     title: copy.pageTitle,
     description: copy.pageDescription,
-    alternates: { canonical: `https://www.3deureka.com/${locale}/reviews` },
   }
 }
 

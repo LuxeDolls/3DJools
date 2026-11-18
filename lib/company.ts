@@ -16,7 +16,7 @@ export const COMPANY = {
   email: "info@3deureka.com",
   companyNumber: "1005.815.863",
   vat: "BE1005815863",
-  url: "https://www.3deureka.com",
+  url: "https://3deureka.com",
 } as const
 
 export const companyStreetLine = `${COMPANY.street}, ${COMPANY.postalCode} ${COMPANY.city}, ${COMPANY.country}`

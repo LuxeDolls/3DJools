@@ -5,8 +5,11 @@
  *
  *  Pages use a same-origin /media path so the HTML does not name a host.
  *  Feeds and schema use SITE_ORIGIN.
+ *
+ *  SITE_ORIGIN is the apex domain because middleware 308-redirects every
+ *  www page to it; canonical, sitemap and feed URLs must not redirect.
  */
-export const SITE_ORIGIN = "https://www.3deureka.com"
+export const SITE_ORIGIN = "https://3deureka.com"
 export const IMAGE_ORIGIN = "https://images.3deureka.com"
 const OWN_HOSTS = new Set([
   "3deureka.com",
