@@ -55,6 +55,8 @@ function pageUrl(page: number) {
     take: String(PAGE_SIZE),
     page: String(page),
     sortReviews: "recent",
+    // Without an explicit minRating Stamped returns only 5-star reviews.
+    minRating: "1",
   })
   return `${REVIEWS_ENDPOINT}?${params.toString()}`
 }
