@@ -56,10 +56,10 @@ export function ProductQuickView({
           </button>
         }
       />
-      <DialogContent className="max-h-[90dvh] overflow-y-auto p-0 sm:max-w-3xl">
-        <div className="grid gap-0 md:grid-cols-12">
+      <DialogContent className="max-h-[90dvh] grid-cols-1 overflow-x-hidden overflow-y-auto p-0 sm:max-w-3xl">
+        <div className="grid min-w-0 grid-cols-1 gap-0 md:grid-cols-12">
           {/* Left column: studio image + thumbnails */}
-          <div className="flex flex-col justify-between border-b border-border bg-white p-5 md:col-span-6 md:border-r md:border-b-0 md:rounded-l-xl">
+          <div className="flex min-w-0 flex-col justify-between border-b border-border bg-white p-5 md:col-span-6 md:border-r md:border-b-0 md:rounded-l-xl">
             <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-white">
               <Image
                 src={gallery[activeImage] || "/placeholder.svg"}
@@ -92,7 +92,7 @@ export function ProductQuickView({
           </div>
 
           {/* Right column: product details & actions */}
-          <div className="flex flex-col justify-between p-5 sm:p-6 md:col-span-6">
+          <div className="flex min-w-0 flex-col justify-between p-5 sm:p-6 md:col-span-6">
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="secondary" className="uppercase tracking-wider">
@@ -121,7 +121,7 @@ export function ProductQuickView({
               </DialogHeader>
 
               <div className="mt-4 flex flex-col gap-1.5 rounded-lg border border-border bg-secondary/40 p-3">
-                <div className="flex items-baseline justify-between gap-2">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-2 gap-y-1">
                   <Price cents={product.priceCents} compareAtCents={product.compareAtCents} locale={locale} size="lg" />
                   <span className="text-[11px] font-medium text-muted-foreground">
                     {dict.cart.vatIncluded}
