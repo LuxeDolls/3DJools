@@ -1,3 +1,4 @@
+import { GoogleTag, GoogleTagNoScript } from '@/components/legal/google-tag'
 import { OptionalAnalytics } from '@/components/legal/optional-analytics'
 import { OrganizationJsonLd } from '@/components/legal/organization-jsonld'
 import type { Metadata, Viewport } from 'next'
@@ -57,6 +58,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased">
+        <GoogleTagNoScript />
+        <GoogleTag />
         <OrganizationJsonLd />
         {children}
         <OptionalAnalytics />
