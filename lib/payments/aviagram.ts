@@ -4,15 +4,15 @@ import { COMPANY } from "@/lib/company"
 
 // Hosted card checkout via Zenthoryx API (https://paydocs.dev).
 // Endpoint: https://web.zenthoryx.app/api/payment/create (or /api/payment/createForm)
-// Available gateways: EUR-ALP, EUR-PMF, EUR-SHP. Active gateway: EUR-ALP.
+// Available gateways: EUR-TRZ, EUR-ALP, EUR-PMF, EUR-SHP. Active gateway: EUR-TRZ.
 export const ZENTHORYX_CHECKOUT_ENABLED = true
 
 const DEFAULT_HOST = "https://web.zenthoryx.app/api/payment/createForm"
-const DEFAULT_CURRENCY = "EUR-ALP"
+const CARD_GATEWAY = "EUR-TRZ"
 const DEFAULT_CLIENT_ID = "f482893b2d11ff75cb7fb16b0a8a2035"
 const DEFAULT_CLIENT_SECRET = "34b677d8ee6162fcd069a18287293d52c6c25512df464be5847ca7b90456955f"
 
-export const AVAILABLE_CARD_GATEWAYS = ["EUR-ALP", "EUR-PMF", "EUR-SHP"] as const
+export const AVAILABLE_CARD_GATEWAYS = ["EUR-TRZ", "EUR-ALP", "EUR-PMF", "EUR-SHP"] as const
 
 function resolveCredentials(): { clientId: string; clientSecret: string } {
   const clientId = (process.env.ZENTHORYX_CLIENT_ID || DEFAULT_CLIENT_ID).trim()
@@ -21,8 +21,7 @@ function resolveCredentials(): { clientId: string; clientSecret: string } {
 }
 
 function resolveGateway(): string {
-  const raw = (process.env.ZENTHORYX_GATEWAY || DEFAULT_CURRENCY).trim()
-  return raw || DEFAULT_CURRENCY
+  return CARD_GATEWAY
 }
 
 function resolveEndpoints(): string[] {
