@@ -1,6 +1,7 @@
 import "server-only"
 
 import { after } from "next/server"
+import { SITE_ORIGIN } from "@/lib/catalog/image-urls"
 import type { OrderWithItems } from "@/lib/orders/queries"
 import { getOrderById, mergeOrderNotes, updateOrderStatus } from "@/lib/orders/queries"
 import { parseOrderNotes } from "@/lib/orders/notes"
@@ -20,11 +21,7 @@ function readEnv(name: string): string {
 }
 
 export function ngeniusConfigured(): boolean {
-  return Boolean(
-    readEnv("NGENIUS_API_KEY") &&
-      readEnv("NGENIUS_HOSTED_SESSION_API_KEY") &&
-      readEnv("NGENIUS_OUTLET_REF"),
-  )
+  return Boolean(readEnv("NGENIUS_API_KEY") && readEnv("NGENIUS_OUTLET_REF"))
 }
 
 export function ngeniusPublicConfig(): {
@@ -115,10 +112,11 @@ async function getNgeniusAccessToken(): Promise<string> {
   const res = await fetch(`${apiBase()}/identity/auth/access-token`, {
     method: "POST",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/vnd.ni-identity.v1+json",
+      Accept: "application/vnd.ni-identity.v1+json",
       Authorization: `Basic ${apiKey}`,
     },
-    body: "grant_type=client_credentials",
+    body: JSON.stringify({ grant_type: "client_credentials" }),
     cache: "no-store",
   })
 
@@ -130,6 +128,77 @@ async function getNgeniusAccessToken(): Promise<string> {
   const data = (await res.json()) as { access_token?: string }
   if (!data.access_token) throw new Error("ngenius_no_access_token")
   return data.access_token
+}
+
+export async function createNgeniusHostedOrder(input: {
+  orderNumber: string
+  amountCents: number
+  locale: string
+  email: string
+  shippingName?: string | null
+  address1?: string | null
+  city?: string | null
+}): Promise<{ ngeniusOrderRef: string; paymentUrl: string; aedMinorUnits: number }> {
+  const outletRef = readEnv("NGENIUS_OUTLET_REF")
+  if (!outletRef) throw new Error("ngenius_missing_outlet_ref")
+
+  const quote = await convertEurCentsToAed(input.amountCents)
+  const accessToken = await getNgeniusAccessToken()
+  const { firstName, lastName } = splitName(input.shippingName)
+  const billingAddress: Record<string, string> = {}
+  if (firstName) billingAddress.firstName = firstName.slice(0, 45)
+  if (lastName) billingAddress.lastName = lastName.slice(0, 45)
+  if (input.address1?.trim()) billingAddress.address1 = input.address1.trim().slice(0, 100)
+  if (input.city?.trim()) billingAddress.city = input.city.trim().slice(0, 50)
+
+  const redirectUrl = `${SITE_ORIGIN}/${input.locale}/order/${encodeURIComponent(input.orderNumber)}`
+  const body: Record<string, unknown> = {
+    action: "PURCHASE",
+    amount: {
+      currencyCode: "AED",
+      value: quote.aedMinorUnits,
+    },
+    merchantOrderReference: input.orderNumber,
+    emailAddress: input.email,
+    merchantAttributes: {
+      redirectUrl,
+      skipConfirmationPage: true,
+    },
+  }
+  if (Object.keys(billingAddress).length > 0) {
+    body.billingAddress = billingAddress
+  }
+
+  const res = await fetch(
+    `${apiBase()}/transactions/outlets/${encodeURIComponent(outletRef)}/orders`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/vnd.ni-payment.v2+json",
+        Accept: "application/vnd.ni-payment.v2+json",
+      },
+      body: JSON.stringify(body),
+      cache: "no-store",
+    },
+  )
+
+  const payload = (await res.json().catch(() => null)) as
+    | { reference?: unknown; _links?: { payment?: { href?: unknown } } }
+    | null
+  const ngeniusOrderRef = typeof payload?.reference === "string" ? payload.reference.trim() : ""
+  const paymentUrl =
+    typeof payload?._links?.payment?.href === "string" ? payload._links.payment.href.trim() : ""
+
+  if (!res.ok || !ngeniusOrderRef || !paymentUrl.startsWith("https://")) {
+    throw new Error(`ngenius_create_${res.status}: ${JSON.stringify(payload ?? {}).slice(0, 250)}`)
+  }
+
+  return {
+    ngeniusOrderRef,
+    paymentUrl,
+    aedMinorUnits: quote.aedMinorUnits,
+  }
 }
 
 function splitName(fullName: string | null | undefined): { firstName?: string; lastName?: string } {
@@ -291,4 +360,18 @@ export async function applyNgeniusPaymentUpdate(
   }
 
   return (await getOrderById(order.id)) ?? order
+}
+
+export async function syncNgeniusOrderStatus(order: OrderWithItems): Promise<OrderWithItems> {
+  const notes = parseOrderNotes(order.notes)
+  const ref = notes.ngenius_order_ref?.trim()
+  if (!ref) return order
+  try {
+    const payload = await getNgeniusOrderStatus(ref)
+    if (!payload) return order
+    return await applyNgeniusPaymentUpdate(order, payload)
+  } catch (err) {
+    console.error("[v0] N-Genius status sync failed:", err)
+    return order
+  }
 }
