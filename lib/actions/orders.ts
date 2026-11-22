@@ -257,6 +257,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       await mergeOrderNotes(order.id, {
         checkout_locale: locale,
         ngenius_order_ref: hosted.ngeniusOrderRef,
+        ngenius_aed_minor_units: String(hosted.aedMinorUnits),
       })
       paymentUrl = hosted.paymentUrl
     } catch (err) {
@@ -350,6 +351,7 @@ export async function startNgeniusPayment(
     await mergeOrderNotes(order.id, {
       checkout_locale: safeLocale,
       ngenius_order_ref: hosted.ngeniusOrderRef,
+      ngenius_aed_minor_units: String(hosted.aedMinorUnits),
       ngenius_last_status: undefined,
       ngenius_declined_reason: undefined,
     })

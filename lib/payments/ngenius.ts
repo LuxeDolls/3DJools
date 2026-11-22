@@ -105,6 +105,52 @@ export async function convertEurCentsToAed(eurCents: number): Promise<EurToAedQu
   }
 }
 
+async function convertEurCentsViaNgeniusMcp(
+  eurCents: number,
+  accessToken: string,
+  outletRef: string,
+): Promise<EurToAedQuote> {
+  try {
+    const res = await fetch(
+      `${apiBase()}/forex/outlets/${encodeURIComponent(outletRef)}/forex-lookup`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/vnd.ni.forex.v1+json",
+          Accept: "application/vnd.ni.forex.v1+json",
+        },
+        body: JSON.stringify({
+          currencyCodeFrom: "AED",
+          payerIpAddress: "185.15.56.1",
+          amount: Math.max(10000, eurCents * 4),
+          targetCurrency: ["EUR"],
+        }),
+        cache: "no-store",
+      },
+    )
+    if (res.ok) {
+      const data = (await res.json()) as {
+        targetCurrencies?: Array<{ currencyCodeTo?: string; conversionRate?: number }>
+      }
+      const eurQuote = data.targetCurrencies?.find((c) => c.currencyCodeTo === "EUR")
+      const aedToEurRate = eurQuote?.conversionRate
+      if (typeof aedToEurRate === "number" && Number.isFinite(aedToEurRate) && aedToEurRate > 0.1 && aedToEurRate < 1) {
+        const aedMinorUnits = Math.max(100, Math.round(eurCents / aedToEurRate))
+        return {
+          rate: Number((1 / aedToEurRate).toFixed(4)),
+          aedMinorUnits,
+          aedFormatted: formatAedMinorUnits(aedMinorUnits),
+        }
+      }
+    }
+  } catch {
+    // Fall back to external EUR->AED rate if N-Genius forex lookup is unavailable
+  }
+
+  return convertEurCentsToAed(eurCents)
+}
+
 async function getNgeniusAccessToken(): Promise<string> {
   const apiKey = readEnv("NGENIUS_API_KEY")
   if (!apiKey) throw new Error("ngenius_missing_api_key")
@@ -138,11 +184,12 @@ export async function createNgeniusHostedOrder(input: {
   shippingName?: string | null
   address1?: string | null
   city?: string | null
-}): Promise<{ ngeniusOrderRef: string; paymentUrl: string }> {
+}): Promise<{ ngeniusOrderRef: string; paymentUrl: string; aedMinorUnits: number }> {
   const outletRef = readEnv("NGENIUS_OUTLET_REF")
   if (!outletRef) throw new Error("ngenius_missing_outlet_ref")
 
   const accessToken = await getNgeniusAccessToken()
+  const quote = await convertEurCentsViaNgeniusMcp(input.amountCents, accessToken, outletRef)
   const { firstName, lastName } = splitName(input.shippingName)
   const billingAddress: Record<string, string> = {}
   if (firstName) billingAddress.firstName = firstName.slice(0, 45)
@@ -154,8 +201,8 @@ export async function createNgeniusHostedOrder(input: {
   const body: Record<string, unknown> = {
     action: "PURCHASE",
     amount: {
-      currencyCode: "EUR",
-      value: input.amountCents,
+      currencyCode: "AED",
+      value: quote.aedMinorUnits,
     },
     merchantOrderReference: input.orderNumber,
     emailAddress: input.email,
@@ -196,6 +243,7 @@ export async function createNgeniusHostedOrder(input: {
   return {
     ngeniusOrderRef,
     paymentUrl,
+    aedMinorUnits: quote.aedMinorUnits,
   }
 }
 
