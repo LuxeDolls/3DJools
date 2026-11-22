@@ -2,6 +2,7 @@ import { isLocale, type Locale } from "@/lib/i18n/config"
 import { getDictionary } from "@/lib/i18n/get-dictionary"
 import { Breadcrumb } from "@/components/breadcrumb"
 import { CheckoutView } from "@/components/checkout/checkout-view"
+import { NGENIUS_CHECKOUT_ENABLED, ngeniusConfigured } from "@/lib/payments/ngenius"
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -22,6 +23,7 @@ export default async function CheckoutPage({
   const locale: Locale = isLocale(lang) ? lang : "en"
   const dict = await getDictionary(locale)
   const initialError = Array.isArray(error) ? error[0] : error
+  const ngeniusEnabled = NGENIUS_CHECKOUT_ENABLED && ngeniusConfigured()
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-5 sm:py-8">
@@ -37,7 +39,7 @@ export default async function CheckoutPage({
         {dict.checkout.title}
       </h1>
       <div className="mt-5 sm:mt-8">
-        <CheckoutView locale={locale} initialError={initialError} />
+        <CheckoutView locale={locale} initialError={initialError} ngeniusEnabled={ngeniusEnabled} />
       </div>
     </div>
   )

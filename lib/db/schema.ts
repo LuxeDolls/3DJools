@@ -233,6 +233,7 @@ export type OrderStatus = (typeof ORDER_STATUSES)[number]
 
 export const PAYMENT_METHODS = [
   "card",
+  "ngenius",
   "open_banking",
   "paypal",
   "bank_transfer",

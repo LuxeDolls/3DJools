@@ -25,9 +25,11 @@ import { computeShippingCents, SHIPPING_COUNTRIES } from "@/lib/shipping"
 import { CRYPTO_CHECKOUT_ENABLED, CRYPTO_COIN_OPTIONS, DEFAULT_CRYPTO_COIN_ID, getCryptoCoinOption } from "@/lib/payments/crypto"
 import { BANK_TRANSFER_ACCOUNT, BANK_TRANSFER_CHECKOUT_ENABLED, isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
+import { getNgeniusCopy } from "@/lib/i18n/ngenius"
 
 type PaymentId =
   | "card"
+  | "ngenius"
   | "open_banking"
   | "paypal"
   | "sepa"
@@ -51,9 +53,18 @@ function checkoutErrorText(
   return checkout.orderError
 }
 
-export function CheckoutView({ locale, initialError }: { locale: Locale; initialError?: string }) {
+export function CheckoutView({
+  locale,
+  initialError,
+  ngeniusEnabled = false,
+}: {
+  locale: Locale
+  initialError?: string
+  ngeniusEnabled?: boolean
+}) {
   const { dict } = useI18n()
   const it = getInstallmentDict(locale)
+  const ngeniusCopy = getNgeniusCopy(locale)
   const lp = useLocalizedPath()
   const { lines, subtotalCents } = useCart()
   const { data: session } = useSession()
@@ -64,11 +75,13 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const [payment, setPayment] = useState<PaymentId>(
     CARD_CHECKOUT_ENABLED
       ? "card"
-      : OPEN_BANKING_CHECKOUT_ENABLED
-        ? "open_banking"
-        : BANK_TRANSFER_CHECKOUT_ENABLED
-          ? "sepa"
-          : "installments",
+      : ngeniusEnabled
+        ? "ngenius"
+        : OPEN_BANKING_CHECKOUT_ENABLED
+          ? "open_banking"
+          : BANK_TRANSFER_CHECKOUT_ENABLED
+            ? "sepa"
+            : "installments",
   )
   const [cryptoCoin, setCryptoCoin] = useState<string>(DEFAULT_CRYPTO_COIN_ID)
   const [country, setCountry] = useState("Netherlands")
@@ -95,6 +108,9 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
   const paymentOptions: { id: PaymentId; icon: typeof Landmark; title: string; desc: string; disabled?: boolean; mark?: string }[] = [
     ...(CARD_CHECKOUT_ENABLED
       ? [{ id: "card" as const, icon: CreditCard, title: dict.checkout.payCard, desc: dict.checkout.payCardDesc }]
+      : []),
+    ...(ngeniusEnabled
+      ? [{ id: "ngenius" as const, icon: CreditCard, title: ngeniusCopy.methodTitle, desc: ngeniusCopy.methodDesc }]
       : []),
     ...(OPEN_BANKING_CHECKOUT_ENABLED
       ? [
@@ -142,6 +158,10 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
     }
     if (payment === "card" && !CARD_CHECKOUT_ENABLED) {
       setOrderError(dict.checkout.payCardUnavailable)
+      return
+    }
+    if (payment === "ngenius" && !ngeniusEnabled) {
+      setOrderError(ngeniusCopy.unavailable)
       return
     }
     if (payment === "open_banking" && !OPEN_BANKING_CHECKOUT_ENABLED) {
@@ -285,6 +305,11 @@ export function CheckoutView({ locale, initialError }: { locale: Locale; initial
           {payment === "card" && (
             <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
               <p>{dict.checkout.payCardNote}</p>
+            </div>
+          )}
+          {payment === "ngenius" && (
+            <div className="mt-4 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-muted-foreground">
+              <p>{ngeniusCopy.checkoutNote}</p>
             </div>
           )}
           {payment === "open_banking" && (
