@@ -150,6 +150,23 @@ export async function getOrderById(orderId: string): Promise<OrderWithItems | nu
   return { ...order, items }
 }
 
+export async function getOrderByNgeniusRef(ngeniusOrderRef: string): Promise<OrderWithItems | null> {
+  const ref = ngeniusOrderRef.trim()
+  if (!ref) return null
+  const safePattern = `%ngenius_order_ref=${ref.replace(/[%_\\]/g, "\\$&")}%`
+  const candidates = await db
+    .select()
+    .from(orders)
+    .where(and(eq(orders.paymentMethod, "ngenius"), like(orders.notes, safePattern)))
+    .orderBy(desc(orders.createdAt))
+    .limit(5)
+
+  const match = candidates.find((row) => parseOrderNotes(row.notes).ngenius_order_ref === ref)
+  if (!match) return null
+  const items = await db.select().from(orderItems).where(eq(orderItems.orderId, match.id))
+  return { ...match, items }
+}
+
 export async function mergeOrderNotes(orderId: string, fields: Record<string, string | undefined>): Promise<void> {
   const current = await getOrderById(orderId)
   if (!current) return
