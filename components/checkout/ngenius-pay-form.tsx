@@ -80,13 +80,11 @@ function loadNgeniusSdk(sdkUrl: string): Promise<NINamespace> {
 
 export function NgeniusPayForm({
   orderNumber,
-  locale,
+  locale: _locale,
   hostedSessionApiKey,
   outletRef,
   sdkUrl,
   eurFormatted,
-  aedFormatted,
-  rate,
   copy,
 }: {
   orderNumber: string
@@ -95,8 +93,6 @@ export function NgeniusPayForm({
   outletRef: string
   sdkUrl: string
   eurFormatted: string
-  aedFormatted: string
-  rate: number
   copy: NgeniusCopy
 }) {
   const router = useRouter()
@@ -261,17 +257,10 @@ export function NgeniusPayForm({
     }
   }
 
-  const conversionText = copy.conversionNote
-    .replace("{aed}", aedFormatted)
-    .replace("{eur}", eurFormatted)
-    .replace("{rate}", rate.toFixed(4))
-
-  const payLabel = copy.payNow.replace("{aed}", aedFormatted)
+  const payLabel = copy.payNow.replace("{eur}", eurFormatted)
 
   return (
     <div className="mt-4 space-y-4">
-      <p className="text-xs font-medium text-muted-foreground">{conversionText}</p>
-
       {!ready && !mountError && (
         <p className="text-sm text-muted-foreground">{copy.loadingForm}</p>
       )}

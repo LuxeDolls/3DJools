@@ -4,7 +4,6 @@ export type NgeniusCopy = {
   methodTitle: string
   methodDesc: string
   checkoutNote: string
-  conversionNote: string
   payNow: string
   processing: string
   loadingForm: string
@@ -17,16 +16,16 @@ export type NgeniusCopy = {
 
 const EN: NgeniusCopy = {
   methodTitle: "Visa / Mastercard (Direct)",
-  methodDesc: "Pay directly on our checkout with 3D Secure (billed in AED)",
+  methodDesc: "Pay directly on our checkout with 3D Secure",
   checkoutNote:
-    "Enter your card details on the next step with 3D Secure verification. Your order total in EUR will be converted to AED at the current exchange rate.",
-  conversionNote: "Your card will be charged {aed} (converted from {eur} at 1 EUR = {rate} AED).",
-  payNow: "Pay {aed}",
+    "Enter your card details on the next step with 3D Secure verification to complete your payment.",
+  payNow: "Pay {eur}",
   processing: "Processing payment…",
   loadingForm: "Loading secure card form…",
   reloadForm: "Reload card form",
   cardInvalid: "Please complete all card fields before paying.",
-  paymentFailed: "The card payment could not be completed. Please check your details or try another payment method.",
+  paymentFailed:
+    "The card payment could not be completed. Please check your details or try another payment method.",
   threeDsHint: "Complete the 3D Secure verification below to confirm your payment.",
   unavailable: "Direct card payment is temporarily unavailable.",
 }
@@ -35,11 +34,10 @@ const COPY: Record<Locale, NgeniusCopy> = {
   en: EN,
   de: {
     methodTitle: "Visa / Mastercard (Direkt)",
-    methodDesc: "Direkt per Karte mit 3D Secure bezahlen (Abrechnung in AED)",
+    methodDesc: "Direkt per Karte mit 3D Secure bezahlen",
     checkoutNote:
-      "Geben Sie Ihre Kartendaten im nächsten Schritt mit 3D-Secure-Prüfung ein. Der EUR-Betrag wird zum aktuellen Wechselkurs in AED umgerechnet.",
-    conversionNote: "Ihre Karte wird mit {aed} belastet (umgerechnet von {eur} bei 1 EUR = {rate} AED).",
-    payNow: "{aed} bezahlen",
+      "Geben Sie Ihre Kartendaten im nächsten Schritt mit 3D-Secure-Prüfung ein, um Ihre Zahlung abzuschließen.",
+    payNow: "{eur} bezahlen",
     processing: "Zahlung wird verarbeitet…",
     loadingForm: "Sicheres Kartenformular wird geladen…",
     reloadForm: "Formular neu laden",
@@ -51,11 +49,10 @@ const COPY: Record<Locale, NgeniusCopy> = {
   },
   fr: {
     methodTitle: "Visa / Mastercard (Direct)",
-    methodDesc: "Payer directement par carte avec 3D Secure (facturé en AED)",
+    methodDesc: "Payer directement par carte avec 3D Secure",
     checkoutNote:
-      "Saisissez vos coordonnées bancaires à l’étape suivante avec vérification 3D Secure. Le montant en EUR sera converti en AED au taux du jour.",
-    conversionNote: "Votre carte sera débitée de {aed} (converti depuis {eur} au taux 1 EUR = {rate} AED).",
-    payNow: "Payer {aed}",
+      "Saisissez vos coordonnées bancaires à l’étape suivante avec vérification 3D Secure pour finaliser votre paiement.",
+    payNow: "Payer {eur}",
     processing: "Traitement du paiement…",
     loadingForm: "Chargement du formulaire sécurisé…",
     reloadForm: "Recharger le formulaire",
@@ -67,11 +64,10 @@ const COPY: Record<Locale, NgeniusCopy> = {
   },
   it: {
     methodTitle: "Visa / Mastercard (Diretto)",
-    methodDesc: "Paga direttamente con carta e 3D Secure (addebito in AED)",
+    methodDesc: "Paga direttamente con carta e 3D Secure",
     checkoutNote:
-      "Inserisci i dati della carta al passaggio successivo con verifica 3D Secure. L’importo in EUR sarà convertito in AED al tasso corrente.",
-    conversionNote: "Sulla tua carta verranno addebitati {aed} (convertiti da {eur} al tasso 1 EUR = {rate} AED).",
-    payNow: "Paga {aed}",
+      "Inserisci i dati della carta al passaggio successivo con verifica 3D Secure per completare il pagamento.",
+    payNow: "Paga {eur}",
     processing: "Elaborazione pagamento…",
     loadingForm: "Caricamento modulo carta sicuro…",
     reloadForm: "Ricarica modulo",
@@ -83,11 +79,10 @@ const COPY: Record<Locale, NgeniusCopy> = {
   },
   es: {
     methodTitle: "Visa / Mastercard (Directo)",
-    methodDesc: "Paga directamente con tarjeta y 3D Secure (cobro en AED)",
+    methodDesc: "Paga directamente con tarjeta y 3D Secure",
     checkoutNote:
-      "Introduce los datos de tu tarjeta en el siguiente paso con verificación 3D Secure. El importe en EUR se convertirá a AED al tipo de cambio actual.",
-    conversionNote: "Se cargarán {aed} en tu tarjeta (convertido de {eur} a 1 EUR = {rate} AED).",
-    payNow: "Pagar {aed}",
+      "Introduce los datos de tu tarjeta en el siguiente paso con verificación 3D Secure para completar tu pago.",
+    payNow: "Pagar {eur}",
     processing: "Procesando pago…",
     loadingForm: "Cargando formulario seguro de tarjeta…",
     reloadForm: "Recargar formulario",
@@ -99,11 +94,10 @@ const COPY: Record<Locale, NgeniusCopy> = {
   },
   nl: {
     methodTitle: "Visa / Mastercard (Direct)",
-    methodDesc: "Direct betalen met kaart en 3D Secure (afschrijving in AED)",
+    methodDesc: "Direct betalen met kaart en 3D Secure",
     checkoutNote:
-      "Vul uw kaartgegevens in de volgende stap in met 3D Secure-verificatie. Het bedrag in EUR wordt omgerekend naar AED tegen de actuele koers.",
-    conversionNote: "Er wordt {aed} van uw kaart afgeschreven (omgerekend van {eur} tegen 1 EUR = {rate} AED).",
-    payNow: "{aed} betalen",
+      "Vul uw kaartgegevens in de volgende stap in met 3D Secure-verificatie om uw betaling te voltooien.",
+    payNow: "{eur} betalen",
     processing: "Betaling verwerken…",
     loadingForm: "Beveiligd kaartformulier laden…",
     reloadForm: "Formulier opnieuw laden",

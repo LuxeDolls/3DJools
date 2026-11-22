@@ -29,7 +29,6 @@ import { CARD_CHECKOUT_ENABLED, OPEN_BANKING_CHECKOUT_ENABLED } from "@/lib/paym
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import {
   NGENIUS_CHECKOUT_ENABLED,
-  convertEurCentsToAed,
   ngeniusConfigured,
   ngeniusPublicConfig,
 } from "@/lib/payments/ngenius"
@@ -135,10 +134,6 @@ export default async function OrderConfirmationPage({
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
   const ngeniusCopy = getNgeniusCopy(locale)
   const ngeniusConfig = ngeniusPublicConfig()
-  const ngeniusQuote =
-    order.paymentMethod === "ngenius" && status === "awaiting_payment" && ngeniusConfig
-      ? await convertEurCentsToAed(order.totalCents)
-      : null
   const paymentLabels: Record<string, string> = {
     card: dict.checkout.payCard,
     ngenius: ngeniusCopy.methodTitle,
@@ -397,7 +392,7 @@ export default async function OrderConfirmationPage({
 
         {order.paymentMethod === "ngenius" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            {ngeniusConfig && ngeniusQuote ? (
+            {ngeniusConfig ? (
               <>
                 <p>{ngeniusCopy.checkoutNote}</p>
                 <NgeniusPayForm
@@ -407,8 +402,6 @@ export default async function OrderConfirmationPage({
                   outletRef={ngeniusConfig.outletRef}
                   sdkUrl={ngeniusConfig.sdkUrl}
                   eurFormatted={formatPrice(order.totalCents, locale)}
-                  aedFormatted={ngeniusQuote.aedFormatted}
-                  rate={ngeniusQuote.rate}
                   copy={ngeniusCopy}
                 />
               </>
