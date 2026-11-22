@@ -138,11 +138,10 @@ export async function createNgeniusHostedOrder(input: {
   shippingName?: string | null
   address1?: string | null
   city?: string | null
-}): Promise<{ ngeniusOrderRef: string; paymentUrl: string; aedMinorUnits: number }> {
+}): Promise<{ ngeniusOrderRef: string; paymentUrl: string }> {
   const outletRef = readEnv("NGENIUS_OUTLET_REF")
   if (!outletRef) throw new Error("ngenius_missing_outlet_ref")
 
-  const quote = await convertEurCentsToAed(input.amountCents)
   const accessToken = await getNgeniusAccessToken()
   const { firstName, lastName } = splitName(input.shippingName)
   const billingAddress: Record<string, string> = {}
@@ -155,8 +154,8 @@ export async function createNgeniusHostedOrder(input: {
   const body: Record<string, unknown> = {
     action: "PURCHASE",
     amount: {
-      currencyCode: "AED",
-      value: quote.aedMinorUnits,
+      currencyCode: "EUR",
+      value: input.amountCents,
     },
     merchantOrderReference: input.orderNumber,
     emailAddress: input.email,
@@ -197,7 +196,6 @@ export async function createNgeniusHostedOrder(input: {
   return {
     ngeniusOrderRef,
     paymentUrl,
-    aedMinorUnits: quote.aedMinorUnits,
   }
 }
 
@@ -330,9 +328,11 @@ export async function applyNgeniusPaymentUpdate(
   const expectedAed = Number(notes.ngenius_aed_minor_units || 0)
 
   const amountValid =
-    details.currency === "AED" &&
     details.amountValue !== null &&
-    (expectedAed <= 0 || Math.abs(details.amountValue - expectedAed) <= Math.max(50, Math.round(expectedAed * 0.02)))
+    ((details.currency === "EUR" && details.amountValue === order.totalCents) ||
+      (details.currency === "AED" &&
+        (expectedAed <= 0 ||
+          Math.abs(details.amountValue - expectedAed) <= Math.max(50, Math.round(expectedAed * 0.02)))))
 
   const isSuccess = Boolean(details.state && SUCCESS_STATES.has(details.state) && amountValid)
   const isFailed = Boolean(details.state && FAILED_STATES.has(details.state))
