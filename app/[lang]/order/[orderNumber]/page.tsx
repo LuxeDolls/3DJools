@@ -21,11 +21,19 @@ import { Separator } from "@/components/ui/separator"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import { OrderPaymentInstructions } from "@/components/checkout/order-payment-instructions"
 import { CardPayButton } from "@/components/checkout/card-pay-button"
+import { NgeniusPayForm } from "@/components/checkout/ngenius-pay-form"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { ChangePaymentMethod } from "@/components/checkout/change-payment-method"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
 import { CARD_CHECKOUT_ENABLED, OPEN_BANKING_CHECKOUT_ENABLED } from "@/lib/payments/cardholder"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
+import {
+  NGENIUS_CHECKOUT_ENABLED,
+  convertEurCentsToAed,
+  ngeniusConfigured,
+  ngeniusPublicConfig,
+} from "@/lib/payments/ngenius"
+import { getNgeniusCopy } from "@/lib/i18n/ngenius"
 import { syncTrapayOrderStatus } from "@/lib/payments/trapay-webhook"
 import { ClearCart } from "@/components/checkout/clear-cart"
 import { parseOrderNotes } from "@/lib/orders/notes"
@@ -125,8 +133,15 @@ export default async function OrderConfirmationPage({
   const personalDiscountCents = Number(notes.personal_discount_cents || 0)
   const discountGap = order.subtotalCents + order.shippingCents - order.totalCents
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
+  const ngeniusCopy = getNgeniusCopy(locale)
+  const ngeniusConfig = ngeniusPublicConfig()
+  const ngeniusQuote =
+    order.paymentMethod === "ngenius" && status === "awaiting_payment" && ngeniusConfig
+      ? await convertEurCentsToAed(order.totalCents)
+      : null
   const paymentLabels: Record<string, string> = {
     card: dict.checkout.payCard,
+    ngenius: ngeniusCopy.methodTitle,
     open_banking: dict.checkout.payOpenBanking,
     paypal: dict.checkout.payPaypal,
     bank_transfer: dict.checkout.paySepa,
@@ -140,6 +155,7 @@ export default async function OrderConfirmationPage({
   const canSwitchPayment = status === "awaiting_payment" || status === "reviewing_payment"
   const rawSwitchOptions: Array<{ method: PaymentMethod; label: string } | false> = [
     CARD_CHECKOUT_ENABLED && { method: "card", label: dict.checkout.payCard },
+    NGENIUS_CHECKOUT_ENABLED && ngeniusConfigured() && { method: "ngenius", label: ngeniusCopy.methodTitle },
     OPEN_BANKING_CHECKOUT_ENABLED && { method: "open_banking", label: dict.checkout.payOpenBanking },
     isPaypalCheckoutEnabled() && { method: "paypal", label: dict.checkout.payPaypal },
     isBankTransferCheckoutEnabled(order.email) && { method: "bank_transfer", label: dict.checkout.paySepa },
@@ -376,6 +392,29 @@ export default async function OrderConfirmationPage({
                 errorLabel={dict.checkout.payCardUnavailable}
               />
             ) : null}
+          </div>
+        )}
+
+        {order.paymentMethod === "ngenius" && status === "awaiting_payment" && (
+          <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
+            {ngeniusConfig && ngeniusQuote ? (
+              <>
+                <p>{ngeniusCopy.checkoutNote}</p>
+                <NgeniusPayForm
+                  orderNumber={order.orderNumber}
+                  locale={locale}
+                  hostedSessionApiKey={ngeniusConfig.hostedSessionApiKey}
+                  outletRef={ngeniusConfig.outletRef}
+                  sdkUrl={ngeniusConfig.sdkUrl}
+                  eurFormatted={formatPrice(order.totalCents, locale)}
+                  aedFormatted={ngeniusQuote.aedFormatted}
+                  rate={ngeniusQuote.rate}
+                  copy={ngeniusCopy}
+                />
+              </>
+            ) : (
+              <p>{ngeniusCopy.unavailable}</p>
+            )}
           </div>
         )}
 

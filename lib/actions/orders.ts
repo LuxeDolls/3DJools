@@ -32,6 +32,10 @@ import {
   createCardForm as createTrapayCardForm,
   trapayConfigured,
 } from "@/lib/payments/trapay"
+import {
+  NGENIUS_CHECKOUT_ENABLED,
+  ngeniusConfigured,
+} from "@/lib/payments/ngenius"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
 import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import { INSTALLMENTS_CHECKOUT_ENABLED } from "@/lib/installments"
@@ -48,6 +52,7 @@ const MAX_QTY = 20
 type CheckoutShipping = "standard"
 type CheckoutPayment =
   | "card"
+  | "ngenius"
   | "open_banking"
   | "paypal"
   | "sepa"
@@ -56,6 +61,7 @@ type CheckoutPayment =
 
 const PAYMENT_METHOD: Record<CheckoutPayment, PaymentMethod> = {
   card: "card",
+  ngenius: "ngenius",
   open_banking: "open_banking",
   paypal: "paypal",
   sepa: "bank_transfer",
@@ -121,8 +127,10 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
   if (input.termsAccepted !== true) return { ok: false, error: "terms_required" }
   if (!input.items?.length) return { ok: false, error: "empty_cart" }
   const cardConfigured = ZENTHORYX_CHECKOUT_ENABLED && aviagramConfigured()
+  const ngeniusReady = NGENIUS_CHECKOUT_ENABLED && ngeniusConfigured()
   const openBankingConfigured = OPEN_BANKING_CHECKOUT_ENABLED && trapayConfigured()
   if (input.payment === "card" && !cardConfigured) return { ok: false, error: "card_unavailable" }
+  if (input.payment === "ngenius" && !ngeniusReady) return { ok: false, error: "ngenius_unavailable" }
   if (input.payment === "open_banking" && !openBankingConfigured) {
     return { ok: false, error: "open_banking_unavailable" }
   }
@@ -173,6 +181,7 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
     paymentMethod === "bank_transfer" ||
     paymentMethod === "crypto" ||
     paymentMethod === "card" ||
+    paymentMethod === "ngenius" ||
     paymentMethod === "open_banking" ||
     paymentMethod === "paypal"
       ? "awaiting_payment"
@@ -229,6 +238,11 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
       await abandonUnpaidOrder(order.id)
       return { ok: false, error: "card_start_failed" }
     }
+  }
+
+  if (paymentMethod === "ngenius") {
+    const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
+    await mergeOrderNotes(order.id, { checkout_locale: locale })
   }
 
   if (paymentMethod === "open_banking") {
@@ -400,6 +414,7 @@ export type SwitchPaymentMethodResult = { ok: true } | { ok: false; error: strin
 
 const SWITCHABLE_METHODS: Partial<Record<PaymentMethod, boolean>> = {
   card: true,
+  ngenius: true,
   open_banking: true,
   paypal: true,
   bank_transfer: true,
@@ -407,6 +422,7 @@ const SWITCHABLE_METHODS: Partial<Record<PaymentMethod, boolean>> = {
 
 function isMethodAvailable(method: PaymentMethod, email: string): boolean {
   if (method === "card") return ZENTHORYX_CHECKOUT_ENABLED && aviagramConfigured()
+  if (method === "ngenius") return NGENIUS_CHECKOUT_ENABLED && ngeniusConfigured()
   if (method === "open_banking") return OPEN_BANKING_CHECKOUT_ENABLED && trapayConfigured()
   if (method === "paypal") return paypalConfigured()
   if (method === "bank_transfer") return isBankTransferCheckoutEnabled(email)
