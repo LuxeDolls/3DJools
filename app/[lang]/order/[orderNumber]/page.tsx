@@ -21,7 +21,6 @@ import { Separator } from "@/components/ui/separator"
 import { OrderStatusBadge } from "@/components/orders/order-status-badge"
 import { OrderPaymentInstructions } from "@/components/checkout/order-payment-instructions"
 import { CardPayButton } from "@/components/checkout/card-pay-button"
-import { NgeniusPayForm } from "@/components/checkout/ngenius-pay-form"
 import { PaypalPayButton } from "@/components/checkout/paypal-pay-button"
 import { ChangePaymentMethod } from "@/components/checkout/change-payment-method"
 import { isPaypalCheckoutEnabled } from "@/lib/payments/paypal-availability"
@@ -30,7 +29,7 @@ import { isBankTransferCheckoutEnabled } from "@/lib/payments/bank-transfer"
 import {
   NGENIUS_CHECKOUT_ENABLED,
   ngeniusConfigured,
-  ngeniusPublicConfig,
+  syncNgeniusOrderStatus,
 } from "@/lib/payments/ngenius"
 import { getNgeniusCopy } from "@/lib/i18n/ngenius"
 import { syncTrapayOrderStatus } from "@/lib/payments/trapay-webhook"
@@ -95,6 +94,12 @@ export default async function OrderConfirmationPage({
       order = await syncTrapayOrderStatus(order)
     }
   }
+  if (
+    order.paymentMethod === "ngenius" &&
+    (order.status === "awaiting_payment" || order.status === "reviewing_payment")
+  ) {
+    order = await syncNgeniusOrderStatus(order)
+  }
 
   const status = order.status as OrderStatus
   const shipmentEvents = await getShipmentEvents(order.id)
@@ -133,7 +138,7 @@ export default async function OrderConfirmationPage({
   const discountGap = order.subtotalCents + order.shippingCents - order.totalCents
   const memberDiscountCents = memberFromNotes > 0 ? memberFromNotes : personalDiscountCents > 0 ? 0 : discountGap
   const ngeniusCopy = getNgeniusCopy(locale)
-  const ngeniusConfig = ngeniusPublicConfig()
+  const ngeniusAvailable = NGENIUS_CHECKOUT_ENABLED && ngeniusConfigured()
   const paymentLabels: Record<string, string> = {
     card: dict.checkout.payCard,
     ngenius: ngeniusCopy.methodTitle,
@@ -392,17 +397,15 @@ export default async function OrderConfirmationPage({
 
         {order.paymentMethod === "ngenius" && status === "awaiting_payment" && (
           <div className="mt-6 rounded-lg border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
-            {ngeniusConfig ? (
+            {ngeniusAvailable ? (
               <>
                 <p>{ngeniusCopy.checkoutNote}</p>
-                <NgeniusPayForm
+                <CardPayButton
                   orderNumber={order.orderNumber}
                   locale={locale}
-                  hostedSessionApiKey={ngeniusConfig.hostedSessionApiKey}
-                  outletRef={ngeniusConfig.outletRef}
-                  sdkUrl={ngeniusConfig.sdkUrl}
-                  eurFormatted={formatPrice(order.totalCents, locale)}
-                  copy={ngeniusCopy}
+                  label={ngeniusCopy.payNow.replace("{eur}", formatPrice(order.totalCents, locale))}
+                  errorLabel={ngeniusCopy.paymentFailed}
+                  mode="ngenius"
                 />
               </>
             ) : (

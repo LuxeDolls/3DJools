@@ -34,6 +34,7 @@ import {
 } from "@/lib/payments/trapay"
 import {
   NGENIUS_CHECKOUT_ENABLED,
+  createNgeniusHostedOrder,
   ngeniusConfigured,
 } from "@/lib/payments/ngenius"
 import { appendPaypalOrderId, createPaypalCheckout, paypalConfigured } from "@/lib/payments/paypal"
@@ -242,7 +243,28 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
 
   if (paymentMethod === "ngenius") {
     const locale = input.locale && isLocale(input.locale) ? input.locale : "en"
-    await mergeOrderNotes(order.id, { checkout_locale: locale })
+    const customerName = `${input.firstName.trim()} ${input.lastName.trim()}`.trim()
+    try {
+      const hosted = await createNgeniusHostedOrder({
+        orderNumber: order.orderNumber,
+        amountCents: totalCents,
+        locale,
+        email: input.email.trim(),
+        shippingName: customerName || undefined,
+        address1: input.address.trim(),
+        city: input.city.trim(),
+      })
+      await mergeOrderNotes(order.id, {
+        checkout_locale: locale,
+        ngenius_order_ref: hosted.ngeniusOrderRef,
+        ngenius_aed_minor_units: String(hosted.aedMinorUnits),
+      })
+      paymentUrl = hosted.paymentUrl
+    } catch (err) {
+      console.error("[v0] N-Genius payment could not start:", err)
+      await abandonUnpaidOrder(order.id)
+      return { ok: false, error: "ngenius_start_failed" }
+    }
   }
 
   if (paymentMethod === "open_banking") {
@@ -296,6 +318,49 @@ export async function placeOrder(input: PlaceOrderInput): Promise<PlaceOrderResu
 }
 
 export type StartCardPaymentResult = { ok: true; paymentUrl: string } | { ok: false; error: string }
+
+/** Opens a new hosted N-Genius payment page for an order awaiting payment. */
+export async function startNgeniusPayment(
+  orderNumber: string,
+  locale: string,
+): Promise<StartCardPaymentResult> {
+  if (!NGENIUS_CHECKOUT_ENABLED || !ngeniusConfigured()) {
+    return { ok: false, error: "ngenius_unavailable" }
+  }
+  const order = await getOrderByOrderNumber(orderNumber)
+  if (!order || order.paymentMethod !== "ngenius") return { ok: false, error: "not_found" }
+  if (order.status !== "awaiting_payment") return { ok: false, error: "invalid_status" }
+
+  const notes = parseOrderNotes(order.notes)
+  const safeLocale = isLocale(locale)
+    ? locale
+    : notes.checkout_locale && isLocale(notes.checkout_locale)
+      ? notes.checkout_locale
+      : "en"
+
+  try {
+    const hosted = await createNgeniusHostedOrder({
+      orderNumber: order.orderNumber,
+      amountCents: order.totalCents,
+      locale: safeLocale,
+      email: order.email,
+      shippingName: order.shippingName,
+      address1: order.shippingAddress1,
+      city: order.shippingCity,
+    })
+    await mergeOrderNotes(order.id, {
+      checkout_locale: safeLocale,
+      ngenius_order_ref: hosted.ngeniusOrderRef,
+      ngenius_aed_minor_units: String(hosted.aedMinorUnits),
+      ngenius_last_status: undefined,
+      ngenius_declined_reason: undefined,
+    })
+    return { ok: true, paymentUrl: hosted.paymentUrl }
+  } catch (err) {
+    console.error("[v0] N-Genius payment retry failed:", err)
+    return { ok: false, error: "ngenius_start_failed" }
+  }
+}
 
 /** Opens a new hosted card form (Zenthoryx) for an order that is still awaiting payment. */
 export async function startCardPayment(orderNumber: string, locale: string): Promise<StartCardPaymentResult> {

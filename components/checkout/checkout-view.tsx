@@ -45,7 +45,14 @@ function checkoutErrorText(
   },
   code: string,
 ): string {
-  if (code === "card_unavailable" || code === "card_start_failed") return checkout.payCardUnavailable
+  if (
+    code === "card_unavailable" ||
+    code === "card_start_failed" ||
+    code === "ngenius_unavailable" ||
+    code === "ngenius_start_failed"
+  ) {
+    return checkout.payCardUnavailable
+  }
   if (code === "open_banking_unavailable" || code === "open_banking_start_failed") {
     return checkout.payOpenBankingUnavailable
   }
