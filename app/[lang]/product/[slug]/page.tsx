@@ -82,7 +82,18 @@ export default async function ProductPage({
   return (
     <div className="mx-auto max-w-7xl px-4 py-5 sm:py-8">
       {isCardPaymentTest(product.slug) ? null : (
-        <ProductJsonLd product={ratedProduct} url={url} reviews={reviews} rating={stampedRating} />
+        <ProductJsonLd
+          product={ratedProduct}
+          url={url}
+          reviews={reviews}
+          rating={
+            stampedRating.count > 0
+              ? stampedRating
+              : reviewSummary.count > 0
+                ? { rating: reviewSummary.average, count: reviewSummary.count }
+                : undefined
+          }
+        />
       )}
 
       <Breadcrumb
